@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#2 SQLインジェクション② 防御の仕組みと限界｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#2 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>SQLインジェクション② 防御の仕組みと限界</h1>
+  <ol class="summary"><li>根本対策はプレースホルダ。SQL文の構造を先に確定し、入力は後から値として渡す。</li><li>列名・表名・ASC/DESCなどの識別子はバインドできないので、許可リストで候補を固定する。</li><li>エラー非表示・権限最小化は保険的な対策、WAFは運用面の補助。どちらも修正の代わりにならない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep102-sqli-2:placeholder">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">プレースホルダ</span><span class="back" hidden><span class="def">SQL文の値の位置に置く記号（? など）。値は後からバインドして渡す。静的なら原理的に構文として解釈されない（動的はライブラリ依存）。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep102-sqli-2:static-placeholder">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">静的プレースホルダ</span><span class="back" hidden><span class="def">DB側で値を割り当てる方式。SQL文の構造が先に確定するため、原理的に最も確実。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep102-sqli-2:dynamic-placeholder">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">動的プレースホルダ</span><span class="back" hidden><span class="def">接続ライブラリ側で値をエスケープしてSQL文に埋める方式。安全性はライブラリの実装に依存する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep102-sqli-2:bind">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">バインド</span><span class="back" hidden><span class="def">プレースホルダに値を割り当てること。値はデータとして扱われる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep102-sqli-2:sql-escape">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SQLのエスケープ</span><span class="back" hidden><span class="def">プレースホルダを使えない箇所での代替。文字列は特殊記号を無害化し（例: クォートを2つ重ねる）、数値は数値であることを確実にする。</span><span class="note">規則はDBごとに違い、OWASPは強く非推奨としている。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep102-sqli-2:identifier">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">識別子</span><span class="back" hidden><span class="def">テーブル名・列名など、SQLの構造を決める名前。値ではないのでプレースホルダで渡せない。</span><span class="note">ORDER BY の ASC/DESC のようなキーワードも同様。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep102-sqli-2:allowlist">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">許可リスト</span><span class="back" hidden><span class="def">使ってよい候補をコード側で固定し、入力は候補を選ぶ目印にだけ使う方式。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep102-sqli-2:stored-procedure">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ストアドプロシージャ</span><span class="back" hidden><span class="def">DB側に保存した処理。安全に実装されていれば有効だが、中で動的SQLを連結すると同じ穴になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep102-sqli-2:waf">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">WAF</span><span class="back" hidden><span class="def">Webアプリへの通信を検査し、攻撃のパターンを検知・遮断する装置やサービス。運用面の補助的な対策。</span><span class="note">検知漏れも誤検知も起こりうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep102-sqli-2:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>列名を入力で切り替えたい。適切な対策は？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>列名を ? にバインドする</span></button><p class="why" hidden>識別子はバインドできない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>許可リストで列名を固定する</span></button><p class="why" hidden>候補をコード側で固定する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>HTMLエスケープする</span></button><p class="why" hidden>HTMLエスケープはXSS向けの対策</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WAFがあれば対策不要</span></button><p class="why" hidden>WAFは補助。修正の代わりにならない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep102-sqli-2:q0" data-answer="3">
+  <p class="q">動的プレースホルダの説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>DBエンジン側で値を割り当てるため、原理的に脆弱性がなくなる</span></button><p class="why" hidden>これは静的プレースホルダの説明。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>テーブル名や列名などの識別子も、値と同じようにバインドできる</span></button><p class="why" hidden>識別子はどちらの方式でもバインドできない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>値を文字列連結で組み込むので、SQLインジェクション対策にはならない</span></button><p class="why" hidden>対策にはなる。ただし静的のほうが原理的に確実。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>接続ライブラリが値をエスケープして埋めるため、その実装に依存する</span></button><p class="why" hidden>正解。動的はライブラリ側でエスケープして組み立てるため、安全性はその実装しだい。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep102-sqli-2:q1" data-answer="2">
+  <p class="q">一覧の並び順（ASC/DESC）を利用者が切り替えられるようにしたい。実装として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>入力された文字列をSQLの文法に沿ってエスケープし、ORDER BY の後ろに連結する</span></button><p class="why" hidden>エスケープは値（リテラル）向けの処理。キーワードの位置に入力を入れる作りは残る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ORDER BY の後ろに ? を置き、入力された ASC か DESC をバインドする</span></button><p class="why" hidden>ASC/DESC はキーワードで、値ではないのでバインドできない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>入力が 1 なら ASC、それ以外なら DESC と、コード側で持つ文字列を使う</span></button><p class="why" hidden>正解。入力は候補を選ぶ目印にだけ使い、SQLに入る文字はコード側の許可リストで決める。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ORDER BY を含むリクエストをWAFで遮断し、入力はそのまま連結する</span></button><p class="why" hidden>WAFは補助で、入力を連結する原因は残る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep102-sqli-2:q2" data-answer="0">
+  <p class="q">ストアドプロシージャを呼び出し、引数はプレースホルダでバインドしている。それでもSQLインジェクションが起こりうるのはどの場合か。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>プロシージャの中で引数を連結し、動的SQLとして実行している</span></button><p class="why" hidden>正解。呼び出し方が安全でも、中で動的SQLを連結すれば同じ穴になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>呼び出し側のSQL文を、静的プレースホルダだけで組み立てている</span></button><p class="why" hidden>呼び出し側の対策としては適切で、原因にはならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>アプリのDBアカウントに、必要最小限の権限しか付けていない</span></button><p class="why" hidden>被害を抑える保険で、成立の原因にはならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>引数を、数値型として確実に変換したうえで渡している</span></button><p class="why" hidden>数値として確定させるのは対策側の処理。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep102-sqli-2:q3" data-answer="3">
+  <p class="q">事情でプレースホルダを使えず、文字列連結のままSQLを組み立てる。IPAの整理に照らして適切な対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>外部から受け取った値だけをエスケープし、プログラム内で作った値はそのまま連結する</span></button><p class="why" hidden>外部入力に限らず、SQL文を構成するすべてのリテラルに適用する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>入力値をHTMLエスケープしてから連結し、クォートなどの記号を無害にしておく</span></button><p class="why" hidden>HTMLエスケープはXSS対策で、SQLの文法とは規則が違う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>入力の長さを短く制限し、攻撃文字列を組み立てる余地をなくしてから連結する</span></button><p class="why" hidden>長さの制限だけでは、短い攻撃文字列を防げない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>文字列はDBの文法に沿ってエスケープし、数値は数値であることを確実にする</span></button><p class="why" hidden>正解。リテラルを正しく作る。ただし規則はDBごとに違い、OWASPは強く非推奨としている。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep102-sqli-2:q4" data-answer="0">
+  <p class="q">診断でSQLインジェクションが見つかった。改修版のリリースまでしばらくかかる。その間の対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>WAFで該当する通信を検知・遮断し、改修はそのまま進める</span></button><p class="why" hidden>正解。WAFは修正が難しい間の補助。検知漏れや誤検知があるので、修正が最優先。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>エラーメッセージを画面に出さないようにし、改修は見送る</span></button><p class="why" hidden>エラーを隠すのは保険で、原因は残る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>DBアカウントの権限を絞ったので、改修の優先度を下げる</span></button><p class="why" hidden>権限の最小化は被害を抑える保険で、修正の代わりにならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WAFを導入したので、検知漏れも見込んだうえで改修を中止する</span></button><p class="why" hidden>WAFには検知漏れがあり、修正の代わりにならない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">並び順（ORDER BY の列名）を利用者が選べる画面。どこが危険で、どう直すかを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">列名は識別子なのでプレースホルダで渡せず、連結すると入力が構文になる。候補の列名をコード側の許可リストで固定し、入力は候補を選ぶ目印にだけ使う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep102-sqli-2-t0-0"> 識別子はバインドできない</label></li><li><label><input type="checkbox" id="ep102-sqli-2-t0-1"> 許可リストで候補を固定する</label></li><li><label><input type="checkbox" id="ep102-sqli-2-t0-2"> SQLに入る文字はコード側で決める</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">「エスケープすればプレースホルダは不要」という意見に、頭の中で反論してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">エスケープの規則はDBごとに違い、すべてのリテラルに漏れなく適用し続けるのは難しい。漏れが1つあれば穴になる。OWASPも強く非推奨としており、プレースホルダを基本にして、エスケープは使えない箇所の代替にとどめる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep102-sqli-2-t1-0"> 規則がDBごとに違う</label></li><li><label><input type="checkbox" id="ep102-sqli-2-t1-1"> 1か所の漏れで穴になる</label></li><li><label><input type="checkbox" id="ep102-sqli-2-t1-2"> プレースホルダが基本で、エスケープは代替</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="商品一覧のコード（ダミー）"><div class="logtitle">商品一覧のコード（ダミー）</div><div class="logbody"><div class="logrow"><span>sql = &quot;SELECT * FROM items WHERE category = </span><span class="hl">?</span><span>&quot;</span></div><div class="logrow"><span>sql += &quot; ORDER BY &quot; + </span><span class="hl">request.sort</span></div><div class="logrow"><span>db.query(sql, [request.category])</span></div></div></div>
+  <p class="q">どこが問題で、どう直すか。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ORDER BY に入力を連結。許可リストで固定する（一例）</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>category の条件 … バインド済みで問題ない</li><li>WAFで解決 … 補助的で、連結の修正の代わりにならない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.8.3 SQLインジェクション</li><li>5.8 Webアプリケーションファイアウォール（WAF）</li></ul>
+  <p>根本対策（プレースホルダ）と保険的な対策の区別、WAFが補助にとどまる理由を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep101-sqli-1.html">← #1 SQLインジェクション① 攻撃が成立する仕組み</a><a href="ep103-xss.html">#3 XSS 出力の扱いで起きる攻撃と防御 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

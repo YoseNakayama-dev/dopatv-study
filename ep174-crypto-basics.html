@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#74 暗号の概念と主な暗号方式 鍵の使い分けと渡し方｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#74 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
+  <h1>暗号の概念と主な暗号方式 鍵の使い分けと渡し方</h1>
+  <ol class="summary"><li>共通鍵暗号は高速だが鍵配送が課題。公開鍵暗号は低速だが、鍵の数はn組で済む。</li><li>ハイブリッド暗号は、データを共通鍵で、その共通鍵を公開鍵で送る。公開鍵は証明書で本物か確認する。</li><li>鍵が漏れれば方式が強くても読まれる。推奨方式を十分な鍵長で使い、鍵の一生を管理する。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep174-crypto-basics:plaintext-ciphertext">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">平文・暗号文・復号</span><span class="back" hidden><span class="def">平文を鍵で暗号化したものが暗号文。暗号文を元の平文に戻すことが復号で、鍵がなければ戻せない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep174-crypto-basics:common-key">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">共通鍵暗号</span><span class="back" hidden><span class="def">暗号化と復号に同じ鍵を使う方式。AESなどがあり、処理が高速。</span><span class="note">n人が互いに通信すると鍵はn(n-1)/2本。鍵の配送が課題になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep174-crypto-basics:public-key">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">公開鍵暗号</span><span class="back" hidden><span class="def">公開鍵と秘密鍵のペアを使う方式。RSAや楕円曲線暗号があり、共通鍵より低速。鍵はn組で済む。</span><span class="note">受信者の公開鍵で暗号化し、対応する秘密鍵で復号する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep174-crypto-basics:key-count">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">鍵の本数の式</span><span class="back" hidden><span class="def">n人が互いに通信するとき、共通鍵はn(n-1)/2本、公開鍵暗号ではn組。例えば10人なら共通鍵は45本、公開鍵は10組。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep174-crypto-basics:hybrid">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ハイブリッド暗号</span><span class="back" hidden><span class="def">データは共通鍵で暗号化し、その共通鍵を公開鍵暗号で相手へ送る方式。共通鍵の速さと公開鍵の配りやすさを両立する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep174-crypto-basics:key-delivery">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">鍵配送問題</span><span class="back" hidden><span class="def">共通鍵を安全に相手へ渡す方法が課題になること。公開鍵暗号で共通鍵を渡す形がハイブリッド暗号。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep174-crypto-basics:fake-public-key">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">偽の公開鍵のすり替え</span><span class="back" hidden><span class="def">偽の公開鍵を渡されると盗聴されうること。公開鍵は証明書で本物かを確認する。</span><span class="note">公開鍵は配ってよいが、本物かどうかは別に確かめる必要がある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep174-crypto-basics:old-method">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">古い方式・短い鍵</span><span class="back" hidden><span class="def">DESや短い鍵は解読されるおそれがある。計算機の性能向上で安全でなくなるため、推奨方式を十分な鍵長で使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep174-crypto-basics:key-lifecycle">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">鍵の管理</span><span class="back" hidden><span class="def">鍵の生成・保管・更新・廃棄の手順を決めておくこと。鍵が漏れると方式が強くても読まれる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep174-crypto-basics:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>公開鍵暗号方式の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>暗号化と復号に別の鍵を使い、公開鍵は相手に知られても問題ない方式</span></button><p class="why" hidden>別の鍵を使い、公開鍵は公開してよい</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>暗号化と復号に同じ鍵を使い、その鍵を事前に共有しておく方式である</span></button><p class="why" hidden>同じ鍵を使うのは共通鍵暗号</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>共通鍵暗号方式より一般に高速で、大容量データの暗号化に向く方式</span></button><p class="why" hidden>一般に共通鍵のほうが高速</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>公開鍵が知られると復号できるため、厳重に秘密にしておく必要がある方式</span></button><p class="why" hidden>秘密にするのは秘密鍵</p></li></ol>
+</li>
+<li class="quiz" data-key="ep174-crypto-basics:q0" data-answer="1">
+  <p class="q">社員10人の全員が互いに通信する。通信相手の組ごとに別の共通鍵を使う場合の鍵の本数と、公開鍵暗号を使う場合の鍵の組数の組合せはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>共通鍵は20本必要で、公開鍵暗号では10組の鍵で済む</span></button><p class="why" hidden>公開鍵の10組は合っているが、共通鍵は n(n-1)/2 に n=10 を入れて 10×9÷2=45本になる。20本ではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>共通鍵は45本必要で、公開鍵暗号では10組の鍵で済む</span></button><p class="why" hidden>正解。共通鍵は10×9÷2=45本、公開鍵暗号は人数と同じ10組で済む。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>共通鍵は90本必要で、公開鍵暗号では45組の鍵が要るため増える</span></button><p class="why" hidden>10×9=90を2で割っていないので誤り。共通鍵は45本。また公開鍵暗号の鍵はn組なので10組で、45組ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>共通鍵は45本必要だが、公開鍵暗号でも45組の鍵が要る</span></button><p class="why" hidden>共通鍵の45本は合っているが、公開鍵暗号の鍵はn組、つまり10組で済む。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep174-crypto-basics:q1" data-answer="2">
+  <p class="q">共通鍵暗号で、推奨方式のAESを十分な鍵長で使っている。ただし鍵ファイルを、利用者全員が閲覧できる共有フォルダに置いていた。このシステムの評価はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>AESは推奨方式なので、鍵の保管場所は安全性に影響しない</span></button><p class="why" hidden>鍵が漏れると、方式が強くても暗号文は読まれる。暗号の強さは鍵の秘密に支えられている。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>共通鍵暗号は高速なので、鍵が漏れても被害は小さく済む</span></button><p class="why" hidden>処理の速さと、鍵が漏れたときの被害の大きさは関係がない。鍵が漏れれば読まれる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>方式が強くても鍵が漏れれば読まれるため、鍵の保管が問題になる</span></button><p class="why" hidden>正解。鍵の漏えいは方式の強さと無関係に致命的になる。鍵の生成・保管・更新・廃棄の手順を決めて管理する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>公開鍵暗号に替えれば、鍵の保管場所は問題にならなくなり安全になる</span></button><p class="why" hidden>方式を替えても、鍵が漏れると読まれる点は変わらない。鍵の保管は管理の対象であり続ける。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep174-crypto-basics:q2" data-answer="3">
+  <p class="q">社内システムが、古い方式（DES）の共通鍵暗号を、短い鍵長で使っている。見直しの方針として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>鍵を毎週更新すれば、DESのままでも安全に使い続けられる</span></button><p class="why" hidden>DESや短い鍵は、方式や鍵長そのものが解読されるおそれのある対象。更新の頻度では解消しない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>処理が遅くならないよう、独自に考案した暗号方式へ置き換える</span></button><p class="why" hidden>独自の暗号方式は作らないのが原則。DESや短い鍵への対策は、推奨された方式を十分な鍵長で使うこと。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>共通鍵暗号をやめ、データ全体を公開鍵暗号だけで暗号化する</span></button><p class="why" hidden>公開鍵暗号は共通鍵より低速で、大容量のデータ全体の暗号化には遅い。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>推奨された方式へ移行し、十分な鍵長にそろえて運用する</span></button><p class="why" hidden>正解。推奨された方式を十分な鍵長で使うのが、古い方式への対策。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep174-crypto-basics:q3" data-answer="1">
+  <p class="q">取引先の公開鍵で共通鍵を暗号化して送る設計。通信路上の攻撃者が、自分の公開鍵を取引先のものとして渡してきた。起こりうることと対策の組合せはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>公開鍵は配ってよい情報なので、すり替えられても盗聴されない</span></button><p class="why" hidden>公開鍵そのものは配ってよいが、偽の公開鍵を渡されると盗聴されうる。本物かは別に確かめる必要がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>偽の公開鍵で送った内容は盗聴されうるので、証明書で本物か確認する</span></button><p class="why" hidden>正解。偽の公開鍵を渡されると盗聴されうるため、公開鍵は証明書で本物かを確認する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>秘密鍵さえ漏れなければ、公開鍵がすり替えられても影響はない</span></button><p class="why" hidden>秘密鍵が漏れていなくても、偽の公開鍵を使わされると盗聴されうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ハイブリッド暗号にすれば共通鍵は守られるので、公開鍵の確認は不要である</span></button><p class="why" hidden>ハイブリッド暗号でも共通鍵は公開鍵で送る。その公開鍵が偽物なら盗聴されうるので、確認は必要。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep174-crypto-basics:q4" data-answer="2">
+  <p class="q">共通鍵暗号で通信を始めたいが、共通鍵を相手へ安全に渡す方法がない。鍵配送問題への対処として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>鍵長を十分に長くしておけば、鍵を渡す経路が安全かどうかは問題にならない</span></button><p class="why" hidden>鍵が漏れると、方式が強くても読まれる。鍵長を伸ばしても、渡す経路での漏えいは防げない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>鍵を暗号文と同じ経路で送り、受信後に鍵を更新して使い続ける</span></button><p class="why" hidden>鍵が渡る経路が安全でなければ、鍵そのものが漏れうる。安全に渡す方法が課題という点が解消していない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>共通鍵は相手の公開鍵で暗号化して渡し、データは共通鍵で暗号化する</span></button><p class="why" hidden>正解。共通鍵を公開鍵暗号で安全に渡すのがハイブリッド暗号の形。データは速い共通鍵で暗号化する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>公開鍵暗号に切り替え、共通鍵に比べ高速な処理の利点を活かす</span></button><p class="why" hidden>公開鍵暗号は共通鍵暗号より低速。高速なのは共通鍵暗号のほう。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ハイブリッド暗号で、データと共通鍵にそれぞれどの方式を使うか、その理由とあわせて頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">データは高速な共通鍵暗号で暗号化し、その共通鍵を相手の公開鍵で暗号化して送る。公開鍵暗号は低速で大容量には不向きだが、鍵の配送には向く。両者の長所を組み合わせる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep174-crypto-basics-t0-0"> データは共通鍵（高速）</label></li><li><label><input type="checkbox" id="ep174-crypto-basics-t0-1"> 共通鍵は公開鍵で送る（鍵配送問題の解決）</label></li><li><label><input type="checkbox" id="ep174-crypto-basics-t0-2"> 公開鍵暗号は低速という理由</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">公開鍵暗号を使っていても盗聴されうるのはどんな場合か。原因と対策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">偽の公開鍵を渡されて、それで暗号化してしまう場合。偽の公開鍵を渡されると盗聴されうる。対策は、公開鍵を証明書で本物か確認すること。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep174-crypto-basics-t1-0"> 偽の公開鍵のすり替え</label></li><li><label><input type="checkbox" id="ep174-crypto-basics-t1-1"> 公開鍵が本物かは別に確かめる必要がある</label></li><li><label><input type="checkbox" id="ep174-crypto-basics-t1-2"> 証明書で確認する</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="拠点間通信の暗号化に関する調査記録（ダミー）"><div class="logtitle">拠点間通信の暗号化に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 本社と拠点が、インターネットで大容量の設計図を送る</span></div><div class="logrow"><span class="hl">拠点間で、鍵を安全に事前配布する手段はない</span></div><div class="logrow"><span class="hl">相手の公開鍵は、証明書で本物と確認して入手できる</span></div><div class="logrow"><span class="hl">要件: 大容量でも実用的な速度で、盗聴されても読まれない</span></div></div></div>
+  <p class="q">要件を満たす方式として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">データは共通鍵で暗号化し、その共通鍵を相手の公開鍵で暗号化して送る</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>データ全体を、受信者の公開鍵で暗号化する … 大容量では処理が遅く、実用的な速度にならない</li><li>共通鍵を事前に全拠点へ配って暗号化する … 鍵を安全に事前配布する手段がない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>7.1.1 暗号の概念</li><li>7.1.2 主な暗号方式</li></ul>
+  <p>共通鍵と公開鍵の違い（速度・鍵の数・配送）と、ハイブリッド暗号の分担を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep173-id-federation-tech.html">← #73 主なID連携技術 認証と認可を分けて覚える</a><a href="ep175-hash-mac-dh.html">#75 ハッシュ関数とMAC、DH鍵交換 値で確かめ、鍵を作る →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

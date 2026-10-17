@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#35 POP3の脆弱性と対策 平文の認証を守る｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#35 ・ 第3章 情報セキュリティにおける脆弱性</p>
+  <h1>POP3の脆弱性と対策 平文の認証を守る</h1>
+  <ol class="summary"><li>POP3の基本の認証は平文で、暗号化がないと経路上の盗聴でパスワードやメール内容が漏れる。</li><li>APOPはパスワードを送らないが古いハッシュ関数に依存し、総当たりや使い回しの影響も受ける。</li><li>対策はTLSと平文認証の無効化に回数制限・監視を重ねる。端末が感染していれば通信路を守っても漏れる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep135-pop3-vuln:pop3">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">POP3</span><span class="back" hidden><span class="def">サーバの受信箱からメールを取り出す仕組み。TCPの110番が基本で、基本の認証は平文で送る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep135-pop3-vuln:plain-auth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">平文の認証</span><span class="back" hidden><span class="def">ユーザー名とパスワードをそのまま送る認証。暗号化がないと、経路上の盗聴でパスワードやメール内容が漏れる。</span><span class="note">公衆無線LANなど信頼できない経路で特に危険。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep135-pop3-vuln:apop">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">APOP</span><span class="back" hidden><span class="def">パスワードそのものは送らず、ハッシュを使う認証。古いハッシュ関数（MD5）に依存し、推奨しにくい。</span><span class="note">本文は暗号化されない。TLSの代わりにはならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep135-pop3-vuln:pop3s">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">POP3S</span><span class="back" hidden><span class="def">最初から通信を暗号化して始める方式。途中で暗号化に切り替える方式（STLS）と対になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep135-pop3-vuln:stls">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">STLS</span><span class="back" hidden><span class="def">平文で始めてから途中でTLSに切り替える方式。強制しないと、平文のまま続けられる余地が残る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep135-pop3-vuln:brute-force-reuse">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">総当たりと使い回し</span><span class="back" hidden><span class="def">パスワード方式が受ける攻撃・弱点。総当たりにはログイン失敗の回数制限と監視、強いパスワードで備える。</span><span class="note">使い回しは、他のサービスを試される恐れにつながる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep135-pop3-vuln:login-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">回数制限とログ監視</span><span class="back" hidden><span class="def">ログイン失敗の回数を制限し、ログも監視する対策。総当たりへの備えになるが、盗聴された平文の認証情報は守れない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep135-pop3-vuln:endpoint-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">通信路保護の限界</span><span class="back" hidden><span class="def">TLSは通信路を守る対策。端末がマルウェアに感染していれば、通信路を保護しても漏れるため、端末側の対策も要る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep135-pop3-vuln:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>POP3の認証情報の盗聴への対策として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パスワードを、覚えやすい数字だけの短い文字列にそろえる</span></button><p class="why" hidden>短く単純で、破られやすい</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>待ち受けのポート番号を、110から別の番号に変えるだけにする</span></button><p class="why" hidden>平文のままなら、盗聴できる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>TLSで通信を保護し、平文の認証を無効にする</span></button><p class="why" hidden>通信路をTLSで保護</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>受信したメールを、すぐに削除するようにしておく</span></button><p class="why" hidden>認証情報の盗聴を防がない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep135-pop3-vuln:q0" data-answer="0">
+  <p class="q">社員Aが無料の公衆無線LANからPOP3（ポート110、USER/PASS、TLSなし）で受信した直後、別のIPから1回目のログインで成功された。端末は手元にあり感染もなく、パスワードの使い回しもない。再発防止として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>TLSで通信を保護し、平文の認証を無効にする</span></button><p class="why" hidden>正解。平文の認証情報が経路上で盗聴された事象。TLSで通信路を保護し、平文の認証を無効にする。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>APOPに切り替えれば、本文も保護されTLSは不要になる</span></button><p class="why" hidden>APOPは本文を暗号化しない。認証だけでなく通信路の保護も必要。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ログイン失敗の回数制限を厳しくして防ぐようにする</span></button><p class="why" hidden>1回目で成功しており、総当たりではない。回数制限は総当たりへの備えで、盗聴は防げない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>端末のマルウェア対策の強化を最優先にして感染を防ぐ</span></button><p class="why" hidden>端末のマルウェア検査は感染なしで、端末も手元にある。原因は端末ではなく経路。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep135-pop3-vuln:q1" data-answer="3">
+  <p class="q">POP3の認証にAPOPを使っている。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パスワードを送らないので通信全体が暗号化され、メール本文も盗聴されない</span></button><p class="why" hidden>APOPのとき、本文は暗号化されない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>TLSと同等に保護されるため、公衆無線LANからでも安心して使うことができる</span></button><p class="why" hidden>本文が暗号化されず、通信路の保護も必要。信頼できない経路ではリスクが高い。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ハッシュ関数を使うので、総当たりや使い回しの影響は受けないと考えてよい</span></button><p class="why" hidden>パスワード方式は、総当たりや使い回しの影響を受ける。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>パスワードは送らないが、MD5に依存して推奨しにくく、本文も暗号化されない</span></button><p class="why" hidden>正解。パスワードそのものは送らないが、古いハッシュ関数に依存して推奨しにくく、本文は暗号化されない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep135-pop3-vuln:q2" data-answer="1">
+  <p class="q">POP3で、途中でTLSに切り替える方式（STLS）を使っているが、TLSの利用は強制していない。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>最初から暗号化するPOP3Sと同じなので、平文のまま続く余地はない</span></button><p class="why" hidden>切り替える方式は、強制しないと平文のまま続けられる余地が残る。最初から使う方式とは違う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>強制しないと平文のまま続けられる余地が残るので、必須にする設定が要る</span></button><p class="why" hidden>正解。切り替え方式は強制しないと平文が続く余地があり、平文の認証の無効化とあわせて必須にする。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>切り替え方式は暗号化の効果がないので、POP3Sに移す以外に意味はない</span></button><p class="why" hidden>暗号化の効果がないとは言えない。強制しないことが問題。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>平文の認証を有効のままにしても、TLSがあれば盗聴の余地は残らない</span></button><p class="why" hidden>平文の認証を有効にしたままでは、平文で続けられる余地が残る。無効にする。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep135-pop3-vuln:q3" data-answer="0">
+  <p class="q">POP3の通信路はTLSで保護し、平文の認証も無効にした。それでも、ある社員のパスワードが漏れた。端末の感染が確認された場合の判断として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通信路の保護は端末内の漏えいを防げないため、端末側の対策もあわせて要る</span></button><p class="why" hidden>正解。端末が感染していれば、通信路を保護しても漏れる。端末側の対策もあわせて必要。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>TLSの暗号化が破られたのが原因なので、TLSの強度を上げれば解決する</span></button><p class="why" hidden>原因は端末の感染で、通信路の問題ではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ログイン失敗の回数制限を厳しくすれば、感染した端末からの漏えいも防げる</span></button><p class="why" hidden>回数制限は総当たりへの備え。端末からの漏えいとは別。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>APOPに切り替えれば、感染した端末でもパスワードは漏れなくなると考えてよい</span></button><p class="why" hidden>APOPは古いハッシュ関数に依存し推奨しにくい。端末の感染という限界の解決にもならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep135-pop3-vuln:q4" data-answer="3">
+  <p class="q">ログに、同一アカウントへのログイン失敗が短時間に多数あり、その後に成功が記録されていた。総当たりへの備えとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>TLSで通信を保護すれば、総当たりも同時に防げるので追加の対策は要らない</span></button><p class="why" hidden>TLSは通信路を守る対策で、総当たりへの備えは別に要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>待ち受けのポートを110から別の番号に変えて、見つかりにくくしておく</span></button><p class="why" hidden>ポートを変えても平文のままなら盗聴でき、総当たりへの備えにもならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>APOPに切り替えて、パスワードそのものを送らないようにするだけにしておく</span></button><p class="why" hidden>APOPでもパスワード方式は総当たりの影響を受ける。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログイン失敗の回数制限とログの監視に加え、強いパスワードを使わせる</span></button><p class="why" hidden>正解。回数制限とログ監視、強いパスワードが総当たりへの備えになる。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">公衆無線LANでPOP3を使うと特に危ない理由と、有効な対策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">基本の認証はパスワードを平文で送るため、暗号化がないと経路上の盗聴でパスワードやメール内容が漏れる。信頼できない経路ほどリスクが高い。TLSで通信を保護して平文の認証を無効にし、公衆の回線では利用を避ける運用も有効。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep135-pop3-vuln-t0-0"> 平文で送るため盗聴で漏れる</label></li><li><label><input type="checkbox" id="ep135-pop3-vuln-t0-1"> 信頼できない経路ほどリスクが高い</label></li><li><label><input type="checkbox" id="ep135-pop3-vuln-t0-2"> TLSと平文認証の無効化</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">TLSで保護しても残るリスクと、あわせて必要な対策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">端末が感染していれば通信路を保護しても漏れる。総当たりや使い回しにはTLSは効かない。端末側の対策に加え、ログイン失敗の回数制限とログの監視、強いパスワードを重ねる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep135-pop3-vuln-t1-0"> 端末が感染していれば漏れる</label></li><li><label><input type="checkbox" id="ep135-pop3-vuln-t1-1"> 総当たりや使い回しは別の対策</label></li><li><label><input type="checkbox" id="ep135-pop3-vuln-t1-2"> 回数制限・監視・強いパスワード</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="不正ログインの調査記録（ダミー）"><div class="logtitle">不正ログインの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社員Aのメールが、POP3で不正に読まれた（ダミー）</span></div><div class="logrow"><span class="hl">認証は、ポート110のUSER/PASS方式。TLSは未使用</span></div><div class="logrow"><span class="hl">不正ログインは1回目で成功。接続元は、Aの端末と別のIP</span></div><div class="logrow"><span class="hl">Aは直前に、無料の公衆無線LANから受信。端末は手元にある</span></div><div class="logrow"><span class="hl">Aの端末のマルウェア検査は感染なし。パスワードは固有</span></div></div></div>
+  <p class="q">この不正ログインの原因として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">暗号化されていないPOP3の認証情報が、経路上で盗聴された</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>パスワードの総当たり … 1回目の試行で成功</li><li>端末の盗難・紛失 … 端末は手元にある</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>3.4.3 POP3の脆弱性</li><li>3.4.4 POP3の脆弱性への対策</li></ul>
+  <p>平文認証が盗聴で漏れる仕組み、APOPの限界、TLSの強制の要否、通信路保護の限界を区別しながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep134-smtp-vuln.html">← #34 SMTPの脆弱性と対策 送信者を確かめない仕組みの弱点</a><a href="ep136-dns-vuln.html">#36 DNSの脆弱性 仕様・設定・実装のどこが弱いか →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

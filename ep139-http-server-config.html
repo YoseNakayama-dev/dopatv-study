@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#39 HTTPの仕様とWebサーバの設定不備 仕様側と設定側の弱点｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#39 ・ 第3章 情報セキュリティにおける脆弱性</p>
+  <h1>HTTPの仕様とWebサーバの設定不備 仕様側と設定側の弱点</h1>
+  <ol class="summary"><li>HTTP自体は平文で盗聴・改ざんされうる。対策はHTTPSとHSTSで、Basic認証もHTTPS前提で使う。</li><li>要求の値（ヘッダ・パラメータ）は送る側が自由に変えられるので、信用せずサーバ側で検証する。</li><li>設定不備（一覧表示・公開領域の置き忘れ等）はHTTPSでは防げない。無効化・更新・定期点検で守る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep139-http-server-config:http-plain">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">HTTPの平文通信</span><span class="back" hidden><span class="def">HTTP自体は通信を暗号化しない。通信路では中身が見え、盗聴や改ざんの余地がある。対策はHTTPS/TLS。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep139-http-server-config:https-hsts">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">HTTPSとHSTS</span><span class="back" hidden><span class="def">HTTPSは通信経路を保護する。HSTSは、常にHTTPSで接続させるための仕組み。</span><span class="note">経路を守るが、サーバ側の設定不備は防がない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep139-http-server-config:basic-auth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Basic認証</span><span class="back" hidden><span class="def">利用者名とパスワードをBase64で符号化して送る認証。暗号化ではないので、HTTPS前提で使う。</span><span class="note">符号化は元に戻せる。暗号化とは別物。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep139-http-server-config:request-value">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">要求の値（ヘッダ・パラメータ）</span><span class="back" hidden><span class="def">リクエストヘッダやクエリなどの値。利用者（または経路上の者）が自由に変えられるので、信用しない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep139-http-server-config:dir-listing">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ディレクトリ一覧の表示</span><span class="back" hidden><span class="def">有効だと公開領域の中身が一覧で見え、見せるつもりのないファイルまで並んでしまう。無効にする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep139-http-server-config:public-files">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">公開領域のバックアップ・設定ファイル</span><span class="back" hidden><span class="def">公開領域に置いたバックアップや設定ファイルは取得されうる。設定ファイルには接続情報が入ることもある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep139-http-server-config:unneeded-features">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">不要な機能・サンプル・初期設定のアカウント</span><span class="back" hidden><span class="def">有効のまま残すと弱点になる。不要な機能は無効にし、公開領域に重要なファイルを置かない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep139-http-server-config:verbose-error">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">詳細なエラー表示・バージョン情報</span><span class="back" hidden><span class="def">内部の情報が攻撃の手がかりになる。エラーは汎用の表示にする。</span><span class="note">バージョンの非表示は補助にとどまる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep139-http-server-config:old-software">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">古い版のソフト</span><span class="back" hidden><span class="def">公開済みの弱点が残る。ソフトは更新し、設定は定期的に点検する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep139-http-server-config:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>Webサーバの設定不備への対策として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ディレクトリ一覧の表示を、有効のままにしておく</span></button><p class="why" hidden>公開領域の中身が見えてしまう</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>初期設定のアカウントを、そのまま使い続ける</span></button><p class="why" hidden>初期設定は、広く知られている</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>不要な機能を無効にし、エラーを汎用にする</span></button><p class="why" hidden>不要機能の無効化と汎用エラー</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>古い版のソフトを、動作実績を理由に使い続ける</span></button><p class="why" hidden>公開済みの弱点が残る</p></li></ol>
+</li>
+<li class="quiz" data-key="ep139-http-server-config:q0" data-answer="0">
+  <p class="q">HTTPで公開したサイトでBasic認証を使っている。通信路で取得した要求には、符号化された利用者名とパスワードが含まれていた。評価として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>符号化は元に戻せるため、通信路で読まれうる。HTTPSの利用が前提になる</span></button><p class="why" hidden>正解。Base64は符号化で暗号化ではない。元に戻せるので、HTTPS上で使うことが前提になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>Base64で符号化されているので、暗号化と同じく、通信路の第三者には読まれない</span></button><p class="why" hidden>符号化は暗号化ではない。元に戻せてしまう。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>認証に使う値は利用者が自分で送るものなので、サーバ側での検証は不要になる</span></button><p class="why" hidden>要求の値は送る側が自由に変えられるので、むしろサーバ側で検証する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>盗聴への備えは、サーバのバージョン情報を表示しない設定にすれば足りる</span></button><p class="why" hidden>盗聴への対策はHTTPS/TLS。バージョンの非表示は補助にとどまる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep139-http-server-config:q1" data-answer="3">
+  <p class="q">サーバが要求ヘッダとクエリの値を、そのまま正しい値として処理に使っている。送る側が値を変えられることを前提にした、適切な扱いはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ヘッダの値はブラウザが付けるものなので、利用者が書き換えることはできない</span></button><p class="why" hidden>ヘッダの値も、送る側が自由に変えられる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>HTTPSで通信していれば、送る側が要求の値を書き換えることはできない</span></button><p class="why" hidden>HTTPSは経路を守るもので、送る本人による値の変更は防がない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>クエリの値だけを検証すれば足り、ヘッダの値は信用して処理に使ってよい</span></button><p class="why" hidden>ヘッダもパラメータも同じく、送る側が変えられる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ヘッダもクエリも変えられる前提で、サーバ側で検証してから処理に使う</span></button><p class="why" hidden>正解。受け取った値は信用せず、サーバ側で検証する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep139-http-server-config:q2" data-answer="1">
+  <p class="q">調査記録によると、公開ディレクトリへの通常のパスへの要求で、ファイル一覧が表示され、バックアップファイルが認証なしで取得された。通信は常にHTTPSだった。最も適切な対策はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>HSTSの設定を見直し、常にHTTPSで接続させて、経路上の盗聴や改ざんを防ぐ</span></button><p class="why" hidden>通信はすでにHTTPS。HTTPSは経路を守るが、サーバの設定不備は防がない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ディレクトリ一覧の表示を無効にし、公開領域にバックアップを置かない</span></button><p class="why" hidden>正解。一覧の表示と公開領域のバックアップが原因なので、設定側で直す。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>サーバのバージョン情報を表示しない設定にして、攻撃の手がかりを減らす</span></button><p class="why" hidden>バージョン情報の非表示は補助で、一覧表示やバックアップの置き忘れは直らない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>エラー表示を汎用にし、詳細なエラーから内部の情報が分からないようにする</span></button><p class="why" hidden>エラーの汎用化は別の弱点への対策で、今回の事象の原因ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep139-http-server-config:q3" data-answer="2">
+  <p class="q">Webサーバの定期点検で、サンプル機能、初期設定のままのアカウント、詳細なエラー表示、古い版のソフトが見つかった。対応として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>バージョン情報を非表示にすれば古い版の弱点も解消されるので、更新は後回しにする</span></button><p class="why" hidden>バージョンの非表示は補助にとどまる。古い版の弱点はソフトの更新で解消する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>HTTPSとHSTSを導入すれば、これらの設定の不備も防げるので追加の対応は不要とする</span></button><p class="why" hidden>HTTPSは経路を守るが、サーバの設定不備は防がない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>不要な機能・サンプル・初期設定のアカウントを残さず、エラーを汎用にして更新する</span></button><p class="why" hidden>正解。不要機能の無効化、エラーの汎用化、更新を行い、設定は定期的に点検する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>いまの設定のまま運用を続け、点検は構築時に一度実施していれば十分とする</span></button><p class="why" hidden>設定は定期的に点検する。構築時の一度きりでは足りない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep139-http-server-config:q4" data-answer="0">
+  <p class="q">HTTPSとHSTSを導入した直後に、「Webサーバの弱点への対策は完了」と報告された。評価として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>経路の盗聴・改ざんへの対策にはなるが、設定の不備は別に点検が必要</span></button><p class="why" hidden>正解。HTTPSは経路を守るが、サーバの設定不備は防がない。両方を別々に守る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>HTTPS化によって、一覧表示の有効化やバックアップの置き忘れも防げる</span></button><p class="why" hidden>一覧表示やバックアップの置き忘れは設定の不備で、HTTPSでは防げない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>HSTSがあれば、サーバに届く要求の値を検証する必要はなくなる</span></button><p class="why" hidden>要求の値は送る側が変えられるので、HSTSがあってもサーバ側で検証する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>Basic認証はHTTPS上でも符号化のままであり、使うこと自体が認められなくなる</span></button><p class="why" hidden>Basic認証はHTTPSを前提に使うものとされており、使えなくなるわけではない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">Basic認証をHTTPのまま使うと何が問題か。Base64の性質に触れて、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">Basic認証は利用者名とパスワードをBase64で符号化して送るだけで、暗号化ではなく元に戻せる。HTTPは平文なので通信路で読まれうる。HTTPSの上で使うことが前提で、HSTSで常にHTTPSを使わせる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep139-http-server-config-t0-0"> 符号化は暗号化ではなく、元に戻せる</label></li><li><label><input type="checkbox" id="ep139-http-server-config-t0-1"> HTTPは平文で、通信路で中身が見える</label></li><li><label><input type="checkbox" id="ep139-http-server-config-t0-2"> HTTPS（とHSTS）が前提</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">「HTTPSにしたからWebサーバの設定は安全」という説明の誤りを、頭の中で指摘してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">HTTPSは通信経路を守るが、サーバの設定不備は防がない。一覧表示や公開領域のバックアップ、不要な機能、詳細なエラー表示、古い版のソフトは別に対策が要る。無効化・更新・定期点検で守る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep139-http-server-config-t1-0"> HTTPSが守るのは経路</label></li><li><label><input type="checkbox" id="ep139-http-server-config-t1-1"> 設定不備（一覧表示・公開領域など）は防げない</label></li><li><label><input type="checkbox" id="ep139-http-server-config-t1-2"> 無効化・更新・定期点検が別に必要</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="Webサーバの調査記録（ダミー）"><div class="logtitle">Webサーバの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 企業のWebサーバ（ダミー）。外部から、公開用ディレクトリへの要求が多数あった</span></div><div class="logrow"><span class="hl">要求は、公開ディレクトリ内の通常のパスで、上位ディレクトリを示す指定は含まない</span></div><div class="logrow"><span class="hl">応答には、ディレクトリ内のファイル一覧が含まれ、バックアップファイルが取得されていた</span></div><div class="logrow"><span class="hl">この公開ディレクトリは、一覧の表示設定が有効で、認証なしで取得できた</span></div><div class="logrow"><span class="hl">// 通信は常にHTTPSで暗号化 / 取得は外部からサーバへの直接の要求</span></div></div></div>
+  <p class="q">この事象の原因として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ディレクトリ一覧の表示が有効で、公開領域にバックアップを置いた設定の不備</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>ディレクトリトラバーサル … 要求は通常のパスで、上位指定を含まない</li><li>通信の盗聴 … 通信はHTTPSで暗号化され、直接の要求だった</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>3.6.3 HTTP（プロトコル）の仕様による脆弱性と対策</li><li>3.6.4 Webサーバの実装や設定の不備による脆弱性と対策</li></ul>
+  <p>仕様側（平文・Basic認証・要求の値）と設定側（一覧表示・公開領域・不要機能）を分け、HTTPSで防げる範囲と防げない範囲を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep138-http-session.html">← #38 HTTPとセッション管理 IDを持つ人が本人になる仕組み</a><a href="ep140-webapp-flaws.html">#40 Webアプリの仕様と実装による脆弱性 設計の穴と実装の穴 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

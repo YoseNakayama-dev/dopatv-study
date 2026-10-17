@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#36 DNSの脆弱性 仕様・設定・実装のどこが弱いか｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#36 ・ 第3章 情報セキュリティにおける脆弱性</p>
+  <h1>DNSの脆弱性 仕様・設定・実装のどこが弱いか</h1>
+  <ol class="summary"><li>DNSは標準では応答が本物かを確かめず、照合の要素が予測しやすいと偽の応答が通る余地がある。</li><li>答えはTTLの間キャッシュされるので、偽の答えが入ると影響が続く。弱点は仕様・設定・実装に分ける。</li><li>設定の弱点は再帰やゾーン転送の開けすぎ、内部名の載せすぎ、兼用。実装はソフトの更新遅れ。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep136-dns-vuln:dns-udp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DNSの問い合わせ・応答（UDP）</span><span class="back" hidden><span class="def">主にUDPで短いやり取りを行う。接続の確立を省く分、送信元が偽られやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep136-dns-vuln:verify-match">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">応答の照合</span><span class="back" hidden><span class="def">標準では応答が本物かを確かめる仕組みがなく、問い合わせの内容・識別子・ポート等との照合に頼る。予測されやすいと偽の応答が通る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep136-dns-vuln:cache-ttl">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">キャッシュとTTL</span><span class="back" hidden><span class="def">答えはTTL（有効期間）の間キャッシュされる。偽の答えが入ると、その間は問い合わせなくても同じ答えが返り、影響が続く。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep136-dns-vuln:recursive">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">再帰問い合わせ</span><span class="back" hidden><span class="def">利用者の代わりに、最後まで調べて答える動作。誰にでも許す状態（オープンリゾルバ）は、踏み台にされうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep136-dns-vuln:zone-transfer">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ゾーン転送</span><span class="back" hidden><span class="def">ゾーンの登録情報を丸ごと渡す機能。誰にでも許すと、登録情報がすべて見えてしまう。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep136-dns-vuln:internal-names">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">公開ゾーンの内部名</span><span class="back" hidden><span class="def">公開ゾーンに内部の名前を載せると、構成が漏れる。見えた名前は、攻撃の前段の情報収集に使われうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep136-dns-vuln:authoritative-cache">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">権威サーバとキャッシュサーバの兼用</span><span class="back" hidden><span class="def">1台で両方の役割を担う構成。攻撃を受ける面を広げる、設定上の弱点。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep136-dns-vuln:dns-impl-vuln">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">実装の弱点</span><span class="back" hidden><span class="def">DNSサーバのソフトウェア自体の脆弱性。更新が遅れると、公開済みの弱点が残ったままになる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep136-dns-vuln:spec-config-impl">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">仕様・設定・実装の分類</span><span class="back" hidden><span class="def">DNSの弱点を、プロトコルの仕様、運用の設定、ソフトの実装に分けて整理する見方。対策もこの3つに対応づけて考える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep136-dns-vuln:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>DNSの仕様上の弱点として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ゾーン転送を誰にでも許していて、登録情報が見えること</span></button><p class="why" hidden>設定の弱点（仕様ではない）</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>DNSサーバのソフトウェアの更新が遅れ、既知の脆弱性が残ること</span></button><p class="why" hidden>実装の弱点（仕様ではない）</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>標準では、応答の真偽を確かめる仕組みがないこと</span></button><p class="why" hidden>標準では出どころを確かめない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>再帰問い合わせを誰にでも許していて、踏み台にされること</span></button><p class="why" hidden>設定の弱点（仕様ではない）</p></li></ol>
+</li>
+<li class="quiz" data-key="ep136-dns-vuln:q0" data-answer="1">
+  <p class="q">キャッシュDNSサーバに偽の答えが入ると、その後も利用者への影響が続く。主な理由として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>権威サーバの登録内容が書き換わり、正規の更新を行うまで元に戻らないため</span></button><p class="why" hidden>偽の答えが入った場合でも、権威サーバの登録内容は正しいままのことがある。影響が続くのはキャッシュの性質による。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>答えがTTLの間キャッシュされ、その間は同じ答えが返り続けるため</span></button><p class="why" hidden>正解。有効期間の間は問い合わせなくても同じ答えが返るので、偽の答えが入ると影響が続く。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>各端末の名前解決の設定が改ざんされ、キャッシュと無関係に誤りが残るため</span></button><p class="why" hidden>端末の設定が正規のままでも、キャッシュの偽の答えによる影響は起きる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ゾーン転送で偽の答えがすべてのサーバへ複製され、正規の値に戻らなくなるため</span></button><p class="why" hidden>ゾーン転送は登録情報を渡す機能で、キャッシュの偽の答えを複製するものではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep136-dns-vuln:q1" data-answer="0">
+  <p class="q">キャッシュDNSサーバが、どのアドレスからの再帰問い合わせにも応答する設定になっている。この弱点の分類として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>設定の弱点で、誰にでも許すと踏み台にされうる</span></button><p class="why" hidden>正解。再帰問い合わせを誰にでも許すのは設定の弱点で、踏み台にされうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>仕様の弱点で、UDPを使う限り設定では避けられないもの</span></button><p class="why" hidden>許可範囲は設定で決められる。仕様の弱点は、応答が本物かを確かめにくい点など。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>実装の弱点で、ソフトを更新すればこの状態は解消するもの</span></button><p class="why" hidden>ソフトの脆弱性とは別の話。許可範囲を設定で見直す必要がある。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>弱点ではなく、通常の動作なので確認は要らないもの</span></button><p class="why" hidden>再帰は通常の動作だが、誰にでも許す点が設定の弱点になる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep136-dns-vuln:q2" data-answer="3">
+  <p class="q">古い版のDNSサーバソフトを使い続け、すでに公開されている脆弱性が残っていた。弱点の分類として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>仕様の弱点で、設定でも更新でも解消できないもの</span></button><p class="why" hidden>ソフト自体の脆弱性は実装の弱点。仕様の弱点とは分けて考える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>設定の弱点で、再帰の許可範囲を見直せば解消するもの</span></button><p class="why" hidden>許可範囲の見直しは設定の弱点への対応で、ソフトの脆弱性は残る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>設定の弱点で、権威とキャッシュの兼用をやめれば解消するもの</span></button><p class="why" hidden>兼用は設定の弱点の1つで、ソフトの更新遅れとは別。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>実装の弱点で、更新が遅れると公開済みの弱点が残る</span></button><p class="why" hidden>正解。ソフトウェア自体の脆弱性は実装の弱点で、更新が遅れると公開済みの弱点が残る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep136-dns-vuln:q3" data-answer="1">
+  <p class="q">公開ゾーンに、社内サーバの名前を載せている。この評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>TTLを短くすれば、載せても外部には見えなくなるので、問題は残らない</span></button><p class="why" hidden>TTLは答えを保持する期間で、外部に見えるかどうかとは関係しない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>構成が漏れ、攻撃の前段の情報収集に使われうる</span></button><p class="why" hidden>正解。内部の名前が見えると、構成が漏れ、攻撃の前段の情報収集に使われうる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>内部の名前が見えても、実害は特に生じないので、対策は要らない</span></button><p class="why" hidden>内部の名前が見えると、情報収集に使われうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>登録内容を改ざんされる原因になり、キャッシュが汚染される</span></button><p class="why" hidden>載せすぎは情報の漏えいの問題で、登録内容の改ざんとは別。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep136-dns-vuln:q4" data-answer="0">
+  <p class="q">権威サーバとキャッシュサーバを1台で兼用している。この構成の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>攻撃を受ける面が広がるので、役割を分ける方が望ましい</span></button><p class="why" hidden>正解。兼用は攻撃を受ける面を広げる設定の弱点。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>台数が減るので、攻撃を受ける面は狭まり、むしろ望ましい構成である</span></button><p class="why" hidden>兼用は攻撃を受ける面を広げる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>実装の弱点であり、ソフトを更新すれば兼用でも攻撃面は広がらない</span></button><p class="why" hidden>兼用は攻撃を受ける面を広げる構成の問題で、ソフトの脆弱性を直す更新とは別。更新しても兼用による面の広がりは残る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>仕様で定められた構成なので、設定の弱点としては扱われない</span></button><p class="why" hidden>どの役割を同じサーバに置くかは運用者が決める構成で、兼用が仕様で求められるわけではない。攻撃を受ける面を広げるので設定の弱点に入る。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">DNSの弱点を「仕様・設定・実装」に分けて考えると、何が嬉しいか。頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">弱点ごとに原因の種類が違うので、対策も対応づけて整理できる。仕様は応答が本物かを確かめにくい点、設定は開けすぎ・載せすぎ・兼用、実装はソフトの更新遅れ。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep136-dns-vuln-t0-0"> 原因の種類で分けると対策を対応づけやすい</label></li><li><label><input type="checkbox" id="ep136-dns-vuln-t0-1"> 仕様：本物かを確かめにくい</label></li><li><label><input type="checkbox" id="ep136-dns-vuln-t0-2"> 設定：開けすぎ・載せすぎ、実装：更新遅れ</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">偽の応答が通る余地が生まれる条件と、通った後に影響が長引く理由を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">標準では応答の真偽を確かめる仕組みがなく、問い合わせの内容や識別子などとの照合に頼る。照合の要素が予測しやすいと偽の応答が通る。通ると答えがTTLの間キャッシュされ、影響が続く。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep136-dns-vuln-t1-0"> 応答の真偽を確かめる仕組みがない</label></li><li><label><input type="checkbox" id="ep136-dns-vuln-t1-1"> 照合の要素が予測しやすいと通る</label></li><li><label><input type="checkbox" id="ep136-dns-vuln-t1-2"> TTLの間キャッシュされ影響が続く</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="キャッシュDNSサーバの調査記録（ダミー）"><div class="logtitle">キャッシュDNSサーバの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社内のキャッシュDNSサーバ（ダミー）。誤誘導が発生</span></div><div class="logrow"><span class="hl">権威サーバの登録内容は正しく、他のキャッシュも正しい値</span></div><div class="logrow"><span class="hl">このキャッシュを使う全端末が、同じ誤ったIPを得ていた</span></div><div class="logrow"><span class="hl">各端末のhostsファイルとDNS設定は、正規のまま</span></div><div class="logrow"><span class="hl">調査: なりすました応答が、正規より先に届き、識別子とポートも一致</span></div></div></div>
+  <p class="q">この誤誘導の原因として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">キャッシュサーバが、正規より先に届いた偽の応答を受理して、覚えた</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>権威サーバの登録内容の改ざん … 登録内容は正しい</li><li>各端末の設定の改ざん … 端末の設定は正規のまま</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>3.5.1 DNSの脆弱性</li></ul>
+  <p>仕様・設定・実装の3分類で、どの弱点がどこに入るかを確かめながら読む。対策は次回（3.5.2）で対応づける。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep135-pop3-vuln.html">← #35 POP3の脆弱性と対策 平文の認証を守る</a><a href="ep137-dns-vuln-defense.html">#37 DNSの脆弱性への対策 弱点ごとに塞ぐ →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

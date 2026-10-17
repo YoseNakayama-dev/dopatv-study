@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#19 サイバーセキュリティ情報の共有 J-CSIP・ISAC・TLPの考え方｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#19 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>サイバーセキュリティ情報の共有 J-CSIP・ISAC・TLPの考え方</h1>
+  <ol class="summary"><li>攻撃者は似た手口を複数の組織に使うことがあり、共有すると他組織が早く気づいて備えられる。</li><li>共有では通信先やファイルの特徴値、手口と対処を扱い、個人・顧客情報は除いてTLPで範囲を決める。</li><li>共有された情報は古い・誤りもありうるため、自組織で確認して使い、自分からも出して信頼を育てる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep119-info-sharing:j-csip">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">J-CSIP</span><span class="back" hidden><span class="def">IPAを情報の窓口（ハブ）として、参加組織の間で標的型攻撃などの情報を共有する取組み。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep119-info-sharing:isac">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ISAC</span><span class="back" hidden><span class="def">業界・分野ごとの組織が、情報を持ち寄って共有する枠組み。</span><span class="note">J-CSIPはIPAが窓口、ISACは業界ごとの枠組み。窓口の違いで区別する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep119-info-sharing:jpcert-cc">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">JPCERT/CC</span><span class="back" hidden><span class="def">インシデント対応の調整、注意喚起、情報提供を行う組織。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep119-info-sharing:stix">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">STIX</span><span class="back" hidden><span class="def">脅威情報を機械で扱える標準の形式で表現するための仕様。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep119-info-sharing:taxii">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">TAXII</span><span class="back" hidden><span class="def">脅威情報を交換するためのプロトコル。表現はSTIX、交換はTAXIIと役割が分かれる。</span><span class="note">STIXは表現、TAXIIは交換。取り違えやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep119-info-sharing:shared-info">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">共有する情報の例</span><span class="back" hidden><span class="def">不審な通信先やファイルの特徴値（ハッシュ値）など攻撃の特徴と、どう侵入されどう対応したかという手口と対処。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep119-info-sharing:sanitize">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">共有前の除去・匿名化</span><span class="back" hidden><span class="def">個人情報・顧客情報・機密そのものは共有しない。共有前に、個人・顧客・自社固有の情報を除去または匿名化する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep119-info-sharing:tlp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">TLP（Traffic Light Protocol）</span><span class="back" hidden><span class="def">共有範囲を色で示す目印。RED=名指しの受け手のみ、AMBER=受け手の組織内など限定、GREEN=同じコミュニティ内、CLEAR=公開可。</span><span class="note">色は緊急度ではなく共有範囲を表す。CLEARは旧版ではWHITE。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep119-info-sharing:tlp-vs-tlpt">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">TLPとTLPTの違い</span><span class="back" hidden><span class="def">TLPは情報の共有範囲を示す目印。TLPTは脅威ベースのペネトレーションテストで、別のもの。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep119-info-sharing:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>TLPの「赤（RED）」が示すのは、次のうちどれ？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>名指しされた受け手のみに限り、再共有しない</span></button><p class="why" hidden>名指しの受け手のみ・再共有しない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>公開してよい</span></button><p class="why" hidden>公開してよいのは、CLEAR（旧WHITE）</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>同じ業界の組織内で、広く共有できる</span></button><p class="why" hidden>コミュニティ内は、GREEN</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>緊急度が高い情報である</span></button><p class="why" hidden>色は緊急度でなく、共有範囲</p></li></ol>
+</li>
+<li class="quiz" data-key="ep119-info-sharing:q0" data-answer="1">
+  <p class="q">標的型メールの被害を、業界のISACへ共有したい。手元の調査ログには、通信先とファイルの特徴値のほか、顧客名の抜粋が混ざっている。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ログ抜粋をそのまま送り、受け手側で個人情報を除いてもらう</span></button><p class="why" hidden>除去は共有する側が共有前に行う。受け手に任せると、個人・顧客情報が出てしまう。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>個人・顧客情報を取り除いた、通信先と特徴値だけを共有する</span></button><p class="why" hidden>正解。個人・顧客情報そのものは共有せず、攻撃の特徴や手口を、取り除いたうえで共有する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>顧客に関わるので、被害に関する情報は一切共有しない</span></button><p class="why" hidden>共有しないと、他組織が同じ手口に気づけない。共有すべき情報と除くべき情報を分けるのが要点。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>TLPをREDにすれば、顧客名入りのログもそのまま共有できる</span></button><p class="why" hidden>TLPは共有範囲の目印で、個人・顧客情報を共有してよい根拠にはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep119-info-sharing:q1" data-answer="2">
+  <p class="q">共有された情報にTLP:GREENと付いていた。取扱いとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>広報を通じて自社サイトに公開してよい</span></button><p class="why" hidden>公開してよいのはCLEAR（旧版ではWHITE）。GREENは公開までは認めない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>名指しされた担当者のみで扱い、他へは再共有しない</span></button><p class="why" hidden>名指しの受け手のみで再共有しないのはRED。GREENはそれより広い。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>コミュニティ内の関係者への共有はよいが、公開は避ける</span></button><p class="why" hidden>正解。GREENは同じコミュニティ内で共有できる範囲。公開はCLEARの扱いになる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>色は緊急度を示すので、受領後すぐ最優先で全社員に周知する</span></button><p class="why" hidden>TLPの色は緊急度ではなく共有範囲を示す。緊急度と取り違えない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep119-info-sharing:q2" data-answer="3">
+  <p class="q">他組織から共有された通信先の一覧を、そのままFWの遮断リストへ全件登録する案が出た。共有情報の限界を踏まえた対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>共有元を信頼し、確認せずに全件をすぐ登録する</span></button><p class="why" hidden>共有された情報は古い・誤りもありうる。確認せずに登録すると、正規の通信を止めるおそれもある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>誤りがありうるため、受け取った情報は使わない</span></button><p class="why" hidden>誤りがありうることは、使わない理由にならない。自組織で確認して活用する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>TLPがGREENなら正確性が担保されるので、登録してよい</span></button><p class="why" hidden>TLPは共有範囲の目印で、内容の正確さを示すものではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>自組織の通信ログと照合し、影響を確認してから使う</span></button><p class="why" hidden>正解。情報は古かったり誤りがあったりするので、自組織で確認して使う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep119-info-sharing:q3" data-answer="1">
+  <p class="q">脅威情報を機械で処理できる形式で表し、組織間で自動的に交換したい。STIXとTAXIIの役割の組合せとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>STIXは交換のプロトコル、TAXIIは脅威情報の表現形式</span></button><p class="why" hidden>役割が逆。表現がSTIX、交換がTAXII。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>STIXは脅威情報の表現形式、TAXIIは交換のプロトコル</span></button><p class="why" hidden>正解。STIXは脅威情報の表現形式、TAXIIはその交換のプロトコル。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>どちらも脅威情報を暗号化するための標準である</span></button><p class="why" hidden>どちらも暗号化のための標準ではない。表現と交換の仕組みである。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>STIXは共有範囲の目印、TAXIIは共有する組織の枠組み</span></button><p class="why" hidden>共有範囲の目印はTLP、組織の枠組みはISACなど。STIXとTAXIIの説明ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep119-info-sharing:q4" data-answer="2">
+  <p class="q">IPAを情報の窓口として、参加組織の間で標的型攻撃などの情報を共有する取組みはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ISAC</span></button><p class="why" hidden>ISACは業界・分野ごとの組織が情報を持ち寄る枠組み。IPAが窓口とは限らない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>JPCERT/CC</span></button><p class="why" hidden>JPCERT/CCはインシデント対応の調整、注意喚起、情報提供を行う組織。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>J-CSIP</span></button><p class="why" hidden>正解。J-CSIPはIPAが窓口になり、参加組織間で攻撃情報を共有する取組み。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>TLP</span></button><p class="why" hidden>TLPは共有範囲を色で示す目印で、取組みや組織の名前ではない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">被害を受けた組織が、自社の被害情報を黙っておくより共有したほうがよいとされる理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">攻撃者は似た手口を複数の組織に使うことがあり、1組織だけでは全体の傾向がつかめない。共有すれば、他の組織が早く気づいて備えられ、被害の拡大を防げる。自分から出すことで相互の信頼も育つ。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep119-info-sharing-t0-0"> 似た手口が複数組織に使われる</label></li><li><label><input type="checkbox" id="ep119-info-sharing-t0-1"> 1組織では傾向がつかめない</label></li><li><label><input type="checkbox" id="ep119-info-sharing-t0-2"> 他組織が早く気づき備えられる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">ISACへ共有する前にやるべきことと、受け取った側が持つべき姿勢を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">共有前に個人・顧客・自社固有の情報を取り除き、TLPなどで共有範囲を決めて、受け手にも守ってもらう。受け取った側は、情報が古い・誤りもありうるので、自組織で確認して使う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep119-info-sharing-t1-0"> 個人・顧客情報を除く</label></li><li><label><input type="checkbox" id="ep119-info-sharing-t1-1"> TLPで共有範囲を決める</label></li><li><label><input type="checkbox" id="ep119-info-sharing-t1-2"> 受け取った情報は自組織で確認して使う</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="情報共有の検討メモ（ダミー）"><div class="logtitle">情報共有の検討メモ（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">状況: 標的型メールの被害を受け、業界のISACへ共有を検討（ダミー）</span></div><div class="logrow"><span class="hl">共有の候補 : 添付ファイルの特徴値、通信先、攻撃の手口の概要</span></div><div class="logrow"><span class="hl">含まれている : 被害端末の利用者の氏名、顧客データの抜粋</span></div><div class="logrow"><span class="hl">// 取扱区分は未設定 / 社内の広報は共有に慎重</span></div></div></div>
+  <p class="q">ISACへの共有として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">個人・顧客の情報を除き、攻撃の特徴と手口を、共有範囲を指定して共有する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>共有しない … 他組織が同じ手口に気づけない</li><li>全部そのまま共有 … 個人・顧客情報が含まれる</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.1.5 サイバーセキュリティ情報を共有する取組み</li></ul>
+  <p>J-CSIP・ISAC・JPCERT/CCの役割の違い、共有する情報と共有しない情報、TLPの各色が示す範囲を整理しながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep118-sase.html">← #18 ゼロトラストの実現方式 ZTNAとSASEの考え方と限界</a><a href="ep120-dns-attack.html">#20 DNSサーバへの攻撃 4種類を狙いで整理する →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

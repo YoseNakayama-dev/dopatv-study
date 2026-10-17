@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#52 FWで防げないものと拡張機能 許可した通信の中身が盲点｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#52 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>FWで防げないものと拡張機能 許可した通信の中身が盲点</h1>
+  <ol class="summary"><li>FWは、許可した通信の中身、内部同士の通信、FWを経由しない経路、暗号化された通信の中身を防げない。</li><li>拡張機能にはVPN、URLフィルタ・コンテンツ検査、IPS・アプリケーション識別、DoS対策がある。</li><li>機能を重ねると処理が重くなり、更新や誤検知の調整も要る。復号検査は配慮が要り、多層防御が前提。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep152-fw-limits-ext:allowed-content">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">許可した通信の中身の攻撃</span><span class="back" hidden><span class="def">Webアプリへの不正な入力など。アドレス・ポートの規則では判断できないので、FWの基本機能では防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep152-fw-limits-ext:internal-traffic">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">境界を通らない内部同士の通信</span><span class="back" hidden><span class="def">境界のFWを通らない通信や内部の不正。境界のFWの規則では防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep152-fw-limits-ext:bypass-path">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">FWを経由しない経路</span><span class="back" hidden><span class="def">無許可の無線、持ち込んだ媒体、モバイル回線など。FWの規則が適切でも、この経路は防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep152-fw-limits-ext:encrypted-content">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">暗号化された通信の中身</span><span class="back" hidden><span class="def">復号しない限り検査できない。見えないことは、安全であることを意味しない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep152-fw-limits-ext:vpn">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">VPN</span><span class="back" hidden><span class="def">FWの拡張機能の一つ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep152-fw-limits-ext:content-inspection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">URLフィルタ・コンテンツ検査</span><span class="back" hidden><span class="def">URLや通信の内容を調べる拡張機能。マルウェア対策にも使われる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep152-fw-limits-ext:ips-appid">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IPS・アプリケーション識別（UTM・次世代FW）</span><span class="back" hidden><span class="def">UTMや次世代FWの要素となる拡張機能。許可した通信の中身まで調べて制御する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep152-fw-limits-ext:dos-measure">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DoS対策</span><span class="back" hidden><span class="def">接続数の制限など。回線そのものを埋める通信は、FWの手前での対策が要る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep152-fw-limits-ext:decrypt-inspection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">復号検査</span><span class="back" hidden><span class="def">暗号化通信を復号して検査すること。通信の秘密・プライバシーに配慮し、対象とルールを決める。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep152-fw-limits-ext:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>ファイアウォールだけでは防げないものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>許可したWeb通信に含まれる、アプリへの不正な入力</span></button><p class="why" hidden>許可した通信の中身は、規則で判断できない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>規則で許可していないポート番号への、外部からの接続要求</span></button><p class="why" hidden>規則で拒否できる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>規則で禁止した宛先への、内部から外部への通信</span></button><p class="why" hidden>宛先の規則で拒否できる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>外部から、内部のアドレスを送信元にして届く通信</span></button><p class="why" hidden>送信元の確認で拒否できる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep152-fw-limits-ext:q0" data-answer="1">
+  <p class="q">FWの拡張機能でコンテンツ検査を使っているが、HTTPSの通信が増えている。暗号化された通信の扱いとして適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>復号しなくてもFWは暗号化された通信の中身を検査できるため、HTTPSが増えても検査の範囲は変わらない</span></button><p class="why" hidden>暗号化された通信の中身は、復号しない限り検査できない。HTTPSが増えれば検査できない範囲が増える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>復号しない限り検査できない。復号するなら、プライバシーに配慮して対象とルールを決める</span></button><p class="why" hidden>正解。復号しない限り中身は検査できない。復号検査は通信の秘密・プライバシーに配慮し、対象とルールを決める。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>復号検査は技術的に可能であれば全通信を対象にしてよく、対象やルールを事前に決める必要は無い</span></button><p class="why" hidden>復号検査は通信の秘密・プライバシーに配慮し、対象とルールを決める。全通信を無条件に対象にはしない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗号化された通信には中身の攻撃が含まれても成立しないので、検査の対象から外してよい</span></button><p class="why" hidden>見えないことは安全であることを意味しない。検査できないだけである。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep152-fw-limits-ext:q1" data-answer="2">
+  <p class="q">調査すると、従業員が持ち込んだモバイル回線の機器を端末に接続し、社内のサーバへつないでいた。境界のFWの規則は適切だった。この経路についての説明として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>FWの規則を厳しくすれば、この経路の通信も境界で許可・拒否を判断できるので、防げる</span></button><p class="why" hidden>この経路はFWを通らないので、規則を厳しくしても判断の対象にならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>FWにIPSの機能を追加すれば、FWを通らないこの経路の通信も検査して止められる</span></button><p class="why" hidden>IPSもFWの拡張機能。FWを通らない通信は、機能を足しても検査の対象にならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>FWを経由しない経路なので規則では防げず、FWだけに頼らない多層防御が要る</span></button><p class="why" hidden>正解。無許可の無線・持ち込み媒体・モバイル回線などは、FWを経由しないので規則では防げない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>モバイル回線の通信は暗号化されており、FWで復号して検査すれば防げる</span></button><p class="why" hidden>問題は暗号化ではなく、FWを経由しない点。復号してもFWを通らない通信は検査できない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep152-fw-limits-ext:q2" data-answer="3">
+  <p class="q">公開サイトが、回線帯域そのものを埋める大量の通信で応答しなくなった。FWの接続数の制限を厳しくしたが改善しなかった。評価として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>接続数の制限はDoS対策として全般に有効なので、さらに厳しくすれば回線を埋める通信も止められる</span></button><p class="why" hidden>接続数の制限などはDoS対策になるが、回線そのものを埋める通信には手前での対策が要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>FWの処理性能を上げれば、回線そのものが埋まる通信も境界で処理できるようになる</span></button><p class="why" hidden>回線が埋まる通信はFWに届く前の問題。FWの性能で解決するとは言えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>UTMや次世代FWの機能をすべて有効にすれば、回線を埋める通信にも対応できる</span></button><p class="why" hidden>機能を重ねるほど処理が重くなる。回線そのものを埋める通信への対策は、FWの手前で行う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>回線そのものを埋める通信には、FWの手前での対策が要る。制限は別の場面で使う</span></button><p class="why" hidden>正解。回線そのものを埋める通信は、FWの手前での対策が要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep152-fw-limits-ext:q3" data-answer="0">
+  <p class="q">FWにコンテンツ検査とIPSの機能を追加したところ、通信が遅くなり、正常な業務通信が遮断されたとの問い合わせが増えた。運用上の対応として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>必要な機能を見直し、シグネチャの更新と誤検知の調整を運用に組み込む</span></button><p class="why" hidden>正解。機能を重ねるほど処理が重くなる。シグネチャ更新と誤検知の調整も運用に含める。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>検知はシグネチャが初期設定のままで最も安定するので、更新は止めて誤検知は放置する</span></button><p class="why" hidden>シグネチャ更新と誤検知の調整は運用に必要なこと。放置は適切ではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>誤検知が出たため拡張機能は不要と判断し、すべて無効にして、以後はFWだけで防御する方針に戻す</span></button><p class="why" hidden>FWだけに頼らず、多層防御で考える。許可した通信の中身は、FWの基本機能では防げない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>機能を重ねるほど処理は速くなるので、遅いのは回線の問題として追加の機能を足していく</span></button><p class="why" hidden>機能を重ねるほど処理は重くなる。遅さの原因を回線に決めつけられない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep152-fw-limits-ext:q4" data-answer="2">
+  <p class="q">同じセグメント内の端末から別のサーバへ不正アクセスが行われたが、境界のFWのログには該当する通信が無かった。解釈として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ログに無いので不正アクセスは起きておらず、別の機器の誤報であると判断してよい</span></button><p class="why" hidden>境界を通らない通信は境界のFWに記録されない。ログに無いことは不正が無い根拠にならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>境界FWの規則をさらに厳しくすれば、同じ内部同士の通信も防げるようになる</span></button><p class="why" hidden>境界を通らない通信には、境界FWの規則は適用されない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>境界を通らない内部同士の通信は、境界FWの規則では判断できず、別の対策が要る</span></button><p class="why" hidden>正解。境界を通らない内部同士の通信や内部の不正は、境界のFWだけでは防げない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>URLフィルタを追加すれば、境界を通らない内部同士の通信も検査して止められる</span></button><p class="why" hidden>URLフィルタもFWの拡張機能で、境界を通らない通信は検査の対象にならない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">FWの規則が正しく動いていても被害が出る典型的な場面を、3つ頭の中で挙げ、それぞれの理由を説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">許可した通信の中身の攻撃（アドレス・ポートの規則では判断できない）、境界を通らない内部同士の通信や内部の不正、FWを経由しない経路（無許可の無線・持ち込み媒体・モバイル回線）。暗号化された通信の中身も復号しない限り検査できない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep152-fw-limits-ext-t0-0"> 許可した通信の中身は規則で判断できない</label></li><li><label><input type="checkbox" id="ep152-fw-limits-ext-t0-1"> 境界を通らない内部同士の通信</label></li><li><label><input type="checkbox" id="ep152-fw-limits-ext-t0-2"> FWを経由しない経路</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">FWに拡張機能を重ねるときの注意点を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">機能を重ねるほど処理が重くなる。シグネチャの更新と誤検知の調整が要る。暗号化通信を復号して検査するなら、通信の秘密・プライバシーに配慮して対象とルールを決める。FWだけに頼らず多層防御で考える。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep152-fw-limits-ext-t1-0"> 処理が重くなる</label></li><li><label><input type="checkbox" id="ep152-fw-limits-ext-t1-1"> シグネチャ更新と誤検知の調整</label></li><li><label><input type="checkbox" id="ep152-fw-limits-ext-t1-2"> 復号検査はプライバシーに配慮して対象とルールを決める</label></li><li><label><input type="checkbox" id="ep152-fw-limits-ext-t1-3"> FWだけに頼らない多層防御</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="Webサイト被害の調査記録（ダミー）"><div class="logtitle">Webサイト被害の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">FWの規則: 外部→DMZのWebサーバは、443番（HTTPS）のみ許可</span></div><div class="logrow"><span class="hl">FWのログ: 通信はすべて外部→DMZの443番で、許可された記録</span></div><div class="logrow"><span class="hl">結果: 通常と異なる値を含む要求が処理され、顧客情報が閲覧された</span></div><div class="logrow"><span class="hl">境界の機器は、証明書を登録すれば、HTTPSを復号して検査できる</span></div><div class="logrow"><span class="hl">要件: 公開は継続。アプリの修正は準備中で、当面は境界で対処</span></div></div></div>
+  <p class="q">境界側で追加する対策として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">許可した通信の中身を調べ、不正なものを止める機能を追加する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>443番を閉じる … 要件は、公開の継続</li><li>外部→内部を拒否する規則を足す … 被害の通信は外部→DMZで、規則の対象外</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.5.5 ファイアウォールで防御できない攻撃</li><li>5.5.6 ファイアウォールの拡張機能</li></ul>
+  <p>FWが判断できるものとできないものの線引き、各拡張機能が補う範囲、機能を重ねたときの運用上の注意を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep151-firewall-types-nat.html">← #51 FWの種類とアドレス変換 状態を見るか中身を見るか</a><a href="ep153-ids-basics.html">#53 IDSの概要と種類 検知して知らせる見張り番 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#101 脅威の分類 災害・障害・人の脅威と備え｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#101 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>脅威の分類 災害・障害・人の脅威と備え</h1>
+  <ol class="summary"><li>脅威は災害・障害・人（偶発的と意図的）で整理でき、原因に合う備えを選ぶ。</li><li>災害と障害は主に可用性に影響し、人の脅威は機密性・完全性・可用性のすべてに関わりうる。</li><li>UPSは短時間用、バックアップは復元用。分類は整理の道具で、事象は重なりうる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep201-threat-classes:disaster">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">災害</span><span class="back" hidden><span class="def">地震・火災・水害・停電など。備えは拠点分散・遠隔地バックアップ・事業継続計画。</span><span class="note">停電は外部の電力が止まること。機器内の部品の故障は障害。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep201-threat-classes:fault">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">障害</span><span class="back" hidden><span class="def">機器やソフトの故障・不具合、容量の不足など。備えは冗長化・監視・定期的な保守。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep201-threat-classes:accidental">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">偶発的な人の脅威</span><span class="back" hidden><span class="def">誤操作や紛失など、悪意のない人の行為による脅威。備えは教育と確認の手順。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep201-threat-classes:intentional">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">意図的な人の脅威</span><span class="back" hidden><span class="def">内部不正など、故意の行為による脅威。備えは最小権限・職務分離・ログ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep201-threat-classes:ups">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">無停電電源装置（UPS）</span><span class="back" hidden><span class="def">停電のとき、短時間をしのぐための装置。長時間の停電や、機器内部の部品の故障は防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep201-threat-classes:redundancy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">冗長化</span><span class="back" hidden><span class="def">機器を複数用意し、故障時に別の機器へ切り替えて稼働を続けられるようにする備え。障害への備えの一つ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep201-threat-classes:backup">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">バックアップ</span><span class="back" hidden><span class="def">データを戻すための複製。復元用で、故障中の業務の稼働を続けるものではない。</span><span class="note">稼働の継続は冗長化。遠隔地に置くのは災害への備え。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep201-threat-classes:bcp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">事業継続計画</span><span class="back" hidden><span class="def">災害などのあと、復旧する手順をまとめておく計画。拠点分散や遠隔地バックアップと合わせて備える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep201-threat-classes:least-privilege">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">最小権限と職務分離</span><span class="back" hidden><span class="def">意図的な人の脅威（内部不正）への備えとして、ログとあわせて挙げる二つ。最小権限と職務分離は、この種類の脅威に当てはめて整理する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep201-threat-classes:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>脅威の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>誤操作は、意図的な脅威に分類される</span></button><p class="why" hidden>誤操作は偶発的な脅威</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>地震や火災は、人の行為による脅威に分類される</span></button><p class="why" hidden>地震や火災は災害に分類</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>機器の故障は、可用性を損なう脅威になりうる</span></button><p class="why" hidden>故障は可用性を損なう</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>内部不正は、偶発的な脅威に分類される</span></button><p class="why" hidden>内部不正は意図的な脅威</p></li></ol>
+</li>
+<li class="quiz" data-key="ep201-threat-classes:q0" data-answer="0">
+  <p class="q">UPSを導入済みの事業所で、落雷による停電が数時間続き、サーバが停止した。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>UPSは短時間用なので、長時間の停電には拠点分散や事業継続計画などで備える</span></button><p class="why" hidden>正解。UPSは停電を短時間しのぐための装置。長時間の停電には、拠点分散・遠隔地バックアップ・事業継続計画などで備える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>UPSが機器の故障として働かなかった障害の事例なので、冗長化の不備として扱えば足りる</span></button><p class="why" hidden>停電は災害に分類される。UPSの役割は短時間のしのぎで、数時間の停電で止まったことを機器の故障と決めつける根拠はない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>停電は人の脅威に分類されるので、電源の管理手順を見直す教育を中心に備えるべきである</span></button><p class="why" hidden>停電は外部の電力が止まることで、災害に分類される。人の行為が原因ではないので、教育中心の備えは原因に合わない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>UPSの容量を増やせば、停電だけでなく機器内部の部品故障による停止も防げるようになる</span></button><p class="why" hidden>UPSは停電への備えで、機器内の部品の故障は防げない。容量を増やしても、その点は変わらない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep201-threat-classes:q1" data-answer="1">
+  <p class="q">退職予定の担当者が、自分の権限で顧客データを大量に複製して持ち出した形跡がある。意図的な人の脅威への備えとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者への教育と操作前の確認手順を整備して、複製の操作ミスが起きにくい状態にする</span></button><p class="why" hidden>教育と確認手順は偶発的な脅威への備え。故意の持ち出しは、手順を知っていても行われうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>必要最小限の権限付与、職務の分離、操作ログの取得で備える</span></button><p class="why" hidden>正解。意図的な脅威には、最小権限・職務分離・ログで備える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>データを遠隔地にバックアップし、持ち出されても元のデータを復元できるようにする</span></button><p class="why" hidden>バックアップは復元用で、複製を持ち出す行為（機密性の侵害）を防がない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>サーバを冗長化し、一台に障害が起きても顧客データの参照を続けられるようにする</span></button><p class="why" hidden>冗長化は機器の障害への備えで、権限を持つ人の持ち出しとは原因が違う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep201-threat-classes:q2" data-answer="3">
+  <p class="q">共有フォルダのファイルを誤って削除する事故が月に数回起きている。原因は故意ではなく操作の誤りである。効果が見込める備えとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>データセンターを遠隔地にも置き、一つの拠点で誤操作が起きても別の拠点で業務を続けられるようにする</span></button><p class="why" hidden>拠点分散は災害への備え。原因が操作の誤りの場合、拠点を分けても誤操作は防げない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>サーバを冗長化して、機器の故障が起きても別の機器へ切り替えて操作を続けられるようにする</span></button><p class="why" hidden>冗長化は機器の障害への備え。原因が故障ではなく操作なので、原因に合わない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>操作ログの取得と定期的な確認を行い、悪意を持った内部の者による削除を抑止する</span></button><p class="why" hidden>ログによる抑止は意図的な脅威への備え。今回は故意ではない誤操作で、原因に合わない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>教育と、削除前に確認を挟む手順を整えて、誤操作が起きにくい運用にする</span></button><p class="why" hidden>正解。偶発的な人の脅威には、教育と確認の手順で備える。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep201-threat-classes:q3" data-answer="2">
+  <p class="q">落雷による停電をきっかけに、ストレージ機器の不具合が生じて、一部のデータにアクセスできなくなった。この事象の扱いとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>原因は停電だけなので災害に分類して、UPSの導入だけで足りるものとして備えを決める</span></button><p class="why" hidden>UPSは停電を短時間しのぐ備えで、機器の不具合には効かない。重なった事象の片方だけを見ている。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>不具合が表面化したのは機器なので障害に分類して、冗長化だけで足りるものとして備えを決める</span></button><p class="why" hidden>冗長化は障害への備えだが、きっかけの停電には拠点分散や事業継続計画などの備えも要る。障害側だけでは足りない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>災害と障害が重なった事象として扱い、双方に対する備えを組み合わせて検討する</span></button><p class="why" hidden>正解。分類は整理の道具で、事象は重なりうる。重なったときは両方に対する備えを組み合わせる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>分類は一つに決まらないと整理できないので、先に起きた停電だけを対象にして備えを決める</span></button><p class="why" hidden>重なる事象を一つに決められないからと、後から出た障害を切り捨てると、障害への備えが抜ける。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep201-threat-classes:q4" data-answer="0">
+  <p class="q">地震や水害を想定した遠隔地バックアップと拠点分散を整備した組織が、内部不正による情報の持ち出しと記録の書換えへの備えを問われた。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>災害は主に可用性に影響する脅威で、人の脅威には最小権限やログなど別の備えが要る</span></button><p class="why" hidden>正解。災害と障害は主に可用性に影響する。人の脅威は機密性・完全性・可用性のすべてに関わりうるので、原因に合う別の備えが要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>遠隔地バックアップがあれば書換え前の状態へ復元できるので、持ち出しにも書換えにも備えは十分である</span></button><p class="why" hidden>バックアップは復元用で、書換えの復元に役立つ場合はあっても、持ち出し（機密性の侵害）は防げない。十分とは言えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>拠点が分散されていれば、一か所から持ち出されても他の拠点の情報は守られるので、機密性への備えは十分である</span></button><p class="why" hidden>拠点分散は災害への備え。権限を持つ人が持ち出す場合、拠点を分けても持ち出しは防げない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>人の脅威は可用性にだけ影響するので、災害向けの備えと同じ冗長化を行えば足りる</span></button><p class="why" hidden>人の脅威は機密性・完全性・可用性のすべてに関わりうる。可用性にだけ影響するという前提が誤り。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">人の脅威を「偶発的」と「意図的」に分けると、備えがどう変わるか。頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">偶発的（誤操作・紛失）は悪意がないので、教育と確認の手順で起きにくくする。意図的（内部不正）は故意に行われるので、最小権限・職務分離・ログで備える。原因が違えば備えも違う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep201-threat-classes-t0-0"> 偶発的は教育と確認手順</label></li><li><label><input type="checkbox" id="ep201-threat-classes-t0-1"> 意図的は最小権限・職務分離・ログ</label></li><li><label><input type="checkbox" id="ep201-threat-classes-t0-2"> 原因に合う備えを選ぶ</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">災害への備えとして、拠点の分散、遠隔地バックアップ、事業継続計画は、それぞれ何を担うか。頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">拠点の分散は、一つの拠点が被災しても他の拠点で続けられるようにする。遠隔地バックアップは、被災したときにデータを戻せるようにする。事業継続計画は、復旧の手順をまとめておく。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep201-threat-classes-t1-0"> 拠点分散は被災時に別の拠点で続ける</label></li><li><label><input type="checkbox" id="ep201-threat-classes-t1-1"> 遠隔地バックアップはデータを戻す</label></li><li><label><input type="checkbox" id="ep201-threat-classes-t1-2"> 事業継続計画は復旧の手順をまとめる</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="業務停止の調査記録（ダミー）"><div class="logtitle">業務停止の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">サーバの電源部品が故障し、業務が止まった</span></div><div class="logrow"><span class="hl">サーバは1台のみで運用している</span></div><div class="logrow"><span class="hl">データは、毎日バックアップを取っていた</span></div><div class="logrow"><span class="hl">要件: 機器が1台故障しても、業務を止めたくない</span></div></div></div>
+  <p class="q">このあとの対応として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">サーバを冗長化し、故障時に別の機器へ切り替える</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>バックアップの頻度を上げる … バックアップはデータを戻すもので、故障中の業務は続けられない</li><li>利用者への教育を強化する … 停止の原因は部品の故障で、利用者の操作ではない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.1.1 脅威の分類</li><li>2.1.2 災害の脅威</li><li>2.1.3 障害の脅威</li><li>2.1.4 人の脅威</li></ul>
+  <p>災害・障害・人の分類と、それぞれに対応する備えを対応づけて読む。分類が重なる場合の考え方にも注意する。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep200-cloud-vdi.html">← #100 クラウドとVDI クラウドコンピューティングの概要とシンクライアント</a><a href="ep202-attack-spec-methods.html">#102 攻撃の記述仕様と主な手法 STIX・TAXII・CVE・攻撃手法の整理 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

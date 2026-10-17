@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#130 HTTPリクエストスマグリングとキャッシュポイズニング 解釈の差を突く攻撃｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#130 ・ 追加テーマ（目次外）</p>
+  <h1>HTTPリクエストスマグリングとキャッシュポイズニング 解釈の差を突く攻撃</h1>
+  <ol class="summary"><li>前段と後段で要求の区切りの解釈が食い違うと、スマグリングが成立しうる。</li><li>キーに含まれない入力が応答を変えると、細工された応答が保存され他の人に届く。</li><li>解釈・設定・更新をそろえ曖昧な要求は拒否する。WAFだけでは解釈の差は消えない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep230-http-smuggling-cache:request-smuggling">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">HTTPリクエストスマグリング</span><span class="back" hidden><span class="def">前段と後段で要求の区切りの解釈が食い違うと成立しうる攻撃。要求の余りが次の要求の先頭に付き、他の利用者に影響する。</span><span class="note">成立には前段と後段の解釈の差が必要。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep230-http-smuggling-cache:front-back">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">前段と後段</span><span class="back" hidden><span class="def">プロキシ・CDN・負荷分散装置などの前段と、その後ろのサーバ。連なる構成で、各段が要求の区切りを判断する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep230-http-smuggling-cache:length-methods">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">長さを示す二通りの方法</span><span class="back" hidden><span class="def">メッセージの長さはContent-Lengthとチャンク転送（Transfer-Encoding）で示せる。併記時の扱いが段ごとに違うことが典型的な原因。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep230-http-smuggling-cache:connection-reuse">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">接続の使い回し</span><span class="back" hidden><span class="def">前段が後段への接続を複数の利用者で共有すること。余りが他の利用者の要求に付くため、影響が広がりやすい。</span><span class="note">成立の必須条件ではない。必要なのは解釈の差。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep230-http-smuggling-cache:cache-key">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">キャッシュのキー</span><span class="back" hidden><span class="def">同じキーの要求に対して、キャッシュは保存した応答を返す。何をキーに含めるかで、誰に何が返るかが決まる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep230-http-smuggling-cache:unkeyed-input">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">キーに含まれない入力</span><span class="back" hidden><span class="def">キーに含まれないのに応答の内容を変える入力。これが細工されると、細工された応答が保存され他の利用者に届く。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep230-http-smuggling-cache:cache-poisoning">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">HTTPキャッシュポイズニング</span><span class="back" hidden><span class="def">細工された応答がキャッシュに保存され、同じキーの要求をした他の利用者に、有効期限まで返され続ける問題。</span><span class="note">DNSキャッシュポイズニングとは別の話。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep230-http-smuggling-cache:vary-cache-control">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Vary・Cache-Control等による制御</span><span class="back" hidden><span class="def">応答を変える入力をキーに含めるか無視し、個人向け・動的な応答はキャッシュに保存させない、といった設定で制御する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep230-http-smuggling-cache:waf-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">WAFの限界</span><span class="back" hidden><span class="def">WAFだけでは、前段と後段の解釈の差は消えない。HTTPSにしても、解釈の差は残る。</span><span class="note">暗号化や文字列の遮断は、要求の区切りの解釈そのものを変えない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep230-http-smuggling-cache:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>HTTPの攻撃の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>前段と後段で要求の境界の解釈が異なると、スマグリングが成立しうる</span></button><p class="why" hidden>境界の解釈の食い違い</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>HTTPSにすれば、スマグリングは起きなくなる</span></button><p class="why" hidden>暗号化と境界の解釈は無関係</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>HTTPのキャッシュポイズニングは、DNSの応答を書き換える攻撃である</span></button><p class="why" hidden>HTTPの保存された応答の細工</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WAFを入れれば、解釈の差は解消される</span></button><p class="why" hidden>解釈の差は消えない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep230-http-smuggling-cache:q0" data-answer="2">
+  <p class="q">ある構成では、前段と後段が同じ規則で要求の長さを解釈し、長さの指定が二通り付いた要求は前段で拒否している。担当者は「後段への接続を使い回しているので、スマグリングは成立する」と判断した。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>使い回しがある以上、解釈が一致していても成立するので、使い回しをやめるべき</span></button><p class="why" hidden>使い回しは影響を広げる条件であって、成立の条件ではない。解釈が一致していれば、使い回しだけで成立するとは言えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>前段が拒否していれば、後段の実装や更新状況の確認は不要</span></button><p class="why" hidden>拒否は有効な対策だが、実装・設定・更新は前段と後段でそろえ続ける必要がある。後段を確認しなくてよいとは言えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>成立には前段と後段の解釈の差が要る。使い回しだけでは成立しない</span></button><p class="why" hidden>正解。成立に必要なのは前段と後段の解釈の差で、使い回しは影響を広げる条件にとどまる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>接続を使い回さなければ、スマグリングは起きないので、停止を最優先にする</span></button><p class="why" hidden>使い回しをやめると影響の広がりは抑えられうるが、解釈の差が残るかぎり原因は解消しない。起きないと言い切れない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep230-http-smuggling-cache:q1" data-answer="3">
+  <p class="q">CDNは、一部の入力をキーに含めずに応答を保存している。調査で、そのキーに含まれない入力が応答の内容を変えており、変わった応答が同じキーの要求をした他の利用者にも返ることが分かった。対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>有効期限を短くして、細工された応答が返され続ける時間を縮めれば、原因は解消する</span></button><p class="why" hidden>期限を短くすると被害の時間は縮まりうるが、キーに含まれない入力が応答を変える原因は残る。原因が解消するとは言えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>リゾルバのDNSキャッシュを消去し、DNSの応答を検証する設定に変える</span></button><p class="why" hidden>DNSキャッシュポイズニングは別の話。今回の問題は、HTTPキャッシュのキーと応答の内容の関係にある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>前段と後段の間をTLSで暗号化すれば、保存される応答は細工されなくなる</span></button><p class="why" hidden>暗号化しても、キーに含まれない入力が応答を変える問題は残る。暗号化は、保存される応答の内容や、何をキーに含めるかを決めるものではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>応答を変える入力をキーに含めるか無視し、個人向けの応答は保存させない</span></button><p class="why" hidden>正解。応答を変える入力はキーに含めるか無視する。個人向け・動的な応答はCache-Control等で保存させない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep230-http-smuggling-cache:q2" data-answer="1">
+  <p class="q">ログイン後のマイページの応答（利用者ごとに内容が異なる）がCDNに保存され、同じURLを要求した別の利用者に表示された。調査では、要求の区切りの食い違いは見つかっていない。まず見直すべきものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>前段と後段の長さの解釈をそろえれば、保存された個人向けの応答の問題は解消する</span></button><p class="why" hidden>長さの解釈をそろえるのはスマグリングへの対策で、区切りの食い違いが見つかっていないこの状況の原因とは別。そろえても、保存の可否やキーの設定は変わらない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>個人向けの応答をキャッシュに保存させない設定と、キーの扱いの確認</span></button><p class="why" hidden>正解。個人向け・動的な応答はキャッシュに保存させない。あわせて、応答を変える入力がキーに含まれているかを確認する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>保存期間を長くして、利用者ごとの応答もCDN側で効率よく再利用する</span></button><p class="why" hidden>期間を長くすると、他の人に返る時間が延びる。同じキーの要求に保存した応答を返すのがキャッシュなので、悪化する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WAFの遮断ルールを追加すれば、保存される応答が利用者ごとに分けられる</span></button><p class="why" hidden>WAFの遮断ルールは、キャッシュの保存の可否やキーの設定とは別の話。遮断ルールを足しても、保存の設定が変わらないかぎり問題は残る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep230-http-smuggling-cache:q3" data-answer="2">
+  <p class="q">前段の製品を製品の提供元が、後段のアプリを開発会社が、それぞれ単体で診断し、どちらも「指摘なし」だった。結合後の構成に対する評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>単体で指摘なしなら、組み合わせても解釈の差は生じないので追加の診断は不要</span></button><p class="why" hidden>解釈の差は前段と後段の組み合わせで生じる。各段が単体で正しく動いていても、段ごとに規則が違えば食い違いうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>後段のアプリだけを重点的に診断すれば、前段の解釈は関係ないので足りる</span></button><p class="why" hidden>要求の区切りは前段も判断する。成立の条件は前段と後段の解釈の差なので、片方だけを見ても足りない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>差は組み合わせで生じうるので、前段と後段を連ねた構成で確認する</span></button><p class="why" hidden>正解。解釈の差は前段と後段の組み合わせで現れる。診断は連ねた構成で確認し、実装と設定をそろえる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>前段にWAFを追加し、単体診断の結果を維持すれば、組み合わせの確認は省略できる</span></button><p class="why" hidden>WAFだけでは解釈の差は消えない。WAFを足しても、組み合わせの確認を省く理由にはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep230-http-smuggling-cache:q4" data-answer="3">
+  <p class="q">後段のアプリサーバを最新版に更新した。前段のプロキシは再起動が必要なので、当面は据え置く方針である。この方針に対する評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>後段が最新であれば、前段の更新状況にかかわらず、要求の区切りの解釈の差は生じない</span></button><p class="why" hidden>後段だけを新しくすると、前段との間で解釈が食い違う場合もある。解釈の差は、段どうしの組み合わせで決まる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>更新は後段のみで十分。前段は転送するだけなので、要求の区切りの解釈には関わらない</span></button><p class="why" hidden>前段も要求の区切りを判断する立場にある。前段が解釈に関わらないという前提は、スマグリングの成立条件と合わない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>解釈の差の原因は設定だけなので、更新状況ではなく設定値の一致だけ確認すればよい</span></button><p class="why" hidden>実装・設定・更新のどれもそろえる対象。設定値が同じでも、実装や版が違えば併記時の扱いが違いうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>前段との解釈に差が出うる。前段も同じ水準で更新し、組み合わせを確認する</span></button><p class="why" hidden>正解。前段と後段で実装・設定・更新をそろえる。片方だけの更新は差を生みうるので、組み合わせで確認する。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">リクエストスマグリングが成立する条件と、被害が他の利用者に及ぶ理由を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">前段と後段が連なる構成で、要求の区切りの解釈が食い違うと成立しうる。典型的な原因は、長さを示す二つの方法（Content-Lengthとチャンク転送）の併記時の扱いが段ごとに違うこと。要求の余りが次の要求の先頭に付き、後段への接続を使い回す構成では他の利用者に広がる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep230-http-smuggling-cache-t0-0"> 前段と後段の連なる構成</label></li><li><label><input type="checkbox" id="ep230-http-smuggling-cache-t0-1"> 区切り（長さ）の解釈の差</label></li><li><label><input type="checkbox" id="ep230-http-smuggling-cache-t0-2"> 余りが次の要求に付く</label></li><li><label><input type="checkbox" id="ep230-http-smuggling-cache-t0-3"> 接続の使い回しで影響が広がる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">HTTPキャッシュポイズニングが成立する仕組みと、対策の要点を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">キャッシュは同じキーの要求に保存した応答を返す。キーに含まれない入力が応答の内容を変えると、細工された応答が保存され、同じキーの他の利用者に有効期限まで届く。応答を変える入力はキーに含めるか無視し、個人向けの応答は保存させない。DNSのキャッシュポイズニングとは別。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep230-http-smuggling-cache-t1-0"> キーに含まれない入力が応答を変える</label></li><li><label><input type="checkbox" id="ep230-http-smuggling-cache-t1-1"> 細工された応答が保存され他の人に届く</label></li><li><label><input type="checkbox" id="ep230-http-smuggling-cache-t1-2"> キーに含める・無視、個人向けは保存させない</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="リバースプロキシ構成の診断記録（ダミー）"><div class="logtitle">リバースプロキシ構成の診断記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">構成: 利用者 → 前段のリバースプロキシ → 後段のアプリ</span></div><div class="logrow"><span class="hl">前段は、後段への接続を複数の利用者で使い回す</span></div><div class="logrow"><span class="hl">診断: 前段と後段で長さの解釈が食い違い、余りが次の人に付いた</span></div><div class="logrow"><span class="hl">接続の使い回しは性能のため維持。後段はHTTP/1.1のみ</span></div><div class="logrow"><span class="hl">要件: 他の利用者の要求に、影響を及ぼさせない</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">前段と後段で要求の解釈をそろえ、曖昧な要求は拒否する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>TLSの暗号強度を上げる … 経路の暗号化は、要求の区切りの解釈に関係しない</li><li>WAFで特定の文字列を遮断する … 解釈の差は残り、遮断の対象外の形でも起きる</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>EX-16 HTTPリクエストスマグリング・キャッシュポイズニング</li></ul>
+  <p>前段と後段の解釈の差が成立条件になる点と、キャッシュのキーに含まれない入力の関係を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep229-ai-security.html">← #129 AIシステム固有のセキュリティ 指示とデータ・権限・出力</a><span></span></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

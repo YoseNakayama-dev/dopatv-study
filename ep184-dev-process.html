@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#84 開発工程ごとの対策 上流から重ねて防ぐ｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#84 ・ 第8章 システム開発におけるセキュリティ対策</p>
+  <h1>開発工程ごとの対策 上流から重ねて防ぐ</h1>
+  <ol class="summary"><li>要件・設計・実装・試験の各工程に対策を置く。要件で資産と基準を決め、設計で脅威分析をして対策を入れる。</li><li>実装は規約・レビュー・静的解析で確かめ、試験は動かして入力を与える脆弱性診断を行う。公開後も続ける。</li><li>規約は確認しないと形だけ。静的解析は設計の不備を見つけにくく、試験は確認した範囲の不備しか見つからない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep184-dev-process:security-requirements">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">セキュリティ要件</span><span class="back" hidden><span class="def">要件定義で、守る資産と満たす基準を決めて文書に残したもの。関係者で共有する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep184-dev-process:threat-analysis">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">脅威分析</span><span class="back" hidden><span class="def">設計の段階で、狙われそうな点を洗い出す作業。洗い出した脅威への対策を設計に入れる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep184-dev-process:design-review">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">設計レビュー</span><span class="back" hidden><span class="def">設計書を確認して、不備を早く見つける作業。</span><span class="note">設計上の問題は設計の段階で見つける。静的解析は設計の不備を見つけにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep184-dev-process:coding-standard">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">コーディング規約</span><span class="back" hidden><span class="def">実装での書き方を定めた決まり。コードレビューや静的解析と組み合わせて使う。</span><span class="note">守られているかを確認しないと形だけになる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep184-dev-process:static-analysis">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">静的解析</span><span class="back" hidden><span class="def">プログラムを実行せず、ソースコードを調べて欠陥を探す手法。ビルドのたびに実行すれば漏れにくい。</span><span class="note">設計上の不備は見つけにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep184-dev-process:vulnerability-assessment">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">脆弱性診断</span><span class="back" hidden><span class="def">試験の工程で、システムを動かして入力を与え、応答から欠陥を探す検査。公開後も続ける。</span><span class="note">静的解析とは違い、動作させて調べる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep184-dev-process:penetration-test">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">侵入テスト</span><span class="back" hidden><span class="def">擬似的な攻撃を行って、侵入を試みる試験の手法。</span><span class="note">ソースコードを実行せずに調べる静的解析とは別の手法。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep184-dev-process:test-scope">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">試験の範囲</span><span class="back" hidden><span class="def">試験は確認した範囲の不備しか見つからない。試験の項目にセキュリティを入れておく。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep184-dev-process:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>静的解析の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>実際にシステムを動かして、入力への応答から欠陥を探す手法である</span></button><p class="why" hidden>動かして調べるのは動的な検査</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>プログラムを実行せず、ソースコードから欠陥を探す手法である</span></button><p class="why" hidden>実行せず、ソースコードを調べる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>公開済みのシステムへ、擬似的な攻撃を行って侵入を試みる手法である</span></button><p class="why" hidden>擬似的な攻撃は侵入テスト</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>設計書の記述だけを読んで、仕様上の欠陥を探す手法である</span></button><p class="why" hidden>設計書の確認は設計レビュー</p></li></ol>
+</li>
+<li class="quiz" data-key="ep184-dev-process:q0" data-answer="2">
+  <p class="q">実装工程では、ビルドのたびに静的解析を実行している。一方、設計書に認可の抜けなど、設計上の不備が残っている疑いが出た。対応として最も適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>静的解析の設定を増やして、設計の不備も見つける</span></button><p class="why" hidden>静的解析は設計上の不備を見つけにくい。設計の問題は設計の段階で見つける。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>公開直前に脆弱性診断を一度行って、不備をまとめて見つける</span></button><p class="why" hidden>診断を公開直前に回すと、直す時間が足りない。設計の不備は設計の段階で見つけるほうが早い。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>設計の段階で脅威分析とレビューを行い、不備を早く見つける</span></button><p class="why" hidden>正解。脅威分析で洗い出した脅威への対策を設計に入れ、設計書はレビューして不備を早く見つける。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>コーディング規約を厳しくして、設計の不備を作らせないようにする</span></button><p class="why" hidden>規約は実装での書き方の決まりで、実装工程の対策。設計上の問題は設計の段階で見つける必要がある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep184-dev-process:q1" data-answer="0">
+  <p class="q">開発チームはコーディング規約を文書で配布したが、守られているかを確かめる仕組みは用意していない。この状況への評価として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>レビューや静的解析で、守られているかを確認する</span></button><p class="why" hidden>正解。規約は守られているかを確認しないと形だけになる。レビューや解析で確認する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>文書で配布済みなので、規約は守られているものとして扱う</span></button><p class="why" hidden>規約は作っても守られなければ意味がない。守られているかの確認が要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>静的解析を入れれば、設計の不備まで確認できるので十分</span></button><p class="why" hidden>静的解析は設計上の不備を見つけにくい。設計の問題は設計の段階で見つける。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>試験で脆弱性診断を行うので、規約の確認は省略できる</span></button><p class="why" hidden>試験は確認した範囲の不備しか見つからない。規約が守られているかは、実装の段階でレビューや解析で確認する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep184-dev-process:q2" data-answer="3">
+  <p class="q">試験工程で、試験項目は機能の動作確認だけでセキュリティの項目が無い。全項目に合格した。リリース前の判断として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>全項目に合格したので、セキュリティの不備も見つかっていると判断する</span></button><p class="why" hidden>試験は確認した範囲の不備しか見つからない。セキュリティの項目が無ければ、その不備は確認されていない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>合格したので、公開後の診断と修正は不要と判断する</span></button><p class="why" hidden>公開後も診断と修正を続ける。合格だけで不要にはならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>試験項目はそのままに、公開直前に診断を一度行えば足りる</span></button><p class="why" hidden>診断を公開直前に回すと、直す時間が足りない。早めに計画して余裕を持つ。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>確認した範囲の不備しか見つからないため、セキュリティ項目を追加する</span></button><p class="why" hidden>正解。試験の項目にセキュリティを入れておく。確認した範囲の不備しか見つからないため。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep184-dev-process:q3" data-answer="1">
+  <p class="q">実装工程で、ビルドのたびにソースコードを自動で調べて欠陥を早く見つけたい。まだシステムを動かせる環境はない。適切な手法はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>脆弱性診断で、システムを動かして入力への応答から探す</span></button><p class="why" hidden>動かして入力を与え、応答から欠陥を探すのは試験工程の脆弱性診断。この状況では動かす環境が無い。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>静的解析で、プログラムを動かさずにソースコードから探す</span></button><p class="why" hidden>正解。静的解析は実行せずにソースコードを調べる。ビルドのたびに実行すれば漏れにくい。ただし設計上の不備は見つけにくい。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>侵入テストを行い、擬似的な攻撃で侵入を試みる</span></button><p class="why" hidden>侵入テストは擬似的な攻撃を行う試験の手法で、ソースコードを調べる静的解析とは別。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>設計レビューを行い、実装済みのコードの不備を探す</span></button><p class="why" hidden>設計レビューは設計書を確認して不備を早く見つける作業で、ソースコードを調べる静的解析とは別。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep184-dev-process:q4" data-answer="0">
+  <p class="q">要件定義の段階で、セキュリティ要件の決め方を検討している。適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>守る資産と満たす基準を決め、文書にして関係者で共有する</span></button><p class="why" hidden>正解。要件定義で守る資産と満たす基準を決め、セキュリティ要件として文書に残す。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>基準は決めず、実装担当者の判断に任せて静的解析で補う</span></button><p class="why" hidden>満たす基準は要件定義で決めて文書にする。静的解析は設計上の不備を見つけにくく、基準の代わりにならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>公開直前の脆弱性診断の結果を見てから、満たす基準を決める</span></button><p class="why" hidden>診断を公開直前に回すと直す時間が足りない。基準は要件定義で決める。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>要件は口頭で伝え、設計レビューのときにだけ確認する</span></button><p class="why" hidden>要件は文書に残し、関係者で共有する。口頭では残らない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">「最後にテストすれば安全」と考えてはいけない理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">試験は確認した範囲の不備しか見つからず、静的解析も設計上の不備は見つけにくい。設計の問題は設計の段階で脅威分析とレビューにより見つける。診断を公開直前に回すと直す時間も足りない。だから上流から工程ごとに重ねて対策する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep184-dev-process-t0-0"> 試験は確認した範囲の不備しか見つからない</label></li><li><label><input type="checkbox" id="ep184-dev-process-t0-1"> 設計の不備は設計の段階で見つける</label></li><li><label><input type="checkbox" id="ep184-dev-process-t0-2"> 診断が公開直前だと修正時間が足りない</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">コーディング規約を作ったのに形だけになる条件と、防ぎ方を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">規約は守られているかを確認しないと形だけになる。レビューや静的解析で守られているかを確認し、ビルドのたびに実行すれば漏れにくい。ただし静的解析は設計上の不備を見つけにくいので、設計の問題は設計の段階で見つける。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep184-dev-process-t1-0"> 守られているか確認しないと形だけ</label></li><li><label><input type="checkbox" id="ep184-dev-process-t1-1"> レビューや静的解析で確認する</label></li><li><label><input type="checkbox" id="ep184-dev-process-t1-2"> 静的解析は設計の不備を見つけにくい</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="Webアプリ開発の現状記録（ダミー）"><div class="logtitle">Webアプリ開発の現状記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: Webアプリの実装中。開発者は10名で書き方に差がある</span></div><div class="logrow"><span class="hl">過去の不具合は、入力値の検証漏れが多かった</span></div><div class="logrow"><span class="hl">ビルドの仕組みには、検査ツールを組み込める</span></div><div class="logrow"><span class="hl">要件: 個人の差に左右されず、検証漏れを早く見つけたい</span></div></div></div>
+  <p class="q">要件を満たす対策として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">コーディング規約を定め、ビルドのたびに静的解析を行う</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>公開後に脆弱性診断を行う … 要件の『早く見つけたい』に合わない</li><li>開発者に、口頭で注意を促す … 個人の差に左右され、要件を満たせない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>8.1.2 システム開発工程におけるセキュリティ対策の実施例</li></ul>
+  <p>各工程の対策を整理しながら、規約の形骸化・静的解析の限界・試験の範囲・診断の時期という弱点を対応づけて読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep183-secure-dev-need.html">← #83 システム開発とセキュリティ 後付けせず作り込む</a><a href="ep185-cookie.html">#85 Cookieの扱い 属性で守る範囲が違う →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

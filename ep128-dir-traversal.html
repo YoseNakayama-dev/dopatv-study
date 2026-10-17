@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#28 ディレクトリトラバーサル 階層をさかのぼる仕組みと対策｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#28 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>ディレクトリトラバーサル 階層をさかのぼる仕組みと対策</h1>
+  <ol class="summary"><li>入力をパスに使い、上位ディレクトリ指定を拒否・検証せず、実行権限で読めると成立する。</li><li>根本は入力をファイル名として直接使わないこと。使うなら正規化し、基準ディレクトリ配下か検証する。</li><li>文字列の除去だけでは別表記で回避されうる。実行権限の最小化や公開領域の整理は補助。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep128-dir-traversal:dir-traversal">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ディレクトリトラバーサル</span><span class="back" hidden><span class="def">入力がファイルパスの一部に使われ、階層をさかのぼって基準ディレクトリの外のファイルを指せてしまう攻撃。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep128-dir-traversal:base-dir">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">基準ディレクトリ</span><span class="back" hidden><span class="def">アプリが配下のファイルだけを渡すつもりでいる起点のディレクトリ。さかのぼれると外のファイルを指せる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep128-dir-traversal:parent-dir">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">上位ディレクトリ指定</span><span class="back" hidden><span class="def">1つ上の階層を指す指定。入力に含まれると、階層をさかのぼって基準ディレクトリの外を指せる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep128-dir-traversal:three-conditions">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">成立条件（3つ）</span><span class="back" hidden><span class="def">①外部入力をパスに使う ②上位ディレクトリ指定や絶対パスを拒否・検証しない ③アプリの実行権限でそのファイルを読める。</span><span class="note">③が満たされなければ読めない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep128-dir-traversal:impact">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">影響の範囲</span><span class="back" hidden><span class="def">設定ファイル（接続情報）、ソースコード、ログの閲覧。書き込みの機能があれば改ざんもありうる。範囲は実行権限による。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep128-dir-traversal:no-direct-name">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">入力をファイル名に直接使わない</span><span class="back" hidden><span class="def">IDから対応表でファイルを選ぶか、許可した名前だけを通す。根本の対策。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep128-dir-traversal:normalize-verify">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">正規化と基準配下の検証</span><span class="back" hidden><span class="def">入力を使うなら、パスを正規化してから基準ディレクトリの配下かを検証する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep128-dir-traversal:string-removal-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">文字列除去の限界</span><span class="back" hidden><span class="def">上位ディレクトリ指定の文字列を取り除くだけでは、別の表記で回避されうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep128-dir-traversal:least-privilege">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">実行権限の最小化</span><span class="back" hidden><span class="def">アプリの実行権限を絞り、読める範囲を狭める補助的な対策。成立自体は防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep128-dir-traversal:non-public-placement">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">重要ファイルを公開領域に置かない</span><span class="back" hidden><span class="def">設定ファイルなどの重要なファイルを公開領域に置かない補助的な対策。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep128-dir-traversal:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>ディレクトリトラバーサルへの、有効な対策は？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ダウンロード用のファイルを圧縮して保存する</span></button><p class="why" hidden>圧縮は、パスの解決と無関係</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>入力のシングルクォートをエスケープして出力する</span></button><p class="why" hidden>クォートの処理はSQL向け。パスは変わらない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>パスを正規化し、配下を検証する</span></button><p class="why" hidden>正規化と配下の検証</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ダウンロード回数を利用者ごとに制限する</span></button><p class="why" hidden>1回でも外のファイルは読める</p></li></ol>
+</li>
+<li class="quiz" data-key="ep128-dir-traversal:q0" data-answer="1">
+  <p class="q">資料ダウンロード機能が、パラメータで受け取ったファイル名を基準ディレクトリのパスに連結して返している。根本に近い改修として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>名前から上位ディレクトリ指定の文字列を削除してから連結する</span></button><p class="why" hidden>文字列の除去だけでは、別の表記で回避されうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>入力をファイル名に使わず、IDと対応表でファイルを選ぶ</span></button><p class="why" hidden>正解。入力をファイル名として直接使わず、IDから対応表で選ぶか許可した名前だけを通す。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>アプリの実行権限を最小化して、入力はそのまま連結する</span></button><p class="why" hidden>実行権限の最小化は補助。入力を連結する問題は残る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>重要ファイルを公開領域に置かない運用にして、連結はそのままにする</span></button><p class="why" hidden>公開領域の整理は補助で、パスの検証をしない問題は直らない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep128-dir-traversal:q1" data-answer="0">
+  <p class="q">ディレクトリトラバーサルの成立条件のうち、アプリの実行権限の最小化が関わるものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>アプリの実行権限でそのファイルを読めること</span></button><p class="why" hidden>正解。権限を絞って読めない状態にすれば、読める範囲が絞られる。ただし補助にとどまる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>外部入力をパスの一部に使っていること</span></button><p class="why" hidden>入力をパスに使うかどうかは設計の話で、実行権限とは別の条件。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>上位ディレクトリ指定や絶対パスの拒否・検証がないこと</span></button><p class="why" hidden>拒否・検証は入力の扱いの話で、権限の最小化では変わらない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>いずれにも関わらず、実行権限の最小化が根本対策になる</span></button><p class="why" hidden>実行権限の最小化は補助で、根本対策ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep128-dir-traversal:q2" data-answer="3">
+  <p class="q">製品の制約で、利用者が指定した名前のファイルを開く必要がある。実装として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>上位ディレクトリ指定の文字列を取り除いてから、そのまま連結する</span></button><p class="why" hidden>文字列の除去だけでは、別の表記で回避されうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>拒否する文字列を増やし続けて、別の表記にも対応する</span></button><p class="why" hidden>文字列の除去を重ねる方法は、別の表記で回避されうる点が変わらない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ファイルを開いた後で、内容が機密かどうかを確認する</span></button><p class="why" hidden>開いた後の確認では、読める状態を防ぐ対策にならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>パスを正規化し、基準ディレクトリの配下かを検証してから開く</span></button><p class="why" hidden>正解。使うなら、正規化してから基準ディレクトリ配下かを検証する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep128-dir-traversal:q3" data-answer="0">
+  <p class="q">ダウンロード機能の不備で設定ファイルを読まれた。この機能は読み出し専用である。影響の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>接続情報が漏えいしうる。読める範囲はアプリの実行権限による</span></button><p class="why" hidden>正解。設定ファイルの接続情報が漏えいしうる。読める範囲は実行権限による。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>読み出しだけなので、ソースコードやログが読まれても攻撃の足がかりにならない</span></button><p class="why" hidden>ソースコードやログも、さらなる攻撃の足がかりになる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>実行権限に関係なく、サーバ上のすべてのファイルが読める</span></button><p class="why" hidden>読める範囲はアプリの実行権限による。「すべて」は言い過ぎ。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>書き込み機能がなくても、ファイルの改ざんは起こりうる</span></button><p class="why" hidden>改ざんは、書き込みの機能がある場合にありうる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep128-dir-traversal:q4" data-answer="1">
+  <p class="q">ダウンロード要求をIDで受け、サーバ側の対応表で実際のファイル名に変換する設計にした。この設計の位置付けとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>対応表は補助で、パスの正規化と基準ディレクトリの検証が別に必須になる</span></button><p class="why" hidden>入力を直接使わない方法は根本の対策。正規化と検証は、入力を使う場合の対策。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>入力をファイル名として直接使わない、根本の対策の一つ</span></button><p class="why" hidden>正解。IDから対応表で選ぶか、許可した名前だけを通す。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>文字列の除去と同じ程度の効果で、回避されうる補助にとどまる</span></button><p class="why" hidden>文字列を除去する方法とは別で、入力をファイル名に使わない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>実行権限の最小化と同じ、被害を絞るための補助的な対策</span></button><p class="why" hidden>被害を絞る補助ではなく、入力の扱いを変える根本の対策。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ディレクトリトラバーサルの成立条件を3つ挙げ、実行権限を絞ると何が変わるかを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">①外部入力をパスに使う、②上位ディレクトリ指定や絶対パスを拒否・検証しない、③アプリの実行権限でそのファイルを読める。実行権限を絞れば読める範囲が狭まるが、成立自体は防げない補助である。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep128-dir-traversal-t0-0"> 外部入力をパスに使う</label></li><li><label><input type="checkbox" id="ep128-dir-traversal-t0-1"> 上位ディレクトリ指定の拒否・検証なし</label></li><li><label><input type="checkbox" id="ep128-dir-traversal-t0-2"> 実行権限で読める</label></li><li><label><input type="checkbox" id="ep128-dir-traversal-t0-3"> 権限の最小化は補助</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">「上位ディレクトリ指定の文字列を取り除く」だけの対策で足りない理由と、より確かな対策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">文字列の除去だけでは、別の表記で回避されうる。根本は入力をファイル名として直接使わず、IDの対応表や許可リストで選ぶこと。使うなら、パスを正規化して基準ディレクトリの配下かを検証する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep128-dir-traversal-t1-0"> 別の表記で回避されうる</label></li><li><label><input type="checkbox" id="ep128-dir-traversal-t1-1"> 入力を直接使わない（対応表・許可リスト）</label></li><li><label><input type="checkbox" id="ep128-dir-traversal-t1-2"> 正規化して基準配下を検証</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="資料ダウンロード機能の調査記録（ダミー）"><div class="logtitle">資料ダウンロード機能の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 資料ダウンロード機能（ダミー）。公開ディレクトリ内の資料を返す</span></div><div class="logrow"><span class="hl">パラメータのファイル名を、公開ディレクトリのパスに連結 / 検証なし</span></div><div class="logrow"><span class="hl">パラメータに、上位ディレクトリを示す指定が繰り返し含まれていた</span></div><div class="logrow"><span class="hl">公開ディレクトリの外にある、設定ファイルが、応答200で返されていた</span></div><div class="logrow"><span class="hl">// パラメータは、ファイルパスの連結にのみ使われ、SQLにも外部コマンドの引数にも使われない</span></div></div></div>
+  <p class="q">この事象の原因として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">入力のパスが検証されず、階層をさかのぼってファイルを指せた</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>SQLインジェクション … パラメータはパスの連結にのみ使われる</li><li>OSコマンドインジェクション … パラメータはコマンドの引数に使われない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.8.7 ディレクトリトラバーサル攻撃</li></ul>
+  <p>成立条件の3つと、入力をファイル名に使わない対策、正規化と基準配下の検証、権限の最小化が補助である点を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep127-mail-header-injection.html">← #27 メールヘッダインジェクション 改行が区切りになる仕組みと対策</a><a href="ep129-virus-worm.html">#29 ウイルスとワーム 宿主の有無と広がり方の違い →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

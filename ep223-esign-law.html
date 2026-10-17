@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#123 電子署名法 本人だけが行える署名と認証業務｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#123 ・ 第9章 情報セキュリティに関する法制度</p>
+  <h1>電子署名法 本人だけが行える署名と認証業務</h1>
+  <ol class="summary"><li>電子署名は本人性と非改ざん性を確認する。本人だけが行える署名があれば、真正に成立したと推定される。</li><li>推定は反証があれば覆る。署名を行う符号や物件を適正に管理し、本人だけが使えることが前提になる。</li><li>認証業務の認定は任意。立会人型は事業者が利用者の指示で署名する方式。検証と保存はPKIとタイムスタンプで支える。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep223-esign-law:electronic-signature">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">電子署名</span><span class="back" hidden><span class="def">電磁的記録について、措置を行った者の作成であること（本人性）と、改変がないか（非改ざん性）を確認できるもの。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep223-esign-law:presumption">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">推定効</span><span class="back" hidden><span class="def">本人だけが行える電子署名が行われているとき、文書が真正に成立したものと推定される効力。</span><span class="note">推定なので、反証があれば覆る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep223-esign-law:proper-management">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">符号及び物件の適正な管理</span><span class="back" hidden><span class="def">署名を行うための鍵や暗証番号などを、本人だけが使えるよう管理すること。推定が成り立つ前提になる。</span><span class="note">共有や貸し借りをしない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep223-esign-law:certification-service">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証業務</span><span class="back" hidden><span class="def">電子証明書の発行などで、署名した人を証明する業務。PKIでいう認証局が担う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep223-esign-law:accreditation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認定</span><span class="back" hidden><span class="def">本人確認の方法・設備・運営などの基準を満たす事業者を、国が認定する制度。</span><span class="note">任意。認定がなくても認証業務は行える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep223-esign-law:witness-type">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">立会人型（事業者署名型）</span><span class="back" hidden><span class="def">事業者が利用者の指示で署名する方式。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep223-esign-law:signature-image">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">署名画像の貼り付け</span><span class="back" hidden><span class="def">署名のスキャン画像などを文書に貼ること。他の人も使え、改変の有無も確認できないので、電子署名ではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep223-esign-law:pki-timestamp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">PKIとタイムスタンプ</span><span class="back" hidden><span class="def">署名の検証と長期保存を支える仕組み。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep223-esign-law:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>電子署名法の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>電子署名による推定は、反証があっても覆らない</span></button><p class="why" hidden>推定は反証で覆る</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>本人だけが行える電子署名があれば、真正に成立したと推定される</span></button><p class="why" hidden>本人だけが行える署名で推定</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>国の認定がない事業者は、認証業務を行えない</span></button><p class="why" hidden>認定は任意</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>スキャンした署名画像の貼り付けは、電子署名に当たる</span></button><p class="why" hidden>画像は本人だけが行えない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep223-esign-law:q0" data-answer="0">
+  <p class="q">社長のICカードと暗証番号を、秘書が預かって日常的に代行署名していた。契約相手は「電子署名があるので社長の署名として成立したと推定される」と主張し、社長は自分の意思ではないと争っている。評価として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>鍵と暗証番号を本人だけが使えず、推定が成り立たない恐れがある</span></button><p class="why" hidden>正解。推定は、本人だけが行える署名であることが前提。符号や物件を適正に管理していなければ、推定が成り立たない、または反証で覆る恐れがある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認定認証事業者の証明書なので、管理が不十分でも推定が及ぶ</span></button><p class="why" hidden>推定の前提は、符号や物件を適正に管理し、本人だけが行えること。事業者の認定は任意の制度で、その管理を代わりに満たすものではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>暗証番号を共有していても、署名者がICカード所有者なら推定される</span></button><p class="why" hidden>暗証番号の共有や貸し借りは、本人だけが行える状態を損なう。カードの所有者であっても、推定の前提は満たされない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>契約書が電子データなので、署名の管理方法は推定に影響しない</span></button><p class="why" hidden>管理の方法は、本人だけが行える署名かどうかを左右する。電子データであっても、管理は推定の前提に関わる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep223-esign-law:q1" data-answer="3">
+  <p class="q">電子証明書の発行元を選ぶ。事業者Xは国の認定を受けており、事業者Yは未認定である。選定の考え方として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>未認定の事業者が発行した証明書は、法律上すべて無効になる</span></button><p class="why" hidden>認定は任意で、認定がなくても認証業務は行える。未認定だから、すべて無効になるわけではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認定事業者の証明書なら、鍵と暗証番号の管理は不要になる</span></button><p class="why" hidden>証明書を発行する側の認定と、署名鍵・暗証番号を本人だけが使えるよう管理することは別。利用者側の管理は引き続き必要。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>認定が任意なので、本人確認の方法などの基準は気にしなくてよい</span></button><p class="why" hidden>認定は任意でも、基準は本人確認の方法・設備・運営などを見るためのもの。認定の有無だけでなく、基準の内容も比べる価値がある。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>認定は任意の目安。本人確認や運営の基準を見て選ぶ</span></button><p class="why" hidden>正解。認定は一定の基準を満たす事業者を国が認める任意の制度。未認定でも業務は行えるので、基準の中身も見て選ぶ。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep223-esign-law:q2" data-answer="2">
+  <p class="q">取引先が「この契約書には電子署名が付いているので、真正に成立したことは確定しており、争う余地はない」と主張している。見解として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>電子署名があれば、署名者の意思の有無にかかわらず成立が確定する</span></button><p class="why" hidden>電子署名があっても、成立が確定するわけではない。推定であり、反証があれば覆る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認定認証事業者の証明書であれば、反証の余地もなくなる</span></button><p class="why" hidden>推定である以上、反証があれば覆る。認定は任意の制度で、反証を不可能にするものではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>成立は推定にとどまり、反証があれば覆りうる</span></button><p class="why" hidden>正解。本人だけが行える電子署名があると、真正に成立したと推定される。推定なので反証があれば覆る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>署名鍵の管理状況は、成立の推定とは無関係である</span></button><p class="why" hidden>符号や物件の適正な管理は、本人だけが行える署名であることの前提。推定と無関係とは言えない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep223-esign-law:q3" data-answer="1">
+  <p class="q">電子署名付きの契約書を、長期間保存する。署名の検証と長期保存の設計として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>署名を付けたPDFを保存すれば足りるので、検証の仕組みは別に要らない</span></button><p class="why" hidden>署名の検証と長期保存は、PKIとタイムスタンプで支える。ファイルを保存するだけでは、検証の仕組みを用意したことにならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>検証と保存を、PKIとタイムスタンプで支える設計にする</span></button><p class="why" hidden>正解。署名の検証と長期保存は、PKIとタイムスタンプで支える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>紙に印刷して押印し直せば、電子署名の効力はそのまま引き継がれる</span></button><p class="why" hidden>押印し直しても、電子署名の効力が引き継がれるわけではない。電子署名の本人性と非改ざん性は、その署名自体で確認する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗証番号を長期間変えなければ、署名の検証も保てる</span></button><p class="why" hidden>暗証番号は署名を行うときの本人の管理に関わるもの。長期の検証を保つ手段にはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep223-esign-law:q4" data-answer="3">
+  <p class="q">取引先から届いた電子署名付きの文書を検証したところ、署名者は取引先の担当者本人と確認できたが、署名後に文書の一部が変更されていた。判断として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>署名者が本人と確認できたので、文書全体を本人の作成として扱える</span></button><p class="why" hidden>電子署名は本人性だけでなく、改変がないことも確認できる。署名後に変更された部分まで、本人の作成とは扱えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>改変があっても、署名者が本人であれば電子署名の目的は満たされる</span></button><p class="why" hidden>電子署名が確認するのは、本人性と、改変がないことの二つ。改変があれば、目的の一方が満たされない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>改変の確認は電子署名の役割ではないので、別の手段で確認する</span></button><p class="why" hidden>改変の有無を確認できることは、電子署名の要素の一つ。別の手段に任せる前提ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>改変の確認も電子署名の働き。変更された文書は信頼できない</span></button><p class="why" hidden>正解。電子署名は、本人が作成したことと、改変がないことを確認するもの。変更があるなら、その文書は信頼できない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">電子署名があっても、文書が真正に成立したと推定されない場合を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">推定は、本人だけが行える署名であることが前提で、反証があれば覆る。鍵や暗証番号を共有・貸し借りして本人だけが使える状態でなければ、推定は成り立たない、または覆る恐れがある。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep223-esign-law-t0-0"> 本人だけが行える署名が前提</label></li><li><label><input type="checkbox" id="ep223-esign-law-t0-1"> 鍵・暗証番号の管理が不十分だと成り立たない</label></li><li><label><input type="checkbox" id="ep223-esign-law-t0-2"> 推定なので反証で覆る</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">認証業務の認定が「任意」とは、どういうことか。事業者を選ぶ立場で、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">国が一定の基準（本人確認の方法・設備・運営など）を満たす事業者を認定する制度だが、認定は任意で、認定がなくても認証業務は行える。認定の有無だけでなく、基準の中身も見て選ぶ。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep223-esign-law-t1-0"> 認定は国が基準を満たす事業者を認める制度</label></li><li><label><input type="checkbox" id="ep223-esign-law-t1-1"> 認定は任意で、なくても認証業務は行える</label></li><li><label><input type="checkbox" id="ep223-esign-law-t1-2"> 本人確認の方法・設備・運営などの基準も見る</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="電子契約の確認記録（ダミー）"><div class="logtitle">電子契約の確認記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">契約書のPDFを、電子メールで取引先へ送る</span></div><div class="logrow"><span class="hl">社内のPCに、社長の署名画像があり、担当者も使える</span></div><div class="logrow"><span class="hl">社長のICカードに、署名鍵が入っている</span></div><div class="logrow"><span class="hl">要件: 契約書が、社長本人の署名で成立したと推定される</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">社長の署名鍵で電子署名を付与し、鍵は社長だけが使えるよう管理する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>署名画像をPDFに貼り付ける … 担当者も使え、改変の有無も確認できず、電子署名ではない</li><li>PDFにパスワードを設定する … 開く人を限るだけで、誰が署名したかを示さない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>9.3.6 電子署名法</li></ul>
+  <p>推定が成り立つ前提（本人だけが行える）と、覆る場合を確かめながら読む。認証業務・認定が任意である点にも注目する。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep222-cyber-laws.html">← #122 サイバーセキュリティ関連の法律 不正アクセス禁止法ほか</a><a href="ep224-dnssec-doh-dot.html">#124 DNSSECとDoH・DoT 真正性と秘匿性の違い →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

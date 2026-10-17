@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#33 ファイルレス攻撃とマルウェアの検出手法 ファイルがなくても見つける｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#33 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>ファイルレス攻撃とマルウェアの検出手法 ファイルがなくても見つける</h1>
+  <ol class="summary"><li>ファイルレス攻撃は、ディスクに実行ファイルを置かず、メモリ上やOS標準のツールで動く。完全にファイルなしとは限らない。</li><li>ファイルを照合する検査には対象が見当たらない。検出手法はそれぞれ得意な範囲が違い、単独では足りない。</li><li>見る対象をファイルからプロセスの動作と通信へ変え、手法を組み合わせる。誤検知と見逃しは残る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep133-fileless-detect:fileless">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ファイルレス攻撃</span><span class="back" hidden><span class="def">ディスクに実行ファイルを置かず、メモリ上やOS標準の正規ツールを悪用して動く攻撃。ファイルを調べる検査には対象が見当たらない。</span><span class="note">初期侵入にファイルが使われる、設定が残るといった例もある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep133-fileless-detect:memory-resident">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">メモリ上で動くもの</span><span class="back" hidden><span class="def">メモリ上のものは、再起動で消える。そのため、設定を残して再び動かす例もある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep133-fileless-detect:pattern-matching">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">パターンマッチング</span><span class="back" hidden><span class="def">既知のマルウェアの特徴とファイルを照合する方式。既知に強いが、未知のものや、ファイルが見当たらない場合は見つけにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep133-fileless-detect:behavior-detection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">振る舞い検知（ヒューリスティック法）</span><span class="back" hidden><span class="def">動作の怪しさで判断する検出手法。誤検知もある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep133-fileless-detect:sandbox">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">サンドボックス</span><span class="back" hidden><span class="def">隔離環境で実行して観察する仕組み。環境を見抜かれると、回避される。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep133-fileless-detect:checksum">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">変更検知（チェックサム法）</span><span class="back" hidden><span class="def">ハッシュ値などを基準と比べて、変化を見つける手法。</span><span class="note">ファイルが置かれなければ、変化も生じない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep133-fileless-detect:edr">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">EDR</span><span class="back" hidden><span class="def">端末上の動作を記録し、検知と調査に使う仕組み。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep133-fileless-detect:view-target">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">見る対象を変える</span><span class="back" hidden><span class="def">ファイルではなく、プロセスの動作と通信を見る。標準ツールがふだんと違う使われ方をしていないかを確かめる。</span><span class="note">正規の使い方に似ていると、誤検知と見逃しが残る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep133-fileless-detect:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>ファイルレス攻撃の検出に、有効なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パターンファイルの更新頻度を、さらに上げて、毎日配信する</span></button><p class="why" hidden>更新を増やしても、照合するファイルがない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ディスク上のファイルのハッシュ値を、定期的に比べて確認する</span></button><p class="why" hidden>ファイルが置かれないので、変化もない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>実行ファイルの拡張子を、あらかじめ制限しておく</span></button><p class="why" hidden>標準ツールは、実行ファイルを増やさない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>プロセスの動作と通信を、監視して検知する</span></button><p class="why" hidden>動作と通信を見る</p></li></ol>
+</li>
+<li class="quiz" data-key="ep133-fileless-detect:q0" data-answer="0">
+  <p class="q">経理部の端末で、定期スキャンは検出なしだったが、OS標準のスクリプト実行機能が外部と通信していた。ディスク上に新しい実行ファイルはない。次の調査の観点として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ファイルではなく、プロセスの動作と通信を見る</span></button><p class="why" hidden>正解。見る対象を、ファイルからプロセスの動作と通信に変える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>パターンファイルの更新頻度を上げて、ディスク上のファイルを再度照合する</span></button><p class="why" hidden>更新を増やしても、照合するファイルが見当たらない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>OS標準のツールは正規のものなので、通信も正規とみなして調査を終える</span></button><p class="why" hidden>OS標準の正規ツールが悪用されることがある。正規のツールだから通信も正規、とは言えない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ディスクに実行ファイルがないので、初期侵入にもファイルは使われていないと断定する</span></button><p class="why" hidden>初期侵入にファイルが使われる例がある。「断定」は言い過ぎ。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep133-fileless-detect:q1" data-answer="1">
+  <p class="q">未知の添付ファイルをサンドボックスで実行したが、不審な挙動は観察されなかった。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>挙動が観察されなかったので、このファイルは安全と確定できる</span></button><p class="why" hidden>環境を見抜かれると回避される。無観察を安全の証拠にはできない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>環境を見抜かれると回避されうるので、安全の確定にはならない</span></button><p class="why" hidden>正解。サンドボックスは隔離環境で実行して観察する仕組みで、見抜かれると回避される。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>サンドボックスは隔離して実行するので、回避される可能性はない</span></button><p class="why" hidden>隔離して観察しても、環境を見抜かれると回避される。「可能性はない」は言い過ぎ。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>サンドボックスは変更検知と同じ仕組みなので、ハッシュ値で代替できる</span></button><p class="why" hidden>変更検知はハッシュ値を基準と比べる手法で、実行して観察するサンドボックスとは別の仕組み。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep133-fileless-detect:q2" data-answer="2">
+  <p class="q">OS標準ツールの悪用が疑われる端末で、変更検知を行ったところ、既存ファイルのハッシュ値は基準と一致していた。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>一致しているので、この端末は侵害されていないと断定できる</span></button><p class="why" hidden>ファイルが置かれなければ変化も生じない。一致は侵害がない証拠にならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>変更検知は端末の動作を記録する方式なので、一致していても動作から検知できる</span></button><p class="why" hidden>端末の動作を記録するのはEDR。変更検知はハッシュ値を基準と比べる手法である。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>変更検知はファイルの変化を見るので、ファイルを置かない攻撃には向かない</span></button><p class="why" hidden>正解。ファイルが置かれない攻撃では、比べる変化が生じない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ハッシュ値が一致するなら、パターンマッチングも振る舞い検知も不要になる</span></button><p class="why" hidden>手法は単独では完全ではなく、得意な範囲が違う。組み合わせて使う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep133-fileless-detect:q3" data-answer="0">
+  <p class="q">標準ツールがいつ、どのような使われ方をしたかを、端末上の動作の記録からさかのぼって調べたい。使う仕組みとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>端末上の動作を記録する、EDR</span></button><p class="why" hidden>正解。EDRは端末上の動作を記録し、検知と調査に使う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>既知のマルウェアの特徴とファイルを照合する、パターンマッチング</span></button><p class="why" hidden>ファイルとの照合方式で、動作の記録は残らない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>隔離環境でファイルを実行して観察する、サンドボックス</span></button><p class="why" hidden>隔離環境で実行して観察する仕組みで、実際の端末での動作の記録ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ハッシュ値を基準と比べて変化を見つける、変更検知（チェックサム法）</span></button><p class="why" hidden>ファイルのハッシュ値の変化を見る手法で、動作の記録ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep133-fileless-detect:q4" data-answer="1">
+  <p class="q">標準ツールの不審な使われ方を見る振る舞い検知を導入したところ、管理者の正規作業でも警報が多数出た。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>誤検知が出る方式は信用できないため、振る舞い検知を止めてパターンマッチングだけにする</span></button><p class="why" hidden>ファイルが見当たらない場合、パターンマッチングは見つけにくい。止めると見る範囲が狭まる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>誤検知と見逃しが残る前提で、他の手法と組み合わせて運用する</span></button><p class="why" hidden>正解。正規の使い方に似ていると誤検知と見逃しが残る。手法を組み合わせ、疑わしい動作は隔離と調査の流れで扱う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>警報が出るのは正規作業だけなので、見逃しは起きていないと判断する</span></button><p class="why" hidden>正規の使い方に似ていると見逃しも残る。警報の内容だけでは見逃しの有無は判断できない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>管理者の作業をすべて除外すれば、誤検知も見逃しもなくなるとみなす</span></button><p class="why" hidden>正規の使い方に似ていると、誤検知も見逃しも残る。「なくなる」は言い過ぎ。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ファイルレス攻撃がパターンマッチングで見つかりにくい理由と、代わりに見る対象を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">パターンマッチングは既知の特徴とファイルを照合する方式で、ディスクに実行ファイルを置かないファイルレス攻撃には、照合する対象が見当たらない。そこで、見る対象をファイルからプロセスの動作と通信に変え、標準ツールの使われ方を確かめる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep133-fileless-detect-t0-0"> ファイルと照合する方式である</label></li><li><label><input type="checkbox" id="ep133-fileless-detect-t0-1"> 照合する対象が見当たらない</label></li><li><label><input type="checkbox" id="ep133-fileless-detect-t0-2"> プロセスの動作と通信を見る</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">ファイルレス攻撃への備えで、検出手法を組み合わせる理由と、組み合わせても残る限界、疑わしい動作が出たときの流れを説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">手法ごとに得意な範囲が違い、単独では完全ではないため、パターンマッチング・振る舞い検知・EDRなどを組み合わせる。正規の使い方に似ていると誤検知と見逃しが残る。疑わしい動作が出たら、端末を隔離して調べる流れを用意する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep133-fileless-detect-t1-0"> 手法ごとに得意な範囲が違う</label></li><li><label><input type="checkbox" id="ep133-fileless-detect-t1-1"> 正規の使い方に似ると誤検知と見逃しが残る</label></li><li><label><input type="checkbox" id="ep133-fileless-detect-t1-2"> 端末の隔離と調査の流れを用意する</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="経理部端末の調査記録（ダミー）"><div class="logtitle">経理部端末の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 経理部の端末（ダミー）。定期スキャンは、検出なし</span></div><div class="logrow"><span class="hl">同時刻、OS標準のスクリプト実行機能が起動し、外部へ通信</span></div><div class="logrow"><span class="hl">ディスク上に新しい実行ファイルは作られていない（監査ログ）</span></div><div class="logrow"><span class="hl">定期スキャンは、ディスク上のファイルを、パターンファイルと照合</span></div><div class="logrow"><span class="hl">パターンファイルは最新で、スキャンの除外設定はなし</span></div></div></div>
+  <p class="q">定期スキャンで検出できなかった理由として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">新しい実行ファイルがなく、ファイルを照合する方式では、見つけられなかった</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>パターンファイルが古かった … 最新だった</li><li>除外設定に入っていた … 除外設定はなし</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.9.12 ファイルレス攻撃</li><li>2.9.14 マルウェアを検出する手法</li></ul>
+  <p>ファイルレス攻撃が検査をすり抜ける理由と、各検出手法の得意・不得意、組み合わせても残る限界を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep132-dropper-targeted.html">← #32 ドロッパと標的型攻撃 侵入から外への持ち出しまで</a><a href="ep134-smtp-vuln.html">#34 SMTPの脆弱性と対策 送信者を確かめない仕組みの弱点 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

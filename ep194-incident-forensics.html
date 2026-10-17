@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#94 インシデント対応とフォレンジック 証拠保全とログ相関｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#94 ・ 追加テーマ（目次外）</p>
+  <h1>インシデント対応とフォレンジック 証拠保全とログ相関</h1>
+  <ol class="summary"><li>初動は被害を抑えつつ証拠を失わない。隔離し、消えやすい揮発性の情報から先に採取する。</li><li>ディスクは書込みを防いで複製し、ハッシュ値で照合。解析は複製で行い、原本と受け渡しを記録する。</li><li>ログ相関は時刻同期が前提。上書き・消去・保存期間切れでは追えないので、別の場所へ転送して保管する。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep194-incident-forensics:volatile-info">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">揮発性の情報</span><span class="back" hidden><span class="def">電源を切ると失われる情報。メモリ上の情報や通信の状態など。消えやすいものから先に採取する。</span><span class="note">電源を切る前に、何が失われるかを考える。メモリ上の情報や通信の状態は、電源断で消える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep194-incident-forensics:isolation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">隔離</span><span class="back" hidden><span class="def">感染が疑われる端末をネットワークから切り離し、被害の拡大を抑える初動。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep194-incident-forensics:write-block-copy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">書込みを防いだ複製</span><span class="back" hidden><span class="def">原本の内容を変えないよう、書込みを防いだ状態でディスクを複製すること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep194-incident-forensics:hash-compare">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ハッシュ値の照合</span><span class="back" hidden><span class="def">原本と複製のハッシュ値を記録して比べる。一致すれば、同じ内容だと確認できる。</span><span class="note">一致は内容の同一性の確認。取り扱いの経緯の説明は、別の記録で補う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep194-incident-forensics:analyze-copy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">複製での解析</span><span class="back" hidden><span class="def">解析は複製に対して行い、原本には手を付けずに保管する進め方。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep194-incident-forensics:chain-of-custody">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">証拠管理の連鎖</span><span class="back" hidden><span class="def">証拠の保管者と受け渡しを記録しておくこと。改ざんされていないと説明できるようにする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep194-incident-forensics:log-correlation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ログの相関</span><span class="back" hidden><span class="def">複数の機器のログを時刻でつないで、一連の流れを追う作業。例：プロキシとFWの記録の突き合わせ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep194-incident-forensics:time-sync">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">時刻同期とタイムゾーンの統一</span><span class="back" hidden><span class="def">ログ相関の前提。ずれていると、出来事の順序を取り違える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep194-incident-forensics:log-forwarding">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ログの転送・保管</span><span class="back" hidden><span class="def">ログを別の場所へ転送して保管すること。侵入者による消去や上書きに備える。保存期間は調査に足りる長さにする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep194-incident-forensics:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>ディスクの証拠保全として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>原本のディスクを、そのまま接続して解析する</span></button><p class="why" hidden>原本に接続すると内容が変わりうる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>不要なファイルを消してから、複製を取得する</span></button><p class="why" hidden>消すと証拠が失われる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>書込みを防いで複製を取り、ハッシュ値を記録する</span></button><p class="why" hidden>書込みを防いで複製し、ハッシュ値を記録</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>複製の取得は省き、ファイルの一覧だけを保管する</span></button><p class="why" hidden>一覧だけでは情報が失われる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep194-incident-forensics:q0" data-answer="0">
+  <p class="q">起動中の端末Bに感染の疑いがあり、外部との不審な通信が続いている。上長から「被害が広がる前に電源を抜け」と指示が出たが、原因と侵入経路の調査もこれから必要になる。最初の対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ネットワークから切り離して隔離し、消えやすい情報を別の媒体へ採取したうえで、停止の要否を判断する</span></button><p class="why" hidden>正解。隔離で通信による被害拡大を抑えつつ、電源断で失われるメモリ上の情報や通信状態を先に採る。停止はその後の判断になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>被害の拡大を確実に止めるため直ちに電源を切り、ディスクの複製の取得を最優先にしてから調査を始める</span></button><p class="why" hidden>電源を切るとメモリ上の情報や通信の状態が失われ、原因の調査が難しくなる。ディスクの複製だけでは補えない情報がある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>通信を遮断せず稼働させたまま、攻撃者の接続先が分かるまで一晩分の通信の様子を観察し続ける</span></button><p class="why" hidden>通信が続く間は被害が拡大しうる。観察の価値はあっても、隔離せずに続けるのは初動の目的（被害を抑える）に反する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>不審なファイルを削除してから再起動し、正常に動作することを確認したうえで調査に取りかかる</span></button><p class="why" hidden>削除と再起動で証拠そのものが失われ、メモリ上の情報も消える。正常に見えても侵入経路の手がかりが残らない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep194-incident-forensics:q1" data-answer="3">
+  <p class="q">ディスクを書込み防止の状態で複製し、原本と複製のハッシュ値の一致も確認できた。解析担当者から「原本のほうが確実なので、原本を直接調べたい」と要望があった。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>原本を直接解析してよい。終了後にハッシュ値を再計算して、取得時と一致すれば問題ない</span></button><p class="why" hidden>原本に接続すると内容が変わるおそれがある。再計算で一致を確認する方法に頼らず、そもそも原本には触れない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>複製のハッシュ値が一致したので原本は不要になる。保管の手間を省くため速やかに廃棄する</span></button><p class="why" hidden>ハッシュ値の一致は複製が同じ内容である確認であって、原本を捨てる根拠にならない。あとで説明が必要になった場合に原本が要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>複製を解析担当者全員に配り、各自が必要なファイルだけを抜き出して自由に調べてもらう</span></button><p class="why" hidden>複製の扱いが分散すると、誰がいつ何をしたかの記録が追えなくなる。受け渡しの記録が前提になる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>解析は複製で行い、原本は手を付けずに保管する。保管者と受け渡しも記録しておく</span></button><p class="why" hidden>正解。解析は複製で行い、原本は保管する。保管者と受け渡しの記録が、改ざんされていないという説明を支える。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep194-incident-forensics:q2" data-answer="1">
+  <p class="q">プロキシのログとFWのログを時刻順に並べたところ、端末Cが不審サイトへ接続した同じ通信の記録時刻が、2つの機器で約9時間ずれていた。プロキシのログはUTC、FWのログは日本時間で記録されていた。まず行うべきことはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>FWのログのほうが正確だと判断し、プロキシのログは相関の対象から外して調査を続ける</span></button><p class="why" hidden>どちらが正確かの根拠がない。片方を外すと、複数機器をつなげて流れを追うという相関の目的が果たせない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>各機器の時刻同期の状況とタイムゾーンを確認し、そろえたうえで時刻順に並べ直す</span></button><p class="why" hidden>正解。相関の前提は時刻同期とタイムゾーンの統一。ずれたまま並べると順序を取り違えるので、まずそろえる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>プロキシのログが攻撃者に書き換えられたものと断定し、調査をその前提で進める</span></button><p class="why" hidden>書き換えの可能性はあっても、タイムゾーンの違いという説明が先にある。断定せず、前提を確認してから判断する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログの保存期間を延長してから、しばらく様子を見て同様の現象が起きるか確認する</span></button><p class="why" hidden>保存期間の延長は大切だが、今回の食い違いの原因（時刻やタイムゾーンのずれ）の確認にならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep194-incident-forensics:q3" data-answer="0">
+  <p class="q">侵入を受けたWebサーバの調査で、侵入が疑われる時間帯のログが、サーバ内に保存されていたものだけ消えていた。同じ事態に備えた対策として、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ログを別のサーバへ転送して保管し、保存期間も調査に足りる長さに設定しておく</span></button><p class="why" hidden>正解。侵入者がログを消す場合に備え、別の場所へ転送して保管する。保存期間が短いと、あとで調べるときに追えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>サーバ内のログファイルの閲覧権限を厳しくし、運用担当者以外が参照できないようにする</span></button><p class="why" hidden>閲覧の制限は情報の漏えい対策の面が強い。侵入者に管理権限まで奪われた場合の消去や上書きに備えたことにならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ログの出力量を増やして情報を詳しくし、一部が消えても残りで補えるようにしておく</span></button><p class="why" hidden>詳しくしても同じ場所に保存していれば、まとめて消されうる。消えたときに別の場所に残る備えが要る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ディスクの空き容量を確保するため、古いログを短い周期で自動的に削除する設定にする</span></button><p class="why" hidden>保存期間を短くすると、調査に必要な期間のログが残らなくなる。対策としては逆方向になる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep194-incident-forensics:q4" data-answer="1">
+  <p class="q">ディスクの複製を取り、原本と複製のハッシュ値が一致した。後日、社内の監査担当から「その複製が改ざんされていないことを説明できるか」と問われた。説明の組み立てとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ハッシュ値が一致しているので、取得後の保管者や受け渡しの記録は不要だと説明する</span></button><p class="why" hidden>一致が確認するのは取得時点での内容の同一性。その後の取り扱いの経緯は、保管者・受け渡しの記録で補う必要がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>取得時点で原本と同じ内容と確認でき、その後は保管者と受け渡しの記録で経緯を示す</span></button><p class="why" hidden>正解。ハッシュ値の照合で内容の同一性を確認し、証拠管理の連鎖の記録で、改ざんされていないという説明を支える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ハッシュ値を比べれば、侵入した攻撃者が誰かを特定できることを根拠にして説明する</span></button><p class="why" hidden>ハッシュ値は内容の同一性を確かめる手段で、攻撃者の特定には使えない。目的が違う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>原本と複製のどちらも解析に使っているため、内容に差が出ないことを確認済みと説明する</span></button><p class="why" hidden>原本を解析に使うのは避けるべき扱いで、前提が誤っている。解析は複製で行い、原本は保管する。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">感染が疑われる起動中の端末について、「すぐ電源を切る」より先に何をするか。理由もあわせて、頭の中で組み立ててみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">まずネットワークから隔離して被害の拡大を抑える。電源を切るとメモリ上の情報や通信の状態が失われるため、消えやすい（揮発性の）情報から別の媒体へ採取する。操作は誰がいつ行ったかを記録する。そのうえで停止するかどうかを判断する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep194-incident-forensics-t0-0"> ネットワークからの隔離</label></li><li><label><input type="checkbox" id="ep194-incident-forensics-t0-1"> 電源断でメモリ・通信状態が失われる</label></li><li><label><input type="checkbox" id="ep194-incident-forensics-t0-2"> 揮発性の高い情報から別の媒体へ採取</label></li><li><label><input type="checkbox" id="ep194-incident-forensics-t0-3"> 操作者と時刻の記録</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">複数の機器のログを突き合わせて侵入の経緯を追うとき、どんな前提が崩れると追えなくなるか。その備えもあわせて組み立ててみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">各機器の時刻同期とタイムゾーンの統一が前提で、ずれると出来事の順序を取り違える。ログが上書きや消去をされたり、保存期間が切れたりしても追えない。備えとして、ログを別の場所へ転送して保管し、保存期間を調査に足りる長さにする。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep194-incident-forensics-t1-0"> 時刻同期とタイムゾーンの統一</label></li><li><label><input type="checkbox" id="ep194-incident-forensics-t1-1"> 上書き・消去・保存期間切れでは追えない</label></li><li><label><input type="checkbox" id="ep194-incident-forensics-t1-2"> 別の場所への転送と保管</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="感染疑い端末の初動記録（ダミー）"><div class="logtitle">感染疑い端末の初動記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">端末Aに、マルウェア感染の疑いがある。起動中である</span></div><div class="logrow"><span class="hl">端末Aは、外部への不審な通信を、今も続けている</span></div><div class="logrow"><span class="hl">このあと、原因と侵入経路の調査が必要になる</span></div><div class="logrow"><span class="hl">要件: 被害の拡大を止めつつ、証拠を保全したい</span></div></div></div>
+  <p class="q">この端末への初動として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">電源は切らずに隔離し、揮発性の情報から先に採取する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>すぐ電源を切り、ディスクを保全する … 電源を切るとメモリ上の情報が失われ、原因の調査が難しくなる</li><li>通信を続けたまま、様子を観察する … 不審な通信が続くと、被害が拡大する</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>EX-08 インシデント対応とデジタルフォレンジック</li></ul>
+  <p>初動で何が消えやすいか、原本・複製・ハッシュ値の役割、ログ相関の前提と限界を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep193-secure-dev-sast-dast.html">← #93 脅威モデリングとSAST・DAST・SCA 見つけられる範囲の違い</a><a href="ep195-mail-auth-spf-dkim-dmarc.html">#95 メール認証 SPF・DKIM・DMARC なりすましへの備え →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

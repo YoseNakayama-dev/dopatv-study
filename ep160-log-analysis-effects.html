@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#60 ログ分析の効果と限界 残し方と守り方で価値が決まる｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#60 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>ログ分析の効果と限界 残し方と守り方で価値が決まる</h1>
+  <ol class="summary"><li>効果は、早期の検知、原因と影響範囲の特定、証跡、抑止と設定の見直し。記録があってこそ成り立つ。</li><li>限界は、出力設定のない操作は残らないこと、消去や改ざん、量による見落とし、暗号化通信の中身。</li><li>対策は、発生時の別保管先への転送、出力設定の確認、アラートでの絞り込み、訓練、取得対象の見直し。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep160-log-analysis-effects:early-detection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">早期の検知</span><span class="back" hidden><span class="def">不審な動きに早く気づくこと。早く気づけば、被害の拡大を抑えられる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep160-log-analysis-effects:scope">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">原因と影響範囲の特定</span><span class="back" hidden><span class="def">事故のあとに、何が、いつ、どこまで起きたかを調べること。ログ分析の効果のひとつ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep160-log-analysis-effects:evidence">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">証跡</span><span class="back" hidden><span class="def">対応の根拠や説明の材料になる記録。どう対応したかを後から説明できる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep160-log-analysis-effects:deterrence">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">抑止と設定の見直し</span><span class="back" hidden><span class="def">記録が残ると知らせることで不正を抑える効果がある。記録は設定の見直しにも使える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep160-log-analysis-effects:not-logged">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">記録されないものは見えない</span><span class="back" hidden><span class="def">出力の設定をしていない操作は、ログに残らない。残らないものは、後から調べられない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep160-log-analysis-effects:tamper">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ログの改ざんや消去</span><span class="back" hidden><span class="def">侵入した者に、ログを消されたり書き換えられたりしうること。ログ分析の限界のひとつ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep160-log-analysis-effects:volume">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">量と見落とし</span><span class="back" hidden><span class="def">ログの量が多いと人手では見切れず、見落としが出る。絞り込みがないと、重要な兆候が埋もれる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep160-log-analysis-effects:encrypted-traffic">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">暗号化通信の中身</span><span class="back" hidden><span class="def">暗号化された通信は、通信の記録に中身までは残らないことが多い。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep160-log-analysis-effects:forwarding">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">別の保管先への転送</span><span class="back" hidden><span class="def">ログを発生時に別の保管先へ送って残す対策。追記のみなど、書き換えにくい領域を使う方法もある。</span><span class="note">出力設定のない操作を記録に残す対策ではない。出力設定の確認は別に必要。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep160-log-analysis-effects:review-targets">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">取得対象の定期的な見直し</span><span class="back" hidden><span class="def">取得する対象を、システムの変更に合わせて定期的に見直す。必要な操作が残る設定かは事前に確かめる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep160-log-analysis-effects:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>ログ分析の限界として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>出力の設定がない操作は、ログに残らず、後から調べられない</span></button><p class="why" hidden>出力設定のない操作は残らない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ログを保管していれば、改ざんされても、必ず元の内容に戻せる</span></button><p class="why" hidden>改ざんされると戻せるとは限らない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ログの量が増えるほど、不審な動きは、人手でも見つけやすくなる</span></button><p class="why" hidden>量が増えると見落としやすい</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログ分析は事後の調査専用で、不審な動きの早期の検知には使えない</span></button><p class="why" hidden>アラートで早期の検知にも使う</p></li></ol>
+</li>
+<li class="quiz" data-key="ep160-log-analysis-effects:q0" data-answer="1">
+  <p class="q">暗号化された通信の内容を、通信の記録から調べることについて、適切な説明はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通信の記録があれば、暗号化されていても送受信の内容はすべて分かる</span></button><p class="why" hidden>暗号化された通信は、通信の記録に中身までは残らないことが多い。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>暗号化された通信の中身までは、通信の記録に残らないことが多い</span></button><p class="why" hidden>正解。暗号化された通信は、通信の記録に中身までは残らないことが多く、ログ分析の限界のひとつになる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>保管期間を延ばせば、暗号化通信の中身も後から記録として残せる</span></button><p class="why" hidden>期間を延ばしても、記録されていない中身は残らない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>時刻の同期が取れていれば、相関分析で中身まで復元できる</span></button><p class="why" hidden>相関分析は複数のログを突き合わせて一連の動きをたどるもので、記録にない中身を復元するものではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep160-log-analysis-effects:q1" data-answer="2">
+  <p class="q">毎日大量のログが出力され、担当者が目視で確認しているが、重要な兆候が埋もれている。改善として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>出力するログの項目を増やし、目視で確認できる情報を充実させる</span></button><p class="why" hidden>量が多いと人手では見切れず見落としが出る。項目を増やすと、確認する量はさらに増える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ログを別の保管先へ発生時に転送し、書き換えにくい領域に置く</span></button><p class="why" hidden>転送と書き換えにくい領域は、消去や改ざんへの対策。量による見落としには、絞り込みが要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>相関ルールやアラートを設定して、人が確認する対象を絞り込む</span></button><p class="why" hidden>正解。量による見落としには、相関ルールやアラートで見る対象を絞り込む。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>重要な兆候は人の目でしか判断できないため、自動化は採用しないでおく</span></button><p class="why" hidden>絞り込みがないと兆候が埋もれる。自動化で絞り込み、最終的な判断と対応は人が行う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep160-log-analysis-effects:q2" data-answer="3">
+  <p class="q">半年前にシステムを変更して新機能を追加したが、ログの取得設定は変更前のままだった。調査で新機能の操作が追えなかった。今後の運用として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>保管期間を延ばしておけば、新機能の操作も後から調査に使えるようになる</span></button><p class="why" hidden>出力の設定をしていない操作は、期間を延ばしてもログに残らない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>調査が必要になった時点で、その操作の出力設定を有効にして記録を取り直す</span></button><p class="why" hidden>出力設定を後から有効にしても、それ以前の操作は記録されていない。必要な操作が残る設定かは事前に確かめておく。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ログを別の保管先へ転送する設定にすれば、新機能の操作も記録として確実に残る</span></button><p class="why" hidden>転送は消去や改ざんへの対策。出力設定のない操作は、転送してもログに残らない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>システムの変更に合わせ、取得対象を定期的に見直して設定を事前に確かめる</span></button><p class="why" hidden>正解。取得する対象はシステムの変更に合わせて定期的に見直し、必要な操作が残る設定かを事前に確かめる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep160-log-analysis-effects:q3" data-answer="1">
+  <p class="q">漏えいの疑いが出たため、被害がどこまで及んだかを調べる。ログ分析で期待できることとして適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ログを取得していれば、不正アクセスの発生そのものを事前に防げる</span></button><p class="why" hidden>ログは記録して検知・調査に使うもので、不正アクセスそのものを遮断する仕組みではない。効果は早期の検知による被害の拡大の抑制など。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>記録が残っていれば、何がいつどこまで起きたかを調べられる</span></button><p class="why" hidden>正解。事故のあとは、記録をもとに原因と影響範囲を特定できる。記録が残っていることが前提。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>記録が残ると知らせても、不正を抑える効果は期待できない</span></button><p class="why" hidden>記録が残ると知らせることで、不正を抑える効果もある。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログ分析をすれば、設定の見直しは不要になり、再発も起きなくなる</span></button><p class="why" hidden>ログ分析は設定の見直しに使うもので、見直しの代わりにはならない。再発が起きなくなるとも言えない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep160-log-analysis-effects:q4" data-answer="2">
+  <p class="q">ログ基盤を整備し、収集と保管は運用できている。ただ、実際の調査で必要な記録が足りるかは確認していない。追加の対策として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>保管用ディスクの容量を増やせば、調査に必要な記録は足りるものとみなす</span></button><p class="why" hidden>容量を増やしても、必要な操作が記録される設定かは分からない。足りるかは訓練で確かめる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>実際のインシデントが起きた時点で、記録が足りるかを初めて確認する</span></button><p class="why" hidden>インシデントの最中に不足が分かっても、記録されなかった操作は取り戻せない。実際の調査を想定した訓練で事前に確かめる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>実際の調査を想定した訓練を行い、必要なログが足りるかを確かめる</span></button><p class="why" hidden>正解。実際の調査を想定した訓練で、ログが足りるかを確かめる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>アラートの件数を増やすため、相関ルールを大量に追加して通知を増やす</span></button><p class="why" hidden>量が多いと見落としが出るため、相関ルールやアラートは見る対象を絞り込むために使う。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">侵入者にログを消去・改ざんされることへの対策を、限界の原因と結びつけて、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ログが侵入された機器だけに残っていると、侵入者に消されたり書き換えられたりしうる。発生時に別の保管先へ転送し、追記のみなど書き換えにくい領域も使う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep160-log-analysis-effects-t0-0"> 侵入者に消去・改ざんされうる</label></li><li><label><input type="checkbox" id="ep160-log-analysis-effects-t0-1"> 発生時に別の保管先へ転送する</label></li><li><label><input type="checkbox" id="ep160-log-analysis-effects-t0-2"> 書き換えにくい領域を使う方法もある</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">ログを大量に取得しているのに、調査で必要な操作の記録が無かった。考えられる原因と、見直す点を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">出力の設定をしていない操作は残らない。必要な操作が残る設定かを事前に確かめ、取得対象をシステムの変更に合わせて定期的に見直す。実際の調査を想定した訓練で、ログが足りるかも確かめる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep160-log-analysis-effects-t1-0"> 出力設定のない操作は残らない</label></li><li><label><input type="checkbox" id="ep160-log-analysis-effects-t1-1"> 取得対象を定期的に見直す</label></li><li><label><input type="checkbox" id="ep160-log-analysis-effects-t1-2"> 訓練でログが足りるかを確かめる</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="Webサーバ侵害の調査記録（ダミー）"><div class="logtitle">Webサーバ侵害の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">侵害されたWebサーバのログは、ある時刻以降が空白だった</span></div><div class="logrow"><span class="hl">ログの保存先は、そのWebサーバ自身の内蔵ディスクのみ</span></div><div class="logrow"><span class="hl">FWのログには、同時刻の、そのサーバから外部への通信が残る</span></div><div class="logrow"><span class="hl">保管期間は1年。該当日は、その期間内にある</span></div><div class="logrow"><span class="hl">要件: 侵害されても、消去や改ざんの影響を受けず記録を残す</span></div></div></div>
+  <p class="q">ログの保全として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ログを発生時に、別のログ専用サーバへ転送して保存する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>ログの保管期間をさらに延ばして、長期間残すようにする … 期間は1年で、該当日はその期間内</li><li>出力するログの項目を増やして、より詳細に残すようにする … 保存先は同じサーバのままで、要件を満たさない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.10.2 ログ分析による効果及び限界</li></ul>
+  <p>効果が記録の有無に左右されること、四つの限界とそれぞれの対策の対応づけ、転送・設定確認・絞り込み・訓練の役割の違いを確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep159-log-analysis-basics.html">← #59 ログ分析の概要 突き合わせて初めて見える不正の足取り</a><a href="ep161-access-control-basics.html">#61 アクセス制御の概要 必要な人に必要な範囲だけ →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#109 情報資産の洗出し・分類とクライアントPC｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#109 ・ 第4章 情報セキュリティマネジメントの実践</p>
+  <h1>情報資産の洗出し・分類とクライアントPC</h1>
+  <ol class="summary"><li>情報と、それを扱う機器・ソフト・保管場所を挙げ、台帳に記録して重要度で区分する。漏れた資産は守る対象から外れる。</li><li>取扱い規則は区分ごとに保管・持出し・送信・廃棄を定める。廃棄は復元できない方法で行い、管理責任者が見直す。</li><li>PCは暗号化や権限の制限などを重ねる。紛失や盗難は起きるので保存を絞り遠隔消去も使うが、通信できないと届かない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep209-info-asset-client-pc:info-asset">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">情報資産</span><span class="back" hidden><span class="def">守る対象となる情報と、それを扱う機器・ソフト・保管場所。挙げ漏れた資産は守る対象から外れる。</span><span class="note">情報そのものだけでなく、扱う機器や保管場所も洗出しの対象。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep209-info-asset-client-pc:asset-register">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">資産台帳</span><span class="back" hidden><span class="def">洗い出した資産ごとに、名称・場所・管理責任者を記録する台帳。PCもここに載せて、OSと更新の状態を把握する。</span><span class="note">管理責任者は、取扱いを確認し見直す役。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep209-info-asset-client-pc:cia-rating">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">重要度の評価</span><span class="back" hidden><span class="def">資産ごとに、機密性・完全性・可用性の重要度を付ける作業。</span><span class="note">機密性の重要度は、漏えいした場合の影響で決める。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep209-info-asset-client-pc:classification">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">区分（分類）</span><span class="back" hidden><span class="def">重要度に応じて決める資産の区分。例は秘・社外秘・公開。区分の基準はあらかじめ文書で定める。</span><span class="note">区分名は組織ごとに定める。区分が高いほど取扱い規則は厳しくなる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep209-info-asset-client-pc:label">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ラベル</span><span class="back" hidden><span class="def">資産に付けて、区分が分かるようにする表示。</span><span class="note">ラベルは表示にとどまる。保管・持出し・送信・廃棄の規則とあわせて働く。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep209-info-asset-client-pc:secure-disposal">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">復元できない廃棄</span><span class="back" hidden><span class="def">媒体は、復元できない方法で消去または破棄する。ファイルを削除しただけでは復元できることがある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep209-info-asset-client-pc:disk-encryption">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ディスクの暗号化</span><span class="back" hidden><span class="def">PC内のデータを暗号化し、紛失したPCの中身を読ませないための対策。</span><span class="note">ディスクを別のPCにつなぐとログインを経由せず読めるため、ログインの保護だけでは足りない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep209-info-asset-client-pc:remote-wipe">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">遠隔消去</span><span class="back" hidden><span class="def">紛失や盗難に備え、離れた場所からPC内のデータを消す対策。</span><span class="note">通信できないと届かない。暗号化や、保存するデータを絞る対策と重ねる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep209-info-asset-client-pc:privilege-media">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">管理者権限と外部媒体の制御</span><span class="back" hidden><span class="def">管理者権限を絞り、外部媒体の接続を制御する。不要なソフトの導入や持出しを防ぎやすくなる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep209-info-asset-client-pc:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>情報資産の管理の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>分類は、一度決めたら見直さなくてよい</span></button><p class="why" hidden>分類も変化に応じて見直す</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>資産台帳には、管理責任者を記録しない</span></button><p class="why" hidden>管理責任者を記録する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>区分ごとに、保管や廃棄の方法を定める</span></button><p class="why" hidden>区分ごとに取扱い方法を定める</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>クライアントPCは、パスワードだけで十分に保護できる</span></button><p class="why" hidden>暗号化や権限の制限も組み合わせる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep209-info-asset-client-pc:q0" data-answer="1">
+  <p class="q">情報資産の台帳に顧客名簿のファイルだけが載っている。区分は文書化した「極秘・社外秘・公開」の3段階で、管理責任者も記入済み。一方、名簿を保存するノートPCや共有サーバ、保管場所の記載はない。この台帳への指摘として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>区分が3段階では粗すぎるので、5段階以上に細分化しなければ洗出しとして認められない</span></button><p class="why" hidden>区分名や段階数は組織が基準を文書で定めるもので、3段階であること自体は不備ではない。問題は機器や保管場所の挙げ漏れにある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>名簿を扱う機器や保管場所が漏れており、そこが守る対象から外れて対策が及ばない</span></button><p class="why" hidden>正解。洗出しでは情報だけでなく、それを扱う機器・ソフト・保管場所も漏れなく挙げる。漏れた資産は守る対象から外れる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>洗出しは情報だけが対象で、機器やソフトの把握はPCの管理の段階で行えば足りる</span></button><p class="why" hidden>洗出しの段階で機器・ソフト・保管場所まで挙げる。後回しにすると、その間は守る対象から外れたままになりうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>記入済みの管理責任者がPCや保管場所の管理も兼ねるとみなせば、追加の記載は要らない</span></button><p class="why" hidden>管理責任者の記録は台帳の一項目だが、PCや保管場所が台帳に挙がっていなければ、責任者を決めても対策の対象にならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep209-info-asset-client-pc:q1" data-answer="3">
+  <p class="q">更新で不要になったノートPCを廃棄業者へ渡す。担当者は、利用者がファイルを削除しゴミ箱を空にしたことを確認し、そのまま渡すつもりでいる。台帳上、このPCには社外秘の資料が保存されていた。取扱い規則の観点で適切な判断はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>削除と消去は実質的に同じ操作なので、ゴミ箱を空にした時点で区分に関係なく廃棄してよい</span></button><p class="why" hidden>削除しただけでは復元できることがある。廃棄では、媒体を復元できない方法で消去または破棄する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>PC本体に社外秘のラベルが明確に貼られていれば、廃棄の規則に従った扱いだと判断してよい</span></button><p class="why" hidden>ラベルは区分が分かるようにする表示で、廃棄の方法そのものではない。区分に応じた規則に沿い、復元できない方法を取る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>廃棄の方法は区分に関わらず、そのPCを最後に使った利用者が決めるのが規則の基本である</span></button><p class="why" hidden>廃棄も含め、区分ごとに規則を定め、管理責任者が取扱いを確認して見直す。最後の利用者の判断に任せない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>削除だけでは復元できる場合があり、復元できない方法で消去・破棄し、責任者が確認する</span></button><p class="why" hidden>正解。削除だけでは復元できることがあるので、復元できない方法で消去・破棄し、管理責任者が取扱いを確認する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep209-info-asset-client-pc:q2" data-answer="0">
+  <p class="q">外出先でノートPCを紛失した。このPCにはディスク全体の暗号化と画面ロックが設定済みで、遠隔消去の指示も出した。ただし端末が通信できる状態かは分からない。対応方針として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>暗号化が中身を読ませない主な備えで、遠隔消去は通信できたときだけ届く補助として併用する</span></button><p class="why" hidden>正解。暗号化は紛失したPCの中身を読ませないための対策。遠隔消去は通信できないと届かないので、補助として重ねる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>遠隔消去の指示を出した以上、端末側でデータの消去は完了したとみなして、対応の記録を閉じてよい</span></button><p class="why" hidden>遠隔消去は通信できないと届かない。指示を出しても、端末側で消去が完了したとは言えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>暗号化済みなら中身は読まれないとみなせるため、今後は保存データを絞る対策や遠隔消去は不要である</span></button><p class="why" hidden>紛失や盗難は起きる前提で、保存を絞り、遠隔消去も組み合わせる。暗号化があっても、対策は重ねて使う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>画面ロックの設定が主な防御なので、暗号化の有無に関係なく、中身は誰にも読み取られないと判断してよい</span></button><p class="why" hidden>ディスクを別のPCにつなぐと、ログインを経由せずに中身を読める。中身を読ませない対策としては、ディスク全体の暗号化が要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep209-info-asset-client-pc:q3" data-answer="2">
+  <p class="q">社内調査で、業務用PCの利用者が管理者権限で私物のソフトを入れ、USBメモリに顧客データを複製して持ち出している例が見つかった。PCの管理策の見直しとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>画面ロックの待ち時間を短くすれば、不要なソフトの導入と外部媒体への複製の両方を防げるので足りる</span></button><p class="why" hidden>画面ロックはPCの保護の一つだが、ソフトの導入は管理者権限、複製は外部媒体の接続に関わる。それぞれ権限の制限と接続の制御で扱う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>不正対策ソフトを常に最新に保っていれば、管理者権限や外部媒体の接続を制限する必要はない</span></button><p class="why" hidden>不正対策ソフトも保護の一つだが、対策は重ねて使うもの。管理者権限の制限と外部媒体の制御の代わりにはならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>利用者の管理者権限を絞り、外部媒体の接続も制御して、不要なソフトの導入と持出しを防ぎやすくする</span></button><p class="why" hidden>正解。管理者権限を絞ると不要なソフトの導入を防ぎやすくなり、外部媒体の接続を制御すると、データの持出しも防ぎやすくなる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>区分のラベルを資産にきちんと付ければ、持出しも抑えられるため、外部媒体の接続の制御までは不要である</span></button><p class="why" hidden>ラベルは区分が分かるようにする表示にとどまる。持出しを抑えるには、区分ごとの規則に加えて外部媒体の接続の制御が要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep209-info-asset-client-pc:q4" data-answer="0">
+  <p class="q">人事部の給与データは「社外秘」区分で、同じ区分の議事メモと同じ規則で扱われている。しかし、漏えいした場合の影響は議事メモよりはるかに大きいと評価された。見直しの進め方として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>漏えい時の影響で機密性の重要度を付け直し、文書化した基準に沿って区分を見直し、その規則で扱う</span></button><p class="why" hidden>正解。機密性の重要度は、漏えいした場合の影響で決める。区分は文書で定めた基準に沿って見直し、区分ごとの規則で扱う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>区分は変えず、給与データだけ担当者がその都度の判断で個別に厳しく扱い、基準は改めない</span></button><p class="why" hidden>区分の基準は文書で定め、区分ごとに規則を決める。担当者の判断に任せると基準の外でぶれ、区分を設ける意味が崩れる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>台帳の管理責任者を人事部長に変更すれば、区分や取扱い規則を変えなくても同じ保護になる</span></button><p class="why" hidden>管理責任者は、取扱いを確認し見直す役。責任者を変えるだけでは、区分も規則も変わらず、保護の水準は変わらない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>給与データのラベルだけを目立つ色にして周知すれば、取扱い規則は同じでも漏えいの影響は抑えられる</span></button><p class="why" hidden>ラベルは区分が分かるようにする表示。区分が高いほど規則が厳しくなることで初めて取扱いに反映されるので、表示だけでは足りない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">紛失したノートPCに顧客名簿の複製があった。暗号化と遠隔消去がそれぞれ何のための対策で、どんな限界があるかを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">暗号化は紛失したPCの中身を読ませないための対策で、ディスクを別のPCにつないでも読めないようにする。遠隔消去は通信できないと届かない。紛失や盗難は起きる前提で、保存するデータを絞り、対策を重ねて使う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep209-info-asset-client-pc-t0-0"> 暗号化は中身を読ませないための対策</label></li><li><label><input type="checkbox" id="ep209-info-asset-client-pc-t0-1"> 遠隔消去は通信できないと届かない</label></li><li><label><input type="checkbox" id="ep209-info-asset-client-pc-t0-2"> 保存を絞り、対策を重ねる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">情報資産を洗い出してから、区分ごとの取扱い規則につなげるまでの流れを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">情報と、それを扱う機器・ソフト・保管場所を漏れなく挙げ、台帳に名称・場所・管理責任者を記録する。機密性・完全性・可用性の重要度を付け、文書で定めた基準で区分を決める。区分ごとに保管・持出し・送信・廃棄の規則を定め、管理責任者が確認して見直す。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep209-info-asset-client-pc-t1-0"> 機器・ソフト・保管場所まで漏れなく挙げる</label></li><li><label><input type="checkbox" id="ep209-info-asset-client-pc-t1-1"> 台帳に名称・場所・管理責任者を記録する</label></li><li><label><input type="checkbox" id="ep209-info-asset-client-pc-t1-2"> 重要度から区分を決め、基準は文書化する</label></li><li><label><input type="checkbox" id="ep209-info-asset-client-pc-t1-3"> 区分ごとの規則を管理責任者が見直す</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="ノートPCの管理記録（ダミー）"><div class="logtitle">ノートPCの管理記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">営業部のノートPCに、業務のため顧客名簿の複製を保存</span></div><div class="logrow"><span class="hl">持出しは業務上継続する。紛失時、PCは通信できないことがある</span></div><div class="logrow"><span class="hl">ディスクを別のPCにつなぐと、中身をそのまま読める</span></div><div class="logrow"><span class="hl">要件: 紛失しても、名簿の内容を読み取られないようにする</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ディスク全体を暗号化する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>ログインのパスワードを長くする … ディスクを別のPCにつなぐと、ログインを経由せず読める</li><li>持出しを禁止する … 業務上、持出しを継続する前提で、禁止はできない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>4.5.1 情報資産の洗出しと分類</li><li>4.5.2 情報資産の取扱い方法の明確化</li><li>4.5.3 クライアントPCの管理及びセキュリティ対策</li></ul>
+  <p>洗出し、台帳、重要度、区分という流れと、区分ごとの取扱い規則のつながりを確かめる。PCは紛失を前提に、対策を重ねる考え方を読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep208-security-policy.html">← #108 情報セキュリティポリシー 体系と策定の留意点</a><a href="ep210-bcp-bcm.html">#110 BCPとBCM 事業継続の計画と回し続ける運用 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

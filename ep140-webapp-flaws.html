@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#40 Webアプリの仕様と実装による脆弱性 設計の穴と実装の穴｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#40 ・ 第3章 情報セキュリティにおける脆弱性</p>
+  <h1>Webアプリの仕様と実装による脆弱性 設計の穴と実装の穴</h1>
+  <ol class="summary"><li>不備は、仕様（設計）の不備と実装の不備に分けられる。同じ脆弱性でも原因で直し方が変わる。</li><li>型は、入力の扱い・出力の扱い・認証認可と状態の3つ。共通の原因は、値と状態を信用しすぎること。</li><li>設計で業務ルールを洗い出し、サーバ側で毎回検証する。WAFは補助で、業務ロジックの不備は防げないことが多い。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep140-webapp-flaws:spec-flaw">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">仕様（設計）の不備</span><span class="back" hidden><span class="def">業務ルール・状態遷移・回数制限・認可の範囲などの考慮漏れ。コードだけでは直らず、設計から見直す。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep140-webapp-flaws:impl-flaw">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">実装の不備</span><span class="back" hidden><span class="def">入力値の検証漏れ、出力のエスケープ漏れ、認可チェックの漏れなど、実装段階で生じる不備。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep140-webapp-flaws:error-handling">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">エラー処理の不備</span><span class="back" hidden><span class="def">内部の詳細情報を利用者に表示してしまう不備。エラーは汎用の表示にする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep140-webapp-flaws:input-handling">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">入力の扱いの型</span><span class="back" hidden><span class="def">SQLインジェクション、OSコマンドインジェクション、ディレクトリトラバーサルなど。SQLにはプレースホルダ等で対処する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep140-webapp-flaws:output-handling">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">出力の扱いの型</span><span class="back" hidden><span class="def">XSSやヘッダインジェクションなど。出力は、出力先の文脈に応じたエスケープで対処する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep140-webapp-flaws:authz-state">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証・認可・状態の型</span><span class="back" hidden><span class="def">セッション管理、IDOR、CSRF、処理順序の検証漏れなど。認可はサーバ側で毎回確認する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep140-webapp-flaws:business-logic">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">業務ロジックの不備</span><span class="back" hidden><span class="def">業務の流れや状態の扱いの不備。例は、決済を経ずに完了処理が呼べること。サーバ側で順序と状態を検証する。</span><span class="note">画面側の制御だけでは強制できない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep140-webapp-flaws:server-side-check">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">サーバ側での毎回の検証</span><span class="back" hidden><span class="def">入力値・認可・処理の状態を、リクエストのたびにサーバ側で確かめること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep140-webapp-flaws:waf-aux">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">WAFは補助</span><span class="back" hidden><span class="def">WAFは補助の層で、業務ロジックの不備は防げない場合が多い。設計・実装・テスト・診断・レビューが主になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep140-webapp-flaws:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>Webアプリの不備への対策として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>入力値の検証を、画面側のスクリプトだけで行う</span></button><p class="why" hidden>画面側の検証は、迂回できる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>処理の順序の確認を、画面の見た目に任せる</span></button><p class="why" hidden>見た目では、強制にならない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>サーバ側で、入力と処理の状態を検証する</span></button><p class="why" hidden>サーバ側での検証</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>エラー時に、内部の詳細情報を利用者に表示する</span></button><p class="why" hidden>内部の情報が、手がかりになる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep140-webapp-flaws:q0" data-answer="1">
+  <p class="q">パスワードの試行回数に制限を設けない仕様のまま、コードは仕様どおりに正しく実装されている。この不備の分類と直し方として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>実装の不備。入力値の検証を追加すれば、仕様はそのままでも直る</span></button><p class="why" hidden>コードは仕様どおり。回数制限の考慮漏れは、実装ではなく仕様の不備。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>仕様（設計）の不備。回数制限を要件に加えるなど、設計から見直す</span></button><p class="why" hidden>正解。回数制限は仕様（設計）の考慮漏れの例。コードだけでは直らない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>エラー処理の不備。エラーを汎用の表示にすれば、問題は解消される</span></button><p class="why" hidden>エラー表示の問題ではない。エラーの汎用化は内部情報を見せない対策。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WAFを入れれば業務ルールの不備も防げるので、設計の見直しは不要になる</span></button><p class="why" hidden>WAFは補助で、業務ロジックの不備は防げないことが多い。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep140-webapp-flaws:q1" data-answer="0">
+  <p class="q">ポイント交換の機能が「申込→承認→交換」の順で作られているが、交換の処理を直接要求すると、承認されていなくても実行できる。対策として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>交換の処理で、承認済みかどうかをサーバ側で毎回検証する</span></button><p class="why" hidden>正解。処理の順序と状態は、サーバ側で毎回検証する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>交換へのリンクを画面から消し、順序を画面側の制御で強制する</span></button><p class="why" hidden>画面側の制御だけでは、順序は強制にならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>申込番号をSQLに渡す際にプレースホルダを使う</span></button><p class="why" hidden>プレースホルダはSQLの組み立ての対策。順序の検証漏れは別の問題。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WAFで、交換の処理のURLへの直接の要求を遮断する</span></button><p class="why" hidden>WAFは補助で、業務ロジックの不備は防げないことが多い。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep140-webapp-flaws:q2" data-answer="3">
+  <p class="q">例外が起きたとき、画面にSQL文や内部の処理の詳細が表示された。この不備の分類と対処として、適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>入力の扱いの不備なので、SQLにプレースホルダを使えば解消される</span></button><p class="why" hidden>詳細情報の表示はエラー処理の不備。プレースホルダは入力の扱いの対策。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>出力の扱いの不備なので、HTMLエスケープを加えれば解消される</span></button><p class="why" hidden>HTMLエスケープは出力の文脈に応じた対策で、詳細な情報の表示を防ぐものではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>認可の不備なので、利用者ごとに権限を確認する処理を追加すれば解消される</span></button><p class="why" hidden>権限の問題ではなく、内部の詳細を見せてしまうエラー処理の問題。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>エラー処理の不備。利用者には汎用の表示にして、詳細は見せない</span></button><p class="why" hidden>正解。内部の情報は攻撃の手がかりになるので、エラーは汎用の表示にする。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep140-webapp-flaws:q3" data-answer="1">
+  <p class="q">調査記録によると、利用者が他人の注文番号を指定すると他人の注文内容が表示され、サーバ側に所有者を確認する処理が無かった。分類と対処として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>入力の扱いの型。SQLにプレースホルダを使えば解消される</span></button><p class="why" hidden>SQLの組み立ての問題ではない。プレースホルダでは認可の漏れは直らない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認証・認可・状態の型。認可をサーバ側で毎回確認する</span></button><p class="why" hidden>正解。認可チェックの漏れは認証・認可・状態の型。認可は毎回サーバ側で確認する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>出力の扱いの型。出力先の文脈に応じたエスケープを加えれば解消される</span></button><p class="why" hidden>エスケープは出力の対策で、認可の漏れを直すものではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>処理順序の型。画面の遷移順を変更すれば、他人の注文は見えなくなる</span></button><p class="why" hidden>画面側の制御だけでは強制にならない。認可はサーバ側で確認する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep140-webapp-flaws:q4" data-answer="0">
+  <p class="q">WAFを導入したので、設計段階の洗い出しやテストは省略してよいという提案があった。評価として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>WAFは補助。業務ロジックの不備は防げないことが多く、診断も要る</span></button><p class="why" hidden>正解。WAFは補助。設計で洗い出し、サーバ側で検証し、テスト・診断・レビューで見つけて直す。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>WAFで入力値を検査するので、サーバ側での入力値の検証は不要になる</span></button><p class="why" hidden>サーバ側で入力値・認可・状態を毎回検証する。WAFで代わりにはならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>診断を実装後に一度行えば、設計段階での業務ルールの洗い出しは不要になる</span></button><p class="why" hidden>設計の段階で業務ルールと脅威を洗い出し、要件に入れる。診断だけでは代わりにならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WAFを導入していれば、仕様の不備はWAFのルールで自動的に補われる</span></button><p class="why" hidden>業務ロジックの不備はWAFでは防げないことが多い。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">同じ脆弱性でも、原因が設計か実装かで直し方が変わるのはなぜか。頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">設計の不備は業務ルールや状態遷移、回数制限などの考慮漏れなので、コードを直すだけでは足りず、脅威と業務ルールを洗い出して要件に入れる。実装の不備は検証・エスケープ・認可チェックの漏れなので、コードで直す。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep140-webapp-flaws-t0-0"> 設計は考慮漏れで、要件から見直す</label></li><li><label><input type="checkbox" id="ep140-webapp-flaws-t0-1"> 実装は検証・エスケープ・認可の漏れ</label></li><li><label><input type="checkbox" id="ep140-webapp-flaws-t0-2"> コードだけでは設計の穴は直らない</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">画面側の制御だけで処理の順序を守らせるのが不十分な理由と、あるべき対策を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">画面側の制御では順序は強制にならず、サーバが受け取った値や状態を信用しすぎることが原因になる。サーバ側で入力値・認可・処理の状態を毎回検証する。WAFは補助で、業務ロジックの不備は防げないことが多い。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep140-webapp-flaws-t1-0"> 画面側の制御は強制にならない</label></li><li><label><input type="checkbox" id="ep140-webapp-flaws-t1-1"> サーバ側で毎回検証する</label></li><li><label><input type="checkbox" id="ep140-webapp-flaws-t1-2"> WAFは補助</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="ECサイトの購入機能の調査記録（ダミー）"><div class="logtitle">ECサイトの購入機能の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: ECサイトの購入機能（ダミー）。購入は「カート→確認→決済→完了」の順に進む</span></div><div class="logrow"><span class="hl">決済の画面を経由せず、完了画面のURLへ直接要求した注文が、支払い未了のまま確定</span></div><div class="logrow"><span class="hl">完了画面の処理は、注文番号を受け取ると、そのまま注文を確定していた</span></div><div class="logrow"><span class="hl">要求は、利用者本人のログイン状態で、本人の注文番号に対して行われていた</span></div><div class="logrow"><span class="hl">// 注文番号は、プレースホルダでSQLに渡されており、SQLの組み立てに問題はない</span></div></div></div>
+  <p class="q">この事象の原因として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">決済を経たかをサーバ側で検証していない、処理の順序の不備</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>IDOR（他人の注文番号を指定する不備） … 要求は、本人の注文番号</li><li>SQLインジェクション … 入力はプレースホルダでSQLに渡されている</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>3.6.5 Webアプリケーションの仕様や実装による脆弱性と対策</li></ul>
+  <p>不備を仕様（設計）と実装に分け、入力・出力・認証認可と状態の3つの型に整理して、原因ごとの直し方の違いを確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep139-http-server-config.html">← #39 HTTPの仕様とWebサーバの設定不備 仕様側と設定側の弱点</a><a href="ep141-risk-components.html">#41 リスクの構成要素と損失 資産・脅威・脆弱性とアセスメント →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#110 BCPとBCM 事業継続の計画と回し続ける運用｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#110 ・ 第4章 情報セキュリティマネジメントの実践</p>
+  <h1>BCPとBCM 事業継続の計画と回し続ける運用</h1>
+  <ol class="summary"><li>BCPは事業全体で重要業務を続け戻す計画。策定前にBIAで影響を調べ、業務ごとにRTOとRPOを決める。</li><li>戦略（代替拠点・複製）と、発動基準・連絡網・役割分担を文書にする。経営層が方針と資源を決め、委託先も対象に含める。</li><li>計画は想定の範囲で、作っただけでは動かない。BCMで訓練と見直しを続ける。システムが戻っても業務手順が要る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep210-bcp-bcm:bcp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">BCP（事業継続計画）</span><span class="back" hidden><span class="def">事業が中断・阻害されたときに、重要業務を継続・復旧するための文書化された計画。情報システムに限らず事業全体が対象。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep210-bcp-bcm:bcm">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">BCM（事業継続マネジメント）</span><span class="back" hidden><span class="def">BCPの策定、導入・運用（教育・訓練）、点検・評価（演習・見直し）、改善を継続的に回すマネジメント活動。</span><span class="note">BCPは計画、BCMはそれを回し続ける活動。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep210-bcp-bcm:bia">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">BIA（事業影響度分析）</span><span class="back" hidden><span class="def">策定の前に、業務が止まった場合の影響を時間経過とともに評価し、重要業務と優先順位を決める分析。</span><span class="note">BCP発動後の効果測定ではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep210-bcp-bcm:rto">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">RTO（目標復旧時間）</span><span class="back" hidden><span class="def">いつまでに復旧するか、という時間の目標。業務ごとに異なる。</span><span class="note">RPOと取り違えない。RTOは時間、RPOはデータの時点。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep210-bcp-bcm:rpo">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">RPO（目標復旧時点）</span><span class="back" hidden><span class="def">どの時点のデータまで戻すか、という目標。業務ごとに異なる。</span><span class="note">目標が短いほど、代替拠点や複製などの備えに費用がかかる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep210-bcp-bcm:strategy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">戦略（代替拠点・代替手段・複製）</span><span class="back" hidden><span class="def">目標に間に合わせるため、代替拠点や代替手段、データの複製を用意すること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep210-bcp-bcm:procedure-structure">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">発動基準・連絡網・役割分担</span><span class="back" hidden><span class="def">BCPを動かす条件と連絡の経路、担当の分け方。文書で定める。</span><span class="note">手順が人の頭の中だけにあると、被災時に動けない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep210-bcp-bcm:exercise">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">机上演習・復旧訓練</span><span class="back" hidden><span class="def">手順を実際に動かしてみる訓練。見つかった不備は計画に反映する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep210-bcp-bcm:it-recovery">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ITの復旧と業務手順</span><span class="back" hidden><span class="def">システムが戻っても、業務の手順が戻らなければ事業は再開しない。ITの復旧計画はBCPの一部を支える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep210-bcp-bcm:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>BCPとBCMの説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>BCMは、BCPの訓練や見直しも続ける活動</span></button><p class="why" hidden>BCMは訓練と見直しも続ける</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>BCPは、情報システムの復旧手順だけを定める</span></button><p class="why" hidden>BCPは事業全体の継続を扱う</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>BIAは、BCPを発動した後の効果測定である</span></button><p class="why" hidden>BIAは影響を調べて重要業務を決める分析</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>RPOは、復旧に使える時間の上限を表す</span></button><p class="why" hidden>時間の目標はRTO</p></li></ol>
+</li>
+<li class="quiz" data-key="ep210-bcp-bcm:q0" data-answer="1">
+  <p class="q">受注業務の目標は「障害が起きても直前1時間分までの入力を復元でき、障害から3時間以内に再開する」である。現行運用は、データのバックアップを1日1回の夜間に取得し、復旧作業は4時間かかる見込みである。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>復旧時間（RTO）だけ未達である。バックアップは取得してあるので、データの戻る時点は目標を満たす</span></button><p class="why" hidden>RPOも未達。1日1回の取得では、戻るのは最大で約1日前の時点で、直前1時間分という目標を満たさない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>RTOもRPOも未達である。バックアップの取得頻度と復旧作業の所要時間の両方を見直す</span></button><p class="why" hidden>正解。RPOは戻すデータの時点、RTOはいつまでに復旧するかの目標。取得が1日1回では直前1時間に届かず、4時間の復旧は3時間の目標を超える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>RPOだけが未達である。復旧作業が4時間かかっても、障害から再開までの時間は目標の範囲内と評価できる</span></button><p class="why" hidden>RTOも未達。目標の3時間に対して、復旧作業が4時間かかる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>どちらも満たしている。バックアップが取れていれば、データが戻る時点は取得頻度に関係なく満たされる</span></button><p class="why" hidden>RPOは、どの時点のデータまで戻すかの目標。バックアップがあっても、取得が1日1回なら直前1時間分までは戻らない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep210-bcp-bcm:q1" data-answer="2">
+  <p class="q">情報システム部が単独でBCPを作成した。内容はサーバの復旧手順と代替サイトの確保で、営業や製造の業務手順、委託先の外部サービスは記載がなく、経営層には完成後に報告しただけである。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>復旧を担う情報システム部が手順を持つので、ITの手順がそろえば事業継続の計画として十分である</span></button><p class="why" hidden>ITの復旧は重要だが、BCPはIT部門に限らず事業全体が対象。システムが戻っても業務手順が戻らなければ事業は再開しない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>経営層は発動の承認だけを担えばよく、方針の決定や資源の割当ては各部門に任せるのが望ましい</span></button><p class="why" hidden>経営層は方針と資源を決め、発動の判断に責任を持つ。IT部門だけの計画にしない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>事業全体の計画なので、経営層が方針と資源を決め、委託先も対象に含める必要がある</span></button><p class="why" hidden>正解。BCPは事業全体の計画で、経営層が方針と資源を決める。重要業務を支える委託先や外部サービスも対象に含める。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>委託先の外部サービスは契約で責任が相手に移るため、自社のBCPの対象から外しても支障はない</span></button><p class="why" hidden>重要業務を支える委託先や外部サービスも、BCPの対象に含める。契約があっても、業務が止まる影響は自社に及ぶ。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep210-bcp-bcm:q2" data-answer="3">
+  <p class="q">BCPの机上演習で、連絡網の担当者が異動済みで連絡がつかず、代替拠点の利用手順にも古い設備名が残っていた。組織変更や委託先の変更後、計画の文書は更新していなかった。演習結果の扱いとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>演習は想定した範囲での確認にとどまるので、結果は計画に反映せず、実際の被災時に臨機応変に対応する</span></button><p class="why" hidden>計画は想定の範囲で作るので、演習で手順を実際に動かして不備を見つけ、計画に戻す。反映しないと古い前提のまま残る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>連絡網の担当者だけを差し替えれば足り、設備や委託先の変化の反映は次の策定時にまとめて行う</span></button><p class="why" hidden>連絡網だけでなく、組織・設備・委託先の変化も見直しの対象。まとめて先送りすると、古い前提が残る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>不備は文書の更新漏れにすぎないため、記録だけ残して計画は据え置き、次の策定で見直す</span></button><p class="why" hidden>記録だけでは計画は変わらない。見直さない計画は古い前提のまま残り、被災時に動けない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>不備を計画へ反映し、組織・設備・委託先の変化も含めて見直し、次の演習で動かして確かめる</span></button><p class="why" hidden>正解。訓練の結果と、組織や設備、委託先の変化を反映して見直す。BCMはこれを回し続ける活動。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep210-bcp-bcm:q3" data-answer="1">
+  <p class="q">復旧訓練で、障害を起こしたシステムは目標時間内に復旧した。しかし業務側は、受付の手順や連絡の役割が決まっておらず、システムの復旧後も業務を再開できなかった。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>RTOが長すぎたことが原因なので、目標をさらに短くすればシステムの復旧後に業務も自動で再開できる</span></button><p class="why" hidden>RTOはいつまでに復旧するかの目標で、システムはすでに目標内に戻っている。業務の手順が戻らない点は、目標を短くしても解決しない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>システムが戻っても業務の手順が戻らなければ再開しないため、業務手順も計画に含めて訓練する</span></button><p class="why" hidden>正解。システムが戻っても、業務の手順が戻らなければ事業は再開しない。業務手順もBCPで定め、訓練で動かして確かめる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ITの復旧計画はBCPとは別の文書として管理するものであり、BCPの見直しの対象に含めるべきではない</span></button><p class="why" hidden>ITの復旧計画はBCPの一部を支えるもの。BCPと切り離さず、見直しの対象に含める。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>訓練で目標時間内にシステムを復旧できたので、計画は想定どおりに機能したと評価して差し支えない</span></button><p class="why" hidden>業務を再開できなかった以上、計画が機能したとは言えない。計画は想定の範囲で作るため、訓練の結果を計画に反映する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep210-bcp-bcm:q4" data-answer="2">
+  <p class="q">経営層が「全業務をRTO1時間、RPOほぼゼロで」と要求した。BIAでは、業務ごとに停止の影響の大きさと許容できる停止の長さに差があった。代替拠点とデータの複製を全業務に用意するには大きな費用がかかる。BCP担当者の対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>要求どおりに全業務を最短の目標とし、費用の問題は被災後の復旧の段階であらためて判断する</span></button><p class="why" hidden>目標が短いほど備えの費用がかかる。費用の判断を後回しにすると、経営層が決める資源との関係が抜けたまま計画が進む。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>RTOとRPOは全社で一つに決めるものなので、最も厳しい業務に合わせて統一する案を採る</span></button><p class="why" hidden>RTOとRPOは業務ごとに異なる。BIAで影響の大きい業務を見極め、業務ごとに決める。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>BIAで業務ごとの影響を示し、目標を業務ごとに決めて、費用との関係を経営層に説明する</span></button><p class="why" hidden>正解。BIAで重要業務と優先順位を決め、目標を業務ごとに定める。目標が短いほど費用がかかるので、経営層が方針と資源を決められるよう説明する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>目標の設定はIT部門の技術的な判断で決めるべきなので、経営層の資源配分の判断とは切り離して進める</span></button><p class="why" hidden>経営層が方針と資源を決める。IT部門だけの計画にせず、目標と資源の関係を経営層とあわせて決める。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">RTOとRPOの違いを、障害が起きた場面を想定して頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">RTOは、いつまでに復旧するかという時間の目標。RPOは、どの時点のデータまで戻すかという目標。どちらもBIAの結果をもとに業務ごとに決め、目標が短いほど代替拠点や複製などの備えに費用がかかる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep210-bcp-bcm-t0-0"> RTOは時間、RPOはデータの時点</label></li><li><label><input type="checkbox" id="ep210-bcp-bcm-t0-1"> 業務ごとに異なる（BIAの結果から決める）</label></li><li><label><input type="checkbox" id="ep210-bcp-bcm-t0-2"> 目標が短いほど備えの費用がかかる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">BCPを作っただけでは事業継続につながらない理由と、BCMで何を回すのかを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">計画は想定の範囲で作るため、作っただけでは動かない。手順が人の頭の中だけにあると被災時に動けず、組織や設備、委託先が変われば計画も古くなる。BCMは、策定・訓練・見直しを回し続け、訓練で見つけた不備や変化を計画に反映する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep210-bcp-bcm-t1-0"> 計画は想定の範囲で、作っただけでは動かない</label></li><li><label><input type="checkbox" id="ep210-bcp-bcm-t1-1"> 訓練で手順を実際に動かして不備を見つける</label></li><li><label><input type="checkbox" id="ep210-bcp-bcm-t1-2"> 組織・設備・委託先の変化を反映して見直す</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="復旧計画の検討記録（ダミー）"><div class="logtitle">復旧計画の検討記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">受注システム: 停止が4時間を超えると、納期遅延が確定</span></div><div class="logrow"><span class="hl">経理システム: 3日止まっても、決算に影響しない</span></div><div class="logrow"><span class="hl">復旧の要員は少なく、同時に着手できるのは1システム</span></div><div class="logrow"><span class="hl">要件: 事業への影響が大きい業務から、順に復旧したい</span></div></div></div>
+  <p class="q">復旧計画の方針として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">受注システムを、4時間以内の目標で最優先にする</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>全システムを、同じ目標時間にそろえる … 4時間にそろえても着手できるのは1システム。経理に割くと受注が間に合わない</li><li>経理システムを、最優先で復旧する … 経理は3日待てる。先に限度が来るのは、4時間の受注</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>4.9.1 BCP、BCMの概要</li><li>4.9.2 BCP策定、BCM確立における要点</li></ul>
+  <p>BCPとBCMの関係、BIAからRTO・RPOを決める流れを確かめる。戦略と体制、訓練と見直しの運用まで続けて読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep209-info-asset-client-pc.html">← #109 情報資産の洗出し・分類とクライアントPC</a><a href="ep211-security-audit.html">#111 情報セキュリティ監査とシステム監査 独立と証拠で測る →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

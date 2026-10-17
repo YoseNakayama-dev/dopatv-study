@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#97 ISMSとPDCA 規格・認証・確立と運用の主な作業｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#97 ・ 第1章 情報セキュリティ及びITの基礎</p>
+  <h1>ISMSとPDCA 規格・認証・確立と運用の主な作業</h1>
+  <ol class="summary"><li>ISMSは作って終わりではない。計画・実施・点検・処置のPDCAで、評価と改善を回し続ける。</li><li>27000は用語と概要、27001は認証の基準となる要求事項、27002は管理策の実践規範。認証は範囲を決めて受ける。</li><li>範囲と方針、リスクの評価と残留リスクの受容判断、適用宣言書、内部監査とレビューの流れで確立と運用を行う。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep197-isms-pdca:pdca">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">PDCA</span><span class="back" hidden><span class="def">計画・実施・点検・処置を回して継続的に改善する考え方。ISMSはこれで回し続けるマネジメント。</span><span class="note">本編は考え方としての説明。規格の箇条がPDCAの名称で分かれているとは限らない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep197-isms-pdca:jis-q-27000">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">JIS Q 27000</span><span class="back" hidden><span class="def">ISMSの用語と概要を示す規格。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep197-isms-pdca:jis-q-27001">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">JIS Q 27001</span><span class="back" hidden><span class="def">ISMSの要求事項を定める規格。認証を受けるときの基準になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep197-isms-pdca:jis-q-27002">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">JIS Q 27002</span><span class="back" hidden><span class="def">管理策の実践規範。管理策を選ぶときの手引きになる。</span><span class="note">認証の基準そのものではない。認証の基準は27001。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep197-isms-pdca:certification-scope">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証と認証範囲</span><span class="back" hidden><span class="def">第三者の認証機関が審査して行う。範囲を決めて受けるので、範囲外の部門や業務は対象にならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep197-isms-pdca:risk-assessment">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">リスクアセスメントとリスク対応</span><span class="back" hidden><span class="def">リスクを評価し、対応を選ぶ作業。経営層が関与して決めた適用範囲と基本方針のもとで行う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep197-isms-pdca:residual-risk">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">残留リスクの受容判断</span><span class="back" hidden><span class="def">リスク対応のあとに残るリスクについて、受容してよいかを判断すること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep197-isms-pdca:soa">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">適用宣言書</span><span class="back" hidden><span class="def">選んだ管理策をまとめた文書。採用しない管理策は、その理由も示す。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep197-isms-pdca:internal-audit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">内部監査とマネジメントレビュー</span><span class="back" hidden><span class="def">運用後に、内部監査とマネジメントレビューで有効性を評価し、その結果を改善につなげる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep197-isms-pdca:corrective-action">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">是正処置</span><span class="back" hidden><span class="def">不適合に対して原因へ手を打ち、改善する処置。改善の結果は次の計画に反映する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep197-isms-pdca:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>JIS Q 27002の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ISMS認証の、要求事項を定める</span></button><p class="why" hidden>認証の要求事項はJIS Q 27001</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>情報セキュリティ管理策の、実践規範を示す</span></button><p class="why" hidden>管理策の実践規範</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>情報セキュリティの用語と概要を、定める</span></button><p class="why" hidden>用語と概要はJIS Q 27000</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>個人情報の保護体制を、認証機関が認証する</span></button><p class="why" hidden>個人情報の認証は別の制度</p></li></ol>
+</li>
+<li class="quiz" data-key="ep197-isms-pdca:q0" data-answer="0">
+  <p class="q">取引先からISMS認証の有無を問われた。当社は情報システム部門で、JIS Q 27002の管理策に沿った整備を済ませている。認証を受けたい場合の説明として、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>認証の基準は27001の要求事項。範囲を決めて、第三者の認証機関の審査を受ける</span></button><p class="why" hidden>正解。認証を受けるときの基準になるのは27001の要求事項。認証は第三者の認証機関が審査し、範囲を決めて受ける。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>27002に沿って整備を済ませたので、その適合を社内で宣言すれば、ISMS認証を取得したことになる</span></button><p class="why" hidden>認証は第三者の認証機関が審査して行うもので、社内の宣言では取得したことにならない。また基準は27002ではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>27002は管理策の実践規範なので、全ての管理策を実施したと確認されれば、認証の基準を満たすことになる</span></button><p class="why" hidden>27002は管理策を選ぶときの手引きで、認証の基準そのものではない。管理策を実施したことが基準を満たすことにはならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>27000は用語と概要を示す規格なので、その用語に合わせて文書を整えれば、認証の対象になる</span></button><p class="why" hidden>27000は用語と概要を示す規格で、用語に合わせて文書を整えても要求事項への適合にはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep197-isms-pdca:q1" data-answer="2">
+  <p class="q">当社のISMS認証の範囲は「情報システム部門の運用」と決められている。取引先から「営業部門が扱う顧客情報も、認証で保証されているのか」と問われた。回答として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>認証は会社単位で取得するものなので、営業部門も対象に含まれると回答する</span></button><p class="why" hidden>認証は範囲を決めて受けるので、会社単位とは限らない。今回は範囲が情報システム部門の運用と決められている。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>営業部門は情報システム部門と顧客情報を共有しているので、自動的に対象になると回答する</span></button><p class="why" hidden>情報を共有していても、範囲に含まれていない部門が自動で対象になるとは言えない。範囲の定義で決まる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>認証は範囲を決めて受けるため、営業部門が範囲内かを確認して回答する</span></button><p class="why" hidden>正解。認証は範囲を決めて受ける。範囲外の部門や業務は対象にならない可能性があり、定義を確認して回答する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>認証範囲は規格が一律に全社と定めているので、営業部門も含まれていると回答する</span></button><p class="why" hidden>範囲は組織が決めるもので、規格が全社と一律に定めるものではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep197-isms-pdca:q2" data-answer="3">
+  <p class="q">管理策を選定中。当社はクラウドだけで事業を行い、自社の機器室を持たないため、機器室の入退室に関する管理策は採用しない予定である。適用宣言書の扱いとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>採用しない管理策は宣言書に載せず、載せたものだけを実施の対象とする</span></button><p class="why" hidden>載せないと、検討した結果として採用しなかったのか、検討漏れなのかが分からない。採用しない理由を示す必要がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>規格の管理策は全て採用しなければ基準を満たせないため、形式的に採用したことにして載せる</span></button><p class="why" hidden>形式的に採用したことにすると、実態と宣言書が食い違う。採用しない管理策は理由を示せばよい。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>採用しない理由は内部監査で後から確認すれば十分なので、宣言書の段階では示さなくてよい</span></button><p class="why" hidden>内部監査は運用後の点検で、宣言書の段階で示す理由の代わりにならない。宣言書に理由を示す。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>採用しない管理策も宣言書に載せ、採用しない理由を示してまとめる</span></button><p class="why" hidden>正解。適用宣言書は選んだ管理策をまとめた文書で、採用しない管理策もその理由を示す。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep197-isms-pdca:q3" data-answer="0">
+  <p class="q">リスク対応を実施したが、一部のリスクが許容できる水準まで下がり切らず残っている。担当者は「ゼロになるまで追加対策を続けるので、運用開始は延期する」と述べた。判断として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>残るリスクを受容してよいかを判断し、受容できない場合に追加の対応を選ぶ</span></button><p class="why" hidden>正解。リスク対応のあとに残るリスクは、受容してよいか判断する。受容できないなら、追加の対応を選ぶ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>リスクがゼロにならなければISMSは成立しないので、ゼロになるまで運用を始めない</span></button><p class="why" hidden>リスクをゼロにすることが前提ではない。残るリスクについて、受容してよいかを判断する流れになる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>残るリスクはリスク対応の失敗を示すので、リスクアセスメントを最初からやり直す</span></button><p class="why" hidden>残るリスクがあるからといって対応の失敗とは限らず、評価の最初からやり直す理由にならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>残るリスクは内部監査で初めて扱うので、運用開始前に受容の判断をする必要はない</span></button><p class="why" hidden>受容の判断は、リスク対応のあとの作業。内部監査は運用後の点検で、時期も役割も違う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep197-isms-pdca:q4" data-answer="2">
+  <p class="q">規程を整備し、全社への周知と研修も終えた。担当者が「実施まで完了したのでISMSの確立は終わり。以後は現状を維持すればよい」と報告した。指摘として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>運用の記録を残していれば十分で、評価は問題が実際に起きたときに行えばよい</span></button><p class="why" hidden>記録は必要だが、それだけでは評価にならない。点検では監視や内部監査で有効性を評価する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>内部監査では規程どおりに守れているかを確かめれば足りる。効果の評価は別の機会でよい</span></button><p class="why" hidden>守れているかだけでなく、効いているかも見るのが点検。効果の評価を別にすると、改善につながらない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>守れているかだけでなく効いているかも評価し、不適合は是正して次の計画に反映する</span></button><p class="why" hidden>正解。点検で有効性を評価し、処置で不適合に是正処置をとり、その結果を次の計画に反映して回し続ける。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>改善は年度末に計画を作り直すときに、まとめて一度だけ行えばよい</span></button><p class="why" hidden>改善を一度にまとめると、不適合が放置される期間が長くなる。回し続けることが肝心で、時期を固定しない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ISMSでPDCAの各段階（計画・実施・点検・処置）が、それぞれ何をするか。頭の中で整理してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">計画では適用範囲と方針を決め、リスク対応の計画を立てる。実施では管理策を導入し運用し、記録を残す。点検では監視と内部監査で有効性を評価する。処置では不適合に是正処置をとり、改善の結果を次の計画に反映する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep197-isms-pdca-t0-0"> 計画：範囲・方針・リスク対応の計画</label></li><li><label><input type="checkbox" id="ep197-isms-pdca-t0-1"> 実施：管理策の導入と運用、記録</label></li><li><label><input type="checkbox" id="ep197-isms-pdca-t0-2"> 点検：監視・内部監査で有効性を評価</label></li><li><label><input type="checkbox" id="ep197-isms-pdca-t0-3"> 処置：是正処置と次の計画への反映</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">27000・27001・27002の役割の違いと、「認証」で何が審査されるかを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">27000は用語と概要、27001はISMSの要求事項で認証の基準、27002は管理策の実践規範で認証の基準そのものではない。認証は第三者の認証機関が審査し、範囲を決めて受けるため、範囲外は対象にならない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep197-isms-pdca-t1-0"> 27000は用語と概要</label></li><li><label><input type="checkbox" id="ep197-isms-pdca-t1-1"> 27001は要求事項で認証の基準</label></li><li><label><input type="checkbox" id="ep197-isms-pdca-t1-2"> 27002は管理策の手引き</label></li><li><label><input type="checkbox" id="ep197-isms-pdca-t1-3"> 第三者の審査と、範囲を決めること</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="ISMS内部監査の結果記録（ダミー）"><div class="logtitle">ISMS内部監査の結果記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">リスク対応計画は承認され、運用に移された</span></div><div class="logrow"><span class="hl">内部監査で、手順の未実施が1件見つかった</span></div><div class="logrow"><span class="hl">原因は、担当者が手順を知らなかったことだった</span></div><div class="logrow"><span class="hl">要件: 同じ不適合を、繰り返さないようにしたい</span></div></div></div>
+  <p class="q">このあとの対応として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">原因（手順の周知不足）への是正処置を決め、実施後に有効性を確認する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>リスクアセスメントを最初からやり直す … 不適合の原因は、手順の周知不足にあり、リスク評価ではない</li><li>原因が分かっているのに、見つかった1件だけを直す … 要件は再発防止であり、原因への対応が要る</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>1.3.1 情報セキュリティマネジメントにおけるPDCA</li><li>1.3.2 ISMSに関する規格及び制度の概要</li><li>1.3.3 ISMSの確立と運用における主な作業内容</li></ul>
+  <p>PDCAの各段階の作業と、27000・27001・27002の役割の違いを区別しながら読む。認証が範囲を決めて受ける点に注意する。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep196-infosec-properties.html">← #96 情報セキュリティの特性 機密性・完全性・可用性と付加的な特性</a><a href="ep198-tcpip-icmp.html">#98 TCP/IPの基礎 IP・TCP・UDP・ICMP の役割分担 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

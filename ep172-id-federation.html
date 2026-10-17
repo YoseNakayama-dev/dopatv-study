@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#72 ID連携の概要 認証は持ち主に任せる｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#72 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
+  <h1>ID連携の概要 認証は持ち主に任せる</h1>
+  <ol class="summary"><li>ID連携は信頼関係を結んだ組織間で認証結果を連携する。パスワードはIdPだけが持ち、サービス側は結果を信頼して受け入れる。</li><li>IdPの侵害・停止は連携先すべてに及ぶ。認証結果の盗用や使い回し、渡す属性が多いほど漏えいの影響も大きい。</li><li>対策は連携先の事前確認、署名・宛先・有効期限の検証、属性の最小化、IdP側の多要素認証と冗長化。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep172-id-federation:federation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ID連携（フェデレーション）</span><span class="back" hidden><span class="def">信頼関係を結んだ組織間で認証結果を連携し、SSOを組織の境界を越えて実現する仕組み。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep172-id-federation:idp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IdP</span><span class="back" hidden><span class="def">利用者の認証と属性の提供を行う側。利用者のパスワードはIdPだけが持つ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep172-id-federation:sp-rp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">サービス側（SP/RP）</span><span class="back" hidden><span class="def">IdPの認証結果を信頼して受け入れる側。認証はしないが、何を許可するかは自分で決める。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep172-id-federation:idp-concentration">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IdPへの集中リスク</span><span class="back" hidden><span class="def">IdPが破られると連携先すべてに影響し、IdPが止まると連携先に入れなくなる。</span><span class="note">対策はIdP側の多要素認証と冗長化。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep172-id-federation:result-reuse">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証結果の盗用・使い回し</span><span class="back" hidden><span class="def">認証結果が盗まれて使い回されるおそれがある。認証結果は本来の相手にだけ有効でなければならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep172-id-federation:attribute">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">属性</span><span class="back" hidden><span class="def">IdPがサービス側へ渡す利用者の情報。個人情報を含みうるため、多いほど漏えいの影響が大きい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep172-id-federation:attribute-minimum">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">属性の最小化</span><span class="back" hidden><span class="def">渡す属性を必要最小限にする対策。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep172-id-federation:result-verification">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証結果の検証</span><span class="back" hidden><span class="def">認証結果の署名・宛先・有効期限を確認する。盗まれた結果が別の場所で使われるのを防ぐ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep172-id-federation:trust-check">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">連携先の事前確認</span><span class="back" hidden><span class="def">連携前に連携先を確認し、証明書などで確かめる。信頼関係は口約束ではなく、技術で裏づける。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep172-id-federation:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>ID連携の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者のパスワードを、連携先のすべてのサービスにも複製して保管する方式</span></button><p class="why" hidden>パスワードは複製しない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>異なる組織の間では信頼関係を結べないため、組織内でしか使えない方式</span></button><p class="why" hidden>組織をまたいで使える</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>渡す属性情報は、できるだけ多いほうが安全であるとされている方式</span></button><p class="why" hidden>属性は必要最小限にする</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>認証側が認証結果を発行し、サービス側がそれを信頼して受け入れる方式</span></button><p class="why" hidden>結果を信頼して受け入れる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep172-id-federation:q0" data-answer="1">
+  <p class="q">サービス側が、IdPから届いた認証結果の署名だけを確認して受け入れている。使い回しを防ぐための扱いとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>署名が正しければ、宛先や有効期限が自サービス向けでなくても、そのまま受け入れてよい</span></button><p class="why" hidden>認証結果は本来の相手にだけ有効でなければならず、宛先や有効期限の確認が要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>署名に加えて、宛先が自サービスであることと、有効期限内であることも確認する</span></button><p class="why" hidden>正解。署名、宛先、有効期限を確認して、盗まれた結果が別の場所で使われるのを防ぐ。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>信頼関係のある相手から届くので、署名の確認も省いてよい</span></button><p class="why" hidden>信頼関係は口約束ではなく技術で裏づける。認証結果は署名などを確認する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>宛先は確認せず、有効期限だけ確認する。別サービス向けの結果も受け入れる</span></button><p class="why" hidden>別のサービス向けの認証結果を受け入れてはいけない。宛先も確認する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep172-id-federation:q1" data-answer="0">
+  <p class="q">サービス側が、IdPから受け取る利用者の属性を決めている。方針として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用するサービスの動作に必要な属性だけに絞って、IdPから受け取るようにする</span></button><p class="why" hidden>正解。渡す属性は必要最小限にする。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>将来使うかもしれないので、IdPが持つ属性をできるだけ多く受け取る</span></button><p class="why" hidden>渡す属性は必要最小限にする。属性には個人情報も含まれうる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>属性は認証結果と一緒に渡されるだけなので、件数が多くても、漏えいの影響の大きさは変わらない</span></button><p class="why" hidden>渡す属性が多いほど、漏えいの影響が大きくなる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>属性は個人情報を含まないため、渡す範囲を決める必要はない</span></button><p class="why" hidden>属性の中には個人情報も含まれうるため、渡す範囲を絞る必要がある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep172-id-federation:q2" data-answer="2">
+  <p class="q">取引先のIdPの認証結果を受け入れているポータルで、IdPが停止した。影響と対策の組合せとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>サービス側は認証をしないので影響はなく、利用者は業務を続けられる</span></button><p class="why" hidden>IdPが止まると連携先にも入れなくなり、連携先の利用者は業務を続けられなくなる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>連携先に入れなくなる。対策としては、署名の検証を強化すればよい</span></button><p class="why" hidden>署名の検証は偽の認証結果や使い回しへの対策で、IdPの停止には効かない。IdP側の冗長化で備える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>連携先にも入れなくなる。IdP側の冗長化で止まりにくくする</span></button><p class="why" hidden>正解。IdPの停止は連携先すべてに及ぶので、IdP側を冗長化する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>連携先に入れなくなる。対策としては、渡す属性を絞ればよい</span></button><p class="why" hidden>属性を絞るのは漏えいの影響を小さくする対策で、停止への対策ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep172-id-federation:q3" data-answer="1">
+  <p class="q">ID連携の仕組みの説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>サービス側が利用者のパスワードを預かり、IdPの代わりに認証する</span></button><p class="why" hidden>利用者のパスワードはIdPだけが持ち、サービス側は預からずに済む。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>パスワードはIdPだけが持ち、サービス側はIdPの結果を信頼して受け入れる</span></button><p class="why" hidden>正解。パスワードを持つのはIdPだけで、サービス側はIdPの結果を信頼して受け入れる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>サービス側は認証結果を受け入れるため、何を許可するかもIdP側がすべて決めることになる</span></button><p class="why" hidden>サービス側は認証はしないが、何を許可するかは自分で決める。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>組織の境界の内側に限ってSSOを実現する仕組みである</span></button><p class="why" hidden>ID連携は、信頼関係を結んだ組織間で認証結果を連携し、SSOを組織の境界を越えて実現する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep172-id-federation:q4" data-answer="0">
+  <p class="q">新たな取引先のIdPと連携を始める。連携前の対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>事前に連携先を確認し、証明書などで確かめてから連携を始める</span></button><p class="why" hidden>正解。事前に連携先を確認し、証明書などで確かめる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>連携の取り決めを文書で交わしてあれば、技術的な確認までは不要である</span></button><p class="why" hidden>文書の取り決めだけでは、連携先が本当にその組織かを確かめられない。信頼関係は技術で裏づけるもので、証明書などで確かめる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>連携を始めた後に問題が出てから、連携先を確認すれば足りる</span></button><p class="why" hidden>連携を始めた後の確認では、確認前に、正規かどうか分からない相手の認証結果を受け入れ、属性を渡してしまうおそれがある。連携前に確認し、証明書などで確かめる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>IdPが多要素認証を使っていれば、連携先の確認は省いてよい</span></button><p class="why" hidden>IdP側を多要素認証にするのは別の対策で、事前に連携先を確認し証明書などで確かめることの代わりにはならない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ID連携で、IdPに信頼を集中させることのリスクと、その対策を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">IdPが破られると連携先すべてに影響し、IdPが止まると連携先に入れなくなる。対策は、IdP側を多要素認証にし、冗長化すること。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep172-id-federation-t0-0"> IdPの侵害は連携先すべてに影響する</label></li><li><label><input type="checkbox" id="ep172-id-federation-t0-1"> IdPの停止で連携先に入れなくなる</label></li><li><label><input type="checkbox" id="ep172-id-federation-t0-2"> IdP側の多要素認証と冗長化</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">認証結果が盗まれて別の場所で使い回されるのを防ぐために、受け取る側が確認することを、頭の中で挙げてみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">認証結果の署名、宛先、有効期限を確認する。認証結果は本来の相手にだけ有効でなければならないので、別のサービス向けの結果は受け入れない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep172-id-federation-t1-0"> 署名を確認する</label></li><li><label><input type="checkbox" id="ep172-id-federation-t1-1"> 宛先を確認する</label></li><li><label><input type="checkbox" id="ep172-id-federation-t1-2"> 有効期限を確認する</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="取引先ポータルの認証に関する調査記録（ダミー）"><div class="logtitle">取引先ポータルの認証に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 取引先の社員ごとに、自社でIDとパスワードを発行している</span></div><div class="logrow"><span class="hl">取引先の退職者の情報は、自社では把握できない</span></div><div class="logrow"><span class="hl">取引先は、従業員の認証を自社の基盤で行い、退職時は無効にする</span></div><div class="logrow"><span class="hl">要件: パスワードを自社で保管せず、退職者は自動的に使えなくしたい</span></div></div></div>
+  <p class="q">要件を満たす方法として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">取引先の認証基盤と信頼関係を結び、その認証結果を受け入れて利用させる</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>社員ごとのIDを自社で発行し、退職時の連絡を取引先に求める … 連絡頼みで、自動的には使えなくならない</li><li>取引先の全員で共通のIDとパスワードを一つ作る … 個人を識別できず、退職者を止められない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>6.9.1 ID連携の概要</li></ul>
+  <p>IdPとサービス側の役割分担、IdPに信頼が集中するリスク、認証結果の検証と属性最小化の対策のつながりを確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep171-sso-mechanisms.html">← #71 SSOを実現する仕組み どこで認証を受けるか</a><a href="ep173-id-federation-tech.html">#73 主なID連携技術 認証と認可を分けて覚える →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

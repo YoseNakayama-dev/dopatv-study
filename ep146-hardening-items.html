@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#46 要塞化の主な実施項目 アカウント・サービス・更新・ログ｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#46 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>要塞化の主な実施項目 アカウント・サービス・更新・ログ</h1>
+  <ol class="summary"><li>アカウントとサービスは不要なものを減らす。初期パスワードは変え、共有アカウントは避ける。</li><li>修正プログラムは検証して適用し記録。ファイル権限は必要最小限。ログは別の場所に保管し時刻を合わせる。</li><li>チェックリストと構成基準で漏れを減らし、定期点検でずれを見つける。限界は未知の脆弱性と運用の誤り。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep146-hardening-items:default-password">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">初期パスワードの変更</span><span class="back" hidden><span class="def">導入時の初期パスワードを変えること。初期値は広く知られているため、最初に行う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep146-hardening-items:shared-account">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">共有アカウント</span><span class="back" hidden><span class="def">複数人で共同して使うアカウント。誰の操作か追えなくなるため避ける。</span><span class="note">追跡性や否認防止の観点。パスワードを強くしても人の区別はつかない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep146-hardening-items:admin-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">管理者権限の限定</span><span class="back" hidden><span class="def">管理者権限を持つ利用者を限定すること。不要なアカウントは削除・無効化する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep146-hardening-items:host-firewall">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ホスト上のファイアウォール</span><span class="back" hidden><span class="def">ホスト自身で通信を必要なものに絞る設定。不要なサービスの停止とあわせて入口を減らす。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep146-hardening-items:remote-admin">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">リモート管理の保護</span><span class="back" hidden><span class="def">リモート管理は暗号化された経路で行い、接続元を制限する。可能なら多要素認証も使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep146-hardening-items:patch-verify">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">修正プログラムの検証と記録</span><span class="back" hidden><span class="def">修正プログラムは業務への影響を確かめてから適用し、記録を残す。適用しないと脆弱性が残る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep146-hardening-items:file-permission">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ファイルの権限</span><span class="back" hidden><span class="def">重要なファイルは必要な利用者だけが読める設定にする。読むだけで足りる人に書き込みの権限は与えない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep146-hardening-items:log-offhost">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ログの別保管と時刻合わせ</span><span class="back" hidden><span class="def">ログを取得して別の場所に保管し、時刻を合わせる。改ざんや消去に備え、事故のあとに調査できるようにする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep146-hardening-items:malware-def">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">マルウェア対策</span><span class="back" hidden><span class="def">マルウェア対策ソフトを導入し、定義ファイルを更新すること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep146-hardening-items:checklist-baseline">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">チェックリストと構成基準</span><span class="back" hidden><span class="def">適用漏れを減らすための基準。システムの変化に合わせて更新し、定期的な点検で基準からのずれを見つける。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep146-hardening-items:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>要塞化の実施項目として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>不要なサービスを停止し、通信を必要なものに絞る</span></button><p class="why" hidden>不要なサービスの停止と通信の絞り込み</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ログは、保管の容量を節約するために、取得しないで運用する</span></button><p class="why" hidden>ログがないと、事故を調査できない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>運用の手間を減らすため、管理者アカウントを全員で共有する</span></button><p class="why" hidden>共有だと、誰の操作か追えない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>修正プログラムは、業務に影響しうるので、一切適用しない</span></button><p class="why" hidden>脆弱性が残る。検証して適用する</p></li></ol>
+</li>
+<li class="quiz" data-key="ep146-hardening-items:q0" data-answer="2">
+  <p class="q">侵害されたサーバで、同じサーバ内に保存していたログが消されており、調査できなかった。再発防止として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ログの保存期間を延ばし、同じサーバ内に保存するための容量を十分に確保しておく</span></button><p class="why" hidden>保存期間や容量を増やしても、同じサーバ内では消去や改ざんに備えられない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ログの取得をやめて、攻撃者に操作の手がかりを与えないようにしておく</span></button><p class="why" hidden>ログがないと、事故のあとに調査できない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ログを取得して別の場所に保管し、機器どうしの時刻も合わせて、改ざんや消去に備える</span></button><p class="why" hidden>正解。ログは別の場所に保管し、時刻も合わせる。改ざんや消去に備えるため。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログの閲覧権限を管理者だけに絞り、保存先は従来どおり同じサーバ内のまま、運用を変えずにしておく</span></button><p class="why" hidden>閲覧を絞っても保存先が同じなら、消去や改ざんへの備えにならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep146-hardening-items:q1" data-answer="1">
+  <p class="q">運用担当が、リモート管理でサーバに接続する運用を設計している。設計として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パスワードを頻繁に変更すれば、通信経路や接続元の対策がなくても十分に守れる</span></button><p class="why" hidden>リモート管理では、暗号化した経路・接続元の制限・多要素認証を挙げる。パスワードの変更だけでは足りない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>暗号化された経路に限定し、接続元も制限して、可能なら多要素認証を併用する</span></button><p class="why" hidden>正解。リモート管理は暗号化した経路で行い、接続元も制限する。可能なら多要素認証も使う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>接続元の制限さえ行えば、通信経路が暗号化されていなくても運用上は十分である</span></button><p class="why" hidden>接続元の制限と、経路の暗号化は別々に必要。片方だけでは足りない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>管理用の接続アカウントを担当者全員で共有し、誰が接続しても同じ設定になるようにそろえて、運用の手間を減らす</span></button><p class="why" hidden>共有アカウントは、誰の操作か追えなくなるため避ける。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep146-hardening-items:q2" data-answer="3">
+  <p class="q">サーバに適用する修正プログラムが公開された。運用方針として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>業務への影響が不明でも、公開直後に全台へ一斉に適用し、記録は後でまとめて残す</span></button><p class="why" hidden>検証せずに一斉に適用すると、業務への影響を確かめられない。記録も適用のたびに残す。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>業務に影響しうるので、適用せずに運用し、脆弱性の指摘が出てから対応する</span></button><p class="why" hidden>適用しないと脆弱性が残る。影響を恐れて適用しないのは言い過ぎ。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>検証は省いて重要な台数だけ先に適用し、適用の記録は障害が出たときだけ残す</span></button><p class="why" hidden>修正プログラムは検証してから適用し、記録を残す。記録を障害時だけにするのは足りない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>検証環境で業務への影響を確かめたうえで、順に適用し、適用した記録を残す</span></button><p class="why" hidden>正解。修正プログラムは、検証してから適用し、記録を残す。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep146-hardening-items:q3" data-answer="0">
+  <p class="q">共有フォルダの重要ファイルに、閲覧だけで足りる利用者にも書き込み権限が付いていた。見直しとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>閲覧だけで足りる利用者は読み取りに絞り、書き込みは必要な利用者だけに与える</span></button><p class="why" hidden>正解。重要なファイルは必要な利用者だけが読める設定にし、読むだけで足りる人に書き込みの権限は与えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>書き込み権限は全員に残したまま、変更があるたびに全利用者へメールで通知する運用にする</span></button><p class="why" hidden>通知しても書き込み権限は残る。権限を必要な範囲に絞る対策にならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>フォルダ名を推測されにくいものに変えて、権限の設定そのものは現状のままにしておく</span></button><p class="why" hidden>権限の設定を変えていないので、読むだけで足りる人に書き込み権限が残る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>マルウェア対策ソフトの定義ファイルを更新すれば、権限の見直しは不要になる</span></button><p class="why" hidden>マルウェア対策は別の項目で、権限の見直しの代わりにならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep146-hardening-items:q4" data-answer="1">
+  <p class="q">要塞化のチェックリストの全項目を実施し終えた。担当者は「これで完了。以後の点検は不要」と報告した。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>適切。チェックリストの全項目を実施すれば、未知の脆弱性も運用の誤りも残らないので、点検は要らない</span></button><p class="why" hidden>実施しても、未知の脆弱性や運用の誤りは残る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>不十分。未知の脆弱性や運用の誤りは残るため、定期点検で基準からのずれを見つける</span></button><p class="why" hidden>正解。実施しても未知の脆弱性や運用の誤りは残る。定期的な点検で基準からのずれを見つける。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>適切。チェックリストは一度満たせば、システムを変更しても更新する必要がなくなる</span></button><p class="why" hidden>基準もチェックリストも、システムの変化に合わせて更新する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>不十分。点検は公開サーバや重要な資産を後回しにして、全体を同時に一巡させるべきである</span></button><p class="why" hidden>優先順位は公開サーバや重要な資産から順に進める。後回しにするのは逆。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">削除の操作ログに共有の管理者アカウントしか残らない場合に、誰の操作か特定できない理由と、パスワードを強くしても解決しない理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">共有アカウントでは、複数人が同じアカウントで操作するため、ログに残るのはアカウントまでで、人の区別がつかない。パスワードを強くしても共有している限り区別できない。共有をやめて個人のアカウントで行う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep146-hardening-items-t0-0"> ログに残るのはアカウントまで</label></li><li><label><input type="checkbox" id="ep146-hardening-items-t0-1"> 共有では人の区別がつかない</label></li><li><label><input type="checkbox" id="ep146-hardening-items-t0-2"> 個人のアカウントで管理作業を行う</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">ログを別の場所に保管し、時刻を合わせる理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">改ざんや消去に備えるため。ログがないと事故のあとに調査できない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep146-hardening-items-t1-0"> 改ざんや消去に備える</label></li><li><label><input type="checkbox" id="ep146-hardening-items-t1-1"> ログがないと調査できない</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="ファイルサーバの調査記録（ダミー）"><div class="logtitle">ファイルサーバの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社内ファイルサーバB（ダミー）。重要フォルダが削除された</span></div><div class="logrow"><span class="hl">誰が削除したかは、特定できていない</span></div><div class="logrow"><span class="hl">操作ログ: 削除の操作を記録。実行アカウントは admin-shared</span></div><div class="logrow"><span class="hl">admin-shared は、運用担当5人が共同で使う管理者アカウント</span></div><div class="logrow"><span class="hl">パスワードは強度基準を満たす / 5人は個人のアカウントも持つ</span></div></div></div>
+  <p class="q">特定できない原因への対策として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">共有アカウントを廃止し、管理作業も個人のアカウントで行う</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>ログの取得を始める … 削除の記録は、すでにある（アカウントまで）</li><li>パスワードを強くする … 強度は基準を満たす。5人の区別はつかない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.2.2 要塞化の主な実施項目</li></ul>
+  <p>実施項目ごとに、なぜそうするかの理由と、限界（未知の脆弱性・運用の誤り）を確かめながら読む。点検は診断の回で扱う。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep145-host-hardening.html">← #45 ホストの要塞化の概要 入口を減らす考え方</a><a href="ep147-vuln-assessment.html">#47 脆弱性診断の概要と実施 範囲と時点が肝 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

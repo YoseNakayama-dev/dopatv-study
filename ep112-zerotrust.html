@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#12 ゼロトラスト 場所を信頼しない考え方｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#12 ・ 第1章 情報セキュリティ及びITの基礎</p>
+  <h1>ゼロトラスト 場所を信頼しない考え方</h1>
+  <ol class="summary"><li>ゼロトラストは、ネットワークの位置や機器の所有だけでは暗黙の信頼を与えず、リソースの保護に重点を置く考え方。</li><li>アクセスはセッション単位で最小権限を与え、ID・資産状態・振る舞い・環境の動的ポリシーで判断する。</li><li>製品を入れただけでは完成しない。収集した情報は改善に使う。実現方式は別の回で扱う。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep112-zerotrust:zero-trust">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ゼロトラスト</span><span class="back" hidden><span class="def">暗黙の信頼を与えず、信頼を継続的に評価する考え方。ネットワーク境界ではなく、リソースの保護に重点を置く。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep112-zerotrust:zta">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ゼロトラスト・アーキテクチャ（ZTA）</span><span class="back" hidden><span class="def">ゼロトラストの原則に基づく、企業のセキュリティ計画。考え方を具体化したもの。</span><span class="note">製品を入れただけでは完成しない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep112-zerotrust:perimeter">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">境界防御</span><span class="back" hidden><span class="def">外との境目を固め、中は信頼する従来の考え方。一度中に入られると、中では広く動かれうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep112-zerotrust:no-implicit-trust">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">暗黙の信頼を与えない</span><span class="back" hidden><span class="def">ネットワークの位置（社内か）や機器の所有（会社支給か私物か）だけでは信頼を与えない。すべての要求を同じ要件で評価する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep112-zerotrust:session-least">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">セッション単位の許可と最小権限</span><span class="back" hidden><span class="def">リソースへのアクセスをセッション単位で許可し、最小権限にとどめる。一度の認証で全部を許可しない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep112-zerotrust:dynamic-policy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">動的ポリシー</span><span class="back" hidden><span class="def">ID・資産の状態・振る舞い・環境属性などを踏まえて、アクセスの可否を判断する仕組み。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep112-zerotrust:pe">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Policy Engine（PE）</span><span class="back" hidden><span class="def">許可・拒否・取り消しの最終判断を行う、判断の役割。</span><span class="note">PEが判断、PAが指示、PEPが実施。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep112-zerotrust:pa">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Policy Administrator（PA）</span><span class="back" hidden><span class="def">PEの判断に従い、通信経路の確立・遮断を指示し、セッショントークンを生成する役割。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep112-zerotrust:pep">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Policy Enforcement Point（PEP）</span><span class="back" hidden><span class="def">接続の有効化・監視・終了を行う、実施の役割。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep112-zerotrust:background">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ゼロトラストの背景</span><span class="back" hidden><span class="def">リモートワーク、私物端末の利用（BYOD）、企業ネットワーク外のクラウド資産の増加で、守る境目があいまいになったこと。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep112-zerotrust:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>ゼロトラストの考え方として適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>社内ネットワークの機器は信頼する</span></button><p class="why" hidden>位置による暗黙の信頼は与えない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>位置だけでは信頼せず、リソースごとに許可する</span></button><p class="why" hidden>位置だけでは信頼せず、リソースごとに許可</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>一度認証すれば、全リソースを許可する</span></button><p class="why" hidden>リソースごと・セッションごとに許可</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>製品を導入すれば完成する</span></button><p class="why" hidden>導入しただけでは完成しない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep112-zerotrust:q0" data-answer="3">
+  <p class="q">社内LANに接続した会社支給のPCは、追加の確認なしに、複数の業務システムを利用できる設計になっている。ゼロトラストの観点の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>社内LANにあり会社の機器でもあるため、信頼してよい。外部からの接続だけを厳しく確認すればよい</span></button><p class="why" hidden>誤り。位置と機器の所有だけでは、暗黙の信頼を与えない。内側の機器も同じ要件で評価する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>利用者を多要素認証で確認済みなら、機器の状態は問わずに全システムを許可してよい</span></button><p class="why" hidden>誤り。利用者の確認だけでは足りない。機器の状態も踏まえて、リソースごとに許可を判断する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>社内LANの外にあるPCにだけ、アクセスごとの評価を行えばよい</span></button><p class="why" hidden>誤り。社内か社外かによらず、すべての要求を同じ要件で評価する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>位置や機器の所有だけでは信頼せず、アクセスごとに同じ要件で評価する</span></button><p class="why" hidden>正解。ネットワークの位置や機器の所有だけでは、暗黙の信頼を与えない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep112-zerotrust:q1" data-answer="0">
+  <p class="q">判定ログに次の順で記録されていた。(1) ある利用者の要求の許可を取り消す判断、(2) 該当セッションの経路を遮断する指示、(3) 接続の終了。(1) の判断を行ったコンポーネントはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>Policy Engine（PE）</span></button><p class="why" hidden>正解。PEが、許可・拒否・取り消しの最終判断を行う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>Policy Administrator（PA）</span></button><p class="why" hidden>誤り。PAはPEの判断に従い、経路の確立・遮断を指示する。(2) に当たる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>Policy Enforcement Point（PEP）</span></button><p class="why" hidden>誤り。PEPは接続の有効化・監視・終了を行う。(3) に当たる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>境界に置くファイアウォール</span></button><p class="why" hidden>誤り。NISTの文書が示す3つの役割に含まれない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep112-zerotrust:q2" data-answer="2">
+  <p class="q">夜間に普段と異なる環境から、OSの更新が止まった端末で重要システムへの接続要求があった。ゼロトラストの考え方に沿った対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者のIDとパスワードが正しければ、端末の状態や接続環境は考慮せずに許可する</span></button><p class="why" hidden>誤り。IDとパスワードだけでなく、端末の状態や環境も判断材料にする。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>社内のネットワークからの接続なら、端末の状態にかかわらず、常に許可を継続する</span></button><p class="why" hidden>誤り。社内からの接続でも、位置だけで信頼しない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ID・資産状態・振る舞い・環境属性を踏まえた動的ポリシーで判断する</span></button><p class="why" hidden>正解。動的ポリシーで、ID・資産状態・振る舞い・環境属性を踏まえて判断する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>接続を一律に拒否する静的なルールを設け、例外を設けずに全員へ恒久的に適用する</span></button><p class="why" hidden>誤り。一律拒否の静的なルールではなく、状況に応じて動的に判断する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep112-zerotrust:q3" data-answer="1">
+  <p class="q">データの多くが社外のクラウドにあり、社員は在宅で働き、私物の端末も使う。社内ネットワークの境界を固める投資だけで守る方針の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>境界を固めれば、社外のクラウドや私物端末の通信も社内と同じ強さで保護できるため、十分である</span></button><p class="why" hidden>誤り。境界だけでは、社外のクラウドや私物端末の通信を社内と同じ強さで守れない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>守る対象が社内の外にもあるため、位置でなくリソースの保護に重点を置く</span></button><p class="why" hidden>正解。リモートワーク、BYOD、社外のクラウドで境目があいまいになった。リソースの保護に重点を置く。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>在宅と私物端末の利用を禁止して社内に戻せば、ゼロトラストの考え方は不要になる</span></button><p class="why" hidden>誤り。禁止しても、境界の外にある資産やクラウドは残る。考え方が不要になるわけではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>クラウドの利用は境界の外なので、クラウド側の通信は暗号化さえすればよく、評価は不要である</span></button><p class="why" hidden>誤り。ネットワークの位置によらず通信を保護し、アクセスごとに評価する。暗号化だけでは足りない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep112-zerotrust:q4" data-answer="0">
+  <p class="q">ある組織は、資産の状態やネットワーク、通信の情報を集めて保管しているが、ポリシーの見直しにはまったく使っていない。NIST SP 800-207 の考え方に沿った評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>集めた情報はセキュリティ態勢の改善に使う前提なので、見直しへの活用を考える</span></button><p class="why" hidden>正解。資産・ネットワーク・通信の情報は、集めて態勢の改善に使う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>情報は保管するだけで目的を果たすため、ポリシーの見直しに使わなくても考え方に沿っている</span></button><p class="why" hidden>誤り。集めるだけでは足りず、改善に使うことが前提になっている。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ポリシーは一度決めたら固定する方が安全なので、集めた情報を反映させない運用が望ましい</span></button><p class="why" hidden>誤り。判断は動的ポリシーで行う。固定して反映させない運用は考え方に合わない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>収集は利用者のIDに関する情報に限るべきで、資産や通信の情報の収集はそもそも不要である</span></button><p class="why" hidden>誤り。IDだけでなく、資産の状態や通信の情報も収集して改善に使う。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">「社内ネットワークの中なら安全」とみなす設計の問題点と、ゼロトラストでの考え方の違いを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">境界防御は中を信頼するので、一度中に入られると中では広く動かれうる。ゼロトラストは位置や機器の所有だけでは暗黙の信頼を与えず、リソースごと・セッションごとに、最小権限と動的ポリシーで許可を判断する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep112-zerotrust-t0-0"> 中に入られると広く動かれうる</label></li><li><label><input type="checkbox" id="ep112-zerotrust-t0-1"> 位置や所有だけでは信頼しない</label></li><li><label><input type="checkbox" id="ep112-zerotrust-t0-2"> リソースごと・セッションごと、最小権限、動的ポリシー</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">利用者の要求が来てから接続が成立するまでを、PE・PA・PEP の役割で、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">PEが許可・拒否・取り消しを最終判断する。PAがPEの判断に従い、経路の確立・遮断を指示してセッショントークンを生成する。PEPが接続を有効化し、監視し、終了する。判断と実施の役割が分かれている。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep112-zerotrust-t1-0"> PE：許可・拒否・取り消しの判断</label></li><li><label><input type="checkbox" id="ep112-zerotrust-t1-1"> PA：経路の確立・遮断を指示</label></li><li><label><input type="checkbox" id="ep112-zerotrust-t1-2"> PEP：接続の有効化・監視・終了</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="情報漏えいの調査記録（ダミー）"><div class="logtitle">情報漏えいの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">利用者は、多要素認証でVPNに接続した（正規の利用者）</span></div><div class="logrow"><span class="hl">接続後、利用者の端末から、複数の社内システムにアクセスがあった</span></div><div class="logrow"><span class="hl">端末はマルウェアに感染しており、人事システムのデータが持ち出された</span></div><div class="logrow"><span class="hl">// VPNの通信は暗号化されていた</span></div><div class="logrow"><span class="hl">// 各システムの設定は、VPN接続元アドレスからの通信を許可するのみ</span></div></div></div>
+  <p class="q">ゼロトラストの観点で、設計上の問題点は？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">接続元の位置だけで許可し、リソースごと・端末の状態を踏まえた認可をしていなかった</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>VPNの暗号が弱かった … 記録では暗号化されていた</li><li>認証が弱かった … 認証は通っている。問題は認証の後の認可</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>1.7.1 ゼロトラストの概要</li><li>1.7.2 NIST ZTAの概要</li></ul>
+  <p>境界防御との違い、位置や所有で信頼しない点、判断と実施の役割分担を確かめながら読む。製品名ではなく考え方に注目する。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep111-incident.html">← #11 インシデント対応 慌てないための流れと判断基準</a><a href="ep113-killchain.html">#13 サイバーキルチェーンとATT&amp;CK 攻撃を整理する共通の言葉 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

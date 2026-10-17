@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#49 TLPTの概要 脅威に基づく侵入テスト｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#49 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>TLPTの概要 脅威に基づく侵入テスト</h1>
+  <ol class="summary"><li>TLPTは、実際の攻撃者の手口（脅威情報）を元に攻撃を模擬し、検知・対応を含む防御力を評価する。</li><li>レッド・ブルー・ホワイトの役割があり、ブルーは通常実施を知らされない。範囲と緊急停止は事前に合意する。</li><li>診断などの基礎が整った組織が行う。費用と期間が大きく、1回のシナリオで全体の安全は示せない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep149-tlpt:tlpt">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">TLPT（脅威ベースのペネトレーションテスト）</span><span class="back" hidden><span class="def">実際の攻撃者の手口を元にしたシナリオで、本番環境に近い環境へ攻撃を模擬して侵入を試み、検知・対応を含む防御力を評価する。</span><span class="note">狙いは脆弱性の網羅的な列挙ではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep149-tlpt:threat-intel">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">脅威情報</span><span class="back" hidden><span class="def">実際の攻撃者の手口に関する情報。TLPTではこれを元にシナリオを作る。流れの最初は脅威情報の収集。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep149-tlpt:vuln-assessment">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">脆弱性診断</span><span class="back" hidden><span class="def">脆弱性を網羅的に列挙する取り組み。TLPTは、診断などの基礎が整った組織が次に行うものとされる。</span><span class="note">TLPTの代わりではなく、土台にあたる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep149-tlpt:red-team">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">レッドチーム</span><span class="back" hidden><span class="def">攻撃者の手口を模擬して侵入を試みる側。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep149-tlpt:blue-team">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ブルーチーム</span><span class="back" hidden><span class="def">防御・監視をする側。本当の検知力を見るため、通常は実施を知らされない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep149-tlpt:white-team">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ホワイトチーム</span><span class="back" hidden><span class="def">運営・調整・中止の判断を担う。少数の責任者だけが全体を把握する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep149-tlpt:prior-agreement">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">事前の文書での合意</span><span class="back" hidden><span class="def">範囲・禁止事項・緊急停止の手順を事前に文書で決めておくこと。委託先やクラウドの同意も取る。</span><span class="note">本番に近い環境で行うため、影響への備えが前提になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep149-tlpt:tlpt-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">TLPTの限界</span><span class="back" hidden><span class="def">費用・期間・リスクが大きく、実施者の能力に左右される。1回のシナリオで組織全体の安全は示せない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep149-tlpt:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>TLPTの説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>対象システムの脆弱性を網羅的に列挙し、深刻度を付ける診断</span></button><p class="why" hidden>それは、脆弱性診断の説明</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>開発中のソフトに、不正な入力を大量に与える試験</span></button><p class="why" hidden>それは、ファジングの説明</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>公開資産を継続的に洗い出し、台帳と照合する取り組み</span></button><p class="why" hidden>それは、ASMの説明</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>実際の攻撃者の手口を模擬し、検知と対応も評価する取り組み</span></button><p class="why" hidden>手口を模擬し、検知と対応も評価</p></li></ol>
+</li>
+<li class="quiz" data-key="ep149-tlpt:q0" data-answer="0">
+  <p class="q">決済事業者が脆弱性診断を毎年行い、指摘は対処済みである。次に、監視・対応の担当者が実際の攻撃に気づいて動けるかを確かめたい。最も適切な方法はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>脅威情報に基づくシナリオで本番に近い環境へ模擬攻撃を行い、検知と対応を見る</span></button><p class="why" hidden>正解。実際の手口を模擬し、検知・対応を含む防御力を評価するのがTLPTの狙い。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>脆弱性診断の頻度を上げて指摘の件数をさらに減らし、検知と対応の力もそれで評価できたとみなす</span></button><p class="why" hidden>診断は脆弱性の列挙が狙いで、検知・対応が機能するかは評価できない。件数が減ることと検知力は別の話。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>監視チームにシナリオと実施日を事前に全員へ知らせ、検知の手順を確認しながら進めてもらう</span></button><p class="why" hidden>ブルーチームは本当の検知力を見るため、通常は実施を知らされない。全員に知らせると実態を見られない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>他組織の事例を読み合わせ、自社にも同様の対策があることを文書で確認して終える</span></button><p class="why" hidden>実際に攻撃を模擬していないので、検知・対応が機能するかは確かめられない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep149-tlpt:q1" data-answer="2">
+  <p class="q">TLPTの実施中、模擬攻撃の操作で本番の業務システムに想定外の負荷が出た。実施を事前に知っているのは少数の責任者だけである。中止の判断を担うのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>実施を知らされていないブルーチームが、異常を検知した時点で、演習そのものを止める</span></button><p class="why" hidden>ブルーチームは通常、実施を知らされない。中止の判断を担う役割ではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>攻撃を模擬しているレッドチームが、自分たちの判断で操作を続けるかどうかを決める</span></button><p class="why" hidden>レッドチームは攻撃を模擬する側。運営・調整・中止の判断はホワイトチームの役割。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ホワイトチームが、事前に文書で合意した緊急停止の手順に従って判断する</span></button><p class="why" hidden>正解。ホワイトチームが運営・調整・中止の判断を担い、緊急停止の手順は事前に文書で合意しておく。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>委託先やクラウド事業者が、同意した立場から、実施の可否を随時決めて指示する</span></button><p class="why" hidden>委託先やクラウドの同意は事前に取るもので、実施中の中止判断を担うのはホワイトチーム。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep149-tlpt:q2" data-answer="1">
+  <p class="q">TLPTで、模擬の攻撃チームが設定された目的に到達できなかった。結果の解釈として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>全体の安全が確認できたので、以降の脆弱性診断などの基礎的な取り組みは省いてよい</span></button><p class="why" hidden>TLPTは診断などの基礎が整った組織が行うもので、基礎を省く根拠にならない。1回で全体の安全は示せない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>そのシナリオの範囲では防げたといえるが、組織全体の安全までは示せない</span></button><p class="why" hidden>正解。1回のシナリオで全体の安全は示せない。合格しても安全とは言えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ブルーチームは実施を知らされていなかったので、検知力は十分だと断定してよい</span></button><p class="why" hidden>知らされていない状況で試すのは検知力を見るためだが、1回の結果だけで十分と断定はできない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>実施者の能力に依存しないため、別の実施者でも同じ結果になると考えてよい</span></button><p class="why" hidden>結果は実施者の能力に左右される。同じ結果になると決めつけられない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep149-tlpt:q3" data-answer="3">
+  <p class="q">金融機関が本番環境でTLPTを計画している。基幹システムの一部は委託先のクラウドで稼働している。事前準備として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>実施の妨げにならないよう範囲は決めず、問題が出た時点で関係者と協議して判断する</span></button><p class="why" hidden>範囲・禁止事項・緊急停止の手順は事前に文書で合意する。本番への影響に備えられなくなる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ブルーチームの検知力を見るため、実施の内容と日時を監視担当者を含む全員に通知する</span></button><p class="why" hidden>全体を把握するのは少数の責任者だけで、ブルーチームは通常知らされない。全員に通知すると検知力を見られない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>シナリオの作成は省き、攻撃を模擬する側の経験に任せて自由に侵入を試みてもらう</span></button><p class="why" hidden>流れは、脅威情報の収集、シナリオ作成、実施、報告と改善。シナリオは脅威情報を元に作る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>範囲・禁止事項・緊急停止の手順を文書で合意し、委託先やクラウドの同意も取る</span></button><p class="why" hidden>正解。本番への影響に備え、事前に文書で合意し、委託先やクラウドの同意も取る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep149-tlpt:q4" data-answer="0">
+  <p class="q">新任の担当者がTLPTの進め方を並べた。適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>脅威情報の収集、シナリオ作成、実施、報告と改善の順に進め、実施の前に筋書きを決める</span></button><p class="why" hidden>正解。脅威情報の収集、シナリオ作成、実施、報告と改善の順。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>シナリオ作成、実施、脅威情報の収集、報告と改善の順に進め、収集結果を次回の準備に生かす</span></button><p class="why" hidden>シナリオは脅威情報を元に作るので、収集がシナリオ作成より後では実際の手口に基づけない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>実施、報告と改善、脅威情報の収集、シナリオ作成の順に進め、結果から次の脅威を決める</span></button><p class="why" hidden>実施の前にシナリオが必要。実施が先頭では脅威情報に基づく試験にならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>脅威情報の収集、実施、シナリオ作成、報告と改善の順に進め、実施中に筋書きを決める</span></button><p class="why" hidden>実施の前にシナリオを作る。実施中に筋書きを決める順ではない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">脆弱性診断を毎年行い指摘も対処済みの組織が、それでもTLPTを行う意義を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">診断は脆弱性の列挙が狙い。TLPTは実際の攻撃者の手口を模擬して侵入を試み、検知と対応を含む防御力を評価する。診断で指摘が無くても、アラートに気づいて対応できるかは別なので、試す意義がある。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep149-tlpt-t0-0"> 診断は脆弱性の列挙、TLPTは防御力の評価</label></li><li><label><input type="checkbox" id="ep149-tlpt-t0-1"> 実際の手口を模擬して侵入を試みる</label></li><li><label><input type="checkbox" id="ep149-tlpt-t0-2"> 検知と対応が機能するかを見る</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">ブルーチームに実施を知らせない理由と、本番環境で行うために事前に決めておくことを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">本当の検知力を見るため、ブルーチームは通常知らされず、少数の責任者だけが全体を把握する。一方で本番への影響に備え、範囲・禁止事項・緊急停止の手順を事前に文書で合意し、委託先やクラウドの同意も取る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep149-tlpt-t1-0"> 本当の検知力を見るため知らせない</label></li><li><label><input type="checkbox" id="ep149-tlpt-t1-1"> 範囲・禁止事項・緊急停止の手順を文書で合意</label></li><li><label><input type="checkbox" id="ep149-tlpt-t1-2"> 委託先やクラウドの同意</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="TLPTの実施記録（ダミー）"><div class="logtitle">TLPTの実施記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 決済事業者の基幹システム（ダミー）。脆弱性診断は毎年実施し、指摘は対処済み</span></div><div class="logrow"><span class="hl">脅威情報に基づくシナリオで、模擬の攻撃チームが、本番環境への侵入を試みた</span></div><div class="logrow"><span class="hl">監視チームには、実施を事前に知らせていない</span></div><div class="logrow"><span class="hl">侵入に使われたのは、演習の前提として付与された、正規のアカウント情報。未修正の脆弱性は、使われていない</span></div><div class="logrow"><span class="hl">侵入から目的の達成まで、10日間。経路上で、監視のアラートが、3回発生した。3回とも、模擬の攻撃チームの操作が原因</span></div><div class="logrow"><span class="hl">3回とも、担当者が「定型の誤検知」と判断し、記録のみで処理した</span></div></div></div>
+  <p class="q">検知・対応の観点で、優先して見直すべきなのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">アラートが出たときの、判断の基準と確認の手順</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>監視の仕組みの導入 … 経路上で、アラートは3回発生している</li><li>未修正の脆弱性の解消 … 侵入に使われたのは、正規のアカウント情報</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.3.5 TLPTの概要</li></ul>
+  <p>脆弱性診断との目的の違い、三つの役割、事前合意の内容、1回の結果で安全とは言えない理由を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep148-fuzzing-asm.html">← #48 ファジングとASMの概要 未知の穴と未把握の資産</a><a href="ep150-firewall-basics.html">#50 ファイアウォールの概要と基本的な構成 DMZで被害を止める →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

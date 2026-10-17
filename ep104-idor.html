@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#4 認可不備 IDOR/BOLA 認可チェックが抜けると何が起こる？｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#4 ・ 追加テーマ（目次外）</p>
+  <h1>認可不備 IDOR/BOLA 認可チェックが抜けると何が起こる？</h1>
+  <ol class="summary"><li>IDOR/BOLAは、URLなどのIDを書き換えられ、オブジェクト単位の認可チェックが無いと成立する。</li><li>根本対策は、利用者IDをセッションから取り、参照・更新・削除のたびに所有者を確認すること。</li><li>推測しにくいIDは補助、WAFでは防げない場合がある。共有データはポリシーやロールで判断する。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep104-idor:idor">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IDOR（Insecure Direct Object Reference）</span><span class="back" hidden><span class="def">URLやパラメータ中の識別子を書き換えると、他人のオブジェクトにアクセス・変更できてしまう状態。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep104-idor:bola">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">BOLA（Broken Object Level Authorization）</span><span class="back" hidden><span class="def">APIが、利用者がそのオブジェクトにアクセスしてよいかを確認しない不備。OWASP API Top 10 2023 の先頭の項目。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep104-idor:authn-authz">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証と認可</span><span class="back" hidden><span class="def">認証は本人かどうかの確認、認可はログイン後にどの操作・データを扱えるかの制御。複数の利用者がいる場合に認可が必要。</span><span class="note">ログインできていても、他人のデータを扱ってよいとは限らない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep104-idor:object-level-authz">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">オブジェクト単位の認可</span><span class="back" hidden><span class="def">リソース一件ごとに、ログイン中の利用者に許されているかを確かめること。IDORの根本原因はこのチェックの欠落。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep104-idor:session-user-id">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">利用者IDはセッションから取る</span><span class="back" hidden><span class="def">利用者IDを外部から受け取るパラメータではなく、サーバ側のセッション変数から取得する。外部のIDを使うなら常に照合する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep104-idor:same-response">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">存在を隠す応答（404）</span><span class="back" hidden><span class="def">オブジェクトの存在自体が機微なら、存在しない場合と権限が無い場合で同じ応答（例: 404）を返す。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep104-idor:random-id">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">推測しにくいID</span><span class="back" hidden><span class="def">複雑でランダムなIDは多層防御としてのみ有効。認可チェックの代わりにはならない。</span><span class="note">「連番だから起きる」のではなく、チェックが無いから起きる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep104-idor:bfla">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">BFLA（機能単位の認可不備）</span><span class="back" hidden><span class="def">オブジェクトではなく、機能（関数）単位の認可が抜けている不備。BOLAとは別の項目として扱われる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep104-idor:policy-role">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ポリシーとロール</span><span class="back" hidden><span class="def">利用者のポリシーやロールに基づいて認可を判断する仕組み。セッション利用者IDとの比較だけでは完全な対策にならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep104-idor:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>他人の注文が見える脆弱性の根本対策は？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>注文番号を連番にしない</span></button><p class="why" hidden>推測しにくくなるが補助にとどまる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>注文ごとに所有者を確認する</span></button><p class="why" hidden>リソースごとに認可を確認する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>WAFを導入する</span></button><p class="why" hidden>通信が正常に見え、防げない場合がある</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>パスワードを複雑にする</span></button><p class="why" hidden>認証の強化で、認可の代わりではない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep104-idor:q0" data-answer="0">
+  <p class="q">注文取得APIが、POSTの隠し項目 user_id を検索条件に使い、ログイン済みか否かだけを確認している。修正として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>user_id をセッションから取得し、検索条件に含める</span></button><p class="why" hidden>正解。利用者IDは外部から受け取らず、セッション変数から取る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>user_id を暗号化して推測できなくしてから、隠し項目で送る</span></button><p class="why" hidden>識別子の暗号化は安全に行うのが難しく、避ける。認可チェックの代わりにもならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>user_id を連番でなく乱数のIDに振り直して送る</span></button><p class="why" hidden>ランダムなIDは多層防御としてのみ有効で、チェックの欠落は直らない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>user_id をURLのクエリに移して送るようにする</span></button><p class="why" hidden>送る場所を変えても、外部の値をそのまま信用する点は変わらない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep104-idor:q1" data-answer="3">
+  <p class="q">請求書APIで、他人の請求書の番号を指定されたとき、請求書が存在すること自体も知られたくない。応答の方針として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>権限が無ければ403、存在しなければ404と、はっきり分けて返す</span></button><p class="why" hidden>応答が分かれると、番号が存在することを推測できてしまう。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>権限が無い場合は500を返し、詳しい原因を本文に書く</span></button><p class="why" hidden>エラーの詳細を出すと、かえって情報を与える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>権限が無い場合だけ、ログイン画面へリダイレクトする</span></button><p class="why" hidden>応答が異なるので、存在の有無を見分けられてしまう。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>権限が無い場合も存在しない場合も、同じ404を返す</span></button><p class="why" hidden>正解。存在が機微なら、両方の場合で同じ応答（例: 404）にそろえる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep104-idor:q2" data-answer="2">
+  <p class="q">請求書APIのIDORを確認するテストの方法として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>管理者アカウント1つでログインし、全請求書を参照できることを確認する</span></button><p class="why" hidden>管理者の権限では、他人のデータを拒否できるかを確かめられない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>請求書の番号が連番でないことを確認できれば、合格とする</span></button><p class="why" hidden>ID が予測可能かどうかによらず拒否されることを確かめる必要がある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>権限の異なる2アカウントで、互いの請求書を操作できないか見る</span></button><p class="why" hidden>正解。権限の異なる複数アカウントで、参照を書き換えて他人のオブジェクトの読み書き・削除が拒否されるかを見る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WAFのログに、不審なリクエストが残っていないかを確認する</span></button><p class="why" hidden>通信は正常に見えるので、WAFのログには残らない場合がある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep104-idor:q3" data-answer="1">
+  <p class="q">文書を同じ部署の他の人にも共有する機能で、認可を「文書の所有者IDとログイン中の利用者IDの一致」だけで判定している。この設計の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>一致を参照・更新・削除のたびに確認しているので、共有機能でも認可として十分である</span></button><p class="why" hidden>毎回の確認は必要だが、所有者との一致比較だけでは足りない場合がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>共有相手の閲覧可否を表せないため、ポリシーやロールに基づく判断が要る</span></button><p class="why" hidden>正解。共有データはポリシーやロールで判断する。IDの一致比較だけでは完全な対策にならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>所有者IDを暗号化してから比較すれば、共有の場合も十分に安全になる</span></button><p class="why" hidden>識別子の暗号化は安全に作るのが難しく、共有の判断も解決しない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>共有の機能ではIDをランダムにすれば、認可のチェックは不要になる</span></button><p class="why" hidden>ランダムなIDは補助にとどまり、認可チェックの代わりにはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep104-idor:q4" data-answer="0">
+  <p class="q">一般利用者が、管理者向けの一括出力機能のAPI（/api/admin/export）を直接呼べた。各オブジェクトの所有者チェックは実装済みである。この不備の分類として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>機能単位の認可不備で、BOLAとは別の項目として扱われる</span></button><p class="why" hidden>正解。機能（関数）単位の不備は別の項目（BFLA）。機能ごとの認可も必要になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>オブジェクト単位の認可の欠落であり、所有者チェックを足せば解消するBOLAである</span></button><p class="why" hidden>所有者チェックは実装済みなので、足りないのはオブジェクト単位ではなく機能単位の認可。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>認証の不備であり、ログインを強化すれば解消する</span></button><p class="why" hidden>ログインはできている。範囲を決める認可の話で、認証の強化では直らない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ID推測による漏えいであり、IDをランダムにすれば解消する</span></button><p class="why" hidden>IDの推測は関係しない。ランダムなIDはそもそも補助にとどまる。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">注文番号を連番から長いランダムな値に変えただけでは、IDORの対策として足りない理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">原因は認可チェックの欠如で、IDの推測しにくさは補助にとどまる。IDが漏れたり知られたりすれば、チェックが無い限り他人のデータに届く。チェックが正しく実装されていればIDが漏れても守れる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep104-idor-t0-0"> 原因は認可チェックの欠如</label></li><li><label><input type="checkbox" id="ep104-idor-t0-1"> ランダムなIDは補助（多層防御）</label></li><li><label><input type="checkbox" id="ep104-idor-t0-2"> チェックがあればIDが漏れても守れる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">注文の参照APIには所有者チェックを入れたが、更新・削除APIには入れ忘れた。何が起こり、どう直すかを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">更新・削除でも、他人のデータを書き換えたり消したりできてしまう。利用者IDをセッションから取り、参照・更新・削除のすべてで所有者を確認する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep104-idor-t1-0"> 他人のデータの更新・削除ができる</label></li><li><label><input type="checkbox" id="ep104-idor-t1-1"> 利用者IDはセッションから取る</label></li><li><label><input type="checkbox" id="ep104-idor-t1-2"> すべての操作で所有者を確認する</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="請求書APIのアクセスログ（ダミー）"><div class="logtitle">請求書APIのアクセスログ（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">請求書 8812 の所有者: alice（一般利用者）</span></div><div class="logrow"><span class="hl">GET /api/invoices/8812  user=alice  200</span></div><div class="logrow"><span class="hl">GET /api/invoices/8813  user=alice  200</span></div><div class="logrow"><span class="hl">請求書 8813 の所有者: bob</span></div></div></div>
+  <p class="q">原因として最も適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">オブジェクト単位の認可（所有者の確認）が無い</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>IDが連番 … 補助的な話。本質は認可チェックの欠如</li><li>認証が弱い … 認証は通っている。範囲を決める認可の話</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>EX-01 認可不備・IDOR/BOLA</li></ul>
+  <p>認証と認可の違い、所有者チェックの置き場所、推測しにくいIDやWAFが補助にとどまる理由を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep103-xss.html">← #3 XSS 出力の扱いで起きる攻撃と防御</a><a href="ep105-csrf.html">#5 CSRF 本人の意図かを確認しないと何が起こる？ →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

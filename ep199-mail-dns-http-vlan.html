@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#99 メール・DNS・HTTP・VLAN ネットワーク技術の基礎｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#99 ・ 第1章 情報セキュリティ及びITの基礎</p>
+  <h1>メール・DNS・HTTP・VLAN ネットワーク技術の基礎</h1>
+  <ol class="summary"><li>メールはSMTPで送り、宛先のサーバはDNSのMXで探す。受信者はPOP3かIMAPで取り出す。</li><li>DNSの結果はTTLの間保持される。HTTPは状態を覚えずCookieが補い、HTTPSはTLSで保護する。</li><li>VLANは網を論理的に分けブロードキャストを絞るが、通信は絞れない。制御はVLAN間の中継点で行う。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep199-mail-dns-http-vlan:mua-mta">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">MUAとMTA</span><span class="back" hidden><span class="def">MUAは利用者がメールを読み書きする側、MTAはメールを受け取り中継するサーバ。送信はMUAからMTAへ渡すところから始まる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep199-mail-dns-http-vlan:smtp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SMTP</span><span class="back" hidden><span class="def">メールを送る方向のプロトコル。MUAからMTAへ渡す場面と、MTA同士が中継する場面で使う。</span><span class="note">受信者がメールを取り出すのはPOP3かIMAP。SMTPではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep199-mail-dns-http-vlan:mx-record">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">MXレコード</span><span class="back" hidden><span class="def">宛先ドメインのメールを受け取るサーバを示すDNSのレコード。送信側のMTAはこれで配送先を探す。</span><span class="note">PTR（逆引き）は配送先を決めない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep199-mail-dns-http-vlan:pop3-imap">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">POP3とIMAP</span><span class="back" hidden><span class="def">受信者がメールサーバからメールを取り出すためのプロトコル。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep199-mail-dns-http-vlan:forward-reverse">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">正引きと逆引き</span><span class="back" hidden><span class="def">正引きは名前からIPアドレス（Aレコードなど）、逆引きはIPアドレスから名前（PTRレコード）を引く。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep199-mail-dns-http-vlan:dns-ttl">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">TTLとキャッシュ</span><span class="back" hidden><span class="def">DNSの結果は一定時間（TTL）保持される。そのため設定を変えても、反映に時間がかかる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep199-mail-dns-http-vlan:stateless-cookie">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ステートレスとCookie</span><span class="back" hidden><span class="def">HTTPは前の要求を覚えない。Cookieを要求に付けてもらい、サーバが同じ利用者だと判断できるように状態を補う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep199-mail-dns-http-vlan:https-tls">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">HTTPSとTLS</span><span class="back" hidden><span class="def">HTTPをTLSで保護したもの。通信の暗号化と、接続先サーバの確認を行う。</span><span class="note">状態を覚えないHTTPの性質は変わらない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep199-mail-dns-http-vlan:vlan">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">VLAN</span><span class="back" hidden><span class="def">物理的には一つのスイッチ網を、論理的に分ける仕組み。ブロードキャストの届く範囲を絞れる。</span><span class="note">分けただけでは、VLAN間の通信は絞れない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep199-mail-dns-http-vlan:l3-switch">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">L3スイッチ（VLAN間の中継）</span><span class="back" hidden><span class="def">VLAN間の通信を中継する機器（ルータでもよい）。VLAN間の通信を制御するなら、この中継点で行う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep199-mail-dns-http-vlan:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>電子メールの仕組みとして、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>宛先のメールサーバは、DNSのMXレコードで調べる</span></button><p class="why" hidden>宛先のサーバはMXで調べる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>受信者は、SMTPでサーバからメールを取り出す</span></button><p class="why" hidden>取り出しはPOP3かIMAP</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>配送先のサーバは、PTRレコードで決まる</span></button><p class="why" hidden>PTRは逆引き</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SMTPは、送信者の本人確認を必ず行う</span></button><p class="why" hidden>SMTPは本人確認が必須ではない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep199-mail-dns-http-vlan:q0" data-answer="1">
+  <p class="q">自社ドメインのメールサーバを移転し、DNSのMXレコードを新サーバに変更した。変更直後、一部の送信元からのメールが数時間のあいだ旧サーバに届き続けた。最も適切な説明はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>受信者がPOP3で取り出す設定が送信元ごとに違うため、配送先が分かれて見えている</span></button><p class="why" hidden>POP3やIMAPは受信者がサーバから取り出す段階で、送信元が配送先を探す段階とは別。送信元ごとに配送先が分かれる原因にはならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>送信側のDNSが古いMXの結果をTTLの間保持しており、反映に時間がかかっている</span></button><p class="why" hidden>正解。DNSの結果はTTLの間保持され、変更の反映に時間がかかる。保持が切れた送信元から順に新サーバへ届くようになる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>PTRレコードの逆引きが配送先の決定に使われるため、PTRも同時に更新する必要がある</span></button><p class="why" hidden>PTRは逆引きのレコードで、配送先は決めない。宛先のサーバはMXレコードで探す。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>MUAからMTAへの送信はSMTPで行うので、端末のメール設定を直すまでMXの変更は反映されない</span></button><p class="why" hidden>MUAからMTAへの送信がSMTPなのは正しいが、宛先ドメインのサーバはMXで探す。端末側の設定が原因ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep199-mail-dns-http-vlan:q1" data-answer="2">
+  <p class="q">Webアプリで、利用者がログインした直後は成功するが、次のページへ移動すると再びログイン画面に戻る。サーバは各要求に200を返しており、通信はHTTPSである。最も疑うべき点はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>HTTPSの暗号化のせいで、サーバが前の要求の内容を受け取れなくなっていて状態が続かない点</span></button><p class="why" hidden>TLSの役割は通信の暗号化と接続先サーバの確認で、状態を補うのはCookie。HTTPSにしたことが、状態が続かない原因とは言えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>HTTPは前の要求を覚えないので、ログイン済みという状態そのものを保持できない設計である点</span></button><p class="why" hidden>HTTPは前の要求を覚えないが、Cookieで状態を補える。保持できない設計と言い切るのは言い過ぎ。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>状態を補うCookieが次の要求に付いておらず、サーバが同一の利用者と判断できない点</span></button><p class="why" hidden>正解。HTTPは状態を覚えず、Cookieで補う。Cookieが付いていなければ、サーバは同じ利用者だと判断できずログイン画面に戻す。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ステータスコードが200なので通信は正常であり、画面の戻りは本文の誤りだけが原因である点</span></button><p class="why" hidden>ステータスコードは要求の処理結果を示すもので、同じ利用者と判断できているかとは別。200だから本文の誤りだけが原因とは言えない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep199-mail-dns-http-vlan:q2" data-answer="3">
+  <p class="q">拠点のネットワークでブロードキャストが多く通信が重いので、スイッチでVLANを分割する計画を立てた。分割に期待できる効果と限界として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>VLAN間の通信もスイッチが宛先のポートへ直接転送するため、中継点での制御は設けなくてよい</span></button><p class="why" hidden>VLAN間の通信はルータやL3スイッチが中継する。制御するなら、その中継点で行う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>物理的に別のスイッチを置いたのと同じ状態になり、L3スイッチの設定がなくても部門間は完全に遮断される</span></button><p class="why" hidden>VLANは論理的に網を分けるもので、物理的に分けたのと同じではない。VLAN間は中継されるので、設定がなければ遮断される保証もない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>VLANを分割すれば、VLAN間の通信は自動的に絞られるので、追加の制御は要らない</span></button><p class="why" hidden>分けただけでは通信は絞れない。VLAN間の通信を絞るには、中継点での制御が要る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ブロードキャストの届く範囲は絞れるが、VLAN間の通信を絞るには中継点での制御が要る</span></button><p class="why" hidden>正解。VLANでブロードキャストの届く範囲を絞れる。一方、分けただけでは通信は絞れず、VLAN間を中継する場所で制御する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep199-mail-dns-http-vlan:q3" data-answer="0">
+  <p class="q">ログに不審な接続元のIPアドレスが記録されている。このIPアドレスに対応するホスト名を調べたい。使う方法として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>PTRレコードの逆引きで、IPアドレスから対応する名前を調べる</span></button><p class="why" hidden>正解。IPアドレスから名前を引くのが逆引きで、PTRレコードを使う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>Aレコードの正引きで、そのIPアドレスに対応する名前を調べ、接続元のドメインを特定する</span></button><p class="why" hidden>正引きは名前からIPアドレスを引く方向で、IPアドレスから名前を調べる用途には向かない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>MXレコードを引いて、そのIPアドレスを宛先とするメールサーバの名前を確認する</span></button><p class="why" hidden>MXは宛先ドメインのメールサーバを示すレコードで、IPアドレスの名前を調べるものではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SMTPの応答を調べて、メールの送信元のMTAが逆引きの結果を返しているかを確認する</span></button><p class="why" hidden>SMTPはメールを送る方向のプロトコルで、IPアドレスから名前を引く手段ではない。名前の問い合わせはDNSで行う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep199-mail-dns-http-vlan:q4" data-answer="2">
+  <p class="q">社内の入力フォームをHTTPからHTTPSに切り替えた。HTTPSによって得られるものと、変わらないものの組合せとして適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>Cookieの役割もTLSが引き継ぐため、HTTPSではセッションを管理する仕組みを別に用意しなくてよい</span></button><p class="why" hidden>TLSは暗号化と接続先の確認を担う。HTTPが状態を覚えない点はHTTPSでも変わらず、Cookieなどで補う必要がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>入力値が経路上で暗号化されるので、サーバ側の処理に問題があっても入力値が悪用される心配はなくなる</span></button><p class="why" hidden>経路上の盗聴は防げても、サーバ側の処理に問題があれば、その影響はHTTPSでも残る。心配がなくなるとは言えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>通信の暗号化と接続先サーバの確認が得られるが、状態を覚えない性質は変わらない</span></button><p class="why" hidden>正解。HTTPSはTLSで通信を暗号化し、接続先サーバを確認する。HTTPの性質である、状態を覚えない点は変わらない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗号化は行われるがサーバの確認は行われないので、接続先が正しいかは別の手段で確かめる必要がある</span></button><p class="why" hidden>HTTPSは暗号化に加えて、接続先サーバの確認も行う。確認が行われないという説明は誤り。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">メールが送信者から受信者に届くまでの流れを、使うプロトコルとDNSの役割を入れて頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">送信側はSMTPでメールサーバへ渡し、宛先ドメインのメールサーバはDNSのMXレコードで探す。サーバ間もSMTPで中継して届け、受信者はPOP3かIMAPで取り出す。SMTPは送る方向のプロトコルで、取り出しには使わない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep199-mail-dns-http-vlan-t0-0"> 送信はSMTPでメールサーバへ渡す</label></li><li><label><input type="checkbox" id="ep199-mail-dns-http-vlan-t0-1"> 宛先のサーバはMXレコードで探す</label></li><li><label><input type="checkbox" id="ep199-mail-dns-http-vlan-t0-2"> 受信者はPOP3かIMAPで取り出す</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">HTTPは前の要求を覚えないのに、ログイン状態が保てるのはなぜか。HTTPSが担う役割と区別して頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">HTTPは状態を覚えないが、Cookieを要求に付けて状態を補う。HTTPSはTLSで通信を暗号化し、接続先サーバを確認するもので、状態を覚えさせる役割ではない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep199-mail-dns-http-vlan-t1-0"> HTTPは前の要求を覚えない</label></li><li><label><input type="checkbox" id="ep199-mail-dns-http-vlan-t1-1"> Cookieで状態を補う</label></li><li><label><input type="checkbox" id="ep199-mail-dns-http-vlan-t1-2"> HTTPSの役割は暗号化とサーバの確認</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="部門ネットワークの構成記録（ダミー）"><div class="logtitle">部門ネットワークの構成記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">営業はVLAN10、経理はVLAN20。スイッチは共通</span></div><div class="logrow"><span class="hl">営業PCから、経理サーバへ通信が届いてしまう</span></div><div class="logrow"><span class="hl">VLAN間は、L3スイッチが中継。制限の設定はない</span></div><div class="logrow"><span class="hl">要件: 営業から経理への通信を、必要最小限にしたい</span></div></div></div>
+  <p class="q">L3スイッチで行う対応として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">L3スイッチで、VLAN間の通信を許可する範囲を絞る</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>VLANを一つにまとめる … 要件は通信を絞ることで、まとめると、部門間の通信を区別できなくなる</li><li>営業と経理を、別のスイッチに移す … スイッチを分けても、L3スイッチが中継する限り、通信は届く</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>1.4.5 電子メールの仕組み</li><li>1.4.6 DNSの主な機能</li><li>1.4.7 HTTPで用いられている基本的な技術</li><li>1.4.8 スイッチとVLAN</li></ul>
+  <p>メール・DNS・HTTP・VLANが、それぞれ何を中継し何を引くかで整理して読む。VLANは、分けることと通信を絞ることの違いに注意。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep198-tcpip-icmp.html">← #98 TCP/IPの基礎 IP・TCP・UDP・ICMP の役割分担</a><a href="ep200-cloud-vdi.html">#100 クラウドとVDI クラウドコンピューティングの概要とシンクライアント →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

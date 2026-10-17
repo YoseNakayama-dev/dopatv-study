@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#119 Javaのセキュリティ 実行環境の機構・留意点・例外処理｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#119 ・ 第8章 システム開発におけるセキュリティ対策</p>
+  <h1>Javaのセキュリティ 実行環境の機構・留意点・例外処理</h1>
+  <ol class="summary"><li>Javaは検証・クラスローダ・ポリシーで実行を絞る。ただしセキュリティマネージャはJava 17で非推奨。</li><li>公開範囲は最小に。finalは参照の付け替えを防ぐだけで、可変オブジェクトの中身は防御的コピーで守る。</li><li>例外は握りつぶさず、内部情報は画面に出さずログへ。認可で例外が出たら許可せず拒否に倒す。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep219-java-security:bytecode-verification">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">バイトコード検証</span><span class="back" hidden><span class="def">クラスの読み込み時に、不正なバイトコードがないかを検査する実行環境の機構。</span><span class="note">実行時に動作範囲を絞る制御ではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep219-java-security:class-loader">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">クラスローダ</span><span class="back" hidden><span class="def">クラスの読み込みを管理し、名前空間を分ける機構。</span><span class="note">バイトコードを暗号化する仕組みではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep219-java-security:access-control-policy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">アクセス制御とポリシー</span><span class="back" hidden><span class="def">ポリシーで許可した範囲に、コードの動作を絞る仕組み。信頼できないコードを制限して動かす考え方に使われる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep219-java-security:security-manager">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">セキュリティマネージャ</span><span class="back" hidden><span class="def">ポリシーによるアクセス制御を担ってきた機構。Java 17で削除予定として非推奨になった。</span><span class="note">新規設計の前提にしない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep219-java-security:signed-code">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">署名付きコード</span><span class="back" hidden><span class="def">署名によって、コードの提供元を確認できるようにしたもの。</span><span class="note">確認できるのは提供元。動作範囲の制限とは別。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep219-java-security:final-keyword">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">final</span><span class="back" hidden><span class="def">継承させないクラスに付けて改変を防ぐ。フィールドに付けた場合は、参照の付け替えを防ぐ。</span><span class="note">参照先の可変オブジェクトの中身までは固定しない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep219-java-security:defensive-copy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">防御的コピー</span><span class="back" hidden><span class="def">可変オブジェクトを受け渡すときに複製を取り、元のオブジェクトの中身を外から書き換えられないようにする手法。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep219-java-security:swallowing-exception">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">例外の握りつぶし</span><span class="back" hidden><span class="def">例外を捕捉して何もしないこと。異常に気付けず、原因の調査もできなくなる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep219-java-security:fail-closed">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">拒否に倒す</span><span class="back" hidden><span class="def">認可の処理で例外が出たときに、許可せず拒否として扱う設計。</span><span class="note">例外を許可扱いで続けると、権限のない操作が通りうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep219-java-security:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>Javaの説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>バイトコード検証は、プログラムの実行後に行われる</span></button><p class="why" hidden>検証はクラスの読み込み時</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>可変オブジェクトの受け取りには、防御的コピーが有効</span></button><p class="why" hidden>防御的コピーが有効</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>例外は、握りつぶすほうが安全である</span></button><p class="why" hidden>握りつぶすと異常に気付けない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>クラスローダは、バイトコードを暗号化する仕組みである</span></button><p class="why" hidden>クラスローダは読み込みを管理</p></li></ol>
+</li>
+<li class="quiz" data-key="ep219-java-security:q0" data-answer="0">
+  <p class="q">不変にしたいクラスで、フィールドはprivate、クラスもfinalにした。ただしgetterが、内部にある可変オブジェクト（日付など）の参照をそのまま返している。外部から中身を書き換えられるのを防ぐ対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>getterから内部の複製を返すようにする</span></button><p class="why" hidden>正解。可変オブジェクトは受け渡しのときに複製（防御的コピー）を使うと、返した参照経由で中身を書き換えられなくなる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>フィールドをfinalにして、中身も固定する</span></button><p class="why" hidden>フィールドのfinalは参照の付け替えを防ぐだけで、参照先の可変オブジェクトの中身は変更できてしまう。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>クラスをfinalにして、継承による改変を防ぐ</span></button><p class="why" hidden>前提ですでにクラスはfinalで、継承による改変は防げている。返された参照経由の変更は、これでは止まらない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>入力値の型と長さを検証してから、代入する</span></button><p class="why" hidden>入力値の検証は外部からの入力を使う前の対策。ここでの問題は、内部の参照を外へ返している点にある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep219-java-security:q1" data-answer="2">
+  <p class="q">認可チェックで、権限情報のDBへの問い合わせが例外になることがある。現在の実装は、例外を捕捉してログに記録したあと、処理を許可として続行している。改善として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>例外のたびに管理者へ通知し、処理は許可のまま続ける</span></button><p class="why" hidden>通知は気付くための補助にはなるが、許可のままでは権限のない操作が通りうる。例外時の扱い自体を変える必要がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>広い範囲の例外をまとめて捕捉し、一律に再試行する</span></button><p class="why" hidden>例外を一律に扱うだけでは、失敗したときに許可するかどうかが決まらない。認可の処理で例外が出たら、許可せず拒否に倒す。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>例外時は許可せず拒否とし、詳細はログに残す</span></button><p class="why" hidden>正解。認可の処理で例外が出たら許可せず拒否に倒す。原因の調査のため、詳細はログに記録する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>スタックトレースを画面に出し、利用者に伝える</span></button><p class="why" hidden>スタックトレースなどの内部情報は利用者の画面に出さず、ログに記録して調査に使う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep219-java-security:q2" data-answer="3">
+  <p class="q">新規のJavaシステムの設計レビューで、外部から受け取ったコードを、セキュリティマネージャとポリシーで許可範囲に絞って動かす案が出た。留意点として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ポリシーで許可範囲を絞れるので、これを唯一の防御として採用する</span></button><p class="why" hidden>許可範囲を絞る機構ではあるが、それを唯一の防御とする根拠はない。そのうえ機構自体がJava 17で非推奨になっている。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>バイトコード検証があるので、ポリシーによる制限は不要になる</span></button><p class="why" hidden>バイトコード検証は、クラスの読み込み時に不正なバイトコードを検査するもの。ポリシーによる動作範囲の制限とは役割が違う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>署名付きコードで提供元が確認できれば、動作の制限は不要になる</span></button><p class="why" hidden>署名付きコードで確認できるのは提供元。許可した範囲に動作を絞る制御とは別のもの。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>Java 17で非推奨になった機構で、新規設計の前提にしない</span></button><p class="why" hidden>正解。セキュリティマネージャはJava 17で削除予定として非推奨になった。新規設計の前提にはしない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep219-java-security:q3" data-answer="2">
+  <p class="q">ファイルを開いて処理するメソッドで、途中で例外が起きるとclose()が呼ばれず、ファイルが開いたまま残ることがある。確実に後始末を行う書き方として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>処理の最後の行でclose()を呼び、通常終了時に閉じる</span></button><p class="why" hidden>最後の行に書いたclose()は、途中で例外が起きると実行されない。例外時にも実行される場所に書く必要がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>事前に入力値を検証し、例外が起きないようにしておく</span></button><p class="why" hidden>入力の検証は有効でも、例外が起きる可能性をなくせるとは言えない。例外が起きたときの後始末は別に必要。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>finallyで確実にclose()を呼ぶ</span></button><p class="why" hidden>正解。後始末はfinallyやtry-with-resourcesで確実に行う。例外が起きても解放処理が実行される。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>例外を握りつぶして処理を続け、資源は後でまとめて解放する</span></button><p class="why" hidden>例外を握りつぶすと異常に気付けなくなる。資源の解放を確実に行う方法にもならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep219-java-security:q4" data-answer="1">
+  <p class="q">外部システムから受信した、Javaのシリアライズ済みデータを、受信側でそのままオブジェクトに復元している。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ログに記録しておけば、検証せずにそのまま復元してよい</span></button><p class="why" hidden>ログは事後の調査に役立つが、信頼できないデータを検証せずに復元してよい理由にはならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>避けるか、復元前に型や内容を検証してから使う</span></button><p class="why" hidden>正解。信頼できないデータのデシリアライズは、避けるか検証する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>クラスをfinalにしておけば、復元データも信頼できる</span></button><p class="why" hidden>finalは継承による改変を防ぐもの。復元されるデータが信頼できるかどうかとは別の話。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>バイトコード検証が働くので、復元データの中身も検査される</span></button><p class="why" hidden>バイトコード検証はクラスの読み込み時にバイトコードを検査するもので、復元するデータの中身を検査するものではない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">認可の処理で例外が出たとき、許可と拒否のどちらに倒すべきか。その理由を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">拒否に倒す。例外時に許可として続行すると、権限確認ができていない操作が通りうるため。例外を握りつぶさず、詳細はログに記録して調査に使う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep219-java-security-t0-0"> 例外時は許可せず拒否にする</label></li><li><label><input type="checkbox" id="ep219-java-security-t0-1"> 許可のままだと権限のない操作が通りうる</label></li><li><label><input type="checkbox" id="ep219-java-security-t0-2"> 握りつぶさず、詳細はログに記録する</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">finalを付けたのに、可変オブジェクトの中身を書き換えられてしまう。なぜか、どう防ぐかを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">finalは参照の付け替えを防ぐだけで、参照先の可変オブジェクトの中身は変更できるため。受け渡しのときに複製を取る防御的コピーで、中身の変更を防ぐ。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep219-java-security-t1-0"> finalは参照の付け替えを防ぐ</label></li><li><label><input type="checkbox" id="ep219-java-security-t1-1"> 参照先の中身は変更できる</label></li><li><label><input type="checkbox" id="ep219-java-security-t1-2"> 防御的コピーで中身を守る</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="Webアプリの障害記録（ダミー）"><div class="logtitle">Webアプリの障害記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">Webアプリ: 認証処理で、DB接続の例外が発生</span></div><div class="logrow"><span class="hl">画面に、スタックトレースとDBの接続先が表示された</span></div><div class="logrow"><span class="hl">どこでも捕捉されない例外は、既定のエラー画面に出る</span></div><div class="logrow"><span class="hl">要件: 画面に内部情報を出さず、原因は調査できること</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">例外を捕捉し、認証は失敗として扱い、画面は汎用の文言、詳細はログに記録する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>例外を捕捉して何もしない … 原因が記録されず、調査できない</li><li>例外を投げ直すだけで、どこでも捕捉しない … 既定のエラー画面に出てしまう</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>8.3.2 Javaのセキュリティ機構の概要</li><li>8.3.3 Javaのセキュリティ上の留意点</li><li>8.3.4 例外発生に備えた処理</li></ul>
+  <p>実行環境の機構ごとの役割（検証・ローダ・ポリシー・署名）の違いと、例外が出たときの振る舞いを確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep218-bof-functions.html">← #118 BOFを招くC言語の関数 危険な関数・書式文字列・置き換え</a><a href="ep220-ecmascript-related.html">#120 ECMAScript関連技術 オリジン・CORS・JSON・DOMの扱い →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

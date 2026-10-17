@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#26 HTTPヘッダインジェクション 改行が区切りになる仕組みと対策｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#26 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>HTTPヘッダインジェクション 改行が区切りになる仕組みと対策</h1>
+  <ol class="summary"><li>外部入力をヘッダの値に出力し、含まれる改行を除去・拒否しないと成立する。</li><li>影響はSet-Cookieの追加、レスポンス分割、キャッシュ経由の波及など。実際の影響は実装や中継機器による。</li><li>対策はヘッダ出力のAPI、改行を含む入力の拒否、リダイレクト先の限定。WAFは補助。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep126-http-header-injection:http-header-injection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">HTTPヘッダインジェクション</span><span class="back" hidden><span class="def">入力がレスポンスヘッダの値として出力され、含まれる改行でヘッダが区切られ、意図しないヘッダが追加される攻撃。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep126-http-header-injection:response-structure">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">レスポンスの構造</span><span class="back" hidden><span class="def">ヘッダは改行で区切られて1行ずつ並び、空行のあとにボディが続く。改行は区切りの意味を持つ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep126-http-header-injection:crlf">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">改行（CRLF）</span><span class="back" hidden><span class="def">ヘッダを区切る文字。入力に含まれると、そこでヘッダが区切られ、以降が新しいヘッダとして解釈される。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep126-http-header-injection:location-header">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Locationヘッダ</span><span class="back" hidden><span class="def">リダイレクト先を示すヘッダ。リダイレクト先をパラメータで受ける機能で、入力が出力されやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep126-http-header-injection:session-fixation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">セッションIDの固定</span><span class="back" hidden><span class="def">Set-Cookieを追加され、セッションIDを攻撃者の指定値にされること。ログイン時にIDが変わらないと悪用される。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep126-http-header-injection:response-splitting">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">レスポンス分割</span><span class="back" hidden><span class="def">空行によりレスポンスが分割され、偽のレスポンス本文を返させられること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep126-http-header-injection:cache-spread">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">キャッシュ経由の波及</span><span class="back" hidden><span class="def">キャッシュを経由すると、他の利用者にも影響が及ぶことがある。実際の影響は実装や中継機器の挙動による。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep126-http-header-injection:header-api">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ヘッダ出力のAPI</span><span class="back" hidden><span class="def">言語・フレームワークのヘッダ出力APIを使う。改行を拒否する実装も多いが、挙動は確認しておく。</span><span class="note">ヘッダを文字列で自前に組み立てているほど危ない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep126-http-header-injection:redirect-allowlist">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">リダイレクト先の限定</span><span class="back" hidden><span class="def">リダイレクト先を、許可した範囲の値だけにする対策。改行を含む入力の拒否と合わせて使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep126-http-header-injection:session-regenerate">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ログイン時のID再発行</span><span class="back" hidden><span class="def">ログイン時にセッションIDを再発行する補助的な対策。WAFと同じく、ヘッダの出力の不備は直らない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep126-http-header-injection:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>HTTPヘッダインジェクションで、悪用される文字は？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>改行（CRLF）</span></button><p class="why" hidden>改行（CRLF）</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>シングルクォート</span></button><p class="why" hidden>SQLインジェクションで問題になる記号</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>山括弧（&lt; &gt;）</span></button><p class="why" hidden>XSSで問題になる記号</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>上位ディレクトリ（../）</span></button><p class="why" hidden>ディレクトリトラバーサルの記号</p></li></ol>
+</li>
+<li class="quiz" data-key="ep126-http-header-injection:q0" data-answer="1">
+  <p class="q">ログイン後の戻り先URLをパラメータで受け、文字列を連結してLocationヘッダを自前で組み立てている。根本に近い改修として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>戻り先URLの値をHTMLエスケープしてからヘッダに出力する</span></button><p class="why" hidden>HTMLエスケープはブラウザ向けの処理で、ヘッダの区切りである改行の扱いは変わらない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ヘッダ出力にAPIを使い、改行を含む入力は拒否する</span></button><p class="why" hidden>正解。言語・フレームワークのAPIを使い、改行を含む入力を拒否する。リダイレクト先の限定も合わせる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>戻り先URLをBase64で符号化して、パラメータに入れて渡す</span></button><p class="why" hidden>符号化しても、ヘッダに出力する値に改行が含まれる問題は直らない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WAFを前段に置いて、不審なリクエストを検知する</span></button><p class="why" hidden>WAFは補助で、ヘッダの出力の不備そのものは直らない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep126-http-header-injection:q1" data-answer="2">
+  <p class="q">Set-Cookieを追加される不具合が残るサイトで、ログイン時にセッションIDを再発行する対策を入れた。この対策の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>再発行すれば、ヘッダインジェクションの脆弱性そのものが解消する</span></button><p class="why" hidden>再発行は補助で、脆弱性そのものは直らない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>再発行を入れると、改行を含む入力の拒否は省いてよくなる</span></button><p class="why" hidden>改行の拒否は根本に近い対策で、再発行で代えられない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>固定を悪用されにくくする補助で、原因の改行の扱いは別に直す</span></button><p class="why" hidden>正解。ログイン時にIDが変わらないと同じ画面に入られるため再発行は有効だが、補助にとどまる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログイン時に再発行すれば、改行を拒否しなくても根本対策になる</span></button><p class="why" hidden>再発行だけでは、偽の本文を返させられるなど他の影響は残る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep126-http-header-injection:q2" data-answer="3">
+  <p class="q">ヘッダの出力を、自前の文字列連結からフレームワークのAPIに置き換えた。改行を拒否する実装が多いとされるが、評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>APIを使えば改行は必ず拒否されるので、挙動の確認は不要である</span></button><p class="why" hidden>「必ず」は言い過ぎ。実装により挙動が違うため確認する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>APIは改行を拒否しないのが普通なので、置き換えても意味がない</span></button><p class="why" hidden>改行を拒否する実装も多い。置き換えは根本対策になる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>APIの挙動を確認する代わりに、WAFでの検知に任せてよい</span></button><p class="why" hidden>WAFは補助で、API側の挙動の確認の代わりにならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>拒否する実装は多いが、使うAPIの挙動は確認しておく</span></button><p class="why" hidden>正解。APIの利用は根本対策だが、改行を拒否するかは実装によるため確認する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep126-http-header-injection:q3" data-answer="1">
+  <p class="q">Locationヘッダに入力の改行が入り、Set-Cookieが追加される不具合を確認した。影響の見積もりとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ヘッダが追加されれば、必ずすべての利用者のブラウザに同じ影響が出る</span></button><p class="why" hidden>実際の影響は実装や中継機器の挙動による。「必ず」は言い過ぎ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>挙動に依存し、キャッシュ経由なら他の利用者にも及びうる</span></button><p class="why" hidden>正解。実際の影響は実装や中継機器の挙動による。キャッシュを経由すると他の利用者にも及びうる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>追加されるのは自分のセッションだけなので、他の利用者には影響しない</span></button><p class="why" hidden>キャッシュを経由すれば、他の利用者にも影響が及びうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>Set-Cookieの追加だけが影響で、レスポンスの本文は変えられない</span></button><p class="why" hidden>レスポンス分割により、偽の本文を返させられることもある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep126-http-header-injection:q4" data-answer="2">
+  <p class="q">リダイレクト先を、サーバ側で許可した範囲の値に限定した。この対策の位置付けとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>改行の扱いと無関係に、ヘッダインジェクションを完全に防ぐ</span></button><p class="why" hidden>「完全に」は言い過ぎ。ヘッダ出力のAPIと改行を含む入力の拒否も組み合わせる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>WAFと同じく検知するだけの補助で、入力の値には作用しない</span></button><p class="why" hidden>検知ではなく、出力する値そのものを限定する対策。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ヘッダに出す値を限定する、対策の一つ</span></button><p class="why" hidden>正解。リダイレクト先を許可した範囲の値だけにする。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>セッションIDの再発行と同じ、固定の悪用を抑える補助</span></button><p class="why" hidden>ID再発行は固定の悪用を抑える補助で、値の限定とは別の対策。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ヘッダインジェクションが成立する2つの条件を挙げ、改行がなぜ問題になるのかを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">①外部入力をヘッダの値に出力している、②入力に含まれる改行を除去・拒否していない。改行はヘッダの区切りの意味を持つため、入力に含まれると以降が新しいヘッダとして解釈される。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep126-http-header-injection-t0-0"> 外部入力をヘッダの値に出力</label></li><li><label><input type="checkbox" id="ep126-http-header-injection-t0-1"> 改行の除去・拒否なし</label></li><li><label><input type="checkbox" id="ep126-http-header-injection-t0-2"> 改行はヘッダの区切り</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">戻り先をパラメータで受ける機能でSet-Cookieが追加された。何が起こりうるか、どう直すかを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">セッションIDを固定され、ログイン時にIDが変わらなければ攻撃者も同じ画面に入れる。実際の影響は実装や中継機器による。ヘッダ出力のAPI、改行を含む入力の拒否、リダイレクト先の限定で直し、ID再発行とWAFは補助にする。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep126-http-header-injection-t1-0"> セッションIDの固定</label></li><li><label><input type="checkbox" id="ep126-http-header-injection-t1-1"> 影響は実装や中継機器による</label></li><li><label><input type="checkbox" id="ep126-http-header-injection-t1-2"> API・改行の拒否・リダイレクト先の限定</label></li><li><label><input type="checkbox" id="ep126-http-header-injection-t1-3"> ID再発行・WAFは補助</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="リダイレクト機能の調査記録（ダミー）"><div class="logtitle">リダイレクト機能の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: ログイン後の戻り先を、パラメータで受ける機能（ダミー）</span></div><div class="logrow"><span class="hl">パラメータの値を、そのままLocationヘッダに出力 / 改行の除去なし</span></div><div class="logrow"><span class="hl">レスポンスに、アプリが出力していないSet-Cookieヘッダが追加</span></div><div class="logrow"><span class="hl">利用者のセッションIDが、攻撃者の指定した値に固定されていた</span></div><div class="logrow"><span class="hl">// データベースの異常なし / Locationの遷移先は想定どおり</span></div></div></div>
+  <p class="q">この事象の原因として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">入力に含まれる改行が、ヘッダの区切りとして解釈された</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>SQLインジェクション … データベースの異常はない</li><li>オープンリダイレクト … 遷移先は想定どおり</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.8.5 HTTPヘッダインジェクション</li></ul>
+  <p>レスポンスの構造と改行の意味、成立条件、影響が環境に左右される点、APIと改行の拒否が中心で他は補助である点を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep125-oscmd-injection.html">← #25 OSコマンドインジェクション 成立条件と、シェルを使わない対策</a><a href="ep127-mail-header-injection.html">#27 メールヘッダインジェクション 改行が区切りになる仕組みと対策 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

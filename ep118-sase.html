@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#18 ゼロトラストの実現方式 ZTNAとSASEの考え方と限界｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#18 ・ 第1章 情報セキュリティ及びITの基礎</p>
+  <h1>ゼロトラストの実現方式 ZTNAとSASEの考え方と限界</h1>
+  <ol class="summary"><li>ゼロトラストは製品ではなく考え方。利用者・端末・アプリ・通信の部品を組み合わせて実現する。</li><li>ZTNAは許可されたアプリにだけ接続させ、状態を見て都度判断する。VPNより侵害時に動ける範囲が狭まる。</li><li>SASEはネットワークと安全機能をクラウドで統合する手段の1つ。許可方針の設計は組織の仕事で、段階的に進める。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep118-sase:zero-trust">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ゼロトラスト</span><span class="back" hidden><span class="def">場所だけでは信頼せず、リソースごとに許可する考え方。製品ではなく、複数の部品の組み合わせで実現する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep118-sase:components">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">実現の部品</span><span class="back" hidden><span class="def">利用者の認証と多要素認証、端末の管理と状態確認、アプリ単位のアクセス制御、通信の検査と制御を組み合わせる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep118-sase:vpn">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">従来のVPN</span><span class="back" hidden><span class="def">接続すると、ネットワーク全体に届きやすい方式。侵害された端末からも、複数のサーバへ到達しうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep118-sase:ztna">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ZTNA（Zero Trust Network Access）</span><span class="back" hidden><span class="def">許可されたアプリにだけ接続させ、利用者や端末の状態を見て都度判断する方式。侵害時に動ける範囲を狭める。</span><span class="note">VPNが不要になる、とは言い切れない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep118-sase:device-state">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">端末の状態確認</span><span class="back" hidden><span class="def">端末が管理下にあるか、状態は健全かを確認して判断に使うこと。私物と支給を同じ条件で接続させるのは不十分。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep118-sase:sase">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SASE（サシー）</span><span class="back" hidden><span class="def">拠点やリモートの通信をつなぐネットワーク機能と、セキュリティ機能を、クラウドのサービスとして一体で提供する考え方。</span><span class="note">「サース」と読まれることもある。暗号アルゴリズムの名前ではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep118-sase:sase-vs-zt">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SASEとゼロトラストの関係</span><span class="back" hidden><span class="def">SASEはゼロトラストを実現する手段の1つで、同義ではない。入れれば終わりではなく、許可方針の設計が別に要る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep118-sase:policy-design">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">許可方針の設計</span><span class="back" hidden><span class="def">何を誰に許すかを決める仕事。製品では代わりにならず、自分たちの組織で設計する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep118-sase:staged">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">段階的な移行</span><span class="back" hidden><span class="def">全部を一度に変えず、重要なアプリから進める。事業者への依存や、古いシステムへの対応も見ておく。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep118-sase:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>SASEの説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>暗号アルゴリズムの名称</span></button><p class="why" hidden>暗号の名称ではない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ネットワーク機能とセキュリティ機能を、クラウドで統合提供する考え方</span></button><p class="why" hidden>ネットワークとセキュリティをクラウドで統合</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>社内LANだけを守る専用装置</span></button><p class="why" hidden>社内に限らず、拠点や在宅も対象</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>脆弱性情報の共有の枠組み</span></button><p class="why" hidden>脆弱性情報の共有は別の取組み</p></li></ol>
+</li>
+<li class="quiz" data-key="ep118-sase:q0" data-answer="0">
+  <p class="q">VPN接続後にネットワーク全体へ届いてしまう構成を改善したい。ZTNAの働きとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>許可されたアプリにだけ接続させる</span></button><p class="why" hidden>正解。許可されたアプリだけに接続させ、状態を見て都度判断する。侵害されても動ける範囲が狭くなる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>接続後も全サーバのIPアドレスに到達できるようにする</span></button><p class="why" hidden>それは従来のVPNの問題点。ZTNAは到達範囲を絞る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>接続前の認証を省いて、利用者の待ち時間を短くする</span></button><p class="why" hidden>ゼロトラストは利用者や端末の確認を重ねる考え方で、省かない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>通信を暗号化するだけなので、到達範囲は変わらない</span></button><p class="why" hidden>ZTNAの特徴は暗号化ではなく、アプリ単位の許可と都度の判断。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep118-sase:q1" data-answer="3">
+  <p class="q">SASEを導入した組織が、「ゼロトラストは実現済み」と報告した。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SASEはゼロトラストと同義なので、報告は正しい</span></button><p class="why" hidden>SASEはゼロトラストを実現する手段の1つで、同義ではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SASEを入れれば許可方針の設計は不要になるため、正しい</span></button><p class="why" hidden>何を誰に許すかの設計は、自分たちの仕事。製品では代わりにならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SASEはVPNの別名で、ゼロトラストとは無関係</span></button><p class="why" hidden>SASEはネットワーク機能とセキュリティ機能をクラウドで統合する考え方で、VPNの別名ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SASEは手段の1つで、許可方針の設計が別に要る</span></button><p class="why" hidden>正解。入れれば終わりではなく、方針の設計や段階的な移行が要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep118-sase:q2" data-answer="2">
+  <p class="q">VPN接続後は社内全体に到達でき、私物端末も支給端末も同じ条件で接続できる。ゼロトラストの観点で、足りない点として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>VPN装置の帯域が足りず、通信が遅くなる点</span></button><p class="why" hidden>問題は速度ではなく、到達範囲と端末の確認。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SASEという製品を導入していない点</span></button><p class="why" hidden>製品の導入が目的ではない。製品だけでは足りず、方針の設計が要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>端末の管理状況を確認せずに接続させている点</span></button><p class="why" hidden>正解。端末が管理下にあるか、状態は健全かを確認し、判断に使う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利用者ごとにアプリ単位の許可を出し分けている点</span></button><p class="why" hidden>アプリ単位で許可を出し分けるのは望ましい。不足している点ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep118-sase:q3" data-answer="0">
+  <p class="q">全社員・全システムを一度にSASEへ切り替える計画が出た。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>重要なアプリから段階的に進めるのが現実的</span></button><p class="why" hidden>正解。事業者への依存や古いシステムへの対応も見ながら、段階的に進める。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>一度に切り替えれば、古いシステムも自動で対応する</span></button><p class="why" hidden>古いシステムへの対応には時間がかかる。自動で対応するとは言えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>事業者の障害が起きたときの影響は、考えなくてよい</span></button><p class="why" hidden>クラウド事業者への依存があり、障害時の影響も見ておく。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>切り替えの完了後は、許可方針の見直しが不要になる</span></button><p class="why" hidden>何を誰に許すかの設計は、組織の仕事として続く。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep118-sase:q4" data-answer="3">
+  <p class="q">ZTNAを検討している。ZTNAの評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>VPNが不要になるため、撤去を前提に進めるべきである</span></button><p class="why" hidden>VPNが不要になる、とは言い切れない。撤去を前提にするのは言い過ぎ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ネットワーク全体に届くので、管理が楽になる</span></button><p class="why" hidden>全体に届くのは従来のVPNの特徴。ZTNAは許可されたアプリに絞る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>利用者の認証だけで判断し、端末の状態は見ない</span></button><p class="why" hidden>利用者と端末の状態を見て判断する。認証だけではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>状態を見て都度判断し、侵害時の範囲を狭める</span></button><p class="why" hidden>正解。許可されたアプリにだけつなぎ、状態を見て都度判断する。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">VPNとZTNAで、侵害された端末が動ける範囲がどう違うかを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">VPNは接続するとネットワーク全体に届きやすく、侵害された端末から複数のサーバへ到達しうる。ZTNAは許可されたアプリにだけつなぎ、利用者と端末の状態を見て都度判断するので、動ける範囲が狭くなる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep118-sase-t0-0"> VPNは接続後に全体へ届きやすい</label></li><li><label><input type="checkbox" id="ep118-sase-t0-1"> ZTNAは許可されたアプリだけ</label></li><li><label><input type="checkbox" id="ep118-sase-t0-2"> 利用者・端末の状態で都度判断</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">SASEを導入しても、ゼロトラストが実現できたとは言えない理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">SASEはゼロトラストを実現する手段の1つで、同義ではない。何を誰に許すかの方針は自分たちで設計する必要がある。事業者への依存や古いシステムへの対応もあり、重要なアプリから段階的に進める。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep118-sase-t1-0"> SASEは手段の1つで同義ではない</label></li><li><label><input type="checkbox" id="ep118-sase-t1-1"> 許可方針の設計は組織の仕事</label></li><li><label><input type="checkbox" id="ep118-sase-t1-2"> 依存・古いシステム・段階的移行</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="リモートアクセス調査記録（ダミー）"><div class="logtitle">リモートアクセス調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 在宅勤務者のリモートアクセス（現行はVPNのみ・ダミー）</span></div><div class="logrow"><span class="hl">VPN接続後は、社内ネットワーク全体に到達できる</span></div><div class="logrow"><span class="hl">端末は、私物でも会社支給でも同じ条件で接続できる</span></div><div class="logrow"><span class="hl">// 端末の状態確認なし / 侵害された端末から複数サーバに到達</span></div></div></div>
+  <p class="q">この環境の改善として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">アプリ単位で許可し、利用者と端末の状態を確認して判断する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>VPNの帯域を増やす … 問題は速度でなく到達範囲</li><li>SASE製品を入れて完了 … 許可方針の設計は別に必要</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>1.7.3 ゼロトラストの実現方式</li><li>1.7.4 SASEの概要</li></ul>
+  <p>ゼロトラストを実現する部品、VPNとZTNAの到達範囲の違い、SASEが手段であって同義ではない点と限界を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep117-reverse-brute.html">← #17 リバースブルートフォースとパスワードリスト攻撃 ロックで止まらない理由</a><a href="ep119-info-sharing.html">#19 サイバーセキュリティ情報の共有 J-CSIP・ISAC・TLPの考え方 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#22 DoS攻撃の種類 狙う資源で4つに分ける｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#22 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>DoS攻撃の種類 狙う資源で4つに分ける</h1>
+  <ol class="summary"><li>DoSは可用性への攻撃で、DDoSは多数の機器から分散して行う。狙う資源で帯域・接続・アプリ・脆弱性に分けて考える。</li><li>接続型（SYNフラッド）は、未完了の接続が溜まって新規接続を受けられない。回線に余裕があっても応答しなくなる。</li><li>正規と同形式で送信元が分散・偽装されるため防ぎにくい。回線・接続・アプリの状況から資源を切り分ける。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep122-dos:dos">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DoS攻撃</span><span class="back" hidden><span class="def">サービスを使えなくする、可用性への攻撃。狙う資源によって、帯域・接続・アプリ・脆弱性の型に整理できる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep122-dos:ddos">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DDoS攻撃</span><span class="back" hidden><span class="def">多数の機器から分散してDoSを行う攻撃。ボットネットなどが使われ、送信元が分散するため防ぎにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep122-dos:availability">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">可用性</span><span class="back" hidden><span class="def">必要なときにサービスや情報を使える性質。DoSが直接損なうのはこの特性。</span><span class="note">機密性（漏れない）、完全性（改ざんされない）と取り違えない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep122-dos:bandwidth-type">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">帯域型</span><span class="back" hidden><span class="def">回線容量を超える通信で、正規の通信も入れなくする。特徴は回線使用率の極端な上昇。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep122-dos:syn-flood">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SYNフラッド（接続型）</span><span class="back" hidden><span class="def">接続開始要求にサーバが状態を保持して返事を待つ仕組みを突き、未完了の接続を溜めて新規接続を受けられなくする。</span><span class="note">回線に余裕があっても応答しない点が、帯域型との見分けどころ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep122-dos:app-type">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">アプリケーション型</span><span class="back" hidden><span class="def">正規に見えるHTTP要求で、重い処理を繰り返させる。通信量は多くなく、正規の通信と区別しにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep122-dos:vuln-type">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">脆弱性型</span><span class="back" hidden><span class="def">想定外の入力でプログラムを停止させる。脆弱性が前提で、パッチ適用で対処する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep122-dos:botnet">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ボットネット</span><span class="back" hidden><span class="def">攻撃者に操られる多数の機器の集まり。DDoSで、分散した送信元から通信を送るのに使われる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep122-dos:why-hard">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">防ぎにくい理由</span><span class="back" hidden><span class="def">攻撃の通信が正規と同じ形式で、送信元が分散・偽装される。そのため、送信元や内容だけでは切り分けにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep122-dos:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>DoS攻撃で、直接損なわれるセキュリティ特性は？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>機密性</span></button><p class="why" hidden>情報が漏れないこと</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>完全性</span></button><p class="why" hidden>改ざんされないこと</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>可用性</span></button><p class="why" hidden>可用性</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>真正性</span></button><p class="why" hidden>本物であると確認できること</p></li></ol>
+</li>
+<li class="quiz" data-key="ep122-dos:q0" data-answer="0">
+  <p class="q">Webサービスに接続できなくなった。監視では、回線使用率が上限に張り付いており、正規の通信も入れない状態だった。DoSの型として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>帯域型。回線容量を超える通信で、正規の通信も入れない</span></button><p class="why" hidden>正解。回線使用率の極端な上昇は帯域型の特徴。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>接続型。未完了の接続が溜まって新規接続を受けられない</span></button><p class="why" hidden>接続型は回線に余裕があっても応答しなくなる型。使用率が上限というこの状況とは合わない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>アプリ型。正規に見える要求で重い処理を繰り返させている</span></button><p class="why" hidden>アプリ型は通信量が多くない。回線使用率が上限に張り付く状況とは合わない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>脆弱性型。想定外の入力でプログラムが停止している</span></button><p class="why" hidden>脆弱性型は想定外の入力で停止する型で、回線使用率の上昇は特徴ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep122-dos:q1" data-answer="1">
+  <p class="q">特定の送信元IPアドレスを遮断して対処したが、攻撃元が多数で次々と変わり、止まらなかった。DDoSが防ぎにくい理由として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通信が暗号化されており、内容を検査して区別できないから</span></button><p class="why" hidden>この状況の理由は暗号化ではない。送信元が分散・偽装され、正規と同じ形式であることが、送信元単位の遮断を難しくしている。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>送信元が分散・偽装され、正規と同形式で区別しにくいから</span></button><p class="why" hidden>正解。正規と同じ形式で、送信元が分散・偽装されるため、送信元単位では切り分けにくい。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>脆弱性を突く攻撃なので、パッチがない限り防げないから</span></button><p class="why" hidden>脆弱性型は一つの型にすぎず、DDoS全般の防ぎにくさの理由ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>帯域型は回線ではなくサーバのCPUを使い切る攻撃だから</span></button><p class="why" hidden>帯域型が使い切るのは回線容量。CPUを使い切るのは別の型の特徴である。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep122-dos:q2" data-answer="3">
+  <p class="q">検索ページへのアクセスだけが増え、サービスが遅くなった。回線使用率は平常で、通信量も多くない。回線を増強する案が出た。この判断の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>帯域型と同じ原因なので、回線を増強すれば解消するはず</span></button><p class="why" hidden>回線使用率は平常で、帯域は枯渇していない。増強しても原因は変わらない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>接続型なので、タイムアウトを長くすれば解消する</span></button><p class="why" hidden>接続が溜まっているという根拠がない。検索ページへのアクセスだけが増え、回線使用率も平常という症状は、接続型とは合わない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>脆弱性型なので、増強とパッチの併用で解消できる</span></button><p class="why" hidden>想定外の入力による停止という根拠がない。症状は正規に見える要求の増加である。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>アプリ型の疑いがあり、帯域を増やしても解消しにくい</span></button><p class="why" hidden>正解。通信量が多くなく処理が重くなる場合はアプリ型が疑われ、帯域の増強では解消しにくい。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep122-dos:q3" data-answer="0">
+  <p class="q">通信量は少ないのに、細工された入力を1件受けただけでサービスが停止した。型として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>脆弱性型。想定外の入力で停止する（脆弱性が前提）</span></button><p class="why" hidden>正解。想定外の入力でプログラムを停止させる型で、脆弱性が前提になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>帯域型。回線容量を超える通信が原因になる</span></button><p class="why" hidden>帯域型は大量の通信が必要。通信量が少ないこの状況とは合わない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>接続型。接続の状態を保持する枠が尽きたことが原因になる</span></button><p class="why" hidden>接続型は未完了の接続が溜まって起きる。1件の入力で停止する状況とは合わない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>アプリ型。正規に見える重い要求の繰り返しが原因になる</span></button><p class="why" hidden>アプリ型は重い要求を繰り返す必要がある。1件で停止する点と合わない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep122-dos:q4" data-answer="1">
+  <p class="q">サービスが応答しなくなった。DoSの型を切り分けるための確認として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>回線使用率だけを見て、低ければ攻撃ではないと判断する</span></button><p class="why" hidden>回線使用率が低くても、接続型やアプリ型では応答しなくなる。攻撃でないとは言えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>回線・接続数・アプリの負荷を見て、尽きた資源を探る</span></button><p class="why" hidden>正解。回線・接続・アプリのどの資源が尽きているかを見て、型を切り分ける。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>送信元IPが多ければDDoSなので、型の切り分けは不要</span></button><p class="why" hidden>DDoSかどうかが分かっても、尽きた資源が分からなければ対処を選べない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>通信量が少なければ、帯域・接続・アプリ型の可能性は否定できる</span></button><p class="why" hidden>アプリ型は通信量が多くなくても成立する。通信量が少ないことだけで、帯域・接続・アプリ型の可能性を否定できるとは言えない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">サービスが応答しないのに回線の使用率は平常だった。どの型を疑い、何を確認するかを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">帯域型ではなく、接続型（SYNフラッドなど）やアプリ型を疑う。未完了の接続の数が上限に達していないか、アプリのCPU・メモリや要求の内容に偏りがないかを確認し、尽きた資源を切り分ける。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep122-dos-t0-0"> 帯域型ではない</label></li><li><label><input type="checkbox" id="ep122-dos-t0-1"> 接続型・アプリ型を疑う</label></li><li><label><input type="checkbox" id="ep122-dos-t0-2"> 接続数とアプリの負荷を確認して資源を切り分ける</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">DDoSが、単純な送信元の遮断では防ぎにくい理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">攻撃の通信が正規と同じ形式で、見分けにくい。送信元も多数の機器に分散し、偽装されることもある。そのため送信元や内容だけでは正規の通信と切り分けにくい。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep122-dos-t1-0"> 正規と同形式</label></li><li><label><input type="checkbox" id="ep122-dos-t1-1"> 送信元が分散している</label></li><li><label><input type="checkbox" id="ep122-dos-t1-2"> 送信元の偽装もありうる</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="サーバ障害の調査記録（ダミー）"><div class="logtitle">サーバ障害の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 公開Webサーバ（ダミー）。サービスが応答しない</span></div><div class="logrow"><span class="hl">回線の使用率は、平常時と同程度（約20%）</span></div><div class="logrow"><span class="hl">ハンドシェイク未完了（SYN受信済み）の接続が、上限まで残る</span></div><div class="logrow"><span class="hl">送信元は、世界各地の多数のIPアドレスに分散</span></div><div class="logrow"><span class="hl">// 完了したHTTP要求の記録は少なく、アプリのCPU・メモリは余裕あり</span></div></div></div>
+  <p class="q">この障害で、枯渇した資源として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">TCP接続の状態を保持する資源（接続の枠）</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>回線の帯域 … 使用率は平常時と同程度</li><li>アプリの処理能力 … CPU・メモリは余裕あり</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.7.1 DoS攻撃の種類と対策</li></ul>
+  <p>狙う資源（帯域・接続・アプリ・脆弱性）ごとの仕組みと観測される症状の違い、DDoSが防ぎにくい理由を整理しながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep121-dns-defense.html">← #21 DNSサーバへの攻撃への対策 守備範囲と限界</a><a href="ep123-dos-defense.html">#23 DoS攻撃への総合的な対策 型に合わせた守備範囲と限界 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

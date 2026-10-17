@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#75 ハッシュ関数とMAC、DH鍵交換 値で確かめ、鍵を作る｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#75 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
+  <h1>ハッシュ関数とMAC、DH鍵交換 値で確かめ、鍵を作る</h1>
+  <ol class="summary"><li>ハッシュ値だけでは、改ざん後に値ごと作り直されると見抜けない。鍵を使うMACか署名で検知する。</li><li>MACは鍵を共有する当事者の間でしか確認できない。第三者への証明や否認防止には署名を使う。</li><li>DH鍵交換には相手の認証がなく中間者に割り込まれうる。署名や証明書で認証し、使い捨ての鍵で交換する。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep175-hash-mac-dh:hash">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ハッシュ関数</span><span class="back" hidden><span class="def">任意長の入力から固定長の値を作る関数。同じ入力なら同じ値で、逆算は困難。入力が少し変わると値は大きく変わる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep175-hash-mac-dh:collision">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">衝突とMD5・SHA-1</span><span class="back" hidden><span class="def">別のデータから同じハッシュ値が作れてしまうこと。MD5やSHA-1は衝突が見つかり、推奨されない。SHA-2など推奨方式を選ぶ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep175-hash-mac-dh:mac">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">MAC</span><span class="back" hidden><span class="def">共有鍵とデータから作る確認用の値。改ざんがないことと、鍵を持つ相手が作ったことを確認できる。</span><span class="note">ハッシュ値と違い鍵を使う。確認できるのは鍵を共有する当事者の間だけ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep175-hash-mac-dh:signature">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">デジタル署名</span><span class="back" hidden><span class="def">第三者への証明や否認防止に使う仕組み。鍵を共有するMACでは、これらはできない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep175-hash-mac-dh:fingerprint">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">フィンガプリント</span><span class="back" hidden><span class="def">公開鍵や証明書のハッシュ値。別の経路で短い値を比べて、本物かを確認できる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep175-hash-mac-dh:dh">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DH鍵交換</span><span class="back" hidden><span class="def">公開情報のやり取りだけで、盗聴されても求めにくい共通の鍵を共有する方式。鍵そのものは渡さない。</span><span class="note">相手を確かめる機能はない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep175-hash-mac-dh:mitm">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">中間者による割り込み</span><span class="back" hidden><span class="def">DH鍵交換に相手の認証がないため、中間者に割り込まれると偽の相手と鍵を共有してしまうこと。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep175-hash-mac-dh:dh-auth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DH鍵交換の認証</span><span class="back" hidden><span class="def">DH鍵交換は署名や証明書で相手を認証して使う。認証を併用しないと中間者に割り込まれうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep175-hash-mac-dh:forward-secrecy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">前方秘匿性</span><span class="back" hidden><span class="def">DH鍵交換で通信ごとに使い捨ての（一時的な）鍵を使うと得られる性質。長期に使う鍵が後で漏れても、過去の通信は守りやすくなる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep175-hash-mac-dh:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>ハッシュ関数の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>鍵を用いて暗号化する方式であり、鍵があれば元のデータに復号できる</span></button><p class="why" hidden>暗号化ではなく復号もできない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>入力が少し変わっても、出力のハッシュ値はほとんど変わらない方式である</span></button><p class="why" hidden>少しの変化で値は大きく変わる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>出力の長さは入力の長さに比例し、長いデータほど長い値になる方式</span></button><p class="why" hidden>出力は固定長</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>任意の長さの入力から固定長の値を作り、入力の逆算が困難な方式である</span></button><p class="why" hidden>固定長で逆算が困難</p></li></ol>
+</li>
+<li class="quiz" data-key="ep175-hash-mac-dh:q0" data-answer="1">
+  <p class="q">配布サイトが、ファイルと同じサーバの同じページに、そのファイルのハッシュ値を載せている。サーバが侵害されてファイルが差し替えられた場合の説明として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ハッシュ値は一方向なので、ファイルが差し替えられても照合で必ず検知できる</span></button><p class="why" hidden>改ざん後にハッシュ値も作り直されると、見抜けない。一方向性はこの点を防がない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>同じ場所の値も作り直されうるので、別の経路で確認した値と照合する</span></button><p class="why" hidden>正解。ハッシュ値だけでは改ざん後に値ごと作り直されうる。ハッシュ値は改ざんされない経路で確認する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SHA-2を使っていれば、ハッシュ値をどこに掲載しても改ざんは検知できる</span></button><p class="why" hidden>SHA-2は推奨される方式だが、値ごと作り直されうる点は方式の違いでは防げない。確認は別経路で行う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ハッシュ値からファイルを復元できるので、復元結果と比べて差し替えを見抜ける</span></button><p class="why" hidden>ハッシュ関数は逆算が困難で、値から元のファイルは復元できない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep175-hash-mac-dh:q1" data-answer="0">
+  <p class="q">取引先とのAPI通信で、事前に共有した秘密の鍵を使ってMACを付け、受信側で再計算して照合する運用にした。MACの照合に成功したとき、確認できることはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>データが改ざんされていないことと、共有鍵を持つ者が作ったこと</span></button><p class="why" hidden>正解。MACは共有鍵とデータから作る確認用の値で、改ざんと、鍵を持つ相手が作ったことを確認できる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>送信者が後から送信を否認できないことを、第三者に対して証明できること</span></button><p class="why" hidden>鍵を共有するMACでは、第三者への証明や否認防止はできない。それにはデジタル署名を使う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>鍵を持たない第三者でも検証でき、作成者を証明できること</span></button><p class="why" hidden>MACは鍵を共有する当事者の間でしか確認できない。鍵を持たない第三者は検証できない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>通信の途中で内容を盗み見られても、内容が読まれないこと</span></button><p class="why" hidden>MACは確認用の値で、暗号化ではない。内容が読まれないようにするのは暗号化の役割。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep175-hash-mac-dh:q2" data-answer="2">
+  <p class="q">二つの拠点がDH鍵交換で共通の鍵を作る構成。通信路上の攻撃者が両者の間に割り込み、それぞれと別々に鍵交換を行った。この構成の評価として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>公開情報だけで共通の鍵を作るので、割り込まれても偽の相手とは鍵を共有しない</span></button><p class="why" hidden>DH鍵交換には相手を確かめる機能がなく、中間者に割り込まれると偽の相手と鍵を共有する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>鍵が一時的なものであれば、相手の認証をしなくても割り込みは防げる</span></button><p class="why" hidden>一時的な鍵で得られるのは前方秘匿性で、相手の認証にはならない。割り込みの防止には認証が要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>偽の相手と鍵を共有するおそれがあるので、署名や証明書で相手を認証する</span></button><p class="why" hidden>正解。DH鍵交換は署名や証明書で相手を認証して使う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ハッシュ値を併せて送れば、DH鍵交換だけで相手の認証まで行える</span></button><p class="why" hidden>ハッシュ値だけでは、値ごと作り直されると見抜けない。認証には署名や証明書を使う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep175-hash-mac-dh:q3" data-answer="0">
+  <p class="q">DH鍵交換で、通信のたびに使い捨ての（一時的な）鍵を使う設計にした。この設計で得られる利点として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>後から長期の鍵が漏れても、過去の通信は読まれにくくなる</span></button><p class="why" hidden>正解。通信ごとに鍵を使い捨てにすれば、後から長期の鍵が漏れても過去の通信は守りやすくなる（前方秘匿性）。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>鍵交換の相手が正規かどうかを、鍵交換だけで確認できるようになる</span></button><p class="why" hidden>DH鍵交換には相手の認証機能がない。相手の確認には署名や証明書を併用する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>中間者に割り込まれても、偽の相手と鍵を共有することがなくなる</span></button><p class="why" hidden>割り込みへの対策は、署名や証明書による相手の認証。使い捨ての鍵では防げない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>共有鍵を更新しなくても、同じ鍵を長期間そのまま使い続けられる</span></button><p class="why" hidden>共有鍵は秘密に保ち、定期的に更新する。更新不要になるわけではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep175-hash-mac-dh:q4" data-answer="1">
+  <p class="q">ファイルの完全性確認にMD5のハッシュ値を使っているシステムがある。見直しの方針として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>入力が少し変わると値が大きく変わるので、MD5のまま使い続けて問題ない</span></button><p class="why" hidden>値が大きく変わる性質があっても、MD5は衝突が見つかり非推奨。別のデータで同じ値を作れてしまう。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>MD5は衝突が見つかっているため、SHA-2など推奨される方式に切り替える</span></button><p class="why" hidden>正解。MD5やSHA-1は衝突が見つかり推奨されない。SHA-2など推奨される方式を選ぶ。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ハッシュ値を共通鍵で暗号化して保存すれば、MD5でも衝突は問題にならない</span></button><p class="why" hidden>保存時の暗号化では、別のデータで同じ値が作れてしまう衝突の問題は解消しない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SHA-1はMD5と違って衝突が見つかっていないので、SHA-1へ切り替える</span></button><p class="why" hidden>SHA-1もMD5と同様に衝突が見つかり、推奨されない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">「ハッシュ値を付けて送れば改ざんを検知できる」が不十分な理由と、改善策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">データを書き換えた攻撃者が、ハッシュ値も作り直せるため、改ざんも作成者も確認できない。鍵を使うMACか署名で改ざんを検知し、ハッシュ値は改ざんされない経路で確認する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep175-hash-mac-dh-t0-0"> 改ざん後に値も作り直される</label></li><li><label><input type="checkbox" id="ep175-hash-mac-dh-t0-1"> 鍵を使うMACか署名を使う</label></li><li><label><input type="checkbox" id="ep175-hash-mac-dh-t0-2"> ハッシュ値は別の安全な経路で確認する</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">DH鍵交換の弱点と、その対策、使い捨ての鍵の効果を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">DH鍵交換には相手の認証がなく、中間者に割り込まれると偽の相手と鍵を共有する。署名や証明書で相手を認証する。使い捨ての鍵を使えば前方秘匿性が得られ、後から長期の鍵が漏れても過去の通信は守りやすくなる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep175-hash-mac-dh-t1-0"> 相手の認証がなく中間者に割り込まれる</label></li><li><label><input type="checkbox" id="ep175-hash-mac-dh-t1-1"> 署名や証明書で認証する</label></li><li><label><input type="checkbox" id="ep175-hash-mac-dh-t1-2"> 使い捨ての鍵で過去の通信を守りやすくなる（前方秘匿性）</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="受注データの改ざん対策に関する調査記録（ダミー）"><div class="logtitle">受注データの改ざん対策に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 取引先との受注データのAPI通信は、途中で書き換えうる</span></div><div class="logrow"><span class="hl">両者は、事前に安全な方法で、秘密の鍵を共有している</span></div><div class="logrow"><span class="hl">公開鍵ペアや証明書、デジタル署名は使わない</span></div><div class="logrow"><span class="hl">要件: 改ざんがないことと、正規の相手が作ったことを確認</span></div></div></div>
+  <p class="q">要件を満たす方法として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">共有している秘密の鍵でMACを付け、受信側で再計算して照合する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>データのハッシュ値を、同じ通信に付けて送る … 値ごと作り直せるため、改ざんも作成者も確認できない</li><li>データを受信者の公開鍵で暗号化して送る … 公開鍵ペアを使わない前提に反する</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>7.1.3 ハッシュ関数、MAC、フィンガプリント</li><li>7.1.4 Diffie-Hellman鍵交換</li></ul>
+  <p>ハッシュ・MAC・署名で何が確認できるかの違いと、DH鍵交換が相手の認証をしない点を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep174-crypto-basics.html">← #74 暗号の概念と主な暗号方式 鍵の使い分けと渡し方</a><a href="ep176-ipsec-modes.html">#76 IPsecの概要と二つのモード ヘッダを残すか包むか →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

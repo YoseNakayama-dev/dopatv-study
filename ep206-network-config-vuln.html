@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#106 ネットワーク構成の脆弱性 区画・公開・経路・障害｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#106 ・ 第3章 情報セキュリティにおける脆弱性</p>
+  <h1>ネットワーク構成の脆弱性 区画・公開・経路・障害</h1>
+  <ol class="summary"><li>ネットワーク構成には、区画の分割なし・不要な公開・平文の通信・単一障害点という弱点が潜む。</li><li>構成図と実態のずれ、境界を通らない経路、管理通信の共用、期限なく残る許可は見えにくい弱点になる。</li><li>区画を分け、区画間は必要な通信だけ許可する。許可した通信は通るので、構成図の維持と見直しが要る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep206-network-config-vuln:flat-network">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">区画のない構成</span><span class="back" hidden><span class="def">全端末とサーバが同一のネットワークにある構成。一台に侵入されると、内部へ広がりやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep206-network-config-vuln:segmentation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">区画の分割</span><span class="back" hidden><span class="def">ネットワークを区画に分け、区画間は必要な通信だけ許可すること。侵入後の広がりを抑える。</span><span class="note">VLANで分けただけでは通信は絞れない。許可する規則が要る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep206-network-config-vuln:exposure">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">不要なポート・管理画面の公開</span><span class="back" hidden><span class="def">公開に必要な通信だけに絞られておらず、不要なポートや管理画面が外部に見えている状態。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep206-network-config-vuln:cleartext">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">平文の通信</span><span class="back" hidden><span class="def">暗号化されない通信。盗聴や改ざんを受けうる。管理用の通信は権限が強いため、特に守りたい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep206-network-config-vuln:spof">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">単一障害点</span><span class="back" hidden><span class="def">回線や機器が一つだけで、止まると全体が止まる箇所。冗長化でなくす。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep206-network-config-vuln:config-diagram-gap">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">構成図と実態のずれ</span><span class="back" hidden><span class="def">構成図や機器の一覧が実態と違う状態。存在を知らない機器は守れない。最新に保つ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep206-network-config-vuln:bypass-route">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">境界を通らない経路</span><span class="back" hidden><span class="def">無許可の無線や保守用の回線など。境界のファイアウォールがその通信を見ていない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep206-network-config-vuln:mgmt-path">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">管理通信の経路</span><span class="back" hidden><span class="def">管理用の通信が業務用と同じ経路にあると、業務側の侵害が管理側に届きやすい。専用の経路に限り、接続元も絞る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep206-network-config-vuln:stale-exception">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">期限なく残る許可</span><span class="back" hidden><span class="def">一時的な許可が期限なく残り、そのまま弱点になる。変更管理と定期的な見直しで防ぐ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep206-network-config-vuln:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>弱点と対策の組合せとして、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>区画の分割なし → 区画を分け、通信を絞る</span></button><p class="why" hidden>区画を分け、必要な通信だけ許可</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>単一障害点 → 暗号化を強化する</span></button><p class="why" hidden>単一障害点は冗長化で対処</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>平文の管理通信 → FWを増設する</span></button><p class="why" hidden>平文は暗号化で対処</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>不要なポートの開放 → 冗長化する</span></button><p class="why" hidden>不要なポートは閉じる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep206-network-config-vuln:q0" data-answer="2">
+  <p class="q">保守用の遠隔監視機器が、基幹サーバと同じネットワークにある。機器が侵入された場合に、基幹サーバへ広げにくくする見直しとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>遠隔監視用機器の通信を暗号化して、盗聴や改ざんを受けないようにする</span></button><p class="why" hidden>暗号化は盗聴や改ざんへの対策。機器が侵入された後の広がりを抑える対策ではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>VLANで機器を別に分ければ、基幹サーバとの通信は自動で遮断される</span></button><p class="why" hidden>VLANで分けただけでは通信は絞れない。区画間で許可する通信を、規則で決める必要がある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>機器を別の区画に置き、基幹サーバとの間は必要な通信だけ許可する</span></button><p class="why" hidden>正解。区画を分け、区画間は必要な通信だけ許可することで、侵入後の広がりを抑える。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>基幹サーバを冗長化して、一台が止まっても業務を継続できるようにする</span></button><p class="why" hidden>冗長化は単一障害点をなくす対策で、侵入後の広がりは抑えられない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep206-network-config-vuln:q1" data-answer="0">
+  <p class="q">現地調査で、構成図に載っていない無線のアクセスポイントが社内LANにつながっていた。境界のファイアウォールの規則は厳格に設定済みである。この状況の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>この無線経由の通信は境界のFWを通らず、その規則では制御できない</span></button><p class="why" hidden>正解。無許可の無線や保守回線は境界を通らない経路になり、境界のファイアウォールはその通信を見ていない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>境界のFWの規則が厳格なので、この無線経由の通信も同じ規則で制御される</span></button><p class="why" hidden>その通信は境界のファイアウォールを通らないので、規則の厳しさとは関係なく制御の対象にならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>構成図に載っていない機器は管理対象外なので、通信が暗号化されていれば問題ない</span></button><p class="why" hidden>把握していない機器は守れない。暗号化があっても、境界を通らない経路という弱点は残る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>無線の問題は盗聴されるだけなので、構成図を更新すれば対策は完了する</span></button><p class="why" hidden>構成図の更新は把握に必要だが、更新しただけでは境界を通らない経路は残る。把握したうえで対処が要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep206-network-config-vuln:q2" data-answer="3">
+  <p class="q">運用管理の画面が、業務用ネットワークと同じ経路上にあり、全端末から接続できる。管理者は日常的にこの画面を使う。見直しとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>管理者の人数を増やし、操作を相互に確認できるようにする</span></button><p class="why" hidden>人数を増やしても、業務側が侵害されると管理側に届きやすいという状況は変わらない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>管理用の通信は暗号化するだけにとどめ、経路と接続元は現状のままにする</span></button><p class="why" hidden>暗号化は盗聴や改ざんへの対策。経路と接続元がそのままでは、業務側の侵害が管理側に届きやすい弱点が残る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>業務用の通信をすべて暗号化して、管理用の通信と区別しやすくする</span></button><p class="why" hidden>業務用を暗号化しても、管理用の経路は共用のまま。接続元も絞れていない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>管理を専用の経路に限り、接続元を絞ったうえで、通信も暗号化する</span></button><p class="why" hidden>正解。管理は専用の経路に限り、管理を行える接続元も絞る。管理用の通信は権限が強いので暗号化もする。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep206-network-config-vuln:q3" data-answer="1">
+  <p class="q">3年前の移行作業のために開けた、特定の外部アドレスからの接続を許可する規則が残っている。移行は完了しているが、担当者が異動し、規則を残した理由が分からない。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>理由が不明なので、念のため今後に備えて規則をそのまま残しておく</span></button><p class="why" hidden>一時的な許可が期限なく残ると、そのまま弱点になる。理由が不明なまま残すのは弱点を放置することになる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>移行の完了を確認し、変更管理の手順で見直して不要なら削除する</span></button><p class="why" hidden>正解。目的を終えた一時的な許可は、変更管理と定期的な見直しの対象。不要なら削除する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>規則は残したまま、外部からの通信の記録を取得するだけにとどめる</span></button><p class="why" hidden>記録を取るだけでは、期限なく残る許可という弱点そのものは残る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>規則は残し、許可している接続元が変わっていないかを毎年確認する</span></button><p class="why" hidden>確認は見直しの一部だが、移行が完了して目的がなくなった許可を残す理由にはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep206-network-config-vuln:q4" data-answer="2">
+  <p class="q">経理サーバを別の区画に置き、区画間は経理システムの通信だけを許可した。その後、営業部の端末が感染し、許可した通信を経由して経理サーバに影響が及んだ。この事象の説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>区画の分割には効果がないと分かったため、分割をやめて元の構成に戻す</span></button><p class="why" hidden>分割は、必要な通信だけ許可して広がりを抑える対策。許可した通信は通るという限界はあるが、効果がないとは言えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>境界のFWの規則が緩かったことが原因なので、境界の規則を強化し直せば防げる</span></button><p class="why" hidden>問題になっているのは区画間で許可した通信。境界の規則を強化しても、許可した通信は通る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>許可した通信は通る限界によるもの。許可範囲を最小限に見直す</span></button><p class="why" hidden>正解。許可した通信は通るのが限界。許可の範囲を絞り、構成図の維持と見直しを続ける。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>分割が不十分だったため、全機器を同一ネットワークに戻して一元管理する</span></button><p class="why" hidden>同一ネットワークに戻すと、一台の侵入が内部へ広がりやすい弱点が戻ってしまう。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">区画を分けただけでは安心できない理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">分けただけでは通信は絞れないので、区画間は必要な通信だけ許可する規則が要る。さらに許可した通信は通るので、感染した端末がその通信を使う可能性は残る。許可範囲を絞り、構成図の維持と定期的な見直しを続ける。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep206-network-config-vuln-t0-0"> 分けただけでは通信は絞れない</label></li><li><label><input type="checkbox" id="ep206-network-config-vuln-t0-1"> 必要な通信だけ許可する規則</label></li><li><label><input type="checkbox" id="ep206-network-config-vuln-t0-2"> 許可した通信は通る（限界）</label></li><li><label><input type="checkbox" id="ep206-network-config-vuln-t0-3"> 構成図の維持と見直し</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">無許可の無線や保守回線が弱点になる理由と、構成図の維持が必要な理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">境界を通らない経路になり、境界のファイアウォールはその通信を見ていない。構成図や機器の一覧が実態と違うと、存在を知らない機器は守れない。構成図の維持、変更管理、定期的な見直しで把握し続ける。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep206-network-config-vuln-t1-0"> 境界を通らず、FWが見ていない</label></li><li><label><input type="checkbox" id="ep206-network-config-vuln-t1-1"> 知らない機器は守れない</label></li><li><label><input type="checkbox" id="ep206-network-config-vuln-t1-2"> 構成図の維持・変更管理・見直し</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="社内ネットワークの構成記録（ダミー）"><div class="logtitle">社内ネットワークの構成記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">営業部の端末1台が感染。社内は全機器が同一ネットワーク</span></div><div class="logrow"><span class="hl">経理サーバも同じ。全端末から直接通信できる</span></div><div class="logrow"><span class="hl">境界のFWは設定済み。バックアップは毎日取得済み</span></div><div class="logrow"><span class="hl">要件: 経理サーバへ、感染を広げにくくしたい</span></div></div></div>
+  <p class="q">構成の見直しとして、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">経理サーバを別のセグメントに置き、必要な通信だけ許可する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>境界のFWの規則を厳しくする … 感染は社内で広がり、その通信は境界のFWを通らない</li><li>バックアップの頻度を上げる … 復旧の手段で、感染の広がりは抑えられない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>3.2.1 ネットワーク構成における脆弱性</li><li>3.2.2 ネットワーク構成における脆弱性への対策</li></ul>
+  <p>構成そのものの弱点と見えにくい弱点を整理し、区画分割の限界（許可した通信は通る）まで確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep205-vulnerability-basics.html">← #105 脆弱性とは 弱点の種類と優先順位</a><a href="ep207-tcpip-common-vuln.html">#107 TCP/IP共通の脆弱性 平文・偽装・資源枯渇 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

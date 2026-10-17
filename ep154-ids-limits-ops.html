@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#54 IDSの限界と運用の課題 誤検知と見逃しにどう向き合うか｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#54 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>IDSの限界と運用の課題 誤検知と見逃しにどう向き合うか</h1>
+  <ol class="summary"><li>IDSには誤検知・見逃し・取りこぼしの限界があり、検知は事後の対応につながる。通信は止められない。</li><li>運用では、重要度の分類、環境に合わせた調整、パターンの更新、確認と対応の手順・連絡先が要る。</li><li>検知の厳しさは誤検知と見逃しのトレードオフ。ログの突き合わせと、IPSなど他の対策との併用で補う。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep154-ids-limits-ops:ids">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IDS（侵入検知システム）</span><span class="back" hidden><span class="def">不正な通信を検知して通知する仕組み。基本的に通信は止めないので、検知後の対応が遅れると被害が進む。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep154-ids-limits-ops:false-positive">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">誤検知</span><span class="back" hidden><span class="def">正常な通信を不正と判定すること。多いと、重要なアラートが大量のアラートに埋もれる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep154-ids-limits-ops:false-negative">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">見逃し</span><span class="back" hidden><span class="def">不正な通信を検知できないこと。未知の攻撃や、暗号化された通信で起きやすい。</span><span class="note">誤検知は「正常を不正と判定」、見逃しは「不正を検知できない」。向きが逆。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep154-ids-limits-ops:dropped-detection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">取りこぼし</span><span class="back" hidden><span class="def">通信量が多く監視が追いつかず、一部の通信を検査できないこと。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep154-ids-limits-ops:tuning">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">チューニング（調整）</span><span class="back" hidden><span class="def">環境に合わせて、検知のパターンやしきい値を調整すること。既定のままだと誤検知が多くなりやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep154-ids-limits-ops:tradeoff">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">誤検知と見逃しのトレードオフ</span><span class="back" hidden><span class="def">検知を厳しくすると誤検知が増え、緩めると見逃しが増える関係。調整はこの両方を見ながら行う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep154-ids-limits-ops:correlation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">相関分析</span><span class="back" hidden><span class="def">IDSのアラートを、FWやサーバのログと突き合わせて、本物の攻撃かどうかの真偽を確かめること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep154-ids-limits-ops:anomaly">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">アノマリ型の見直し</span><span class="back" hidden><span class="def">通常の状態を基準に検知する方式では、通常の状態も定期的に見直す。誤検知が増えやすい点にも注意する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep154-ids-limits-ops:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>IDSの「誤検知」の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>不正な通信を、正常な通信と判定して、見逃してしまうこと</span></button><p class="why" hidden>それは、見逃し</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>検知した通信を、管理者の確認なしに、自動で遮断してしまうこと</span></button><p class="why" hidden>IDSは、遮断しない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>正常な通信や操作を、不正な通信と誤って判定してしまうこと</span></button><p class="why" hidden>正常を不正と誤判定</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>攻撃パターンの定義を、最新の状態に更新できていないこと</span></button><p class="why" hidden>運用上の不備</p></li></ol>
+</li>
+<li class="quiz" data-key="ep154-ids-limits-ops:q0" data-answer="0">
+  <p class="q">暗号化された通信の中に不正な通信が含まれていたが、IDSからアラートは出なかった。この事象の分類として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>見逃し。不正な通信が検知されず、アラートが出なかった状態</span></button><p class="why" hidden>正解。不正を検知できないのが見逃しで、未知の攻撃や暗号化された通信で起きやすい。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>誤検知。正常な通信を不正と判定し、アラートが過剰に出る側の問題</span></button><p class="why" hidden>誤検知は正常な通信を不正と判定すること。今回は不正を検知できていないので向きが逆。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>取りこぼし。通信量が多く、監視が追いつかずに一部を見ていない状態</span></button><p class="why" hidden>取りこぼしは通信量が多く監視が追いつかない場合。今回の事象は暗号化された通信で、原因が異なる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>通信は止められない限界。検知はできたが遮断されなかった状態</span></button><p class="why" hidden>この限界は検知できても通信を止められないこと。今回はそもそもアラートが出ていない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep154-ids-limits-ops:q1" data-answer="1">
+  <p class="q">誤検知が多く重要なアラートが埋もれている。担当者が「件数を減らすため、検知を大幅に緩める」と提案した。この提案への評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>緩めても見逃しは増えないので、誤検知の対策として有効である</span></button><p class="why" hidden>緩めると見逃しが増える。誤検知と見逃しはトレードオフの関係にある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>件数は減るが見逃しが増えうるので、環境に合わせた調整とセットで行う</span></button><p class="why" hidden>正解。厳しくすると誤検知が増え、緩めると見逃しが増える。環境に合わせた調整が必要になる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>検知を厳しくするほど誤検知も見逃しも両方減るので、緩める提案は誤りである</span></button><p class="why" hidden>厳しくすると誤検知が増える。両方が同時に減るという関係ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>アラートの件数が減れば、重要度の分類や確認手順は不要になる</span></button><p class="why" hidden>件数が減っても、重要度の分類と確認・対応の手順は運用上の課題として残る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep154-ids-limits-ops:q2" data-answer="3">
+  <p class="q">夜間に重要度「高」のアラートが出たが、誰がいつ確認し、どう対応するかが決まっておらず、翌週まで放置された。最も根本的な不足はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>検知の精度が低く、実際には重要度が高い不正な通信そのものを検知できていないこと</span></button><p class="why" hidden>アラートは実際に出ているので、検知できていないという前提が誤り。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>通信量が多く、監視が追いつかずに一部の通信を取りこぼしていること</span></button><p class="why" hidden>取りこぼしの記述はなく、アラート自体は出ている。放置の原因は別にある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>パターンの定義が古く、既知の攻撃を見逃し続けていること</span></button><p class="why" hidden>パターンの更新は運用課題だが、今回はアラートが出ており、見逃しではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>確認と対応の手順や連絡先が決まっておらず、検知が対応につながらないこと</span></button><p class="why" hidden>正解。誰が、いつ確認し、どう対応するかの手順と連絡先を決めておかないと、検知しても被害が進む。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep154-ids-limits-ops:q3" data-answer="1">
+  <p class="q">IDSが外部から内部サーバへの不審な通信を検知した。これが本物の攻撃かどうかを判断する方法として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>アラートの重要度が高ければ、他のログは見ずに侵害が確定したと判断する</span></button><p class="why" hidden>重要度だけで確定させず、ログを突き合わせて確かめる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>FWやサーバのログと突き合わせて、その通信が本物の攻撃かを確かめる</span></button><p class="why" hidden>正解。相関分析として、FWやサーバのログと突き合わせて真偽を確かめる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>誤検知の可能性があるので、確認せずに無視して様子を見る</span></button><p class="why" hidden>誤検知の可能性があっても、確認せず放置すると本物を見落とす。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>IDSを再起動して、同じアラートが再び出るかどうかだけで判断する</span></button><p class="why" hidden>再起動の再現だけでは真偽は分からない。ログとの突き合わせが必要。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep154-ids-limits-ops:q4" data-answer="0">
+  <p class="q">「IDSだけを導入すれば、攻撃が来ても被害は出ない」という説明があった。この説明への指摘として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>検知は事後の対応につながり、通信は止められない。遮断はIPSと併用する</span></button><p class="why" hidden>正解。IDSは通信を止められず、対応が遅れると被害が進む。遮断はIPS、事後はインシデント対応と組み合わせる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>検知した通信を自動で遮断するので、対応が遅れても被害は進行しない</span></button><p class="why" hidden>IDSは基本的に通信を遮断しない。自動で遮断するのはIPS。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>誤検知が多い場合に限り、検知した通信を自動で遮断できなくなる</span></button><p class="why" hidden>誤検知の多さとは無関係に、IDSは基本的に遮断しない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>未知の攻撃や暗号化された通信も、パターンを最新に保てば漏れなく検知できる設計である</span></button><p class="why" hidden>未知の攻撃や暗号化された通信は見逃しが起きやすい。パターンの更新だけで漏れなく検知できるとは言えない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">アラートが毎日大量に出て、重要なものが埋もれている。原因の見立てと、改善の方向を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">既定のままで環境に合わせた調整をしていないと、誤検知が多くなりやすい。調整で誤検知を減らし、重要度で分類して優先的に確認する。ただし検知を緩めすぎると見逃しが増える。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep154-ids-limits-ops-t0-0"> 既定のままだと誤検知が多くなりやすい</label></li><li><label><input type="checkbox" id="ep154-ids-limits-ops-t0-1"> 環境に合わせて調整し、重要度で分類する</label></li><li><label><input type="checkbox" id="ep154-ids-limits-ops-t0-2"> 緩めすぎると見逃しが増える</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">IDSが重要なアラートを出していたのに、被害が進んだ。運用面の原因と対処を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">IDSは通信を止められず、検知は事後の対応につながる。確認や対応の手順・連絡先が決まっていないと対応が遅れ、被害が進む。確認から連絡・対処までの手順を事前に決め、遮断はIPSと併用する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep154-ids-limits-ops-t1-0"> IDSは通信を止められない</label></li><li><label><input type="checkbox" id="ep154-ids-limits-ops-t1-1"> 確認・対応の手順と連絡先が必要</label></li><li><label><input type="checkbox" id="ep154-ids-limits-ops-t1-2"> 遮断はIPS、事後はインシデント対応と併用</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="IDS運用の調査記録（ダミー）"><div class="logtitle">IDS運用の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">IDSのアラート: 1日に約3000件。大半は、定期バックアップの通信への反応</span></div><div class="logrow"><span class="hl">検知設定: 既定のまま。環境に合わせた調整は、導入後に一度も行っていない</span></div><div class="logrow"><span class="hl">アラートの確認: 担当者1名が、週に1回、まとめて確認している</span></div><div class="logrow"><span class="hl">先週、重要度「高」のアラートが出たが、確認されたのは4日後だった</span></div><div class="logrow"><span class="hl">その4日間、サーバから外部へ、データが送信され続けた</span></div></div></div>
+  <p class="q">運用の改善として、優先すべきなのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">誤検知を減らす調整と、重要度に応じた確認・対応の手順を整える</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>IDSを増設し、監視範囲を広げる … 重要度「高」のアラートは、出ていた</li><li>アノマリ型に変更する … 誤検知が増えやすく、現状は1日3000件</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.6.3 IDSの機能上の限界及び運用上の課題</li></ul>
+  <p>誤検知・見逃し・取りこぼしの違いと、検知しても通信は止められない点を、運用課題（調整・更新・体制）と結びつけて読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep153-ids-basics.html">← #53 IDSの概要と種類 検知して知らせる見張り番</a><a href="ep155-ips-basics.html">#55 IPSの概要と主な機能 経路の中で検知して止める →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

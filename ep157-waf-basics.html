@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#57 WAFの種類と主な機能 Webアプリの手前で中身を見る門番｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#57 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>WAFの種類と主な機能 Webアプリの手前で中身を見る門番</h1>
+  <ol class="summary"><li>WAFはWebアプリの手前で、HTTP/HTTPSのリクエストの中身を検査し、脆弱性を狙う通信を遮断・検知する。</li><li>一般的なFWはIPアドレスとポート番号が中心で、許可した通信の中身は見ない。見る層が違う。</li><li>形態はネットワーク型・ホスト型・クラウド型など。暗号化通信は復号できる位置で検査する必要がある。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep157-waf-basics:waf">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">WAF（Web Application Firewall）</span><span class="back" hidden><span class="def">Webアプリの脆弱性を狙う通信を、HTTP/HTTPSのリクエストの内容から検査し、遮断・検知する仕組み。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep157-waf-basics:fw-diff">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">WAFとFWの違い</span><span class="back" hidden><span class="def">一般的なFWはIPアドレスとポート番号が中心で、許可した通信の中身は見ない。WAFは通信の中身まで見る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep157-waf-basics:network-type">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ネットワーク型WAF</span><span class="back" hidden><span class="def">専用機器をWebサーバの手前に置く形態。複数のサーバをまとめて守りやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep157-waf-basics:host-type">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ホスト型WAF</span><span class="back" hidden><span class="def">Webサーバ自身にソフトを導入する形態。サーバごとに導入と管理が要る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep157-waf-basics:cloud-type">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">クラウド型WAF</span><span class="back" hidden><span class="def">事業者のサービスに通信を中継させて検査する形態。自社に機器を置かなくてよい。DNS設定の変更などで導入する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep157-waf-basics:signature-type">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">シグネチャ型（ブラックリスト型）</span><span class="back" hidden><span class="def">既知の攻撃パターンに一致するかを調べる検査方式。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep157-waf-basics:whitelist-type">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ホワイトリスト型</span><span class="back" hidden><span class="def">正常な入力の形を定義し、外れたら止める検査方式。設定に手間がかかる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep157-waf-basics:action">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">WAFの動作（通過・遮断・検知のみ）</span><span class="back" hidden><span class="def">検知した通信を通過・遮断・検知のみから選べる。最初は検知のみで動かし、誤検知を確認する運用もある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep157-waf-basics:https-decrypt">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">HTTPS通信の検査</span><span class="back" hidden><span class="def">暗号化通信は、復号できる位置で検査しないと中身が見えない。置く位置や復号の方法が重要になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep157-waf-basics:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>WAFの説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>HTTPの通信内容を検査し、Webアプリへの不正な要求を止める</span></button><p class="why" hidden>HTTP通信の内容を検査して遮断</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>送信元のIPアドレスとポート番号だけを見て、通信の許可を決める</span></button><p class="why" hidden>それは、パケットフィルタ型のFW</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>Webアプリのソースコードを解析し、見つかった脆弱性を直す</span></button><p class="why" hidden>それは、ソースコードの解析</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利用者のIDとパスワードを確認して、正規の利用者だけを許可する</span></button><p class="why" hidden>それは、認証</p></li></ol>
+</li>
+<li class="quiz" data-key="ep157-waf-basics:q0" data-answer="1">
+  <p class="q">FWでHTTPSのポートを許可している。その通信に載ったWebアプリの脆弱性を狙うリクエストがFWを通過した。FWが止められなかった理由として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>FWもHTTPのリクエストの中身まで必ず検査するが、暗号化された通信だけは対象外になるから</span></button><p class="why" hidden>FWは暗号化の有無にかかわらず、許可した通信の中身は見ないのが普通。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>FWは主にIPアドレスとポート番号で判断し、許可した通信の中身は見ないから</span></button><p class="why" hidden>正解。FWは主にIPアドレスとポート番号で判断し、許可した通信の中身は見ない。WAFとは見る層が違う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ポート番号の許可設定が誤っていたため、設定を直せばFWだけで同じ攻撃を防げるから</span></button><p class="why" hidden>FWはもともと通信の中身を見ないので、設定を直しても同じ検査はできない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>HTTPのリクエストの内容を検査するのは、パケットフィルタ型の役割だから</span></button><p class="why" hidden>パケットフィルタ型は主にIPアドレスとポート番号で判断する方式で、リクエストの内容は検査しない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep157-waf-basics:q1" data-answer="2">
+  <p class="q">Webサーバが多数あり、自社の設備に専用機器を置ける。事業者への通信の中継は規程で認められておらず、サーバごとの導入・管理は避けたい。適切な形態はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ホスト型。各Webサーバにソフトを導入し、サーバ上で検査する</span></button><p class="why" hidden>ホスト型はサーバごとに導入と管理が要る。避けたい条件に合わない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>クラウド型。事業者のサービスに通信を中継させ、そこで検査する</span></button><p class="why" hidden>クラウド型は事業者のサービスに通信を中継させる。中継が認められていない条件に合わない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ネットワーク型。専用機器をWebサーバの手前に置き、まとめて守る</span></button><p class="why" hidden>正解。ネットワーク型は専用機器をWebサーバの手前に置き、複数のサーバをまとめて守りやすい。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>FWのみ。IPアドレスとポート番号の許可設定を強化して、中身まで検査させる</span></button><p class="why" hidden>FWは主にIPアドレスとポート番号で判断し、中身は見ない。設定を強化しても中身の検査にはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep157-waf-basics:q2" data-answer="3">
+  <p class="q">入力欄に「数字6桁だけ」を受け付ける仕様がある。この形から外れた入力を止めたい。検査方式と特徴として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>シグネチャ型。既知の攻撃パターンに一致するかを調べて遮断する</span></button><p class="why" hidden>シグネチャ型は既知の攻撃パターンとの一致を調べる方式。入力の形を定義する方式ではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ブラックリスト型。正常な入力の形をあらかじめ定義して判断するので、設定の手間はほとんどかからない</span></button><p class="why" hidden>入力の形を定義するのはホワイトリスト型で、設定に手間がかかる。ブラックリスト型は既知のパターンを調べる方式。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>検知のみ型。入力の形を定義したうえで、外れたものを遮断せず通過させる</span></button><p class="why" hidden>検知のみは動作の選択肢の一つで、検査方式ではない。外れた入力を止めたい条件にも合わない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ホワイトリスト型。正常な入力の形を定義して、外れたら止める。設定に手間がかかる</span></button><p class="why" hidden>正解。正常な入力の形を定義し、外れたら止めるのがホワイトリスト型。設定に手間がかかる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep157-waf-basics:q3" data-answer="1">
+  <p class="q">WAFをHTTPS通信が暗号化されたまま通る位置に置き、復号の仕組みは用意しなかった。この構成に対する評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>暗号化されていても、WAFはHTTPのリクエストの中身を検査して遮断できる</span></button><p class="why" hidden>暗号化通信は、復号できる位置で検査しないと中身が見えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>復号できる位置で検査しないと、暗号化されたままでは中身を検査できない</span></button><p class="why" hidden>正解。暗号化通信は、復号できる位置で検査しないと中身が見えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>HTTPSの通信はWAFの検査対象外なので、別のFWを追加すれば同じ検査が行えるようになる</span></button><p class="why" hidden>HTTPSの通信もWAFの対象になる。FWは中身を見ないので、追加しても同じ検査にはならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>復号しなくても、通信の宛先のIPアドレスから、攻撃かどうかを判断できる</span></button><p class="why" hidden>IPアドレスだけでは通信の中身は分からない。中身の検査には復号が要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep157-waf-basics:q4" data-answer="2">
+  <p class="q">WAFを導入した直後に、正常な入力が誤検知で遮断される事態を避けたい。最初の動作設定として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>最初から遮断モードで稼働し、正常な通信が止まった場合に、その都度対応する</span></button><p class="why" hidden>最初から遮断すると、誤検知で正常な通信が止まる事態を避けられない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>通過のみの動作に設定し、遮断も検知もしないまま様子を見て運用を続ける</span></button><p class="why" hidden>通過のみでは誤検知の確認もできず、検査の意味がなくなる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>最初は検知のみで動かし、誤検知の有無を確認してから遮断に切り替える運用を選ぶ</span></button><p class="why" hidden>正解。最初は検知のみで動かし、誤検知を確認する運用がある。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ホワイトリスト型に限定して、設定の手間が少ないので、導入直後から遮断で稼働する</span></button><p class="why" hidden>ホワイトリスト型は設定に手間がかかる。導入直後から遮断してよい根拠にはならない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">FWがあるのにWebアプリを狙う攻撃が届いた。FWとWAFの役割の違いを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">一般的なFWは主にIPアドレスとポート番号で判断し、許可した通信の中身は見ない。WAFは利用者とWebアプリの間でHTTP/HTTPSのリクエストの中身まで検査するので、見る層が違う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep157-waf-basics-t0-0"> FWはIPアドレスとポート番号が中心</label></li><li><label><input type="checkbox" id="ep157-waf-basics-t0-1"> 許可した通信の中身は見ない</label></li><li><label><input type="checkbox" id="ep157-waf-basics-t0-2"> WAFはリクエストの中身を検査する</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">WAFの導入形態を選ぶとき、何を基準にするか。条件の例を挙げて、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">構成、性能、運用体制、暗号化通信の扱いで選ぶ。例えば、専用機器を置けるならネットワーク型、サーバごとにソフトを入れられるならホスト型、機器を置けず事業者への中継が許されるならクラウド型。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep157-waf-basics-t1-0"> 構成・性能・運用体制・暗号化通信の扱いで選ぶ</label></li><li><label><input type="checkbox" id="ep157-waf-basics-t1-1"> ネットワーク型・ホスト型・クラウド型の特徴</label></li><li><label><input type="checkbox" id="ep157-waf-basics-t1-2"> 導入できる条件（機器・ソフト・中継）と対応づける</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="問い合わせサイト防御の検討記録（ダミー）"><div class="logtitle">問い合わせサイト防御の検討記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: レンタルサーバ上の問い合わせサイト（ダミー）</span></div><div class="logrow"><span class="hl">契約でサーバへのソフト追加は不可。自社に機器の設置場所もない</span></div><div class="logrow"><span class="hl">入力欄を狙う不正な要求が届く。アプリ改修は2か月後</span></div><div class="logrow"><span class="hl">DNSの設定は自社で変更可。外部事業者の経由は社内規程で許可</span></div><div class="logrow"><span class="hl">要件: アプリを改修せずに、手前で遮断する</span></div></div></div>
+  <p class="q">WAFの導入方式として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">DNSの設定で事業者のサービスに中継させ、そこで検査して遮断する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>Webサーバにソフトを導入し、サーバ上で検査して遮断する … 契約で、サーバへの追加が認められていない</li><li>自社の設備に専用機器を置き、手前で検査して遮断する … 自社には、置く場所も設備もない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.8.1 WAFの種類と主な機能</li></ul>
+  <p>FWとの違い（見る層）、3つの形態の違い、検査方式と動作の選択肢を整理しながら読む。HTTPSをどこで復号するかにも注目する。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep156-ips-config-limits.html">← #56 IPSの構成例と限界 故障時に止めるか通すか</a><a href="ep158-waf-limits-ops.html">#58 WAFの限界と運用の課題 入れて終わりではない補助の守り →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

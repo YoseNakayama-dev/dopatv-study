@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#76 IPsecの概要と二つのモード ヘッダを残すか包むか｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#76 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
+  <h1>IPsecの概要と二つのモード ヘッダを残すか包むか</h1>
+  <ol class="summary"><li>IPsecはIP層でパケットを守る。トランスポートは元のIPヘッダを残し、トンネルは全体を包んで新ヘッダを付ける。</li><li>保護されるのはトンネルの外側の区間だけ。トランスポートはIPヘッダが見え、通信相手のアドレスが分かる。</li><li>両端の方式・モード・設定をそろえ、長い鍵か証明書で認証し、NAT越えの可否を事前に確認する。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep176-ipsec-modes:ipsec">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IPsec</span><span class="back" hidden><span class="def">IP層でパケットの暗号化と改ざん検知を行う仕組み。モードにはトランスポートとトンネルの二つがある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep176-ipsec-modes:transport-mode">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">トランスポートモード</span><span class="back" hidden><span class="def">元のIPヘッダを残し、中身（ペイロード）を保護するモード。主にホスト間（端末間）の通信で使う。</span><span class="note">IPヘッダが見えるので、通信相手のアドレスは外から分かる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep176-ipsec-modes:tunnel-mode">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">トンネルモード</span><span class="back" hidden><span class="def">元のIPパケット全体を保護し、新しいIPヘッダを付けるモード。ESPで暗号化すれば元のアドレスも外から見えない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep176-ipsec-modes:site-to-site">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">拠点間VPN</span><span class="back" hidden><span class="def">拠点のゲートウェイ同士でトンネルを張り、拠点間の通信を保護する構成。トンネルモードが多い。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep176-ipsec-modes:protected-section">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">保護される区間</span><span class="back" hidden><span class="def">保護されるのはトンネルの外側の区間だけ。拠点内のLANではそのままの通信になる。</span><span class="note">拠点内の通信は、別に守る必要がある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep176-ipsec-modes:settings-mismatch">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">両端の設定の不一致</span><span class="back" hidden><span class="def">両端で方式やモードなどの設定が合わないとつながらないこと。片側だけの変更が障害の原因になりやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep176-ipsec-modes:psk">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">事前共有鍵</span><span class="back" hidden><span class="def">あらかじめ両端で共有しておく鍵。弱いと破られるおそれがある。十分に長い鍵を使うか、証明書で認証する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep176-ipsec-modes:nat-traversal">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">NAT越え</span><span class="back" hidden><span class="def">NATがある経路でIPsecが通るかどうか。事前に確認が要り、対応は機器によって異なる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep176-ipsec-modes:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>IPsecのトンネルモードの説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>元のIPヘッダを保ったまま、ペイロードだけを保護して送る方式である</span></button><p class="why" hidden>ヘッダを残すのはトランスポートモード</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ホスト間の通信にのみ使われ、ゲートウェイ間では使えない方式である</span></button><p class="why" hidden>ゲートウェイ間で使われる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>元のIPパケット全体を保護し、新しいヘッダを付けて送る方式である</span></button><p class="why" hidden>全体を保護し新ヘッダを付加</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗号化を行えないため、拠点間VPNでは使われることのない方式である</span></button><p class="why" hidden>暗号化もでき、拠点間VPNに使われる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep176-ipsec-modes:q0" data-answer="0">
+  <p class="q">本社と支社のVPN装置の間にIPsecのトンネルを張った。支社の端末から支社のVPN装置までのLAN区間の通信について、適切な説明はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>保護されるのは外側の区間だけなので、拠点内のLANは別の対策で守る</span></button><p class="why" hidden>正解。保護されるのはトンネルの外側の区間だけで、拠点内のLANはそのままの通信になる。保護区間を把握し、拠点内は別に守る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>トンネルモードなら、端末からVPN装置までの区間も自動で暗号化される</span></button><p class="why" hidden>トンネルモードでも保護されるのはトンネルの外側の区間だけ。端末からVPN装置までのLAN区間は保護外。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>拠点内の通信もIPsecで暗号化されるため、拠点内の対策は不要になる</span></button><p class="why" hidden>拠点内のLANではそのままの通信になるので、拠点内の対策は別に必要。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ESPで暗号化していれば、拠点内のLANを盗聴されるおそれはなくなる</span></button><p class="why" hidden>ESPで暗号化されるのはトンネルの区間。拠点内のLANは保護外なので、盗聴のおそれは残る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep176-ipsec-modes:q1" data-answer="1">
+  <p class="q">本社のVPN装置でIPsecの暗号方式の設定を変更した直後から、支社とつながらなくなった。支社の装置の設定は変えていない。最初に確認すべき点はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>トンネルモードは片側の設定だけで接続できるので、障害は支社側にあると疑う</span></button><p class="why" hidden>変更したのは本社側で支社側は未変更なので、疑うのは両端の不一致。トンネルモードでも、両端で方式や設定が合わないとつながらない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>両端で方式や設定が合わないとつながらないため、支社側の設定をそろえる</span></button><p class="why" hidden>正解。両端で方式とモードをそろえて設定する必要がある。片側だけの変更は障害の原因になりやすい。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>トランスポートモードに切り替えれば、設定の違いに関係なくつながる</span></button><p class="why" hidden>モードを切り替えても、両端の設定が合わなければつながらない。方式とモードは両端でそろえる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>事前共有鍵が長すぎると接続できなくなるため、短い鍵に変更する</span></button><p class="why" hidden>事前共有鍵が弱いと破られるおそれがある。十分に長い鍵を使うのが対策で、短くするのは逆。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep176-ipsec-modes:q2" data-answer="3">
+  <p class="q">社内の二台の端末間を、IPsecのトランスポートモード（ESPで暗号化）で保護している。経路上の機器で通信を観測する者から見える情報として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>元のIPヘッダも保護されるため、通信相手のアドレスは観測できない</span></button><p class="why" hidden>トランスポートモードは元のIPヘッダを残す。IPヘッダは見える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>元のパケット全体が保護され新しいヘッダが付くので、アドレスは外から見えない</span></button><p class="why" hidden>元のパケット全体を保護して新しいヘッダを付けるのはトンネルモードの説明。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ペイロードが暗号化されないため、通信内容もそのまま読み取れる</span></button><p class="why" hidden>トランスポートモードは中身（ペイロード）を保護する。ESPで暗号化していれば、内容はそのままは読めない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>IPヘッダは残るので通信相手のアドレスは分かるが、中身は保護される</span></button><p class="why" hidden>正解。トランスポートモードは元のIPヘッダを残して中身を保護する。通信相手のアドレスは外から分かる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep176-ipsec-modes:q3" data-answer="0">
+  <p class="q">拠点間のIPsecで、事前共有鍵に短い単語を設定していた。評価と対策の組合せとして適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>事前共有鍵が弱いと破られるおそれがあるため、十分に長い鍵か証明書で認証する</span></button><p class="why" hidden>正解。事前共有鍵が弱いと破られるおそれがある。十分に長い鍵を使うか、証明書で認証する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ESPで暗号化していれば、事前共有鍵の強さは安全性に影響しない</span></button><p class="why" hidden>暗号化の有無とは別に、事前共有鍵が弱いと破られるおそれがある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>トンネルモードにすれば元のアドレスが隠れるので、事前共有鍵が弱くても問題にならない</span></button><p class="why" hidden>モードの選択で隠れるのはアドレスの見え方。事前共有鍵が弱い問題は残る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>NAT越えを確認すれば、事前共有鍵が短くても破られるおそれはなくなる</span></button><p class="why" hidden>NAT越えの確認は通信の通り道の話で、鍵の強さとは別の確認事項。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep176-ipsec-modes:q4" data-answer="1">
+  <p class="q">拠点間IPsecを構築する。支社側のルータはNATを行っている。構築前の対応として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IPsecはNATの有無に影響されないので、事前の確認は不要である</span></button><p class="why" hidden>NATを越えられるかの確認が要る。NATがあると通信方法の調整も必要になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>NATを越えられるかを事前に確認する。対応可否は機器によって異なる</span></button><p class="why" hidden>正解。NATがある場合は、越えられるか事前に確認する。NAT越えの対応は機器によって異なる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>NATがあるとIPsecは使えなくなるので、必ず別の方式を選ぶ必要がある</span></button><p class="why" hidden>使えなくなると決まるわけではなく、越えられるかを確認する。対応は機器によって異なる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>事前共有鍵を長くしておけば、NAT越えの可否も問題にならなくなる</span></button><p class="why" hidden>鍵の長さはNAT越えとは別の確認事項。NAT越えの可否は事前に確認する。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">トランスポートモードとトンネルモードの違いを、IPヘッダの扱いと通信相手のアドレスの見え方に着目して頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">トランスポートモードは元のIPヘッダを残して中身だけを保護するので、通信相手のアドレスは外から見える。トンネルモードは元のパケット全体を保護して新しいヘッダを付けるので、ESPで暗号化すれば元のアドレスも外から見えない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep176-ipsec-modes-t0-0"> トランスポートは元のIPヘッダを残す</label></li><li><label><input type="checkbox" id="ep176-ipsec-modes-t0-1"> トンネルは全体を保護し新ヘッダを付ける</label></li><li><label><input type="checkbox" id="ep176-ipsec-modes-t0-2"> アドレスの見え方の違い</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">拠点間にIPsecトンネルを張ったのに、情報漏えいが起こりうる場所と対策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">保護されるのはトンネルの外側の区間だけで、拠点内のLANはそのままの通信になる。保護される区間とされない区間を把握し、拠点内の通信は別に守る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep176-ipsec-modes-t1-0"> 保護されるのは外側の区間だけ</label></li><li><label><input type="checkbox" id="ep176-ipsec-modes-t1-1"> 拠点内のLANは保護外</label></li><li><label><input type="checkbox" id="ep176-ipsec-modes-t1-2"> 拠点内は別の対策で守る</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="拠点間VPNの構成に関する調査記録（ダミー）"><div class="logtitle">拠点間VPNの構成に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 本社と支社のLANを、インターネット越しに接続したい</span></div><div class="logrow"><span class="hl">各端末の設定は、変更できない</span></div><div class="logrow"><span class="hl">各拠点の境界に、VPN装置を置くことができる</span></div><div class="logrow"><span class="hl">要件: 拠点内部のアドレスを、インターネット上に見せない</span></div></div></div>
+  <p class="q">要件を満たす構成として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">拠点の境界のVPN装置同士で、ESPを使ったIPsecのトンネルモードにする</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>各端末で、トランスポートモードを設定する … 端末の設定を変更できない</li><li>境界のVPN装置同士で、トランスポートモードを使う … 装置自身の通信向けで、LAN内の通信全体を保護できず、内部アドレスも隠せない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>7.3.1 IPsecの概要</li><li>7.3.2 IPsec VPNにおける二つの暗号化モード</li></ul>
+  <p>二つのモードで何が保護され何が見えるかと、保護される区間の範囲を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep175-hash-mac-dh.html">← #75 ハッシュ関数とMAC、DH鍵交換 値で確かめ、鍵を作る</a><a href="ep177-ipsec-functions.html">#77 IPsecの機能と構成プロトコル 守る役と鍵を配る役 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

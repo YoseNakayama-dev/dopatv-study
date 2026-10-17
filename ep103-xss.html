@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#3 XSS 出力の扱いで起きる攻撃と防御｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#3 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>XSS 出力の扱いで起きる攻撃と防御</h1>
+  <ol class="summary"><li>XSSは、入力を適切な処理なしにHTMLへ出力し、ブラウザがコードとして解釈することで起きる。</li><li>種類は反射型・格納型・DOM Based。HTMLの入力を許さない場合の根本対策は出力時のエスケープで、出力位置ごとに処理を変える。</li><li>HttpOnly・CSPは影響や実行を抑える追加の層、WAFは見逃しもある補助。原因は直らない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep103-xss:xss">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">クロスサイトスクリプティング（XSS）</span><span class="back" hidden><span class="def">入力が適切な処理なしにページへ出力され、閲覧者のブラウザでスクリプトとして実行される攻撃。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep103-xss:reflected-xss">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">反射型XSS</span><span class="back" hidden><span class="def">リクエストの内容がそのまま応答に返る型。罠のリンクを踏ませ、1回の往復で完結する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep103-xss:stored-xss">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">格納型XSS</span><span class="back" hidden><span class="def">スクリプトがサーバに保存され、そのページを見た人に届く型。掲示板やプロフィールなど。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep103-xss:dom-xss">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DOM Based XSS</span><span class="back" hidden><span class="def">ブラウザ上のJavaScriptが入力をHTMLとして書き込むことで起きる型。サーバ側のフィルタでは見つけにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep103-xss:html-escape">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">HTMLエスケープ</span><span class="back" hidden><span class="def">&lt; &gt; &amp; &quot; &#39; などの特殊記号をHTMLエンティティに置き換え、タグではなく文字として表示させること。</span><span class="note">XSS対策。SQLインジェクションには効かない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep103-xss:output-context">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">出力位置（コンテキスト）</span><span class="back" hidden><span class="def">HTML本文・属性値・URL・script要素など、出力する場所。場所ごとに必要な処理が違う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep103-xss:innerhtml-textcontent">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">innerHTML と textContent</span><span class="back" hidden><span class="def">innerHTMLは文字列をHTMLとして解釈し、textContentはただの文字として扱う。書き込みは安全な側を選ぶ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep103-xss:httponly">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">HttpOnly属性</span><span class="back" hidden><span class="def">スクリプトからCookieを読めなくするCookie属性。影響を減らす保険で、XSSは防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep103-xss:csp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">CSP（Content Security Policy）</span><span class="back" hidden><span class="def">実行できるスクリプトの読み込み元などを絞るブラウザの仕組み。実行や影響を抑える追加の層で、主防御ではない。設定を誤りやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep103-xss:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>XSSの根本的な対策は？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>入力時に &lt; を削除する</span></button><p class="why" hidden>入力の検査は限定的（属性やURLでは &lt; が無くても成立）</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>出力時にHTMLエスケープする</span></button><p class="why" hidden>出力時に、HTMLエスケープする（位置に合わせる）</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>CookieにHttpOnlyを付ける</span></button><p class="why" hidden>HttpOnlyは影響を減らす保険</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SQLのプレースホルダを使う</span></button><p class="why" hidden>SQLインジェクション向けの対策</p></li></ol>
+</li>
+<li class="quiz" data-key="ep103-xss:q0" data-answer="0">
+  <p class="q">&lt; &gt; &amp; &quot; &#39; をHTMLエスケープしたうえで、&lt;input value=（入力値）&gt; のように属性値をクォートで囲まずに出力している。正しい評価はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>空白を含む入力で、属性を追加されうる</span></button><p class="why" hidden>正解。クォートが無いと、空白の後ろが別の属性として解釈されうる。属性値はクォートで囲む。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>主要な記号をエスケープ済みなので、どの位置でも安全</span></button><p class="why" hidden>出力位置ごとに必要な処理が違う。属性値はクォートで囲むことも必要。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>タグを書けないので、影響はCookieの読み取りに限られる</span></button><p class="why" hidden>属性を追加されればスクリプトが動きうる。影響はCookieに限らない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>CookieにHttpOnlyが付いていれば、問題は残らない</span></button><p class="why" hidden>HttpOnlyは影響を減らす保険で、XSSは防げない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep103-xss:q1" data-answer="3">
+  <p class="q">利用者が登録したWebサイトのURLを、プロフィールのリンク先（href）にHTMLエスケープして出力している。残る問題として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>URLが長すぎると、プロフィール画面の表示が崩れうること</span></button><p class="why" hidden>見た目の話で、XSSの成立条件とは関係しない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>エスケープ済みなので、XSSに関する問題は特に残らないこと</span></button><p class="why" hidden>スキームの問題はエスケープでは防げない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>入力したURLが、DBへのSQLとして解釈されてしまうこと</span></button><p class="why" hidden>SQLインジェクションとは別の話。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>javascript: のURLでスクリプトが動きうること</span></button><p class="why" hidden>正解。入力から作るURLは http か https で始まるものだけを許可する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep103-xss:q2" data-answer="2">
+  <p class="q">ブラウザ側のJavaScriptが、URLから取り出した値を innerHTML で画面に書き込んでいる。サーバ側のWAFのログには攻撃の痕跡が無かった。最も適切な説明はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>WAFが正しく遮断したので、攻撃そのものが成立していない</span></button><p class="why" hidden>痕跡が無いことは遮断の証拠にならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>格納型XSSなので、サーバのログには残らない</span></button><p class="why" hidden>格納型はサーバに保存される型で、むしろサーバ側に入力が残る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ブラウザ側の処理で起きる経路があり、サーバ側では見逃しやすい</span></button><p class="why" hidden>正解。DOM Based XSS はブラウザ側の書き込みで起き、サーバ側のフィルタやWAFでは見逃しやすい。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>反射型XSSなので、サーバの応答に入力が含まれていない</span></button><p class="why" hidden>反射型はリクエストの内容がサーバの応答にそのまま返る型。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep103-xss:q3" data-answer="2">
+  <p class="q">掲示板で、太字やリンクなど一部のHTMLによる装飾を利用者に許したい。XSS対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>script という文字列を入力から削除してから保存する</span></button><p class="why" hidden>ブラックリストの置換は保険にとどまり、回避されうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>すべての入力をHTMLエスケープしてから表示する</span></button><p class="why" hidden>XSSは防げるが、装飾を許すという要件を満たせない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>入力を構文解析し、許可した要素だけを残す</span></button><p class="why" hidden>正解。HTMLを許す場合は、構文解析して許可リストの要素だけを抽出する（実装は複雑）。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>CSPを設定して、HTMLはそのまま表示する</span></button><p class="why" hidden>CSPは追加の層で、主防御ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep103-xss:q4" data-answer="0">
+  <p class="q">XSSが残っているページで、セッションIDを入れたCookieに HttpOnly 属性を付けた。これで抑えられる被害として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>スクリプトによるCookieの読み取り</span></button><p class="why" hidden>正解。HttpOnlyはスクリプトからのCookie参照を禁止する。ただしXSSの全脅威を防ぐものではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>本物のサイト上での偽ページの表示</span></button><p class="why" hidden>偽ページの表示はCookieと関係なく起こりうる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>任意のCookieを保存させるセッション固定化</span></button><p class="why" hidden>Cookieを読めなくしても、書き込ませる攻撃は別の問題。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>閲覧者を偽のログイン画面へ誘導する被害</span></button><p class="why" hidden>誘導はスクリプトの実行で起こせるので、HttpOnlyでは抑えられない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">XSSの対策を「入力時に &lt; を削除する」で済ませてはいけない理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">入力の検査は効果が限定的で、属性値やURLの位置では &lt; が無くても成立しうる。原因は出力の扱いなので、出力時に出力位置に合わせてエスケープするのが本筋。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep103-xss-t0-0"> 入力の検査は効果が限定的</label></li><li><label><input type="checkbox" id="ep103-xss-t0-1"> 属性値やURLでは &lt; 無しでも成立しうる</label></li><li><label><input type="checkbox" id="ep103-xss-t0-2"> 出力時に位置に合わせて対処する</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">プロフィールの自己紹介をそのままHTMLに出しているページ。原因・型・直し方を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">原因は、保存された入力をエスケープせずにHTMLへ出力していること。保存された内容が他の閲覧者に届くので格納型。出力時にHTMLエスケープを入れて直す。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep103-xss-t1-0"> エスケープせずに出力している</label></li><li><label><input type="checkbox" id="ep103-xss-t1-1"> 格納型</label></li><li><label><input type="checkbox" id="ep103-xss-t1-2"> 出力時にエスケープする</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="プロフィール画面のコード（ダミー）"><div class="logtitle">プロフィール画面のコード（ダミー）</div><div class="logbody"><div class="logrow"><span>html = &quot;&lt;p&gt;自己紹介: &quot; + </span><span class="hl">user.bio</span><span> + &quot;&lt;/p&gt;&quot;</span></div><div class="logrow"><span>// bio は本人が保存した文字列。他のユーザーも閲覧する</span></div><div class="logrow"><span>res.send(html)</span></div></div></div>
+  <p class="q">原因として最も適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">保存された入力を、エスケープせずにHTMLへ出力した</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>入力欄で &lt; を禁止しなかった … 正当な入力も壊し、属性やURLでは &lt; 無しでも成立。出力時の対処が本筋</li><li>HttpOnly が無かった … 影響を減らす話で、原因ではない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.8.2 クロスサイトスクリプティング</li></ul>
+  <p>3つの型の違いと、根本対策（出力時のエスケープ）と保険的な対策の区別を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep102-sqli-2.html">← #2 SQLインジェクション② 防御の仕組みと限界</a><a href="ep104-idor.html">#4 認可不備 IDOR/BOLA 認可チェックが抜けると何が起こる？ →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

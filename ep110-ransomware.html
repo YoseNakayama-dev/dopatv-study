@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#10 ランサムウェア 被害の大きさは備えで決まる｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#10 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>ランサムウェア 被害の大きさは備えで決まる</h1>
+  <ol class="summary"><li>ファイル暗号化型は、感染した端末がアクセスできる範囲に及ぶ。入口はメール添付や改ざんサイトの閲覧。</li><li>復号は困難とされるため、戻す備えが要る。バックアップは取得時だけ接続し、複数媒体に取り、復元を確認する。</li><li>更新やセキュリティソフトは入口を減らす対策で、戻す備えとは別。IPA資料は2017年のもの。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep110-ransomware:ransomware">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ランサムウェア</span><span class="back" hidden><span class="def">感染した端末のファイルを暗号化したり操作不能にしたりして、元に戻すことと引き換えに金銭を要求する不正プログラム。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep110-ransomware:crypto-type">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ファイル暗号化型</span><span class="back" hidden><span class="def">ファイルを暗号化する型で、IPAの2017年の資料では主流とされた。復号は困難とされる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep110-ransomware:lock-type">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">端末ロック型</span><span class="back" hidden><span class="def">端末の操作をできなくする型。ファイル暗号化型と並ぶ、ランサムウェアの種類のひとつ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep110-ransomware:drive-by">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ドライブ・バイ・ダウンロード</span><span class="back" hidden><span class="def">脆弱なソフトの端末で、改ざんされたサイトや細工された広告を閲覧して感染する経路。</span><span class="note">メール添付を開く経路と並ぶ、主な入口のひとつ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep110-ransomware:reach">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">暗号化の影響範囲</span><span class="back" hidden><span class="def">ファイルサーバ、接続中の外付けHDD、クラウドと同期するフォルダ、共有フォルダなど、感染端末がアクセスできる範囲。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep110-ransomware:backup-connection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">バックアップの接続方針</span><span class="back" hidden><span class="def">バックアップ装置は取得時だけ接続する。書き換え不可の光学メディアは接続したままでも可。複数の媒体に取る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep110-ransomware:restore-check">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">リストア確認</span><span class="back" hidden><span class="def">バックアップから実際に戻せるかを、定期的に確かめること。取得できていることと、戻せることは別。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep110-ransomware:definition-files">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">定義ファイルの更新</span><span class="back" hidden><span class="def">セキュリティソフトを最新の定義で動かすこと。入口を減らす対策で、戻す備えの代わりにはならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep110-ransomware:risk-analysis">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">影響範囲のリスク分析</span><span class="back" hidden><span class="def">暗号化された場合の影響範囲を見積もり、それに応じてバックアップの方式と頻度を決めること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep110-ransomware:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>ランサムウェアの被害を低減する備えとして適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>書き換え可能な媒体を常時接続しておく</span></button><p class="why" hidden>同時に暗号化されうる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>バックアップを切り離し、戻せるか確認する</span></button><p class="why" hidden>切り離し、戻せるか確認する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>不審な添付ファイルをすぐ開く</span></button><p class="why" hidden>感染の入り口になりうる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>定義ファイルは更新しない</span></button><p class="why" hidden>更新し続けるのが基本</p></li></ol>
+</li>
+<li class="quiz" data-key="ep110-ransomware:q0" data-answer="3">
+  <p class="q">バックアップ運用の見直し案が4つ出た。ランサムウェアの被害を低減する観点で、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>外付けHDDにバックアップを取り、次回の取得に備えて、HDDは端末につないだままにしておく</span></button><p class="why" hidden>誤り。接続したままだと、バックアップも同時に暗号化されうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>バックアップをクラウドと同期するフォルダに置き、端末の変更が常に反映されるようにする</span></button><p class="why" hidden>誤り。クラウドと同期するフォルダは、感染端末の変更の影響を受けうる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>毎回同じ媒体に上書きして保存し、リストア確認は故障が疑われたときだけ行う</span></button><p class="why" hidden>誤り。リストア確認は定期的に行う。故障時だけでは、戻せない事態に気づけない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>書き換え不可の光学メディアに取り、必要に応じて複数の媒体にも保存する</span></button><p class="why" hidden>正解。書き換え不可の光学メディアは接続したままでも可。複数の媒体に取っておく。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep110-ransomware:q1" data-answer="0">
+  <p class="q">ファイル暗号化型ランサムウェアに感染した端末Aは、ファイルサーバの共有フォルダ、クラウドと同期するフォルダ、接続中の外付けHDDを利用できる。暗号化の影響範囲として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>端末Aがアクセスできるサーバ・同期フォルダ・接続中のHDDなどに及びうる</span></button><p class="why" hidden>正解。暗号化型は、感染端末がアクセスできる範囲に影響しうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>端末A内のローカルディスクに限られ、共有フォルダや外付けHDDには及ばない</span></button><p class="why" hidden>誤り。影響はローカルディスクに限られない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ファイルサーバ側で保護されているため、サーバ上のデータは端末Aからの暗号化の対象にならない</span></button><p class="why" hidden>誤り。端末からアクセスできるサーバ上のデータは、対象になりうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>クラウドと同期するフォルダは、同期の仕組みが働くため、暗号化の対象から外れる</span></button><p class="why" hidden>誤り。クラウドと同期するフォルダも、対象になりうる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep110-ransomware:q2" data-answer="2">
+  <p class="q">社員が通常の業務で閲覧した改ざんサイトの広告から、OSとブラウザの更新を長く止めていた端末が感染した。メールの添付は開いていない。入口対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>心当たりのないメールの添付ファイルを開かないよう、全社員への注意喚起を徹底する</span></button><p class="why" hidden>誤り。今回の入口はメールの添付ではない。入口に合った対策が要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>セキュリティソフトの定義ファイルを更新し続ければ、バックアップは取らなくてもよい</span></button><p class="why" hidden>誤り。定義ファイルの更新は入口を減らす対策で、戻す備えとは別。バックアップは要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>OSとソフトを最新にして、悪用される脆弱性を残さないようにする</span></button><p class="why" hidden>正解。改ざんサイトや広告の閲覧では、脆弱な端末が入口になる。OSとソフトを最新にする。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>外付けHDDを接続しない運用にすれば、改ざんサイトの閲覧による感染そのものを防げる</span></button><p class="why" hidden>誤り。外付けHDDは影響範囲の話で、閲覧による感染の入口とは別。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep110-ransomware:q3" data-answer="1">
+  <p class="q">更新が多い営業部門のファイルサーバと、ほとんど更新されない保管用のファイルサーバがある。バックアップの方式と頻度の決め方として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>全サーバで最も安価な方式を選び、頻度は月次にそろえる。感染への備えは定義ファイルの更新で足りる</span></button><p class="why" hidden>誤り。一律に最安・月次では影響の大きさに合わない。定義ファイルの更新は入口を減らす対策で、戻す備えの代わりにならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>暗号化された場合の影響範囲を分析し、更新の多さに応じて方式と頻度を決める</span></button><p class="why" hidden>正解。影響範囲のリスク分析をして、バックアップの方式と頻度を決める。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>営業部門のファイルサーバだけを対象に、日次で取得する。保管用のサーバは取得対象から外す</span></button><p class="why" hidden>誤り。保管用のサーバも暗号化の対象になりうる。影響を分析せずに外してはいけない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>復旧に時間がかかっても業務に影響しないので、頻度や方式は検討せず、現状のままにしておく</span></button><p class="why" hidden>誤り。影響を分析せずに現状維持とするのは、リスク分析に基づく判断ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep110-ransomware:q4" data-answer="2">
+  <p class="q">バックアップ装置は取得時だけ接続する運用で、毎日「取得成功」の通知が届く。ただし、一度も復元を試したことがない。この運用の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>取得成功の通知が毎日届いているので、いざというときも確実に戻せると考えてよい</span></button><p class="why" hidden>誤り。取得の成功は、戻せることの保証にならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>取得時だけ接続しているので暗号化されることはなく、復元の確認は行わなくてよい</span></button><p class="why" hidden>誤り。取得時だけの接続は有効だが、戻せるかの確認は別に必要。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>取得の成功と復元できることは別なので、定期的に復元を試して確認する</span></button><p class="why" hidden>正解。バックアップは取っただけでは足りない。定期的に復元（リストア）して確認する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>復元の確認は、障害が起きて実際に復旧が必要になったときに、初めて行えば十分である</span></button><p class="why" hidden>誤り。必要になってから初めて確認すると、戻せないことに手遅れで気づく。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ランサムウェア対策で、「入口を減らす対策」と「戻す備え」を分けて考える理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">OS・ソフトの更新、定義ファイルの更新、添付ファイルに注意することは入口を減らす対策で、感染した後の復旧を保証しない。復号は困難とされるので、バックアップを切り離し、複数の媒体に取り、戻せるか確認する備えが別に要る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep110-ransomware-t0-0"> 更新や添付への注意は入口を減らす対策</label></li><li><label><input type="checkbox" id="ep110-ransomware-t0-1"> 復号は困難とされる</label></li><li><label><input type="checkbox" id="ep110-ransomware-t0-2"> バックアップの切り離し・複数媒体・リストア確認</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">バックアップの方式と頻度を決めるために、何を分析するか。頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">暗号化された場合の影響範囲を分析する。感染した端末がアクセスできるファイルサーバ、接続中の外付けHDD、クラウドと同期するフォルダ、共有フォルダが、どこまで使えなくなるかを見積もり、それに合わせて方式と頻度を決める。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep110-ransomware-t1-0"> 暗号化された場合の影響範囲</label></li><li><label><input type="checkbox" id="ep110-ransomware-t1-1"> 端末がアクセスできる範囲を洗い出す</label></li><li><label><input type="checkbox" id="ep110-ransomware-t1-2"> その結果で方式と頻度を決める</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="暗号化被害の調査記録（ダミー）"><div class="logtitle">暗号化被害の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">ファイルサーバの文書が暗号化され、身代金を要求された</span></div><div class="logrow"><span class="hl">バックアップ用NASは、ファイルサーバと同じネットワークにあった</span></div><div class="logrow"><span class="hl">NAS内のバックアップも暗号化され、復旧に使えるデータが残らなかった</span></div><div class="logrow"><span class="hl">// バックアップは1台のNASのみ。リストア確認は実施済み</span></div><div class="logrow"><span class="hl">// OSとソフト、定義ファイルは最新だった</span></div></div></div>
+  <p class="q">復旧できなかった根本原因は？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">バックアップが切り離されておらず、暗号化の対象になった</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>リストア確認をしていなかった … 記録では実施済み</li><li>OSが古かった … 記録では最新。感染の入口の話で、復旧の可否とは別</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.9.7 ボット</li><li>2.9.8 ランサムウェア</li></ul>
+  <p>感染の入口と影響範囲、バックアップを切り離す理由、取得とリストアの違いを確かめながら読む。IPA資料は2017年のもの。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep109-tls13.html">← #9 TLS 1.3 通信を守る仕組みの何が変わった？</a><a href="ep111-incident.html">#11 インシデント対応 慌てないための流れと判断基準 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

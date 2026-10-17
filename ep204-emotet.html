@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#104 Emotet 返信を装うメールと感染拡大｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#104 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>Emotet 返信を装うメールと感染拡大</h1>
+  <ol class="summary"><li>取引先を装う返信メールの添付でマクロを有効化させ、感染すると情報を窃取して次のメールを送る。</li><li>Emotetは後続マルウェアの入口。暗号化は後続が行う場合がある。パスワード付きZIPで検査を避けることもある。</li><li>対策は別手段での確認・マクロ停止・検査と監視・感染時の隔離。本物の引用は見分けにくく、単独では足りない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep204-emotet:emotet">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Emotet</span><span class="back" hidden><span class="def">返信を装うメールの添付で感染を広げ、アカウント情報・アドレス帳・メール本文を窃取するマルウェア。後続マルウェアの入口にもなる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep204-emotet:reply-impersonation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">返信を装うメール</span><span class="back" hidden><span class="def">取引先等を装い、過去のやり取りの引用を含むことがあるメール。返信の形は安全の根拠にならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep204-emotet:enable-content">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">コンテンツの有効化（マクロ）</span><span class="back" hidden><span class="def">添付のOffice文書が促す操作。有効化すると不正なコードが動く。マクロは既定で止め、有効化しない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep204-emotet:entrance-role">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">後続マルウェアの入口</span><span class="back" hidden><span class="def">Emotetは他のマルウェアを呼び込む入口になる。後続は情報窃取型やランサムウェアなど。</span><span class="note">暗号化はEmotet自身ではなく、後続が行う場合がある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep204-emotet:password-zip">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">パスワード付きZIP</span><span class="back" hidden><span class="def">中身を検査しにくい形の添付。検査をすり抜けることが狙いで使われる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep204-emotet:domain-check">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">差出人ドメインの確認</span><span class="back" hidden><span class="def">差出人アドレスのドメインを見る確認方法。ただし乗っ取りなら、同じドメインで届く。</span><span class="note">ドメインが一致しても、本物とは限らない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep204-emotet:edr">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">端末の挙動監視（EDR）</span><span class="back" hidden><span class="def">端末の挙動を監視して異常を検知する対策。添付の検査と組み合わせて使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep204-emotet:initial-response">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">感染時の初動</span><span class="back" hidden><span class="def">端末の隔離・パスワード変更・関係先への連絡。自分のアドレスを装うメールが出回る可能性を知らせる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep204-emotet:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>Emotetの説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>感染は、Webページを見ただけで、必ず成立する</span></button><p class="why" hidden>主な入口はメールの添付</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ファイルの暗号化と身代金要求が、自身の主な機能である</span></button><p class="why" hidden>暗号化は後続のマルウェア</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>窃取の対象は、端末の画面の映像だけである</span></button><p class="why" hidden>アカウント・アドレス帳・本文</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>窃取したメールの情報を使い、返信を装うメールを送ることがある</span></button><p class="why" hidden>窃取した情報で返信を装う</p></li></ol>
+</li>
+<li class="quiz" data-key="ep204-emotet:q0" data-answer="1">
+  <p class="q">経理担当が、取引先の担当者名の返信メールを受け取った。過去の見積のやり取りが正確に引用され、差出人のドメインも取引先と同じ。添付のExcelは「コンテンツの有効化」を求めている。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>引用が正確でドメインも一致しているため、本物のメールと判断してよい</span></button><p class="why" hidden>引用は窃取された本文などが使われうる。乗っ取りなら同じドメインで届くので、一致は本物の根拠にならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>取引先が乗っ取られた可能性があるため、別の連絡手段で確認する</span></button><p class="why" hidden>正解。乗っ取りなら同じドメインで届く。有効化を求める添付は、開く前に別の連絡手段で確認する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ドメインが一致するならマクロを有効化しても感染の心配はないと判断する</span></button><p class="why" hidden>有効化すると不正なコードが動く。ドメインの一致は、有効化しても安全という保証にはならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>返信形式で引用が含まれるメールはEmotetの特徴に当たらないため疑わない</span></button><p class="why" hidden>過去のやり取りを引用した返信形式こそ、Emotetが疑いにくくするための手口。特徴から外れるとは言えない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep204-emotet:q1" data-answer="0">
+  <p class="q">社員の端末がEmotetに感染していたと判明した。メールアカウントの情報などが窃取された可能性がある。まず取るべき対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>端末を隔離してパスワードを変更し、なりすましの注意を関係先へ連絡する</span></button><p class="why" hidden>正解。感染時は端末の隔離・パスワード変更・関係先への連絡を行う。自分のアドレスを装うメールが出回る可能性を知らせる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>端末をウイルス対策ソフトで検査し、検出がなければそのまま通常業務を続ける</span></button><p class="why" hidden>感染が判明している以上、検出の有無にかかわらず通常業務を続けず、隔離とパスワード変更が先になる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>端末を初期化すれば窃取情報の悪用も止まるため、関係先への連絡は不要とする</span></button><p class="why" hidden>初期化しても、すでに窃取された情報は戻らない。窃取情報を使った次のメールが出回りうるので、連絡は必要。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗号化の被害が出ていないため後続マルウェアの心配はなく、様子を見る</span></button><p class="why" hidden>暗号化は後続のマルウェアが行う場合があるだけで、被害が出ていないことは後続がいない根拠にならない。Emotetは他のマルウェアの入口になる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep204-emotet:q2" data-answer="2">
+  <p class="q">添付ファイルを検査するゲートウェイを導入済みだが、パスワード付きZIPで届く添付が検査を通過していた。次の方針として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ゲートウェイの検査ルールを厳しくして、暗号化された中身まで検査させる</span></button><p class="why" hidden>パスワード付きZIPは、中身を検査しにくいことが狙いで使われる。ルールを厳しくしても、中身を検査できるとは限らない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>取引先から届く形式なので、パスワード付きZIPは検査の対象から外す</span></button><p class="why" hidden>検査をすり抜けるためにパスワード付きZIPが使われる。検査対象から外すと、その狙いどおりになってしまう。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>端末の挙動監視とマクロの既定ブロックを併用し、多層で備える</span></button><p class="why" hidden>正解。検査には、中身を検査しにくい添付という限界がある。端末の挙動監視やマクロの既定ブロックを組み合わせ、単独の対策に頼らない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利用者への注意喚起だけにとどめ、端末側の技術的な対策は追加しないでおく</span></button><p class="why" hidden>本物の引用は見分けにくく、利用者の注意だけでは限界がある。単独の対策に頼らない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep204-emotet:q3" data-answer="3">
+  <p class="q">取引先から、自社を名乗り過去のやり取りを引用した不審なメールが届いたと連絡があった。自社にはそのようなメールを送った覚えがない。考えられる経緯として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>取引先の受信設定が誤っているだけで、自社側に原因は考えにくい</span></button><p class="why" hidden>受信設定だけでは、自社を名乗り過去のやり取りを引用した内容を説明できない。自社の情報が使われた可能性を調べる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>自社のメールサーバが暗号化されたため、誤ったメールが送られた</span></button><p class="why" hidden>暗号化は後続のマルウェアが行う場合がある話で、メールが送られる仕組みとは別。Emotetは窃取した情報で次のメールを送る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>取引先のメールソフトが、過去のやり取りの引用を自動で書き換えて送信した</span></button><p class="why" hidden>引用は、窃取されたメール本文などが使われうるもの。取引先のソフトの動作ではなく、自社から窃取された情報の悪用を疑う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>窃取された自社のアドレス帳などを使い、自社を装うメールが出回った</span></button><p class="why" hidden>正解。アカウント情報・アドレス帳・メール本文が窃取され、次のメールに使われる。そのため感染時は、自分のアドレスを装うメールが出回る可能性を関係先へ連絡する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep204-emotet:q4" data-answer="0">
+  <p class="q">情報システム部が、Officeのマクロを既定で止める設定を全社に展開した。この対策の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>有効な対策だが単独では足りず、検査や端末の挙動監視と併用する</span></button><p class="why" hidden>正解。マクロの既定ブロックは有効な対策だが、単独の対策に頼らない。検査や端末の挙動監視と組み合わせる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>メールの添付による感染はすべて防げると評価できる</span></button><p class="why" hidden>単独の対策で、添付による感染をすべて防げるとは言えない。言い過ぎの断定。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>利用者が有効化の可否を判断するので、既定で止めても効果は期待できない</span></button><p class="why" hidden>マクロを既定で止め、有効化しないことは対策に挙げられている。効果が期待できないとは言えない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>取引先から届いた文書であれば、マクロを有効化しても問題ないと評価できる</span></button><p class="why" hidden>返信の形や本物の引用は安全の根拠にならない。取引先の名で届いても、乗っ取りの可能性がある。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">Emotetが感染を広げる流れを、入口から次の攻撃メールまで頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">取引先等を装う返信形式のメールが届き、過去のやり取りが引用されていることがある。添付のOffice文書がコンテンツ（マクロ）の有効化を促し、有効化すると不正なコードが動く。感染するとアカウント情報・アドレス帳・メール本文を窃取し、その情報で次のメールを送る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep204-emotet-t0-0"> 返信を装うメールと引用</label></li><li><label><input type="checkbox" id="ep204-emotet-t0-1"> マクロの有効化で不正なコードが動く</label></li><li><label><input type="checkbox" id="ep204-emotet-t0-2"> アカウント・アドレス帳・本文の窃取</label></li><li><label><input type="checkbox" id="ep204-emotet-t0-3"> 窃取した情報で次のメールを送る</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">差出人ドメインの確認だけではEmotetのメールを見分けられない理由と、代わりに取る手段を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">乗っ取りなら同じドメインで届くため、ドメインが一致しても本物とは限らず、本物の引用は見分けにくい。添付は開く前に別の連絡手段で確認し、マクロは既定で止めて有効化しない。検査と端末の挙動監視も組み合わせ、一つの対策に頼らない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep204-emotet-t1-0"> 乗っ取りなら同じドメインで届く</label></li><li><label><input type="checkbox" id="ep204-emotet-t1-1"> 開く前に別の連絡手段で確認</label></li><li><label><input type="checkbox" id="ep204-emotet-t1-2"> マクロは既定で止める</label></li><li><label><input type="checkbox" id="ep204-emotet-t1-3"> 単独の対策に頼らない</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="受信メールの確認記録（ダミー）"><div class="logtitle">受信メールの確認記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">取引先を名乗り、過去のやり取りを引用している</span></div><div class="logrow"><span class="hl">差出人の表示名は取引先、アドレスは別ドメイン</span></div><div class="logrow"><span class="hl">添付のExcelは、コンテンツの有効化を求める</span></div><div class="logrow"><span class="hl">要件: 添付を開く前に、メールの真偽を確かめたい</span></div></div></div>
+  <p class="q">受信者がまず取るべき対応として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">取引先へ、メール以外の連絡手段で確認する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>有効化して、内容を確認する … 有効化するとマクロが動き、確認の前にコードが実行される</li><li>返信の形なので、そのまま開く … 返信の形は根拠にならず、有効化を求める添付は確認が先</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.9.11 Emotet</li></ul>
+  <p>返信を装う拡散の流れと、後続マルウェアの入口という役割、対策の限界を確かめながら読む。暗号化は後続が行う場合がある点に注意。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep203-port-scan.html">← #103 ポートスキャン 目的・種類・対策</a><a href="ep205-vulnerability-basics.html">#105 脆弱性とは 弱点の種類と優先順位 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

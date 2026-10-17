@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#121 セキュリティの規格と制度 15408・PCI DSS・20000｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#121 ・ 第9章 情報セキュリティに関する法制度</p>
+  <h1>セキュリティの規格と制度 15408・PCI DSS・20000</h1>
+  <ol class="summary"><li>規格は基準を定めた文書、制度は審査して認証する仕組み。何を対象にした認証かの取り違えに注意する。</li><li>15408は製品の評価基準でEALは保証のレベル。PCI DSSはカード会員データを扱う事業者向けで、維持が要る。</li><li>20000は組織が認証を受けるITサービス管理の規格。ITILは指針で、情報セキュリティはISMSと組み合わせる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep221-standards-need:standard-and-scheme">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">規格と制度</span><span class="back" hidden><span class="def">規格は守るべき基準を定めた文書。制度は、その基準で第三者が審査し認証する仕組み。調達や取引の判断材料になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep221-standards-need:iso-15408">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ISO/IEC 15408</span><span class="back" hidden><span class="def">IT製品・システムのセキュリティ機能と保証の評価基準。日本ではIPAのJISECが運用する。</span><span class="note">認証は脆弱性がない保証ではなく、評価した構成・版に限られる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep221-standards-need:st">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ST（セキュリティターゲット）</span><span class="back" hidden><span class="def">個別の評価対象について、要件や仕様を記した文書。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep221-standards-need:pp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">PP（プロテクションプロファイル）</span><span class="back" hidden><span class="def">製品の分類ごとの要件をまとめた文書。</span><span class="note">STは個別の製品、PPは分類ごと。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep221-standards-need:eal">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">EAL（評価保証レベル）</span><span class="back" hidden><span class="def">評価の保証のレベル。EAL1〜7で、大きいほど評価が厳格になる。</span><span class="note">機能が強いことを意味しない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep221-standards-need:pci-dss">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">PCI DSS</span><span class="back" hidden><span class="def">カード会員データを扱う事業者向けのセキュリティ基準。カードブランド各社が設立したPCI SSCが策定している。</span><span class="note">製品の機能を評価する制度ではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep221-standards-need:card-data-storage">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">カードデータの保存</span><span class="back" hidden><span class="def">カード番号を保存するなら読めないよう保護する。セキュリティコードなどは、承認後に保存しない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep221-standards-need:iso-20000">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ISO/IEC 20000</span><span class="back" hidden><span class="def">ITサービスマネジメントシステムの要求事項。組織が認証を受ける。インシデント・変更・構成・サービスレベルなどを管理する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep221-standards-need:itil">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ITIL</span><span class="back" hidden><span class="def">ITサービス管理のベストプラクティスをまとめた指針。</span><span class="note">組織が認証を受ける規格ではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep221-standards-need:isms-combination">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ISMSとの組み合わせ</span><span class="back" hidden><span class="def">ITサービスマネジメントの規格だけでは情報セキュリティは足りず、ISMS（ISO/IEC 27001）と組み合わせて運用する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep221-standards-need:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>規格や制度の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>EALが高いほど、製品の機能は強力である</span></button><p class="why" hidden>EALは保証のレベル</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>PCI DSSは、セキュリティコードの保存を認めている</span></button><p class="why" hidden>承認後は保存しない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ISO/IEC 20000は、組織がITサービスマネジメントの認証を受ける規格</span></button><p class="why" hidden>20000は組織が認証を受ける</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ITILは、組織が認証を受けるための規格である</span></button><p class="why" hidden>ITILは指針で認証の規格でない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep221-standards-need:q0" data-answer="3">
+  <p class="q">ファイアウォール製品の入札で、複数ベンダーの製品を同じ要件で比べたい。各社のSTは、評価対象の範囲や要件が個別に異なる。比較の物差しとして適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>各社のSTをそのまま並べ、記載量が多いものを高く評価する</span></button><p class="why" hidden>STは個別の評価対象の要件・仕様なので、各社で異なる。記載量の多さは、共通の物差しにも機能の強さにもならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ISO/IEC 20000認証を持つ開発元の製品を優先する</span></button><p class="why" hidden>ISO/IEC 20000は、組織がITサービスマネジメントの認証を受ける規格。製品の機能を比べる物差しではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>PCI DSSに準拠した事業者の製品を優先する</span></button><p class="why" hidden>PCI DSSはカード会員データを扱う事業者向けの基準で、製品の機能を評価する制度ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>分類ごとの要件をまとめたPPを基準にして比べる</span></button><p class="why" hidden>正解。PPは製品の分類ごとの要件をまとめたもの。分類で共通の要件を基準にすれば、各社の製品を同じ物差しで比べやすい。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep221-standards-need:q1" data-answer="0">
+  <p class="q">ECサイトで、再購入を簡単にするため、カード番号とセキュリティコードを保存する機能を追加したい。PCI DSSの考え方に沿った設計として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>コードは承認後に保存せず、番号は読めないよう保護する</span></button><p class="why" hidden>正解。カード番号を保存するなら読めないよう保護し、セキュリティコードは承認後に保存しない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>暗号化して保存すれば、セキュリティコードの保存も認められるので問題ない</span></button><p class="why" hidden>セキュリティコードは、承認後に保存してはならないとされる。暗号化しても保存してよいことにはならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>カード番号は平文でも、アクセス制御があれば保存してよい</span></button><p class="why" hidden>カード番号は、保存するなら読めないよう保護する。アクセス制御は別の要求であり、平文保存の代わりにならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>保存先DBのバックアップだけを暗号化し、本体は平文のままにする</span></button><p class="why" hidden>バックアップだけを保護しても、本体の平文は読める。保存するカード番号は読めないよう保護する必要がある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep221-standards-need:q2" data-answer="1">
+  <p class="q">調達先が「この製品はISO/IEC 15408の認証を取得済みなので、導入後の脆弱性対応は不要」と説明した。この説明への見解として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>認証済みなので脆弱性は無いと保証されており、その説明で足りる</span></button><p class="why" hidden>認証を受けても、脆弱性がないという保証にはならない。導入後の脆弱性対応が不要とは言えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認証は脆弱性が無い保証でなく、評価した構成・版に限られる</span></button><p class="why" hidden>正解。認証は脆弱性が無い保証ではなく、評価した構成・版に限られる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>EALが高ければ、評価した版と異なる構成でも同じ保証が及ぶ</span></button><p class="why" hidden>EALは保証のレベルで、評価した構成・版が前提。EALが高くても、異なる構成に同じ保証が及ぶわけではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ISMS認証があれば、製品の脆弱性は組織の運用で担保される</span></button><p class="why" hidden>ISMS認証の対象は組織の運用で、製品ではない。製品の脆弱性がそれで担保されるわけではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep221-standards-need:q3" data-answer="2">
+  <p class="q">運用委託先の選定で、委託先はISO/IEC 20000の認証を取得済みである。当社は、委託先の情報セキュリティの管理水準も確認したい。進め方として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>20000の認証があれば、情報セキュリティの管理も網羅されている</span></button><p class="why" hidden>20000はITサービスマネジメントの要求事項。情報セキュリティはISMSと組み合わせて運用するもので、それだけで網羅されるとは言えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>インシデント管理を含むので、セキュリティ事故への対応は十分である</span></button><p class="why" hidden>インシデント管理は20000の管理対象の一つだが、それだけで情報セキュリティの管理水準が十分と判断できるわけではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ISMSなど別の枠組みと組み合わせて運用されているか見る</span></button><p class="why" hidden>正解。情報セキュリティはISMS（ISO/IEC 27001）と組み合わせて運用する。別の枠組みで確認する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ITILを導入済みなので、ISMSの認証は取得する必要がない</span></button><p class="why" hidden>ITILは指針で、組織が認証を受ける規格ではない。導入していても、ISMSの代わりにはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep221-standards-need:q4" data-answer="0">
+  <p class="q">昨年PCI DSSの準拠と判定された事業者が、今期、カード会員データを扱う新システムを追加した。見解として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>準拠は評価時点の状態で、変更後も維持する運用が要る</span></button><p class="why" hidden>正解。準拠は評価時点の状態であり、維持する運用が必要。新しい構成についても、基準を満たす状態を保つ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>昨年の判定が続くので、新システムも準拠済みとして扱える</span></button><p class="why" hidden>判定は評価時点の状態に対するもの。新たに追加したシステムまで準拠済みと扱える根拠にはならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>PCI DSSは製品の評価制度なので、製品認証で代替できる</span></button><p class="why" hidden>PCI DSSは事業者向けの基準で、製品の機能を評価する制度ではない。製品認証で代替するものでもない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>セキュリティコードを保存しなければ、準拠の維持は不要である</span></button><p class="why" hidden>セキュリティコードを保存しないことはPCI DSSの要求の一つにすぎない。ほかの要求を含め、準拠の維持が必要。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ISMS認証済みの開発元の製品を選んでも、製品の機能の検証にならないのはなぜか。頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ISMS認証の対象は組織の運用で、製品ではないため。製品のセキュリティ機能を第三者の検証結果で確かめたいなら、ISO/IEC 15408に基づく評価・認証を受けた製品を選ぶ。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep221-standards-need-t0-0"> ISMS認証の対象は組織の運用</label></li><li><label><input type="checkbox" id="ep221-standards-need-t0-1"> 製品の評価ではない</label></li><li><label><input type="checkbox" id="ep221-standards-need-t0-2"> 製品にはISO/IEC 15408の評価・認証</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">ISO/IEC 15408の認証を受けた製品でも、脆弱性対応が不要にならない理由を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">認証は脆弱性がないという保証ではなく、評価した構成・版に限られるため。EALは保証のレベルで、高いほど評価が厳格という意味であり、機能が強いことや脆弱性が無いことを意味しない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep221-standards-need-t1-0"> 脆弱性がない保証ではない</label></li><li><label><input type="checkbox" id="ep221-standards-need-t1-1"> 評価した構成・版に限られる</label></li><li><label><input type="checkbox" id="ep221-standards-need-t1-2"> EALは保証レベルで機能の強さではない</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="ファイアウォール製品の調達記録（ダミー）"><div class="logtitle">ファイアウォール製品の調達記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">調達: 社内用のファイアウォール製品を選定する</span></div><div class="logrow"><span class="hl">候補Aの開発元は、組織としてISMS認証を取得済み</span></div><div class="logrow"><span class="hl">ISMS認証の対象は、組織の運用で、製品ではない</span></div><div class="logrow"><span class="hl">この装置では、カード会員データを扱わない</span></div><div class="logrow"><span class="hl">要件: 製品の機能を、第三者の検証結果で確かめたい</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ISO/IEC 15408に基づく評価・認証を受けた製品を選ぶ</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>ISMS認証を取得した開発元の製品を選ぶ … 認証の対象は組織の運用で、製品ではない</li><li>PCI DSSへの準拠を求める … 事業者向けの基準で、製品の機能を評価する制度ではない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>9.1.1 情報セキュリティに関する規格や制度の必要性</li><li>9.1.2 ISO/IEC 15408</li><li>9.1.4 PCI DSS</li><li>9.1.5 ISO/IEC 20000及びITIL</li></ul>
+  <p>規格ごとに何を対象にした認証・基準かを整理しながら読む。製品か事業者か組織かの区別と、認証の限界を確かめる。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep220-ecmascript-related.html">← #120 ECMAScript関連技術 オリジン・CORS・JSON・DOMの扱い</a><a href="ep222-cyber-laws.html">#122 サイバーセキュリティ関連の法律 不正アクセス禁止法ほか →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

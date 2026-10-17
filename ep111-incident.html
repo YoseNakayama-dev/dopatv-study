@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#11 インシデント対応 慌てないための流れと判断基準｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#11 ・ 第4章 情報セキュリティマネジメントの実践</p>
+  <h1>インシデント対応 慌てないための流れと判断基準</h1>
+  <ol class="summary"><li>流れは、検知／連絡受付、トリアージ、インシデントレスポンス、報告／公開（対応と並行）、事後の見直し。</li><li>トリアージでは誤検知も疑い、状況を整理して優先順位を決める。原因の究明は後回しで、不要なら根拠を説明。</li><li>難しいときは経営層・IT部門・外部専門機関と連携する。資料は2015年版で、最新の指針とは差があるかもしれない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep111-incident:incident-flow">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">インシデント対応の流れ</span><span class="back" hidden><span class="def">検知／連絡受付 → トリアージ → インシデントレスポンス → 報告／情報公開（対応と並行）。終了後に事後の見直しを行う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep111-incident:detect-contact">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">検知／連絡受付</span><span class="back" hidden><span class="def">自組織内の検知と外部からの通報を受ける段階。窓口を公開し、届いた連絡を速やかにCSIRTへ転送する手順と判断基準を用意する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep111-incident:csirt">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">CSIRT</span><span class="back" hidden><span class="def">インシデント対応を担当するチーム。窓口に届いた連絡は、速やかにここへ転送する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep111-incident:triage">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">トリアージ</span><span class="back" hidden><span class="def">優先順位付けと、そもそもインシデントか（誤検知でないか）の判断。いつ・どこで・何が・どのように・誰がを整理する。</span><span class="note">対応不要と判断したら、その根拠を報告者に説明する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep111-incident:why-later">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">原因（why）の究明は後回し</span><span class="back" hidden><span class="def">トリアージでは、原因の究明より、状況の整理と優先順位付けを先に行う。</span><span class="note">「原因を突き止めてから動く」は逆。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep111-incident:response">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">インシデントレスポンス</span><span class="back" hidden><span class="def">事象の分析 → 技術対応の可否の判断 → 対応計画の策定・実施 → 解決の確認。未解決なら分析へ戻り、結果を回答する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep111-incident:report-disclose">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">報告／情報公開</span><span class="back" hidden><span class="def">プレスリリースや監督官庁への報告などを、対応と並行して検討する。対応が終わってから始めるものではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep111-incident:post-review">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">事後の見直し</span><span class="back" hidden><span class="def">インシデントリストを3〜6か月を目安に見直し、予行演習を定期的に行って手順・体制・ポリシーを修正し、知見を蓄積する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep111-incident:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>トリアージの段階で適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>原因を完全に究明してから動く</span></button><p class="why" hidden>トリアージでは原因の究明は後回し。だから誤り</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>インシデントか判断し、優先順位を決める</span></button><p class="why" hidden>判断し、優先順位を決める</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>対応不要の根拠は説明しない</span></button><p class="why" hidden>対応不要でも根拠を説明する。だから誤り</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>報告・公開の検討は、対応が終わってから始める</span></button><p class="why" hidden>報告・公開は対応と並行して検討する。だから誤り</p></li></ol>
+</li>
+<li class="quiz" data-key="ep111-incident:q0" data-answer="0">
+  <p class="q">外部の報告者から異常の通報を受け、トリアージで調べたところ、誤検知で対応は不要と判断した。次の対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>対応が不要と判断した根拠を、報告者に説明して回答する</span></button><p class="why" hidden>正解。対応が不要と判断したら、その根拠を報告者に説明する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>報告者には連絡せず、再発して被害が確認されるまで、この件の記録も残さない</span></button><p class="why" hidden>誤り。連絡せず記録も残さないのは、根拠を説明するという扱いに反する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>誤検知の原因を完全に究明するまで、報告者への回答を保留し続ける</span></button><p class="why" hidden>誤り。トリアージでは原因の究明は後回し。誤検知でも、完全な究明を待たない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>念のため、対応が必要なインシデントと同じ手順を最後まで実施してから回答する</span></button><p class="why" hidden>誤り。対応不要と判断した件は、対応を続けず、根拠を説明して区切る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep111-incident:q1" data-answer="2">
+  <p class="q">組織のセキュリティ窓口 security@ 宛に外部から連絡が届いたが、メールは担当者個人の受信箱に埋もれ、対応部門に伝わらなかった。再発防止策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>窓口のアドレスを非公開にし、外部からの通報を受け付けないようにする</span></button><p class="why" hidden>誤り。窓口は公開して外部の通報を受ける。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>担当者に毎朝受信箱を確認するよう口頭で依頼し、判断はその担当者に任せる</span></button><p class="why" hidden>誤り。個人の確認頼みでは、届かない連絡が出る。転送の手順と判断基準が要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>連絡を速やかにCSIRTへ転送する手順と、判断基準を用意する</span></button><p class="why" hidden>正解。窓口宛の連絡を速やかにCSIRTへ転送する手順と、判断基準を用意する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>検知はすべて自組織の監視システムに任せ、外部の連絡は優先度を下げて扱う</span></button><p class="why" hidden>誤り。検知には、自組織内の検知と外部からの通報の両方がある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep111-incident:q2" data-answer="3">
+  <p class="q">対応計画を実施した後に解決を確認したところ、同じ異常がまだ続いていた。次の動きとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>解決したものとして、結果の回答と事後の見直しに進む</span></button><p class="why" hidden>誤り。未解決なら分析へ戻る。結果の回答は、解決の確認の後。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>トリアージに戻り、まず原因を究明してから優先順位をつけ直す</span></button><p class="why" hidden>誤り。戻る先はトリアージでなく事象の分析。トリアージでは原因の究明は後回し。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>技術対応は不可能と判断し、外部の専門機関にだけ引き継いで自組織の対応は終える</span></button><p class="why" hidden>誤り。難しい場合は外部の支援を頼めるが、自組織の対応を終える話ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>事象の分析に戻り、再び分析・判断・計画・実施の流れで進める</span></button><p class="why" hidden>正解。解決の確認で未解決なら、事象の分析に戻って進める。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep111-incident:q3" data-answer="1">
+  <p class="q">対応に取りかかったが、自組織の技術だけでは対応が難しいと分かった。この時点の動きとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>対応が終わるまで外部への相談はしない方針とし、担当者だけで試行を続ける</span></button><p class="why" hidden>誤り。難しいときは、外部の専門機関とも連携する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>経営層やIT関連部署、必要に応じて外部の専門機関と連携する</span></button><p class="why" hidden>正解。難しい場合は、経営層・IT関連部署・外部の専門機関と連携する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>トリアージの優先順位を下げ、他のインシデントの対応が落ち着くまで待つ</span></button><p class="why" hidden>誤り。難しさを理由に先送りせず、連携して対応を進める。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>難しい事象は対応計画に入れず、インシデント一覧にも載せずに運用を続ける</span></button><p class="why" hidden>誤り。記録や計画に載せないと、事後の見直しに生かせない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep111-incident:q4" data-answer="2">
+  <p class="q">半年前の重大なインシデント対応のあと、手順書は変更されず、予行演習も予定されていない。JPCERT/CC の資料に沿った見直しとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>同種のインシデントが再び起きて被害が出るまで、手順や体制の見直しは行わない</span></button><p class="why" hidden>誤り。再発を待たず、定期的に見直して手順や体制を直す。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>経験は担当者の記憶にとどめ、共有すると混乱を招くため、文書やナレッジにしない</span></button><p class="why" hidden>誤り。経験はナレッジとして蓄積し、共有する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>一覧を定期的に見直し、予行演習で手順や体制を直し、知見を蓄積する</span></button><p class="why" hidden>正解。インシデントリストを目安として3〜6か月で見直し、予行演習を定期的に行って手順・体制・ポリシーを修正し、知見を蓄積する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>見直しは一度行えば完了なので、以後は予行演習も一覧の更新も行わない</span></button><p class="why" hidden>誤り。見直しは一度で終わらず、定期的に行う。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">トリアージの段階で、原因の究明を後回しにして先に行うことは何か。頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">そもそもインシデントか（誤検知でないか）を判断し、いつ・どこで・何が・どのように・誰がを整理して、優先順位を決める。原因（why）の究明は後回しにする。対応が不要なら、その根拠を報告者に説明する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep111-incident-t0-0"> インシデントか、誤検知かの判断</label></li><li><label><input type="checkbox" id="ep111-incident-t0-1"> いつ・どこで・何が・どのように・誰が</label></li><li><label><input type="checkbox" id="ep111-incident-t0-2"> 優先順位付け。原因は後回し、不要なら根拠を説明</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">対応が終わったあと、次に同じことが起きても慌てにくくするために何をするか。頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">インシデントリストを3〜6か月を目安に見直し、予行演習を定期的に行って、手順・体制・ポリシーを修正する。経験は知見（ナレッジ）として蓄積する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep111-incident-t1-0"> インシデントリストの定期的な見直し</label></li><li><label><input type="checkbox" id="ep111-incident-t1-1"> 予行演習と、手順・体制・ポリシーの修正</label></li><li><label><input type="checkbox" id="ep111-incident-t1-2"> 知見（ナレッジ）の蓄積</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="検知から対応までの記録（ダミー）"><div class="logtitle">検知から対応までの記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">09:10 異常な通信を、監視システムが検知した</span></div><div class="logrow"><span class="hl">担当者は連絡を受けた。優先度の判断方法と上長への連絡経路は、文書化されていなかった</span></div><div class="logrow"><span class="hl">担当者は自分で判断できず、対応の開始まで数時間かかった</span></div><div class="logrow"><span class="hl">// 要員は足りていた。原因の調査は、対応開始後に完了した</span></div></div></div>
+  <p class="q">対応開始が遅れた根本原因は？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">優先度の判断基準と連絡経路が、事前に定められていなかった</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>検知の仕組みが無かった … 記録では検知できていた</li><li>要員が足りなかった … 記録では足りていた</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>4.8.1 情報セキュリティインシデント管理の流れと留意事項</li></ul>
+  <p>検知から事後の見直しまでの流れと、トリアージで先に決めること・後回しにすることを確かめながら読む。資料は2015年版。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep110-ransomware.html">← #10 ランサムウェア 被害の大きさは備えで決まる</a><a href="ep112-zerotrust.html">#12 ゼロトラスト 場所を信頼しない考え方 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

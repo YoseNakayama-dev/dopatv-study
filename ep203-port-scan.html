@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#103 ポートスキャン 目的・種類・対策｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#103 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>ポートスキャン 目的・種類・対策</h1>
+  <ol class="summary"><li>ポートスキャンは各ポートへ要求を送り、返答の違いで開閉やフィルタを判定する。</li><li>攻撃者の偵察にも管理者の棚卸しにも使う。種類は接続・SYN・UDP・変則的な送り方があり、結果は実装で変わる。</li><li>対策は閉じる・絞る・検知。開けたポートは見え、時間をかけた走査は検知を回避しうる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep203-port-scan:port-scan">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ポートスキャン</span><span class="back" hidden><span class="def">開いているポートと、動いているサービスを調べる行為。攻撃者の偵察にも、管理者の棚卸しにも使われる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep203-port-scan:port-state">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ポートの状態</span><span class="back" hidden><span class="def">開いている・閉じている・フィルタされている、の三つ。フィルタされていると、返答がなく開閉を判別できない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep203-port-scan:syn-ack">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SYN/ACK</span><span class="back" hidden><span class="def">TCPでSYNに対して返る応答。返れば、そのポートは待ち受けている。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep203-port-scan:rst">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">RST</span><span class="back" hidden><span class="def">TCPで接続を拒否・切断する応答。待ち受けのない閉じたポートに返る。</span><span class="note">返答なしは、閉じているとは限らない（FWの破棄など）。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep203-port-scan:connect-scan">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">TCP接続スキャン</span><span class="back" hidden><span class="def">3ウェイハンドシェイクを完了させて調べる方式。完了するので、相手のログに残りやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep203-port-scan:syn-scan">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SYNスキャン</span><span class="back" hidden><span class="def">SYNを送り、SYN/ACKが返れば開いていると判定し、RSTで切って完了させない方式。ハーフオープンとも呼ばれる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep203-port-scan:udp-scan">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">UDPスキャン</span><span class="back" hidden><span class="def">UDPのポートを調べる方式。開いていても返答が少なく、判定が難しく遅い。閉じていればICMPで到達不能が返ることが多い。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep203-port-scan:fin-scan">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">FINなどの変則的なスキャン</span><span class="back" hidden><span class="def">FIN・NULL・Xmasなど、通常と違うフラグで送る方式。結果は実装によって異なる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep203-port-scan:default-deny">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">既定拒否のFW設定</span><span class="back" hidden><span class="def">ファイアウォールで必要な通信だけを許可し、それ以外は既定で拒否する設定。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep203-port-scan:ids-threshold">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IDSによる検知</span><span class="back" hidden><span class="def">短時間の多数の接続試行をIDSで見つける。時間をかけた走査はしきい値を回避しうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep203-port-scan:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>ポートスキャンの説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SYNスキャンは、接続を完了させず、返答で状態を判定する</span></button><p class="why" hidden>完了させず返答で判定</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>UDPスキャンでは、閉じたポートからRSTが返る</span></button><p class="why" hidden>UDPはICMPの到達不能</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ポートスキャンは、攻撃者だけが行うもので、管理者は行わない</span></button><p class="why" hidden>管理者の棚卸しにも使う</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ファイアウォールを置けば、ポートスキャンを完全に防げる</span></button><p class="why" hidden>開けたポートは見える</p></li></ol>
+</li>
+<li class="quiz" data-key="ep203-port-scan:q0" data-answer="1">
+  <p class="q">UDPのポート検査で、5001番は何も返らず、5002番はICMPのポート到達不能が返った。結果の読み方として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>何も返らなかった5001番は、TCPと同様に閉じていると判断できる。RSTが返らなくても結論は同じである</span></button><p class="why" hidden>UDPは開いていても返答が少ない。返答がないことだけで閉じていると判断できない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>5002番は閉じていると考えられ、返答なしの5001番は開いていても判別しにくい</span></button><p class="why" hidden>正解。閉じていればICMPで到達不能が返ることが多い。開いていても返答が少ないため、返答なしは判別しにくい。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ICMP到達不能が返った5002番は、待ち受けているサービスがある印なので開いていると判断できる</span></button><p class="why" hidden>ICMPの到達不能は、閉じているポートに返ることが多い応答で、待ち受けの印ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>UDPでは返答の有無が開閉と無関係なので、ICMPの到達不能を見ても開閉は判断できない</span></button><p class="why" hidden>閉じたポートにはICMP到達不能が返ることが多いので、開閉を判断する手がかりになる。無関係とは言えない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep203-port-scan:q1" data-answer="2">
+  <p class="q">IDSは1分間に多数のポートへの接続試行があると警報を出す設定である。ある週、警報は一度も出なかったが、後日、公開サーバへ数日かけて1日に数ポートずつ接続試行した記録が見つかった。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>警報が出なかったので、その週はポートスキャンは行われていなかったと言える。記録は誤検知の可能性が高い</span></button><p class="why" hidden>記録が残っているのに、警報がないことだけで走査がなかったとは言えない。しきい値を超えない走査は警報にならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ファイアウォールが通信を許可していたことが原因なので、IDSの設定は見直さずFWの許可範囲だけ絞れば足りる</span></button><p class="why" hidden>FWの許可範囲を絞るのは有効な対策の一つだが、警報が出なかった理由（しきい値を回避する走査）の説明にはならない。IDSの見直しを不要とも言い切れない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>時間をかけた走査は検知のしきい値を回避しうるので、警報がないことは安全の根拠にならない</span></button><p class="why" hidden>正解。短時間の多数の接続試行を見つける仕組みは、ゆっくりの走査を見逃しうる。警報がないことは、走査がないことを意味しない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>走査の間隔が長いほどIDSの検知精度は高まるので、記録が見つかったのは設計どおりの動作である</span></button><p class="why" hidden>間隔が長いほど検知しにくくなる。検知精度が高まるわけではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep203-port-scan:q2" data-answer="3">
+  <p class="q">外部から公開サーバを検査したところ、業務で必要な443番のほかに、過去の検証で使った3つのポートが開いていた。最も根本的な対策はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IDSを導入して、これらのポートへの接続試行を検知したら管理者に通知する運用にする</span></button><p class="why" hidden>検知は補助の層。開いたままのポートが残る限り、原因は解消しない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>すべてのポートで応答を返さない設定にして、スキャンしても開閉が分からない状態にする</span></button><p class="why" hidden>業務に必要な443番は応答しなければ使えない。開けたポートは見える。すべての応答をやめる設定は現実的ではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>検査の頻度を上げて、これらのポートがスキャンされた事実を早く把握できるようにする</span></button><p class="why" hidden>検査の頻度を上げても、開いているポート自体は減らない。把握の速さを上げるだけである。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>不要なサービスを止めてポートを閉じ、FWでは必要な通信だけ許可する</span></button><p class="why" hidden>正解。不要なサービスを止めてポートを閉じ、FWで必要な通信だけを許可する。開けるポートを最小にするのが基本。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep203-port-scan:q3" data-answer="0">
+  <p class="q">セキュリティ担当者が、他部門が管理する社内の公開サーバのポートを棚卸しのために検査しようとしている。検査の前に最初に行うべきことはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>管理部門の許可を得て、検査の対象と範囲を決める</span></button><p class="why" hidden>正解。自組織の公開ポートの棚卸しは、許可を得て行う。対象と範囲もあらかじめ決める。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>自社のサーバなので許可は不要とし、検知されないよう検知機能を一時的に止めてから検査する</span></button><p class="why" hidden>自社のサーバでも、検査は許可を得て行う。検知機能を止めて検査することは、許可を得る代わりにならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>攻撃者が使う種類のスキャンは避け、接続を完了させるTCP接続スキャンだけを使えば許可は不要になる</span></button><p class="why" hidden>スキャンの種類にかかわらず、許可を得て行う点は変わらない。TCP接続スキャンはむしろ相手のログに残りやすい。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>検査の結果が出てから、事後報告として管理部門に報告し、必要なら許可を得る</span></button><p class="why" hidden>許可は検査の前に得る。結果が出てからの事後報告では、許可を得て行う手順にならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep203-port-scan:q4" data-answer="1">
+  <p class="q">FINなど変則的なフラグを使ったスキャンで、検査対象のすべてのポートが閉じているという結果になった。この結果の扱いとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>変則的な送り方でも結果は共通なので、すべて閉じていると結論してよい。以後の棚卸しは省略できる</span></button><p class="why" hidden>変則的な送り方の結果は、実装によって異なる。その結果だけですべて閉じていると結論するのは言い過ぎ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>実装によって結果が異なるため、他の方法でも確認してから判断する</span></button><p class="why" hidden>正解。FINなどの結果は実装で変わる。SYNスキャンなど他の方法でも確認して判断する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>FINに対して返答がなければ、SYN/ACKと同じく待ち受けている印なので、すべて開いていると読み替える</span></button><p class="why" hidden>SYN/ACKはSYNに対する応答で、FINへの返答とは別。FINなどの結果は実装によって異なり、返答なしだけで開いていると読み替えられない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>UDPスキャンの結果と必ず一致するため、FINの結果だけで十分で、他の種類のスキャンは不要である</span></button><p class="why" hidden>UDPとTCPは別のプロトコルで、結果が必ず一致するとは言えない。種類ごとに判定の仕方が違う。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ポートスキャンを防ぐ対策の限界を、頭の中で説明してみよう。それでも対策を行う意味は何か。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">公開するために開けたポートは、スキャンで見える。時間をかけた走査は検知のしきい値を回避しうる。それでも、不要なポートを閉じ、FWで必要な通信だけを許可すれば、見える範囲を最小にできる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep203-port-scan-t0-0"> 開けたポートは見える</label></li><li><label><input type="checkbox" id="ep203-port-scan-t0-1"> ゆっくりの走査は検知を回避しうる</label></li><li><label><input type="checkbox" id="ep203-port-scan-t0-2"> 閉じる・絞るで見える範囲を最小にする</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">ポートスキャン対策で、ファイアウォールとIDSが担う役割の違いを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ファイアウォールは、必要な通信だけを許可し、それ以外は既定で拒否して、見える範囲を絞る。IDSは、短時間の多数の接続試行を見つけて知らせる。前者は絞る役、後者は見張る役で、役割が違う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep203-port-scan-t1-0"> FWは必要な通信だけ許可し既定で拒否</label></li><li><label><input type="checkbox" id="ep203-port-scan-t1-1"> IDSは多数の接続試行を検知</label></li><li><label><input type="checkbox" id="ep203-port-scan-t1-2"> 絞る役と見張る役で役割が違う</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="外部からのポート検査結果（ダミー）"><div class="logtitle">外部からのポート検査結果（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">外部から、自社サーバへSYNを送って検査した</span></div><div class="logrow"><span class="hl">22番: SYN/ACKが返った</span></div><div class="logrow"><span class="hl">23番: RSTが返った</span></div><div class="logrow"><span class="hl">8080番: 何も返らなかった</span></div></div></div>
+  <p class="q">22番・23番・8080番のうち、待ち受けていると判断できるのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">22番 … SYN/ACKは、待ち受けている印</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>23番 … RSTは、待ち受けるサービスがないことを示す</li><li>8080番 … 返答がなければ、待ち受けの有無は判断できない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.2.1 ポートスキャンの目的と実行方法</li><li>2.2.2 ポートスキャンの種類と仕組み</li><li>2.2.3 ポートスキャンへの対策</li></ul>
+  <p>返答（SYN/ACK・RST・返答なし）から状態を読む方法と、スキャンの種類ごとの違いを確かめながら読む。対策の限界にも注意。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep202-attack-spec-methods.html">← #102 攻撃の記述仕様と主な手法 STIX・TAXII・CVE・攻撃手法の整理</a><a href="ep204-emotet.html">#104 Emotet 返信を装うメールと感染拡大 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

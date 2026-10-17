@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#82 電子文書の長期保存 時刻の証拠を付け直す｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#82 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
+  <h1>電子文書の長期保存 時刻の証拠を付け直す</h1>
+  <ol class="summary"><li>時間がたつと、証明書の期限切れ・失効情報の取得不可・暗号方式の危殆化で、署名の有効性を示しにくくなる。</li><li>タイムスタンプは、TSAが発行する「ある時刻にデータが存在し、以降変更がない」証拠。それ自体にも有効期間がある。</li><li>長期署名は、署名にタイムスタンプと検証用の証明書・失効情報を加えて保存し、期限前に付け直す。方式の移行も要る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 7</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep182-longterm-signature:timestamp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">タイムスタンプ</span><span class="back" hidden><span class="def">ある時刻にデータが存在し、以降変更がないことを示す証拠。タイムスタンプ自体にも有効期間がある。</span><span class="note">暗号化の仕組みでも、作成者の確認でもない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep182-longterm-signature:tsa">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">時刻認証局（TSA）</span><span class="back" hidden><span class="def">タイムスタンプを発行する機関。データが一文字でも変わると、タイムスタンプの検証は失敗する。</span><span class="note">証明書を発行するCAとは役割が違う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep182-longterm-signature:long-term-sig">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">長期署名</span><span class="back" hidden><span class="def">署名にタイムスタンプと、検証に必要な証明書・失効情報を加えて保存したもの。後から検証できる形で証拠を残す。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep182-longterm-signature:re-stamp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">タイムスタンプの付け直し</span><span class="back" hidden><span class="def">期限が切れる前に、元の証拠と検証用の情報も含めて付け直し、有効性を延長すること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep182-longterm-signature:cert-validity">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">署名用証明書の有効期間</span><span class="back" hidden><span class="def">期限が切れると、署名時点で有効だったことを後から示しにくくなる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep182-longterm-signature:revocation-info">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">失効情報の保存</span><span class="back" hidden><span class="def">失効情報は、保存しないと後で取得できないことがある。古い失効情報は公開が終わることもある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep182-longterm-signature:crypto-weakening">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">暗号方式の危殆化</span><span class="back" hidden><span class="def">暗号の方式が年月がたつと安全でなくなること。古い方式のままでは証拠の価値が下がる。強い方式へ移行する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep182-longterm-signature:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>タイムスタンプの説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者の秘密鍵を使い、データの内容を暗号化する仕組みである</span></button><p class="why" hidden>暗号化の仕組みではない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>データの作成者を、パスワードの照合で確認するための仕組みである</span></button><p class="why" hidden>作成者の確認ではなく、時刻と存在の証明</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>失効した証明書の一覧を、すべての利用者へ配布するための仕組みである</span></button><p class="why" hidden>失効した証明書の一覧はCRL</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ある時刻にデータが存在し、以降は変更がないことを示す仕組みである</span></button><p class="why" hidden>ある時刻に存在し、以降の変更がない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep182-longterm-signature:q0" data-answer="0">
+  <p class="q">署名だけを付けて保存した電子文書がある。数年後、署名用の証明書の有効期間が切れた。この保存方法で困ることはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>署名時点で証明書が有効だったことを、後から示しにくくなる</span></button><p class="why" hidden>正解。証明書が期限切れになると、署名時点の有効性を後から示しにくい。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>署名後の失効情報は、公開が終わらないので後からいつでも取得できる</span></button><p class="why" hidden>古い失効情報は公開が終わることもあり、保存しないと後で取得できないことがある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>期限切れでも署名は、改ざんの有無と署名した時刻を変わらず示せる</span></button><p class="why" hidden>期限が切れると、署名時点で証明書が有効だったことを後から示しにくく、改ざんの有無も変わらず示せるとはいえない。署名した時刻はタイムスタンプで示す。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗号方式は年月がたっても安全なままなので、その点は問題にならない</span></button><p class="why" hidden>暗号の方式は年月がたつと安全でなくなる。古い方式のままでは証拠の価値が下がる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep182-longterm-signature:q1" data-answer="2">
+  <p class="q">署名時にタイムスタンプを付けて保存している。そのタイムスタンプの有効期間の終わりが近づいてきた。適切な対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>タイムスタンプ自体に有効期間はないので、そのまま保存を続ける</span></button><p class="why" hidden>タイムスタンプ自体にも有効期間がある。付け直さないと、保存の途中で切れる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>期限が切れた後に新しいタイムスタンプを付ければ、途中も示せる</span></button><p class="why" hidden>期限が切れた後では、元のタイムスタンプの有効性が途切れる。付け直しは期限が切れる前に、元の証拠と検証用の情報も含めて行う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>期限が切れる前に、元の証拠と検証用の情報も含めて付け直す</span></button><p class="why" hidden>正解。期限の前に、元の証拠と検証用の情報も含めて付け直し、有効性を延長する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>署名用証明書の有効期間を延ばせば、タイムスタンプの期限も延びる</span></button><p class="why" hidden>署名用証明書とタイムスタンプは別の証拠で、それぞれ有効期間を持つ。タイムスタンプの期限は、期限前の付け直しで延長する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep182-longterm-signature:q2" data-answer="1">
+  <p class="q">保存開始から年月がたち、使っている暗号方式が安全でなくなる懸念が出てきた。適切な対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>署名と証明書が有効期間内なら、暗号方式の安全性は問題にならない</span></button><p class="why" hidden>暗号方式は年月がたつと安全でなくなる。有効期間内でも、古い方式のままでは証拠の価値が下がる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>方式が安全でなくなる前に、強い方式に移行して保存を続ける</span></button><p class="why" hidden>正解。方式が安全でなくなる前に、強い方式へ移行する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>方式が安全でなくなってから、保存済みの署名を作り直せばよい</span></button><p class="why" hidden>対策は、方式が安全でなくなる前に強い方式へ移行すること。古い方式のままでは証拠の価値が下がる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>失効情報を保存すれば、古い方式のままでも証拠の価値は下がらない</span></button><p class="why" hidden>失効情報の保存は、検証に必要な情報を残す対策。古い方式のままでは証拠の価値が下がる点は変わらない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep182-longterm-signature:q3" data-answer="2">
+  <p class="q">契約書にタイムスタンプを付けた後、内容が1文字だけ書き換えられた疑いが出た。タイムスタンプの検証で分かることとして適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>一文字だけの違いなら検証は成功するので、変更は検知されない</span></button><p class="why" hidden>データが一文字でも変わると、タイムスタンプの検証は失敗する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>作成者を示すものなので、内容が変わっても検証には成功する</span></button><p class="why" hidden>タイムスタンプは作成者の確認ではなく、ある時刻にデータが存在したことの証明。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>データが変わると検証に失敗するので、以降の改ざんを検知できる</span></button><p class="why" hidden>正解。タイムスタンプは、ある時刻に存在し以降変更がないことを示す。変更があれば検証に失敗する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>検証に失敗するのは、署名用証明書が期限切れになった場合に限られる</span></button><p class="why" hidden>データが一文字でも変わると検証に失敗する。証明書の期限切れに限られない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep182-longterm-signature:q4" data-answer="0">
+  <p class="q">署名した契約書へのタイムスタンプ付与を、月末にまとめて行う運用になっている。見直し案として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>署名とタイムスタンプの間があくので、署名の直後に付ける手順にする</span></button><p class="why" hidden>正解。タイムスタンプが示すのは、付与した時刻にデータが存在し以降変更がないこと。署名から間があくと、その間の状態を示せないので、署名の直後に付ける。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>署名時刻はファイル名の日付で足りるので、タイムスタンプは省略できる</span></button><p class="why" hidden>ファイル名の日付は誰でも書き換えられ、第三者に示せる証拠にならない。時刻の証拠はTSAが発行するタイムスタンプで示す。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>期限切れの後でタイムスタンプを付ければ、期限切れの影響を避けられる</span></button><p class="why" hidden>証明書が期限切れになると、署名時点の有効性を後から示しにくい。期限切れの後に付けても避けられない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>タイムスタンプがあれば、証明書と失効情報の保存は省略できる</span></button><p class="why" hidden>長期署名は、検証に必要な証明書・失効情報も一緒に保存する。失効情報は、保存しないと後で取得できないことがある。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">署名付きの契約書を長期間保存する。署名だけでなく何を足し、いつ何をすべきか頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">署名の直後にタイムスタンプを付け、検証に必要な証明書と失効情報を署名と一緒に保存する。タイムスタンプの期限が切れる前に付け直し、暗号方式が安全でなくなる前に強い方式へ移行する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep182-longterm-signature-t0-0"> 署名の直後にタイムスタンプ</label></li><li><label><input type="checkbox" id="ep182-longterm-signature-t0-1"> 証明書と失効情報も保存</label></li><li><label><input type="checkbox" id="ep182-longterm-signature-t0-2"> 期限前に付け直す</label></li><li><label><input type="checkbox" id="ep182-longterm-signature-t0-3"> 方式が古くなる前に移行</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">タイムスタンプを一度付ければ、ずっと安心とはいえない理由を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">タイムスタンプ自体にも有効期間があり、付け直さないと保存の途中で切れる。また暗号の方式は年月がたつと安全でなくなるので、強い方式への移行も要る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep182-longterm-signature-t1-0"> タイムスタンプ自体に有効期間がある</label></li><li><label><input type="checkbox" id="ep182-longterm-signature-t1-1"> 期限前に付け直す</label></li><li><label><input type="checkbox" id="ep182-longterm-signature-t1-2"> 暗号方式は年月で安全でなくなる</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="契約書の長期保存に関する調査記録（ダミー）"><div class="logtitle">契約書の長期保存に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 契約書の電子ファイルに署名を付けて、10年間保存する</span></div><div class="logrow"><span class="hl">署名用の証明書の有効期間は3年、タイムスタンプは5年である</span></div><div class="logrow"><span class="hl">署名時点の証明書と失効情報は、署名と一緒に保存できる</span></div><div class="logrow"><span class="hl">要件: 10年後も、署名時点から改ざんがないことを確認したい</span></div></div></div>
+  <p class="q">要件を満たす方法として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">署名時にタイムスタンプを付けて情報も保存し、期限前に繰り返し付け直す</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>署名だけを付け、時刻の証明はせずに保存する … 署名した時刻を証明できず、証明書が切れた後は署名時点の有効性を示せない</li><li>署名時にタイムスタンプを付け、そのまま10年保存する … 有効期間は5年で、10年保存なら期限前の付け直しが必要</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>7.7.5 電子文書の長期保存のための技術</li></ul>
+  <p>署名だけでは長期に有効性を示せない理由（証明書の期限・失効情報・暗号方式）と、タイムスタンプの付け直しでの延長を確かめる。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep181-pki-signature.html">← #81 証明書を支える要素とデジタル署名 失効と検証</a><a href="ep183-secure-dev-need.html">#83 システム開発とセキュリティ 後付けせず作り込む →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

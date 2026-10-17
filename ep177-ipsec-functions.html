@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#77 IPsecの機能と構成プロトコル 守る役と鍵を配る役｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#77 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
+  <h1>IPsecの機能と構成プロトコル 守る役と鍵を配る役</h1>
+  <ol class="summary"><li>ESPは暗号化と認証、AHは認証のみ。AHは暗号化しないので、盗聴を防ぐならESPを選ぶ。</li><li>IKEが相手の認証、鍵の交換、SAの確立を自動で行う。事前共有鍵が弱いとIKEの認証が破られるおそれがある。</li><li>両端のSA設定をそろえ、FWでIKEとESPを許可し、NAT越えも確認する。どれかが欠けると接続できないおそれがある。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep177-ipsec-functions:ipsec-functions">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IPsecの四つの機能</span><span class="back" hidden><span class="def">機密性、完全性、通信相手の認証、再送（リプレイ）の防止。ESP・AH・IKEなどが分担して実現する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep177-ipsec-functions:esp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ESP</span><span class="back" hidden><span class="def">暗号化と認証を行い、通信内容を守るプロトコル。盗聴も防ぎたいときに選ぶ。実際の通信ではESPが使われることが多い。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep177-ipsec-functions:ah">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">AH</span><span class="back" hidden><span class="def">認証（完全性）のみを行い、暗号化はしないプロトコル。改ざんは検知できるが、盗聴は防げない。</span><span class="note">暗号化もしたいならESP。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep177-ipsec-functions:ike">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IKE</span><span class="back" hidden><span class="def">通信相手の認証、鍵の交換、SAの確立を自動で行うプロトコル。鍵を自動で作り、更新できる。</span><span class="note">暗号化そのものはESPが行う。IKEは相手の認証、鍵の交換、SAの確立を担う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep177-ipsec-functions:sa">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SA</span><span class="back" hidden><span class="def">暗号方式や鍵などの取り決め。一方向ごとに確立される。</span><span class="note">両端でSAの設定が合わないと、つながらない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep177-ipsec-functions:replay">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">再送（リプレイ）の防止</span><span class="back" hidden><span class="def">IPsecが提供する機能の一つ。機密性・完全性・通信相手の認証と並ぶ四つの機能に含まれる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep177-ipsec-functions:psk-ike">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">事前共有鍵とIKEの認証</span><span class="back" hidden><span class="def">事前共有鍵が弱いと、IKEの認証が破られるおそれがある。認証の強さが全体の強さを左右する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep177-ipsec-functions:fw-ike-esp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">FWとIKE・ESP</span><span class="back" hidden><span class="def">FWがIKEを止めるとSAを確立できず、ESPを止めると通信が通らない。対策はFWでIKEとESPを許可すること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep177-ipsec-functions:nat-ipsec">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">NAT越え</span><span class="back" hidden><span class="def">NATがあると、通信方法の調整が要る。IPsecの構築時にはNAT越えが可能かを確認する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep177-ipsec-functions:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>IKEの説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通信データの暗号化を直接行い、鍵の交換は行わないプロトコルである</span></button><p class="why" hidden>暗号化を行うのはESP</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>通信相手を認証し、鍵の交換とSAの確立を自動で行うプロトコルである</span></button><p class="why" hidden>認証し、鍵交換とSAの確立を行う</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>パケットの認証だけを行い、暗号化の鍵の管理は担当しない仕組みである</span></button><p class="why" hidden>認証だけを行うのはAH</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>AHかESPのどちらかを選ぶと、鍵の管理が不要になるプロトコルである</span></button><p class="why" hidden>どちらでも鍵の管理は必要</p></li></ol>
+</li>
+<li class="quiz" data-key="ep177-ipsec-functions:q0" data-answer="0">
+  <p class="q">拠点間の通信をAHだけで保護するIPsecを導入した。パケットを経路上で観測される状況での評価として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>改ざんは検知できるが、暗号化しないので通信内容の盗聴は防げない</span></button><p class="why" hidden>正解。AHは認証のみで暗号化はしない。改ざんは検知できるが盗聴は防げないので、盗聴対策にはESPを選ぶ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>鍵交換とSAの確立を自動で行うので、鍵の管理が不要になる</span></button><p class="why" hidden>鍵交換とSAの確立を自動で行うのはIKEの働き。AHが行うのは認証（完全性）のみで、暗号化も鍵交換もしない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>暗号化と認証を行うESPと同じ働きなので、盗聴を防ぐ要件にも使える</span></button><p class="why" hidden>暗号化と認証を行うのはESP。AHは暗号化しないので、盗聴を防ぐ要件には使えない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>認証だけでなく暗号化も行うので、盗聴と改ざんの両方を防ぐ目的に使える</span></button><p class="why" hidden>AHは認証のみで暗号化はしない。盗聴は防げない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep177-ipsec-functions:q1" data-answer="2">
+  <p class="q">拠点間IPsecがつながらない。調べると、両端のSAの設定のうち暗号方式が食い違っていた。対処として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ESPをAHに切り替えれば、SAの設定が異なっていてもつながる</span></button><p class="why" hidden>AHでもESPでも、両端でSAの設定が合わないとつながらない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>事前共有鍵をより長くすれば、SAの設定の違いは吸収される</span></button><p class="why" hidden>鍵の長さと、両端のSAの設定の一致は別の話。SAの設定が合わないとつながらない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>両端でSAの設定（暗号方式・鍵長）をそろえて、確立し直す</span></button><p class="why" hidden>正解。両端でSAの設定が合わないとつながらない。方式も鍵の長さも同じにする。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>FWでIKEを許可すれば、SAの設定が違っていても確立できる</span></button><p class="why" hidden>FWでIKEを許可するのは通り道の対策。SAの設定が合わない問題は、設定をそろえて解消する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep177-ipsec-functions:q2" data-answer="3">
+  <p class="q">拠点のFWで、ESPの通信は許可しているが、IKEの通信は止めている。このとき起こることとして、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ESPが通るので、鍵の交換とSAの確立も自動で行われ、問題なくつながる</span></button><p class="why" hidden>鍵の交換とSAの確立を行うのはIKE。FWがIKEを止めると、SAを確立できない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>IKEは暗号化を行わないプロトコルなので、FWで止めても通信に影響しない</span></button><p class="why" hidden>IKEは暗号化を行わないが、鍵の交換とSAの確立を担う。FWが止めるとSAを確立できない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ESPを止めたときだけ問題になり、IKEを止めても通信には影響しない</span></button><p class="why" hidden>FWがIKEを止めてもSAを確立できず、ESPを止めても通信が通らない。どちらを止めても問題になる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>IKEが止められているため、鍵の交換とSAの確立ができず通信できない</span></button><p class="why" hidden>正解。FWがIKEを止めるとSAを確立できない。FWでIKEとESPの両方を許可する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep177-ipsec-functions:q3" data-answer="0">
+  <p class="q">ESPで暗号化したIPsecで、IKEの認証に推測されやすい短い事前共有鍵を使っている。評価と対策として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IKEの認証の強さが全体を左右するため、十分に長い鍵か証明書を使う</span></button><p class="why" hidden>正解。事前共有鍵が弱いとIKEの認証が破られるおそれがあり、認証の強さが全体の強さを左右する。長い鍵か証明書を使う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ESPで暗号化されるため、IKEの認証に使う鍵は短くても全体の強さは変わらない</span></button><p class="why" hidden>ESPで暗号化しても、IKEの認証が破られるおそれは残る。認証の強さが全体の強さを左右する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>AHに替えればIKEの認証が不要になるので、事前共有鍵の強さは問題にならない</span></button><p class="why" hidden>AHに替えても、相手の認証や鍵の交換、SAの確立を担うIKEは必要。事前共有鍵が弱いと認証が破られるおそれは残る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SAの設定をそろえれば、事前共有鍵が弱くても破られるおそれはなくなる</span></button><p class="why" hidden>SAの設定の一致は、つながるための条件。事前共有鍵が弱いと破られるおそれは別に残る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep177-ipsec-functions:q4" data-answer="2">
+  <p class="q">IPsecのSAの説明として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通信データを暗号化する処理そのものを指し、鍵の取り決めは含まない</span></button><p class="why" hidden>暗号化を行うのはESP。SAは暗号方式や鍵などの取り決めのことで、鍵も含む。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>パケットの認証だけを行い、暗号化は行わない仕組みのことを指す名称である</span></button><p class="why" hidden>認証のみで暗号化しないのはAH。SAは取り決めのことで、プロトコル名ではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>暗号方式や鍵などの取り決めで、通信の一方向ごとに確立される</span></button><p class="why" hidden>正解。SAは暗号方式や鍵などの取り決めで、一方向ごとに確立される。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>IKEを使わずに、管理者が手作業で設定するものである</span></button><p class="why" hidden>SAの確立はIKEが自動で行う。IKEのおかげで鍵を自動で作り、更新できる。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">盗聴も改ざんも防ぎたいとき、ESPとAHのどちらを選ぶか。理由を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ESPを選ぶ。ESPは暗号化と認証を行うので盗聴も改ざんも防げる。AHは認証のみで暗号化しないため、改ざんは検知できても盗聴は防げない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep177-ipsec-functions-t0-0"> ESPは暗号化と認証</label></li><li><label><input type="checkbox" id="ep177-ipsec-functions-t0-1"> AHは暗号化しない</label></li><li><label><input type="checkbox" id="ep177-ipsec-functions-t0-2"> AHでは盗聴を防げない</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">IPsecがつながらない原因として確認すべき点を、IKE・SA・FWの観点で頭の中で挙げてみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">両端のSA設定（暗号方式・鍵長）が一致しているか。FWでIKEとESPが許可されているか（IKEを止めるとSAを確立できず、ESPを止めると通信が通らない）。NATがある場合はNAT越えが可能かも確認する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep177-ipsec-functions-t1-0"> 両端のSA設定の一致</label></li><li><label><input type="checkbox" id="ep177-ipsec-functions-t1-1"> FWでIKEとESPを許可</label></li><li><label><input type="checkbox" id="ep177-ipsec-functions-t1-2"> NAT越えの確認</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="IPsec拠点間通信の構成に関する調査記録（ダミー）"><div class="logtitle">IPsec拠点間通信の構成に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 拠点間の通信に、IPsecのトンネルを使う</span></div><div class="logrow"><span class="hl">通信内容の盗聴と、データの改ざんを、防ぎたい</span></div><div class="logrow"><span class="hl">通信相手が正規であることも、確認したい</span></div><div class="logrow"><span class="hl">要件: 鍵は手作業でなく自動で交換し、定期的に更新したい</span></div></div></div>
+  <p class="q">要件を満たす構成として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ESPで暗号化と認証を行い、IKEで鍵を自動で交換する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>AHを使い、鍵はIKEで自動交換する … AHは暗号化しないので、盗聴を防げない</li><li>ESPを使い、鍵は管理者が手作業で設定する … 鍵を自動で交換する要件に反する</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>7.3.3 IPsecによって提供される機能</li><li>7.3.4 IPsecを構成するプロトコルや機能の概要</li></ul>
+  <p>ESP・AH・IKE・SAの役割分担と、AHでは盗聴を防げない点、FWで通すべき通信を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep176-ipsec-modes.html">← #76 IPsecの概要と二つのモード ヘッダを残すか包むか</a><a href="ep178-ssl-vpn.html">#78 TLSによるVPN（SSL-VPN） ソフトの要否で選ぶ三つの型 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

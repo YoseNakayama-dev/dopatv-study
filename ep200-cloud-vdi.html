@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#100 クラウドとVDI クラウドコンピューティングの概要とシンクライアント｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#100 ・ 第1章 情報セキュリティ及びITの基礎</p>
+  <h1>クラウドとVDI クラウドコンピューティングの概要とシンクライアント</h1>
+  <ol class="summary"><li>クラウドは、自分で用意でき、共用の資源を増減でき、使った量を計測して課金される。</li><li>借りる範囲はIaaS・PaaS・SaaSで違い、利用形態は専用・公開・組み合わせで分ける。</li><li>VDIはデータをサーバに集める。停止の集中や転送設定、入口の認証が限界で、撮影は防げない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep200-cloud-vdi:cloud-traits">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">クラウドの特徴</span><span class="back" hidden><span class="def">利用者が自分で資源を用意でき、資源は共用されて必要に応じ増減でき、使った量が計測されて課金される。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep200-cloud-vdi:iaas">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IaaS</span><span class="back" hidden><span class="def">処理能力・ストレージ・ネットワークなどの基盤を借りる形態。OSやアプリは利用者が載せる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep200-cloud-vdi:paas">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">PaaS</span><span class="back" hidden><span class="def">アプリを開発し動かすための土台を借りる形態。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep200-cloud-vdi:saas">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SaaS</span><span class="back" hidden><span class="def">完成したアプリケーションを利用する形態。利用者がOSの管理まで行うことはない。</span><span class="note">借りる範囲が広いほど、任せる範囲も広い。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep200-cloud-vdi:cloud-models">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">利用形態（プライベート・パブリック・ハイブリッド）</span><span class="back" hidden><span class="def">プライベートは一組織の専用、パブリックは広く一般に提供、ハイブリッドは複数の形態の組み合わせ。</span><span class="note">提供形態（IaaSなど）とは別の軸。運営は自社でも事業者でもよい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep200-cloud-vdi:thin-client">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">シンクライアント</span><span class="back" hidden><span class="def">端末にデータを残さない設計。端末は最小限の機能で、処理とデータをサーバ側に置く。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep200-cloud-vdi:vdi">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">VDI</span><span class="back" hidden><span class="def">デスクトップ環境をサーバ上の仮想マシンで動かし、画面を端末へ転送する方式。端末は表示と入力を担う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep200-cloud-vdi:transfer-settings">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">転送機能の設定</span><span class="back" hidden><span class="def">クリップボード・ファイル・ドライブの受け渡しの設定。許可の仕方によっては端末にデータが残る。</span><span class="note">必要なものだけ許可する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep200-cloud-vdi:redundancy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">冗長化</span><span class="back" hidden><span class="def">通信やサーバを複数用意し、一方が止まっても利用を続けられるようにする備え。VDIは停止が全員に及ぶため重要。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep200-cloud-vdi:mfa">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">多要素認証</span><span class="back" hidden><span class="def">複数の要素で本人を確かめる認証。VDIの接続の入口を守る。破られると業務環境ごと使われる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep200-cloud-vdi:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>クラウドとVDIの説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ハイブリッドクラウドは、事業者だけの専用環境を指す</span></button><p class="why" hidden>ハイブリッドは複数の形態の組み合わせ</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SaaSの利用者は、OSの管理まで行う</span></button><p class="why" hidden>SaaSはOSの管理まで行わない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>VDIでは、処理を端末側で行い、画面だけをサーバへ送る</span></button><p class="why" hidden>処理はサーバ側、画面が端末へ</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>クラウドは資源を共用し、使った量を計測して利用する</span></button><p class="why" hidden>資源の共用と使用量の計測</p></li></ol>
+</li>
+<li class="quiz" data-key="ep200-cloud-vdi:q0" data-answer="0">
+  <p class="q">自社で選んだOSとバージョンの上に自社開発のソフトを載せて運用したい。仮想サーバや保管領域などの基盤は事業者から借りたい。借り方として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IaaS。処理能力やストレージなどの基盤を借り、OSやアプリは利用者が載せる</span></button><p class="why" hidden>正解。基盤を借りて、OSやアプリを利用者が載せる使い方に当たるのがIaaS。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>PaaS。開発や実行の土台を借りる形態なので、OSの選択まで含めて自社で決められる</span></button><p class="why" hidden>PaaSは開発や実行の土台を借りる形態。基盤の上にOSから自分で載せる使い方に当たるのはIaaS。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SaaS。完成したアプリケーションを利用する形態なので、自社のソフトも同じ場所で動かせる</span></button><p class="why" hidden>SaaSは完成したアプリケーションを利用する形態で、利用者がOSを選んで自社のソフトを載せる使い方ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>プライベートクラウド。一組織が専用で使う形態なので、OSを自社で選べる提供の範囲が決まる</span></button><p class="why" hidden>プライベートは利用形態の分類（誰が専用で使うか）で、借りる範囲を表す提供形態ではない。軸を取り違えている。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep200-cloud-vdi:q1" data-answer="1">
+  <p class="q">VDIを導入し、業務データはサーバ上のみに置く運用にした。外部ネットワークからの接続は、利用者IDとパスワードだけで認証している。端末の紛失は想定済みである。最も優先して見直すべき点はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>紛失した端末から業務データを読まれないよう、端末のストレージ全体を暗号化する運用に切り替える</span></button><p class="why" hidden>データを端末に残さない設計で、紛失への備えは想定済み。端末の暗号化はこの前提では優先度が高い見直しではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>接続の入口に多要素認証を入れ、破られても環境を使われにくくする</span></button><p class="why" hidden>正解。接続の認証が破られると業務環境ごと使われる。入口を多要素認証で守るのが、この構成の弱点に対応する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>VDIサーバの台数を増やして処理能力を高め、画面転送が遅くなる状況を起こりにくくする</span></button><p class="why" hidden>台数の増加は性能や可用性の話で、IDとパスワードだけの認証という弱点には対応しない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利用者の画面にのぞき見防止の措置を施して、画面の撮影による持ち出しを完全になくす</span></button><p class="why" hidden>画面の撮影は完全には防げない。のぞき見防止は補助にとどまり、完全になくせるとは言えない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep200-cloud-vdi:q2" data-answer="2">
+  <p class="q">全社員がVDIで業務を行う。回線は1本、VDIサーバは1台の構成で、障害のときに全員の業務が止まることを経営層が懸念している。この懸念に直接対応する施策はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>画面転送の通信を暗号化し、障害の最中でも通信内容を第三者に読まれないようにする</span></button><p class="why" hidden>暗号化は通信内容の保護で、停止への備えではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>業務データのコピーを各端末に置き、接続できない間も端末だけで作業できるようにする</span></button><p class="why" hidden>端末にデータを残さない設計のVDIの利点を損なう。端末への保存は転送設定を絞って避けるものである。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>回線とVDIサーバを冗長化し、一方が止まっても利用を続けられるようにする</span></button><p class="why" hidden>正解。通信とサーバが止まると全員が使えなくなる。冗長化して、一方が止まっても続けられるようにする。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>多要素認証を導入して、障害の原因になりうる不正な接続を入口で減らせるようにする</span></button><p class="why" hidden>多要素認証は認証の入口を守るもので、機器や回線の障害による停止には対応しない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep200-cloud-vdi:q3" data-answer="3">
+  <p class="q">事業者が運営する自社専用の環境と、広く一般に提供されているサービスを組み合わせて利用している。利用形態の分類として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>事業者が運営しているので、専用環境もパブリッククラウドに分類され、組み合わせてもパブリックのままである</span></button><p class="why" hidden>プライベートは一組織が専用で使う形態で、運営が自社か事業者かは問わない。運営者で分類を決めるのは誤り。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>専用環境は自社運営でなければプライベートクラウドと呼べないので、この構成はどの利用形態にも当たらない</span></button><p class="why" hidden>プライベートクラウドの運営は自社でも事業者でもよい。自社運営が条件という前提が誤り。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>共用の資源を計測して課金する点が定義なので、提供形態のSaaSに分類される構成である</span></button><p class="why" hidden>共用と計測はクラウドの特徴で、SaaSの定義ではない。SaaSは提供形態で、利用形態の分類とは軸が違う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>専用の環境と広く提供されるサービスを組み合わせた構成で、ハイブリッドクラウドに当たる</span></button><p class="why" hidden>正解。複数の形態を組み合わせて使う構成がハイブリッド。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep200-cloud-vdi:q4" data-answer="1">
+  <p class="q">開発部門が、事業者の担当者への依頼なしに管理画面から仮想サーバを追加し、使った量に応じた請求を受けている。この状況に当てはまるクラウドの特徴はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>資源は利用者専用に固定されるので、使わない時間の分も含めた一定額が請求される</span></button><p class="why" hidden>使った量に応じた請求という状況と合わない。クラウドは使った量を計測して課金する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>利用者が自分で資源を用意でき、使った量が計測されて課金される</span></button><p class="why" hidden>正解。利用者が自分で必要な資源を用意でき、使った量が計測されて課金される。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>事業者が個別に構築して引き渡すため、増減のたびに見積りと作業の依頼が必要になる</span></button><p class="why" hidden>事業者への依頼なしで追加している状況と合わない。クラウドは利用者が自分で用意できる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>資源は共用されないので、他の利用者の影響を受けずに増減の自由度が保たれる</span></button><p class="why" hidden>クラウドの資源は共用される。共用されないという前提が誤り。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">VDIを導入すれば業務データは端末に残らず安心だ、と説明されたとする。そのまま受け入れてはいけない点を頭の中で挙げてみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">データを端末に残さない設計にはできるが、クリップボード・ファイル・ドライブの転送設定次第で端末に残る。画面の撮影は完全には防げない。また、接続の認証が破られると業務環境ごと使われる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep200-cloud-vdi-t0-0"> 転送機能の設定次第で端末に残る</label></li><li><label><input type="checkbox" id="ep200-cloud-vdi-t0-1"> 画面の撮影は完全には防げない</label></li><li><label><input type="checkbox" id="ep200-cloud-vdi-t0-2"> 接続の認証が破られると環境ごと使われる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">VDIは管理とデータをサーバに集める。この集約で生じるリスクと対策を、頭の中で2点説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">通信とサーバが止まると利用者全員が使えなくなるので、冗長化して備える。入口の認証が破られると環境ごと使われるので、多要素認証で守る。転送機能は必要なものだけ許可する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep200-cloud-vdi-t1-0"> 停止が全員に及ぶので冗長化</label></li><li><label><input type="checkbox" id="ep200-cloud-vdi-t1-1"> 入口の認証は多要素認証で守る</label></li><li><label><input type="checkbox" id="ep200-cloud-vdi-t1-2"> 転送機能は必要なものだけ許可</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="VDI導入後の設定記録（ダミー）"><div class="logtitle">VDI導入後の設定記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">業務データの保存先: VDIサーバ上のみ（運用）</span></div><div class="logrow"><span class="hl">接続端末: 私物PC（利用は継続）。VDIの画面で利用</span></div><div class="logrow"><span class="hl">端末ドライブの割当: 有効</span></div><div class="logrow"><span class="hl">要件: 業務データを、私物PCに残さない</span></div></div></div>
+  <p class="q">このあとの対応として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">VDIから端末のディスクへ、保存できない設定にする</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>サーバのディスクを暗号化する … 暗号化しても、接続した端末への保存は止まらない</li><li>端末のOSを最新にする … 更新しても、端末へ保存できる設定は変わらない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>1.5.1 クラウドコンピューティングの概要</li><li>1.5.2 シンクライアントとVDI</li></ul>
+  <p>提供形態（借りる範囲）と利用形態（誰が使うか）が別の軸であること、VDIの利点と限界（集約の裏返し）を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep199-mail-dns-http-vlan.html">← #99 メール・DNS・HTTP・VLAN ネットワーク技術の基礎</a><a href="ep201-threat-classes.html">#101 脅威の分類 災害・障害・人の脅威と備え →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

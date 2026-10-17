@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#17 リバースブルートフォースとパスワードリスト攻撃 ロックで止まらない理由｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#17 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>リバースブルートフォースとパスワードリスト攻撃 ロックで止まらない理由</h1>
+  <ol class="summary"><li>リバースブルートフォースは、パスワードを固定してIDを変えて試す。1アカウントの失敗が少なく、ロックに届かない。</li><li>パスワードリスト攻撃は、別サービスで漏れた組の流用。前提は使い回しで、組が合えば1回で成功し、正規の入力に見える。</li><li>対策は多要素認証、使い回しの禁止、サイト全体の監視。どれも完全ではなく、層で守る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep117-reverse-brute:brute-force">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">通常のブルートフォース</span><span class="back" hidden><span class="def">IDを固定し、パスワードを変えて試す。同一アカウントの失敗が積み重なるので、アカウントロックで止めやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep117-reverse-brute:reverse-brute">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">リバースブルートフォース</span><span class="back" hidden><span class="def">パスワードを1つ（または少数）に固定し、IDを次々に変えて試す。1アカウントあたりの失敗が少ない。</span><span class="note">利用者が多いほど、その文字列を使う人に当たりやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep117-reverse-brute:credlist">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">パスワードリスト攻撃</span><span class="back" hidden><span class="def">別のサービスから漏えいしたIDとパスワードの組を、別のサービスのログインに試す攻撃。クレデンシャルスタッフィングとも呼ばれる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep117-reverse-brute:reuse">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">パスワードの使い回し</span><span class="back" hidden><span class="def">複数のサービスで同じパスワードを使うこと。パスワードリスト攻撃が成り立つ前提。</span><span class="note">使い回していなければ、この攻撃は成立しにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep117-reverse-brute:lock-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">アカウントロックの限界</span><span class="back" hidden><span class="def">ロックは同じアカウントの連続失敗を数える。今回の2つはアカウントごとの失敗が少なく、しきい値に届かない。</span><span class="note">厳しくしすぎると、正規の利用者まで締め出す恐れがある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep117-reverse-brute:mfa">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">多要素認証</span><span class="back" hidden><span class="def">パスワードが漏れても突破されにくくする仕組み。ただし導入と運用のコストがかかる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep117-reverse-brute:breached-pw">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">漏えい済みパスワードの使用禁止</span><span class="back" hidden><span class="def">サイト側で、漏えいが知られている文字列を使わせない対策。NIST SP 800-63Bにある考え方。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep117-reverse-brute:rate-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">送信元・サイト全体での試行制限</span><span class="back" hidden><span class="def">送信元や、サイト全体の失敗数を監視して試行回数を制限する。見る単位をアカウントだけにしない。</span><span class="note">攻撃が分散されると効きにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep117-reverse-brute:notify">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">不審なログインの通知</span><span class="back" hidden><span class="def">身に覚えのないログインを利用者に知らせる対策。ログイン監視とあわせて層で守る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep117-reverse-brute:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>パスワードリスト攻撃への対策として、最も有効なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>アカウントの失敗回数のしきい値だけを下げる</span></button><p class="why" hidden>1アカウントの失敗が少なく、届かない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>パスワードの使い回しをやめ、多要素認証を併用する</span></button><p class="why" hidden>使い回しをやめ、多要素認証を併用</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>パスワードの最大文字数を短く制限する</span></button><p class="why" hidden>短くすると、むしろ弱くなる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログインのエラー理由を詳しく表示する</span></button><p class="why" hidden>詳しい理由の表示は、攻撃者にも有利</p></li></ol>
+</li>
+<li class="quiz" data-key="ep117-reverse-brute:q0" data-answer="2">
+  <p class="q">ログを調べたところ、IDが1つだけで、短時間に約3000種類の異なるパスワードが試され、ロックされていた。この試行の型として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パスワードを固定し、IDを次々に変える型</span></button><p class="why" hidden>それはリバースブルートフォース。ここではIDが固定されている。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>別サービスから漏れた組を流用する型で、前提は使い回し</span></button><p class="why" hidden>パスワードリスト攻撃は、IDとパスワードの組が1つずつ違う。1回の試行で成功しうる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>IDを固定し、パスワードを変える通常の型</span></button><p class="why" hidden>正解。IDを固定してパスワードを変える通常の型。同一アカウントの失敗が積み重なるので、ロックで止めやすい。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログインを試さず、パスワードの文字数だけ調べる型</span></button><p class="why" hidden>ログイン試行のログが残っているので、当てはまらない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep117-reverse-brute:q1" data-answer="0">
+  <p class="q">サイト側が、リバースブルートフォースを検知しやすくするための見方として、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>サイト全体の失敗数や送信元ごとの回数も監視する</span></button><p class="why" hidden>正解。見る単位をアカウントだけにせず、サイト全体や送信元でも見る。分散されると効きにくい点は残る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>アカウントごとの失敗回数のしきい値を、1回下げる</span></button><p class="why" hidden>1アカウントの失敗が1回程度なので、しきい値を少し下げても届かない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>アカウントのロック期間を、永久にする</span></button><p class="why" hidden>永久ロックは正規の利用者を締め出す恐れがあり、検知の改善にもならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>IDが存在するかどうかで、エラー表示の文言を分ける</span></button><p class="why" hidden>文言を分けると、IDの存在を攻撃者に教えてしまう。検知の改善にもならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep117-reverse-brute:q2" data-answer="3">
+  <p class="q">利用者Aは、このサイト専用のパスワードを使っていて、他のサービスでは使い回していない。他のサービスから漏れた組を試す攻撃の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IDが一致すれば、パスワードが違っても成功する</span></button><p class="why" hidden>組が合わなければ成功しない。IDが一致するだけでは成功しない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>多要素認証が無い限り、使い回しの有無によらず成功する</span></button><p class="why" hidden>成立の前提は使い回し。多要素認証の有無だけで決まらない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>同一アカウントの失敗が積み重なって、必ずロックされる</span></button><p class="why" hidden>この攻撃は組を1回ずつ試すので、失敗は積み重なりにくい。「必ず」も言い過ぎ。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>前提の使い回しが無ければ、この攻撃では成立しにくい</span></button><p class="why" hidden>正解。パスワードリスト攻撃が成り立つ前提は、使い回し。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep117-reverse-brute:q3" data-answer="0">
+  <p class="q">送信元ごとの試行回数制限を導入した。攻撃が多数の送信元に分散して行われた場合の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>分散されると効きにくい。他の層と併用する</span></button><p class="why" hidden>正解。送信元の制限は、分散されると効きにくい。多要素認証や監視と重ねる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>分散されても、送信元ごとの制限で完全に防げる</span></button><p class="why" hidden>「完全に防げる」は言い過ぎ。分散されると1送信元あたりの回数が少なくなる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>分散されるほど、1つの送信元の失敗が増えるので検知しやすい</span></button><p class="why" hidden>分散されると、1つの送信元あたりの失敗は減るので、検知しにくくなる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>送信元の制限は、パスワードの使い回しを防ぐ効果がある</span></button><p class="why" hidden>使い回しをやめるのは利用者側の対策。送信元の制限とは別。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep117-reverse-brute:q4" data-answer="2">
+  <p class="q">パスワードリスト攻撃への対策として多要素認証を導入する。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>突破されにくくなるが、運用の負担は一切ない</span></button><p class="why" hidden>導入と運用が要る。「一切ない」は言い過ぎ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>2要素目があっても、パスワードが一致すれば成功する</span></button><p class="why" hidden>2要素目があれば、パスワードが一致しても、それだけでは成功しない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>漏れても突破されにくいが、導入と運用が要る</span></button><p class="why" hidden>正解。強い対策だが、コストがかかる。使い回しの禁止や監視と重ねる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>使い回しを禁止しなくても、ほかの対策は不要になる</span></button><p class="why" hidden>どの対策も完全ではない。層で守る。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">約3000のIDに各1回失敗し、試された文字列は全IDで同じだった。ロックが動かなかった理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">パスワードを固定してIDを変えるリバースブルートフォースが疑われる。ロックは同じアカウントの連続失敗を数えるが、1アカウントの失敗は1回程度でしきい値に届かない。送信元やサイト全体の失敗数も見る必要がある。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep117-reverse-brute-t0-0"> パスワードを固定してIDを変える</label></li><li><label><input type="checkbox" id="ep117-reverse-brute-t0-1"> 1アカウントの失敗が少なくしきい値に届かない</label></li><li><label><input type="checkbox" id="ep117-reverse-brute-t0-2"> サイト全体・送信元でも見る</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">パスワードリスト攻撃が成り立つ条件と、利用者側・サイト側の対策を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">別サービスから漏れたIDとパスワードの組を流用するので、利用者が使い回していることが前提。利用者は使い回しをやめ、サイトは多要素認証や漏えい済みパスワードの使用禁止、試行の監視や通知で守る。どれも完全ではない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep117-reverse-brute-t1-0"> 前提は使い回し</label></li><li><label><input type="checkbox" id="ep117-reverse-brute-t1-1"> 利用者は使い回しをやめる</label></li><li><label><input type="checkbox" id="ep117-reverse-brute-t1-2"> サイトは多要素認証・監視などを重ねる</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="ログイン認証ログの調査記録（ダミー）"><div class="logtitle">ログイン認証ログの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 会員サイトのログイン認証ログ（約1時間分・ダミー）</span></div><div class="logrow"><span class="hl">失敗: 約3000のIDに、それぞれ1回ずつ。試された文字列は同じ</span></div><div class="logrow"><span class="hl">同一IDの連続失敗は最大1回。アカウントロックは0件</span></div><div class="logrow"><span class="hl">// 送信元は複数のIPアドレスに分散 / 成功は数件</span></div></div></div>
+  <p class="q">この記録から言える内容として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">アカウント単位のロックでは検知しにくい、パスワードを固定した試行が疑われる</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>特定IDへの総当たり … 同一IDの連続失敗は最大1回</li><li>パスワードリスト攻撃 … 試された文字列が全IDで同じ</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.4.3 リバースブルートフォース攻撃</li><li>2.4.4 パスワードリスト攻撃</li></ul>
+  <p>通常のブルートフォースとの向きの違い、ロックが効かない理由、パスワードリスト攻撃の前提（使い回し）と各対策の限界を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep116-password-crack.html">← #16 パスワードクラックの種類と対策 ソルトとストレッチングの役割</a><a href="ep118-sase.html">#18 ゼロトラストの実現方式 ZTNAとSASEの考え方と限界 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

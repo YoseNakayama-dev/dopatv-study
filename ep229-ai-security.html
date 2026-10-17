@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#129 AIシステム固有のセキュリティ 指示とデータ・権限・出力｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#129 ・ 追加テーマ（目次外）</p>
+  <h1>AIシステム固有のセキュリティ 指示とデータ・権限・出力</h1>
+  <ol class="summary"><li>AIは指示とデータの区別が苦手で、外部の文章に埋まった指示にも従いうる。</li><li>「従うな」と書くだけでは防ぎきれない。権限の最小化と人の承認で被害を狭める。</li><li>出力は渡す前に検証し、入れる情報を選び出所を確認する。記録で異常を見つけて改善する。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep229-ai-security:prompt-injection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">プロンプトインジェクション</span><span class="back" hidden><span class="def">文章に紛れた指示を、AIが指示として扱ってしまう問題。AIが指示とデータを区別しにくいことが原因。</span><span class="note">「従うな」とプロンプトに書くだけでは防ぎきれない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep229-ai-security:indirect-injection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">間接型（外部の文章に埋まる指示）</span><span class="back" hidden><span class="def">外部のメールやWebページなど、利用者が入力していない文章に指示が埋まっている型。利用者が打ち込まなくても起きうる。</span><span class="note">入力欄の検査だけでは、この経路は対象外になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep229-ai-security:data-poisoning">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">学習データの汚染</span><span class="back" hidden><span class="def">不正なデータを混ぜて、AIの挙動をゆがめること。データの出所が不明だと、混入に気づけない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep229-ai-security:confidential-leak">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">機密情報の漏えい</span><span class="back" hidden><span class="def">AIに入力した情報や学習した情報が、出力に出てしまうことがある。入れる情報を選び、扱いの方針を決めておく。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep229-ai-security:model-supply">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">供給元（モデル供給網）</span><span class="back" hidden><span class="def">外部のモデル・データ・拡張機能は、出所を確認してから使う。ソフトウェアのサプライチェーンと同じ考え方。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep229-ai-security:least-privilege-ai">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">権限と接続先の最小化</span><span class="back" hidden><span class="def">AIに与える権限と接続先を最小限にすること。指示で動かされても被害を狭められる。</span><span class="note">指示に従わせない対策ではなく、従われても被害を抑える対策。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep229-ai-security:human-approval">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">人の承認</span><span class="back" hidden><span class="def">送信や削除など影響の大きい操作は、人が確認してから実行させる。AIの判断だけで完結させない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep229-ai-security:output-validation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">出力の検証</span><span class="back" hidden><span class="def">AIの出力を、コマンド・SQL・HTMLなど他のシステムへ渡す前に、入力と同様に検証する。そのまま実行しない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep229-ai-security:logging-stop">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">動作の記録と停止</span><span class="back" hidden><span class="def">AIの動作を記録して異常を見つけ、改善する。異常な動きがあれば権限を止められるようにしておく。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep229-ai-security:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>AIシステムの安全な使い方として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>公開されているデータなら、学習に使う前の検証は不要</span></button><p class="why" hidden>出所と中身の確認が要る</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>プロンプトに禁止事項を書けば、インジェクションを完全に防げる</span></button><p class="why" hidden>書くだけでは防ぎきれない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>AIの出力は、他のシステムへ渡す前に、入力と同様に検証する</span></button><p class="why" hidden>出力も検証してから渡す</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利便性のため、AIエージェントには広い権限を与えるのがよい</span></button><p class="why" hidden>権限は最小限にする</p></li></ol>
+</li>
+<li class="quiz" data-key="ep229-ai-security:q0" data-answer="1">
+  <p class="q">社内の調査AIは、利用者が指定したWebページを読み込んで要約する。利用者の入力は「このURLを要約して」だけだったが、AIは要約の代わりに別の動作を始めた。ページの本文には、AIへの指示らしい文が埋まっていた。まず疑うべき原因はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者が不正な文字列を入力欄に打ち込んだためで、入力欄の検査を強化すれば解消する</span></button><p class="why" hidden>利用者の入力は要約の依頼だけで、不正な文字列は無い。指示は利用者が入力していない外部の文章に埋まっており、入力欄の検査は対象外になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ページ内の文を指示と区別できず従った、間接型のプロンプトインジェクション</span></button><p class="why" hidden>正解。利用者が打ち込んでいない外部の文章に指示が埋まり、AIがそれを指示として扱う間接型の典型。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>学習データに不正なデータが混ぜられ、モデルの挙動がゆがんだ学習データの汚染</span></button><p class="why" hidden>汚染は学習データに不正なデータが混ざる問題。今回は読み込んだページの文に従っており、学習データの混入を示す事実は無い。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>AIの出力に機密情報が出たのは、入力した情報を学習に使った機密の漏えいのため</span></button><p class="why" hidden>機密情報が出力に出た事実は無く、起きているのは別の動作の実行。漏えいの問題とは症状が違う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep229-ai-security:q1" data-answer="3">
+  <p class="q">部署が、顧客の個人情報を含む文書を社外のAIサービスに入力して要約させる運用を始めたい。入力した情報や学習した情報が出力に出うる点を踏まえた判断として、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者に注意喚起を行えば足り、入力してよい情報の範囲を決める必要まではない</span></button><p class="why" hidden>注意喚起だけでは、何を入れてよいかが決まらない。入れる情報を選び、扱いの方針を決めることが対策になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>出力された要約だけを人が確認すれば、入力した情報の扱いは問題にならない</span></button><p class="why" hidden>要約を確認しても、入力した情報が別の場面で出力に出る可能性は消えない。問題は入れる時点の判断にある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>個人情報を含む文書も入力できるようにし、漏えいは事故が起きてから調査する</span></button><p class="why" hidden>事故後の調査に頼ると、入力した情報が出力に出うる点への備えが無いまま運用することになる。入れる前に範囲を決める必要がある。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>AIに入れる情報を選び、出力の扱いとともに方針で決めておく</span></button><p class="why" hidden>正解。入力した情報が出力に出うる以上、AIに入れる情報を選び、出力の扱いも含めて方針で決めておく。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep229-ai-security:q2" data-answer="0">
+  <p class="q">AIエージェントの動作記録に、普段は送らない宛先へのメール送信が短時間に連続して残っていた。受信メールの文中の指示に従った疑いがある。初動として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>権限を止めて被害の拡大を防ぎ、記録から原因を調べて設計を見直す</span></button><p class="why" hidden>正解。異常な動きがあれば権限を止められるようにしておき、記録から原因を調べて改善する。権限を絞る設計の見直しにもつながる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>プロンプトに『外部の指示に従うな』と書き加えて、運用を続けながら様子を見る</span></button><p class="why" hidden>従わない保証は無く、送信できる権限も残る。書き加えて様子を見る間にも被害が続きうる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>該当メールの送信元だけ受信拒否にして、AIの権限は変えずに運用を続ける</span></button><p class="why" hidden>特定の送信元を拒否しても、別の送信元の文章に指示が埋まる経路は残る。AIの権限が広いままでは同じ事故が起きうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>学習データを入れ替えれば、メール文中の指示には従わなくなるので、調査は不要</span></button><p class="why" hidden>原因は学習データではなく、読み込んだ文章中の指示を指示として扱う点にある。調査を省くと原因を特定できない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep229-ai-security:q3" data-answer="1">
+  <p class="q">問い合わせAIの再学習に、外部から収集した大量のデータを使っている。最近、回答が特定の方向に偏るようになったが、データの出所を記録しておらず、どれが原因か分からない。この状況の説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>プロンプトインジェクションが原因で、利用者の入力欄を検査すれば偏りは解消する</span></button><p class="why" hidden>プロンプトインジェクションは文中の指示に従う問題。今回は再学習に使ったデータが疑わしく、入力欄の検査では扱えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>不正なデータの混入で挙動がゆがむ汚染の疑いがあり、出所不明だと気づけない</span></button><p class="why" hidden>正解。不正なデータを混ぜて挙動をゆがめるのが学習データの汚染で、出所が分からないと混入に気づけない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>出力の検証を強化すれば、学習に混ざった不正なデータの影響は取り除ける</span></button><p class="why" hidden>出力の検証は出力を渡す前の対策で、学習に混ざったデータの影響を取り除くものではない。取り除けるという言い切りも根拠が無い。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>外部データは公開されているものなので、不正なデータが混ざる可能性は低い</span></button><p class="why" hidden>公開されているからといって安全とは限らない。外部のデータは出所を確認する、という考え方が必要になる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep229-ai-security:q4" data-answer="3">
+  <p class="q">AIが読み取る対象には、外部から届くメールやWebページも含まれる。担当者は「利用者の入力欄の検査と、プロンプトへの禁止事項の記載で、対策は十分」と報告した。見直しとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>報告どおり十分。入力欄の検査と禁止事項の記載を併せれば、指示に従う可能性はなくなる</span></button><p class="why" hidden>従わない保証は無く、「可能性はなくなる」は言い過ぎ。外部の文章は入力欄も通らない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>禁止事項の記載を増やし、検査する語を増やせば、外部の文章に対しても十分に防げる</span></button><p class="why" hidden>記載や語の追加を重ねても、従わせない保証にはならない。権限の最小化や人の承認など設計で重ねる必要がある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>外部の文章は利用者が入力していないので、プロンプトインジェクションの対象にならない</span></button><p class="why" hidden>利用者が入力していなくても、外部の文章に埋まった指示で起きうるのが間接型。対象にならないとは言えない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>外部の文章は入力欄を通らない。記載に頼らず権限や承認など設計で重ねる</span></button><p class="why" hidden>正解。外部の文章は入力欄の検査を通らず、記載だけでは防ぎきれない。権限・承認・出力の検証など設計で重ねる。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">利用者が何も打ち込んでいないのに、AIが勝手に動いてしまうことがある。その仕組みと、被害を狭める設計上の手立てを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">AIは指示とデータの区別が苦手なので、外部のメールやWebページに埋まった指示を指示として扱うことがある（間接型）。防ぎきれない前提で、AIに与える権限と接続先を最小限にし、送信や削除など影響の大きい操作は人の承認を挟む。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep229-ai-security-t0-0"> 指示とデータの区別が苦手</label></li><li><label><input type="checkbox" id="ep229-ai-security-t0-1"> 外部の文章に指示が埋まる（間接型）</label></li><li><label><input type="checkbox" id="ep229-ai-security-t0-2"> 権限・接続先の最小化</label></li><li><label><input type="checkbox" id="ep229-ai-security-t0-3"> 影響の大きい操作は人の承認</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">「従うな」とプロンプトに書くだけでは足りない理由と、あわせて必要な対策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">書いても従わない保証が無く、権限が残っていれば被害が出うる。権限の最小化、人の承認、出力を渡す前の検証、動作の記録といった設計で重ねる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep229-ai-security-t1-0"> 従わない保証が無い</label></li><li><label><input type="checkbox" id="ep229-ai-security-t1-1"> 権限が残れば被害が出る</label></li><li><label><input type="checkbox" id="ep229-ai-security-t1-2"> 設計（権限・承認・出力の検証）で重ねる</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="問い合わせAIの事故記録（ダミー）"><div class="logtitle">問い合わせAIの事故記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">社内の問い合わせAIが、受信メールを要約し返信文を作る</span></div><div class="logrow"><span class="hl">AIには顧客リストの外部送信が許可され、自分の判断で実行できる</span></div><div class="logrow"><span class="hl">外部からのメールの文中に、送信を促す指示があった</span></div><div class="logrow"><span class="hl">AIがその指示に従い、顧客リストを外部へ送信した</span></div><div class="logrow"><span class="hl">要件: 文中の指示だけで、外部送信を実行させない</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">AIの権限を最小化し、外部送信などの操作は人の承認を挟む</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>指示に『外部の指示に従うな』と書き加える … 従わせない保証はなく、送信の権限が残る</li><li>返信文に禁止語がないか検査する … 送信の操作は、返信文の検査では止まらない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>EX-15 AIシステム固有のセキュリティ</li></ul>
+  <p>指示とデータの区別が苦手という前提から、何を信用しない設計にするかを確かめながら読む。権限・承認・出力の検証の役割分担に注目する。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep228-vuln-mgmt-metrics.html">← #128 脆弱性管理 CVE・CVSS・KEV・EPSS 何を測る指標か</a><a href="ep230-http-smuggling-cache.html">#130 HTTPリクエストスマグリングとキャッシュポイズニング 解釈の差を突く攻撃 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

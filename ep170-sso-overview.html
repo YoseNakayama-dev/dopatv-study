@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#70 SSOの概要 一度の認証で全部使う｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#70 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
+  <h1>SSOの概要 一度の認証で全部使う</h1>
+  <ol class="summary"><li>SSOは一度の認証で複数のシステムを使え、認証回数とパスワード数が減り、ID管理と認証強化を集約できる。</li><li>認証が破られると全システムに影響し、基盤が止まると全システムが使えない。離席や盗難、対象外のシステムにも注意。</li><li>対策は多要素認証、認証基盤の冗長化、有効時間の制限とログアウトの徹底、重要な操作での追加認証。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep170-sso-overview:sso">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SSO（シングルサインオン）</span><span class="back" hidden><span class="def">一度の認証で複数のシステム・サービスを利用できる仕組み。認証済みの結果を各システムが受け入れる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep170-sso-overview:user-benefit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">利用者側の利点</span><span class="back" hidden><span class="def">認証の回数とパスワードの数が減る。覚えきれずに使い回す、という状況も減らせる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep170-sso-overview:admin-benefit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">管理者側の利点</span><span class="back" hidden><span class="def">ID管理と認証の強化を、一か所に集約できる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep170-sso-overview:concentration-risk">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">集中するリスク</span><span class="back" hidden><span class="def">認証が破られると全システムに影響する。認証基盤が止まると、全システムが使えなくなる。</span><span class="note">便利さと集中するリスクは、認証を一か所にまとめることから同時に生じる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep170-sso-overview:mfa">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">多要素認証</span><span class="back" hidden><span class="def">SSOの認証を多要素認証にして強くする対策。パスワードが漏れても、すぐには破られにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep170-sso-overview:redundancy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証基盤の冗長化</span><span class="back" hidden><span class="def">認証基盤を二重化して、止まりにくくする対策。</span><span class="note">多要素認証は破られにくくする対策で、停止への備えは冗長化。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep170-sso-overview:session-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">有効時間の制限とログアウト</span><span class="back" hidden><span class="def">認証の有効時間を限り、ログアウトを徹底させる。離席や端末の盗難で、認証済みの状態が使われ続けるのを防ぐ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep170-sso-overview:step-up">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">重要な操作での追加認証</span><span class="back" hidden><span class="def">SSOで認証済みでも、重要な操作では追加で認証を求める。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep170-sso-overview:out-of-scope">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SSO対象外のシステム</span><span class="back" hidden><span class="def">SSOの対象外のシステムには、従来の認証がそのまま残る。別に守る必要がある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep170-sso-overview:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>SSOの導入時の注意として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>認証基盤が停止しても、各サービスは通常どおり使えるため、冗長化は不要である</span></button><p class="why" hidden>停止すると全システムが使えない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>一度のログインで済むため、有効時間やログアウトの管理は、不要である</span></button><p class="why" hidden>有効時間とログアウトの管理が必要</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>認証基盤が破られると全体に影響するため、多要素認証などで認証を強化する</span></button><p class="why" hidden>集中する分、認証を強化する</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利用者の手間は減るが、管理者のID管理は、サービスごとに別々に必要である</span></button><p class="why" hidden>ID管理も集約できる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep170-sso-overview:q0" data-answer="0">
+  <p class="q">SSOを導入した社内で、認証基盤が停止すると全システムにログインできなくなる点が課題になった。対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>認証基盤を二重化し、片方が止まっても認証を続けられるようにする</span></button><p class="why" hidden>正解。認証基盤を二重化して、止まりにくくする。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>多要素認証を導入すれば、認証基盤の停止も防げるので、冗長化は要らない</span></button><p class="why" hidden>多要素認証は認証を強くする対策で、基盤の停止は防げない。停止には冗長化で備える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>認証の有効時間を長くし、ログアウトを求めない運用にして停止に備える</span></button><p class="why" hidden>認証の有効時間は限り、ログアウトを徹底させるのが対策で、長くする運用は離席や盗難のリスクを増やす。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SSOの対象外のシステムを増やし、全システムが同時に止まらないようにする</span></button><p class="why" hidden>SSOの対象外のシステムを増やしても、SSO対象のシステムは認証基盤が止まれば使えなくなる。対象外のシステムは従来の認証が残るだけで、別に守る必要がある。停止への対策は認証基盤の冗長化である。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep170-sso-overview:q1" data-answer="3">
+  <p class="q">SSOの利用者が離席中に画面を放置したり、認証済みの端末を盗まれたりする事態に備えたい。対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SSOの認証を多要素認証にして強くしておけば、認証済みの状態が使われる心配は無い</span></button><p class="why" hidden>多要素認証は認証を強くする対策。離席や端末の盗難では認証済みの状態が使われうるため、有効時間の制限とログアウトの徹底が要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認証基盤を冗長化すれば、離席中に認証済みの状態が使われ続けるのを防げる</span></button><p class="why" hidden>冗長化は認証基盤の停止への対策で、認証済みの状態が使われ続けるのは防げない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>利用者のパスワードの数を減らしたので、離席や盗難への対策は不要である</span></button><p class="why" hidden>SSOでパスワードの数は減るが、離席や端末の盗難で認証済みの状態が使われうる点は残る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>認証の有効時間を限ってログアウトを徹底し、重要な操作は追加で認証を求める</span></button><p class="why" hidden>正解。有効時間を限りログアウトを徹底させ、重要な操作では追加で認証を求める。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep170-sso-overview:q2" data-answer="1">
+  <p class="q">SSOの導入時、旧式の業務システム1つをSSOの対象外にした。このシステムの扱いとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SSOで認証済みなら、対象外のシステムにもそのまま入れるので、追加の対策は不要</span></button><p class="why" hidden>SSOの対象外のシステムには従来の認証が残り、別に守る必要がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SSOの対象外なので従来の認証が残り、そのシステムは別に守る必要がある</span></button><p class="why" hidden>正解。対象外のシステムには従来の認証が残るので、別に守る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SSOの認証基盤が止まれば、対象外のシステムも同時に使えなくなる</span></button><p class="why" hidden>対象外のシステムには従来の認証が残る。認証基盤の停止で全システムが使えなくなるのは、SSOの対象のシステムである。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>対象外のシステムは、SSOの多要素認証の効果を自動的に受けられる</span></button><p class="why" hidden>SSOの対象外のシステムは別に守る必要があり、SSOの多要素認証には含まれない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep170-sso-overview:q3" data-answer="0">
+  <p class="q">五つの社内Webシステムが個別のパスワードで認証し、利用者が同じパスワードを使い回している。SSO導入で期待できる効果として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>認証の回数とパスワードの数が減り、使い回しの状況を減らせる</span></button><p class="why" hidden>正解。利用者の認証の回数とパスワードの数が減り、使い回しも減らせる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認証基盤が破られても、各システムは個別に認証するので影響は広がらない</span></button><p class="why" hidden>SSOでは認証が破られると全システムに影響する。個別に認証していたときのような分離は期待できない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>パスワードを覚える必要がなくなるため、認証の強化も不要になる</span></button><p class="why" hidden>SSOでも認証は必要で、集中する分、多要素認証などで認証を強化する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ID管理は各システムに分散するので、管理者の作業が減る</span></button><p class="why" hidden>SSOでは、ID管理と認証の強化を一か所に集約できる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep170-sso-overview:q4" data-answer="3">
+  <p class="q">パスワードだけで認証するSSOを運用中、そのパスワードが漏えいした。影響と対策の組合せとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>影響は漏れたシステム1つだけに限られる。対策はシステムごとにパスワードを変える</span></button><p class="why" hidden>SSOでは認証が破られると全システムに影響する。システムごとにパスワードを変えるのは、一度の認証で複数を使うSSOの前提と合わない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>影響は全システムに及びうる。対策は認証基盤の冗長化だけで足りる</span></button><p class="why" hidden>冗長化は認証基盤の停止への対策。認証が破られる点には、多要素認証で備える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>影響は全システムに及びうる。対策はログアウトの徹底だけで足りる</span></button><p class="why" hidden>ログアウトの徹底は離席や盗難への対策。パスワードが漏れても破られにくくするのは多要素認証である。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>影響は全システムに及びうる。対策として、SSOの認証を多要素認証にする</span></button><p class="why" hidden>正解。SSOの認証を多要素認証にして強くする。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">SSOの利点と注意点が、どちらも「認証の集中」から生じる理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">認証を一か所に集約するので、利用者の認証回数とパスワード数が減り、ID管理と認証強化も集約できる。一方、その認証が破られると全システムに影響し、基盤が止まると全システムが使えなくなる。対策は、多要素認証で強くし、冗長化で止まりにくくすること。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep170-sso-overview-t0-0"> 認証回数・パスワード数が減り、管理も集約できる</label></li><li><label><input type="checkbox" id="ep170-sso-overview-t0-1"> 破られると全システムに影響する</label></li><li><label><input type="checkbox" id="ep170-sso-overview-t0-2"> 止まると全システムが使えない</label></li><li><label><input type="checkbox" id="ep170-sso-overview-t0-3"> 多要素認証と冗長化で備える</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">SSOで認証済みの端末が、離席中に他人に使われた。起きていることと対策を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">離席や端末の盗難では、認証済みの状態がそのまま使われうる。認証の有効時間を限り、ログアウトを徹底させ、重要な操作は追加で認証を求める。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep170-sso-overview-t1-0"> 認証済みの状態がそのまま使われうる</label></li><li><label><input type="checkbox" id="ep170-sso-overview-t1-1"> 有効時間を限り、ログアウトを徹底する</label></li><li><label><input type="checkbox" id="ep170-sso-overview-t1-2"> 重要な操作は追加で認証を求める</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="社内システムの認証見直しに関する調査記録（ダミー）"><div class="logtitle">社内システムの認証見直しに関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 五つの社内Webシステムが、個別のパスワードで認証する</span></div><div class="logrow"><span class="hl">利用者は覚えきれず、同じパスワードを使い回している</span></div><div class="logrow"><span class="hl">各システムは、外部の認証基盤の結果を受け入れる設定ができる</span></div><div class="logrow"><span class="hl">要件: 認証の回数を減らし、認証の強さは一か所で高めたい</span></div></div></div>
+  <p class="q">要件を満たす方法として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">共通の認証基盤で認証を集約してSSOにし、その認証を多要素認証にする</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>全システムのパスワードを、同じ値にそろえる … 各システムで入力が要り、認証の回数が減らない</li><li>SSOにするが、認証はパスワードのみとする … 認証の強さを高める要件を満たさない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>6.8.1 SSOの概要</li></ul>
+  <p>SSOの利点と、認証が一か所に集中することで生じるリスク、それぞれに対応する対策（多要素認証・冗長化・有効時間）の対応を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep169-directory-eap.html">← #69 ディレクトリサービスとEAP 名簿と入口を整える</a><a href="ep171-sso-mechanisms.html">#71 SSOを実現する仕組み どこで認証を受けるか →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

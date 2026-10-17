@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#7 セッション管理の不備 IDの扱いを誤るとなりすまされる｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#7 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>セッション管理の不備 IDの扱いを誤るとなりすまされる</h1>
+  <ol class="summary"><li>セッション管理の不備は、IDの推測・盗用・固定化で、パスワードを知らなくてもなりすましが成立する。</li><li>対策は、暗号論的乱数のID、ログイン成功後の再発行と旧IDの無効化、URLにIDを載せないこと。</li><li>HttpOnly・SameSiteや有効期限は補助。Secureは盗聴対策。XSSや盗聴の対策も別に必要になる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep107-session:session-id">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">セッションID</span><span class="back" hidden><span class="def">ログイン後の利用者を見分ける識別子。毎回パスワードを送らない代わりに送られ、知られると本人として扱われうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep107-session:session-guess">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">セッションIDの推測</span><span class="back" hidden><span class="def">時刻や連番など単純な規則で作られたIDを、他人のIDとして予測される攻撃。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep107-session:session-theft">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">セッションIDの盗用</span><span class="back" hidden><span class="def">XSS・盗聴・Referer経由の漏えいなどでIDを不正に入手する攻撃。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep107-session:session-fixation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">セッション固定化</span><span class="back" hidden><span class="def">攻撃者が用意したIDを利用者に使わせ、その利用者がログインすると同じIDで乗っ取る攻撃。IDの予測は不要。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep107-session:csprng">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">暗号論的擬似乱数（CSPRNG）</span><span class="back" hidden><span class="def">予測困難なIDを作るための乱数。サーバ製品のセッション管理機能を使う。OWASPは自作なら128bit以上を推奨する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep107-session:regenerate">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ログイン後のID再発行</span><span class="back" hidden><span class="def">ログイン成功後に新しいセッションを開始し、既存のIDを無効化する。固定化への根本的な対策。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep107-session:id-in-url">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">URLにIDを含めない</span><span class="back" hidden><span class="def">URLに載せたIDは、Refererを経由して外部へ漏れるおそれがある。IDはCookieなどで扱う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep107-session:cookie-attr">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Cookieの属性（Secure/HttpOnly/SameSite）</span><span class="back" hidden><span class="def">SecureはHTTPSのみ送信、HttpOnlyはスクリプトからの読み取りを限定、SameSiteはCSRFの多層防御。</span><span class="note">HttpOnlyはXSS自体を防がない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep107-session:timeout">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">タイムアウトとサーバ側の無効化</span><span class="back" hidden><span class="def">有効期限はサーバ側（アイドル・絶対）で管理し、ログアウトもサーバ側で無効化する。Cookie削除だけでは盗まれたIDは無効にならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep107-session:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>セッション固定化の根本的な対策は？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>Cookieの有効期限を長くする</span></button><p class="why" hidden>長くするほど、リスクが増えうる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ログイン成功後にIDを再発行する</span></button><p class="why" hidden>ログイン成功後にIDを再発行する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>出力時にHTMLエスケープする</span></button><p class="why" hidden>XSS対策。固定化の根本対策ではない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>IDをURLに埋め込む</span></button><p class="why" hidden>URLからIDが漏れるおそれ</p></li></ol>
+</li>
+<li class="quiz" data-key="ep107-session:q0" data-answer="3">
+  <p class="q">自作のセッションID生成が「現在時刻＋連番」になっている。対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>時刻と連番を組み合わせたものを、ハッシュ関数にかけた値にして使う</span></button><p class="why" hidden>元の値が予測できる規則では、ハッシュにしても根本の解決にならない。暗号論的乱数を使う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>生成規則は時刻と連番のまま、桁数だけを増やして推測しにくくする</span></button><p class="why" hidden>規則が同じなら、桁数を増やしても予測の手がかりは残る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>IDに利用者名を含めて、他の利用者のIDと重ならないようにする</span></button><p class="why" hidden>IDは不透明であるべきで、個人情報を含めてはいけない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>製品のセッション管理機能で、暗号論的乱数のIDを作る</span></button><p class="why" hidden>正解。サーバ製品のセッション管理機能を使い、暗号論的乱数で予測困難なIDにする。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep107-session:q1" data-answer="0">
+  <p class="q">Cookieを使えない旧端末向けに、セッションIDをURLに含めて引き回している。見直すべき理由として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>Refererを経由して外部に漏れうるので、URLには含めない</span></button><p class="why" hidden>正解。URLのIDはRefererなどから漏れるおそれがあるため、URLに含めない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>URLが長くなるとサーバがIDを受け付けないので、含められない</span></button><p class="why" hidden>URLの長さの制限は、セキュリティ上の理由ではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>URLのIDはCookieより有効期限が短く、再ログインが増える</span></button><p class="why" hidden>有効期限はサーバ側の設計の話で、URLかどうかとは関係しない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>URLにIDがあると、HTTPSでも暗号化されずに送信されてしまう</span></button><p class="why" hidden>HTTPSならURLの経路上の内容も保護される。問題はRefererなどでの漏えい。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep107-session:q2" data-answer="2">
+  <p class="q">ログアウトボタンが、ブラウザ側のCookieを削除するだけの実装になっている。ログアウト前にIDを盗まれていた場合の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>Cookieが削除されるので、盗まれたIDも利用できなくなる</span></button><p class="why" hidden>削除されるのは利用者のブラウザの中だけ。盗んだ側が持つIDは残る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>Secure属性が付いていれば、盗まれたIDもサーバ側で拒否される</span></button><p class="why" hidden>Secureは送信をHTTPSに限る属性で、サーバ側の有効性とは関係しない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>サーバ側で無効化されず、盗まれたIDは使われ続けうる</span></button><p class="why" hidden>正解。ログアウトはサーバ側でも無効化する。Cookie削除だけでは盗まれたIDは無効にならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>Cookieを過去の日時で上書きすれば、サーバ側の状態も自動で消える</span></button><p class="why" hidden>ブラウザ側の操作は、サーバ側のセッションの状態を変えない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep107-session:q3" data-answer="1">
+  <p class="q">XSSの脆弱性が残るサイトで、セッションCookieにHttpOnly属性を付けた。この属性の説明と評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IDを読み取れなくなるので、XSSがあってもセッション管理の問題は全て解消する</span></button><p class="why" hidden>盗用の経路を限定するだけで、XSS自体は防げない。問題が全て解消するとは言えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>スクリプトからの読み取りは限定できるが、XSS自体は防げない</span></button><p class="why" hidden>正解。HttpOnlyはXSS経由の盗用を限定する。XSS自体は防げないので、XSS対策が別に要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>HTTPSでだけCookieを送る属性なので、盗聴への対策になる</span></button><p class="why" hidden>それはSecure属性の説明。取り違えやすい。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>他サイトからの送信を制限する属性で、CSRFに効果がある</span></button><p class="why" hidden>それはSameSite属性の説明。取り違えやすい。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep107-session:q4" data-answer="3">
+  <p class="q">セッションの有効期限を、CookieのExpiresだけで管理していて、サーバ側にタイムアウトが無い。改善として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>Expiresを長めに設定し直し、再ログインの手間を減らす</span></button><p class="why" hidden>有効期限は必要以上に長くしない。長いほどリスクが増えうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>期限をIDの文字列の中に埋め込み、クライアント側で期限切れを判定させる</span></button><p class="why" hidden>期限の判定をクライアントに任せると、改変された場合に守れない。サーバ側で判定する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ログイン時刻をURLに付け、古いリクエストをブラウザ側で弾く</span></button><p class="why" hidden>ブラウザ側の処理に頼る点は同じで、IDをURLに載せる点も不適切。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>サーバ側でアイドルと絶対の期限を管理し、切れたIDを拒否する</span></button><p class="why" hidden>正解。タイムアウトはサーバ側（アイドル・絶対）で管理し、期限切れのIDを拒否する。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ログイン前から同じセッションIDを使い続けると、なぜ固定化を許してしまうのか。頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">攻撃者が先に用意したIDを利用者が使ったままログインすると、そのIDがログイン済みの状態に紐づく。IDが変わらないので、同じIDを知る攻撃者もログイン状態になる。ログイン成功後にIDを再発行し、旧IDを無効にして防ぐ。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep107-session-t0-0"> 攻撃者のIDのまま利用者がログインする</label></li><li><label><input type="checkbox" id="ep107-session-t0-1"> ログイン後もIDが変わらず、攻撃者も使える</label></li><li><label><input type="checkbox" id="ep107-session-t0-2"> ログイン成功後に再発行し、旧IDを無効にする</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">「IDを暗号論的乱数で作っているから、セッション管理は安全」と言えない理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">乱数で推測は防げても、盗用（XSS・盗聴・Referer漏えい）や固定化は別の経路で起きる。ログイン後の再発行、URLにIDを載せない、Secure等の属性、サーバ側の無効化・期限管理、XSS対策やHTTPSを重ねる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep107-session-t1-0"> 乱数は推測への対策にとどまる</label></li><li><label><input type="checkbox" id="ep107-session-t1-1"> 盗用・固定化は別の経路で起きる</label></li><li><label><input type="checkbox" id="ep107-session-t1-2"> 再発行・属性・サーバ側管理・XSS対策を重ねる</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="ログイン前後のセッションIDの記録（ダミー）"><div class="logtitle">ログイン前後のセッションIDの記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">ログイン前: Set-Cookie sid=A7F3…（暗号論的乱数）</span></div><div class="logrow"><span class="hl">ログイン後: sid=A7F3…（変わらない）</span></div><div class="logrow"><span class="hl">攻撃者が事前に取得したIDで利用者がログイン</span></div><div class="logrow"><span class="hl">→ 同じIDで、別の端末からもアクセスできた</span></div><div class="logrow"><span class="hl">// 通信はHTTPSのみ。IDはURLに含まれず、漏えい経路は無い</span></div></div></div>
+  <p class="q">固定化を許した根本原因は？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ログイン成功後に、セッションIDを再発行していない</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>IDが推測しやすい … 前提は暗号論的乱数。固定化は予測が不要</li><li>盗聴で漏れた … 前提では漏えい経路は無い。原因はID据え置き</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.5.1 セッションハイジャックの概要</li><li>2.5.2 セッションハイジャックの種類と実行方法</li><li>2.5.3 セッションフィクセーションの実行方法</li><li>2.5.4 セッションハイジャックへの対策</li></ul>
+  <p>推測・盗用・固定化の三つを経路で区別し、再発行・属性・サーバ側管理がどの攻撃に効くかを確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep106-ssrf.html">← #6 SSRF サーバを踏み台にされると何が起こる？</a><a href="ep108-fido2.html">#8 FIDO2・WebAuthn 秘密を渡さずに本人だと示す →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

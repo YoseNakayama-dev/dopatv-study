@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#80 PKIとデジタル証明書 署名をたどって信頼する｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#80 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
+  <h1>PKIとデジタル証明書 署名をたどって信頼する</h1>
+  <ol class="summary"><li>PKIは、CAが公開鍵と持ち主を結び付け、CAの秘密鍵で署名した証明書（X.509）で持ち主を確かめる仕組み。</li><li>検証は、登録済みCAの公開鍵で署名を確かめ、有効期間と接続先の名前の一致、失効も確認する。</li><li>穴は署名の未検証、怪しいCAの登録、期限切れ・失効の見落とし、秘密鍵の流出。登録CAを絞り期限を管理する。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep180-pki-certificate:pki">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">PKI</span><span class="back" hidden><span class="def">公開鍵の持ち主を確認する仕組み。CAが公開鍵と持ち主の情報を結び付けて、証明書を発行する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep180-pki-certificate:ca">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証局（CA）</span><span class="back" hidden><span class="def">公開鍵と持ち主の情報を結び付け、CAの秘密鍵で署名した証明書を発行する機関。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep180-pki-certificate:x509">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">デジタル証明書（X.509）</span><span class="back" hidden><span class="def">所有者、公開鍵、有効期間、発行者、シリアル番号、署名アルゴリズム、CAの署名を含む。</span><span class="note">載るのは公開鍵。秘密鍵やパスワードは載らない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep180-pki-certificate:trust-anchor">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">信頼の起点</span><span class="back" hidden><span class="def">検証の出発点にする、あらかじめ登録したCA。登録したCAの公開鍵で、証明書の署名を確かめる。</span><span class="note">怪しいCAを登録すると、そのCAが出す偽の証明書も信じる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep180-pki-certificate:sig-verify">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">証明書の署名の検証</span><span class="back" hidden><span class="def">登録済みCAの公開鍵で、証明書のCAの署名を確かめること。所有者名は作った人が自由に書けるため、見た目では判断できない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep180-pki-certificate:validity">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">有効期間</span><span class="back" hidden><span class="def">証明書の項目の一つ。検証では署名のほかに、有効期間と接続先の名前の一致も確認する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep180-pki-certificate:name-match">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">名前の一致</span><span class="back" hidden><span class="def">接続先の名前が、証明書と一致しているかの確認。署名の検証とは別の確認項目。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep180-pki-certificate:revocation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">失効</span><span class="back" hidden><span class="def">有効期間内の証明書を無効にすること。失効を確認しないと、失効済みの証明書でも有効に見えてしまう。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep180-pki-certificate:private-key-leak">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">秘密鍵の流出</span><span class="back" hidden><span class="def">証明書に対応する秘密鍵が漏れること。本人になりすまされるので、厳重に保管し、漏れたら失効させる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep180-pki-certificate:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>デジタル証明書の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>持ち主の秘密鍵と情報を結び付け、CAが署名して発行する証明書である</span></button><p class="why" hidden>結び付けるのは公開鍵。秘密鍵は持ち主だけが保管</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>利用者のパスワードを保管し、サーバの認証に使うための証明書である</span></button><p class="why" hidden>証明書にパスワードは載らない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>持ち主の公開鍵と情報を結び付け、CAが署名して発行する証明書である</span></button><p class="why" hidden>公開鍵と持ち主を結び付け、CAが署名</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>通信を暗号化する共通鍵を、CAが署名して利用者へ配布する証明書である</span></button><p class="why" hidden>載るのは公開鍵。共通鍵は配らない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep180-pki-certificate:q0" data-answer="3">
+  <p class="q">取引先サイトの証明書は、CAの署名の検証に成功した。ただし有効期間が切れているとの警告が出ており、業務を急いでいる。適切な判断はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>警告は証明書の形式の問題なので、業務上必要なら無視してよい</span></button><p class="why" hidden>期限切れや失効の見落としは危険で、警告を無視して進むのも同じく危険。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>CAの署名が正しければ、期限が切れていても接続先は確認できる</span></button><p class="why" hidden>検証ではCAの署名に加えて、有効期間と接続先の名前の一致も確認する。署名が正しくても期限切れは見落とせない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>期限は管理者の都合なので、失効の確認さえしていれば検証は足りる</span></button><p class="why" hidden>有効期間も検証の確認項目で、失効の確認だけでは足りない。署名・有効期間・名前の一致をそろえて確認する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>有効期間も確認項目なので、期限切れの警告では接続を中止する</span></button><p class="why" hidden>正解。署名・有効期間・名前の一致を確認する。期限切れは見落とすと危ない項目。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep180-pki-certificate:q1" data-answer="0">
+  <p class="q">取引先から、端末の信頼するCAとして、自社のCAの証明書を登録するよう依頼された。適切な対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>登録CAは信頼の起点になるので、必要なものに絞って登録する</span></button><p class="why" hidden>正解。登録したCAが信頼の起点になる。登録するCAは、必要なものに限る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>登録しても影響は限られるので、念のため多めに登録しておけばよい</span></button><p class="why" hidden>登録したCAが検証の起点になるので、怪しいCAを登録すると偽の証明書も信じる。多めの登録は避ける。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>署名を検証すれば、登録した怪しいCAの偽証明書も見分けられる</span></button><p class="why" hidden>登録したCAが検証の起点なので、怪しいCAを登録すると偽の証明書も信じる。署名の検証では見分けられない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>有効期間さえ管理すれば、登録するCAの数は信頼に影響しない</span></button><p class="why" hidden>有効期間の管理は別の対策。登録したCAが信頼の起点になるので、登録するCAの数と中身は信頼に直結する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep180-pki-certificate:q2" data-answer="1">
+  <p class="q">サーバの秘密鍵が、紛失したバックアップ媒体から漏れたおそれがある。証明書の有効期間は残っている。適切な対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>有効期間が残っているので、期限まで使い続けて更新時に鍵を変える</span></button><p class="why" hidden>秘密鍵が漏れると本人になりすまされる。期限まで待たず、漏れたら失効させる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>すぐ失効させる。失効させるまで、証明書は有効に見えるため</span></button><p class="why" hidden>正解。秘密鍵が漏れたら失効させる。証明書は失効させるまで有効に見える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>秘密鍵が漏れても、公開鍵は変わらないので、なりすましの心配はない</span></button><p class="why" hidden>秘密鍵が流出すると本人になりすまされる。公開鍵が同じでも防げない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>CAに署名を作り直してもらえば、漏れた鍵のまま証明書を使える</span></button><p class="why" hidden>流出した秘密鍵は本人になりすませる状態を作る。必要な対応は失効で、署名の作り直しではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep180-pki-certificate:q3" data-answer="3">
+  <p class="q">接続先として pay.example を入力した。提示された証明書は、所有者が shop.example、発行者は登録済みのCA-Xで、有効期間内、CAの署名の検証にも成功した。評価として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>CAの署名が正しく検証できたので、接続先の本人と確認できたといえる</span></button><p class="why" hidden>署名の検証に成功しても、証明書の所有者はshop.exampleで、入力したpay.exampleと違う。接続先の名前の一致は、署名の検証とは別に確認する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>有効期間内であれば、名前が違っていても同一サイトとみなしてよい</span></button><p class="why" hidden>有効期間は確認項目の一つで、名前の一致は別に確認する。名前が違えば同一サイトとはいえない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>発行者が登録済みのCAなので、接続先の名前の確認は省略してよい</span></button><p class="why" hidden>登録CAは信頼の起点だが、署名・有効期間・名前の一致はそれぞれ確認する。名前の確認は省けない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>名前が接続先と一致しないので、本人のサーバとは確認できない</span></button><p class="why" hidden>正解。接続先の名前の一致も検証の項目。一致しないので、本人のサーバとは確認できない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep180-pki-certificate:q4" data-answer="2">
+  <p class="q">取引先から、自社の公開鍵と所有者名を書いたテキストがメールで届いた。受け取った側の判断として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>所有者名が書かれているので、その公開鍵は持ち主のものと確定できる</span></button><p class="why" hidden>所有者名は、作った人が自由に書ける。書いてあるだけでは持ち主と確定できない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>公開鍵は公開してよいものなので、持ち主の確認も省略してよい</span></button><p class="why" hidden>公開鍵は公開してよいが、公開鍵だけでは持ち主は分からない。結び付きの確認は省略できない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>公開鍵と持ち主の結び付きは、CAの署名付き証明書で確かめる</span></button><p class="why" hidden>正解。CAが公開鍵と持ち主を結び付け、署名して証明書を発行する。登録済みCAの公開鍵で署名を検証して確かめる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>有効期間が書かれていれば、その公開鍵は持ち主のものと確認できる</span></button><p class="why" hidden>有効期間は証明書の項目の一つ。公開鍵と持ち主を結び付けるのは、CAの署名。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">端末に怪しいCAが登録されていたら何が起きるか。対策も含めて頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">登録したCAが信頼の起点になるので、そのCAが発行した偽の証明書も信じてしまう。登録するCAは必要なものに限り、署名・有効期間・名前の一致を確認する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep180-pki-certificate-t0-0"> 登録CAが信頼の起点になる</label></li><li><label><input type="checkbox" id="ep180-pki-certificate-t0-1"> 偽の証明書も信じてしまう</label></li><li><label><input type="checkbox" id="ep180-pki-certificate-t0-2"> 登録CAを必要なものに限る</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">CAの署名の検証に成功した証明書でも、使い続けてはいけない場合を挙げ、それぞれ何を確認するか頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">有効期間が切れている場合は有効期間、接続先の名前と一致しない場合は名前の一致、失効している場合や秘密鍵が漏れた場合は失効を確認する。署名の検証だけでは足りない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep180-pki-certificate-t1-0"> 期限切れは有効期間で確認</label></li><li><label><input type="checkbox" id="ep180-pki-certificate-t1-1"> 名前の不一致は名前の一致で確認</label></li><li><label><input type="checkbox" id="ep180-pki-certificate-t1-2"> 失効や秘密鍵の流出は失効で確認</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="取引先サイトの本人確認に関する調査記録（ダミー）"><div class="logtitle">取引先サイトの本人確認に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 利用者が、取引先のサイトにHTTPSで接続する</span></div><div class="logrow"><span class="hl">ブラウザには、信頼するCAの証明書が登録されている</span></div><div class="logrow"><span class="hl">取引先のサーバは、証明書を提示してくる</span></div><div class="logrow"><span class="hl">要件: 接続先が、取引先本人のサーバだと確認したい</span></div></div></div>
+  <p class="q">要件を満たす確認方法として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">登録済みCAの公開鍵で署名を検証し、名前が接続先と一致することも確認する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>証明書が提示されたことを、確認とみなす … 誰でも証明書を作れるため、署名の検証なしでは本人と分からない</li><li>所有者名が取引先名と同じなら、署名の検証は省く … 署名を検証しなければ、所有者名は誰でも自由に書ける</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>7.7.1 PKIの概要</li><li>7.7.2 デジタル証明書</li></ul>
+  <p>CAの署名を起点に信頼がつながる流れと、証明書に載る項目（所有者・公開鍵・有効期間・署名）を押さえて読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep179-ssh.html">← #79 SSH 接続先と利用者を両方確かめる</a><a href="ep181-pki-signature.html">#81 証明書を支える要素とデジタル署名 失効と検証 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

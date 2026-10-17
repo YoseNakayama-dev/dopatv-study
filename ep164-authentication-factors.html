@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#64 認証の分類 知識・所持・生体を重ねる｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#64 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
+  <h1>認証の分類 知識・所持・生体を重ねる</h1>
+  <ol class="summary"><li>認証は知識・所持・生体に分けられ、分類ごとに破られ方（弱点）が異なる。</li><li>多要素認証は異なる分類を2つ以上組み合わせる。同じ分類を重ねても多要素にならない。</li><li>生体認証は忘れない反面、誤りはゼロにできず変更もできない。許容度の調整と代替手段が要る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep164-authentication-factors:knowledge">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">知識（認証の分類）</span><span class="back" hidden><span class="def">本人だけが知っている情報（パスワード・暗証番号など）で確認する分類。推測や漏えいが課題になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep164-authentication-factors:possession">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">所持（認証の分類）</span><span class="back" hidden><span class="def">本人だけが持っているもの（ICカードや認証用の装置など）で確認する分類。紛失や盗難が課題になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep164-authentication-factors:biometric">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">生体（認証の分類）</span><span class="back" hidden><span class="def">本人の身体の特徴（指紋・顔・虹彩など）で確認する分類。誤認識が課題になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep164-authentication-factors:mfa">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">多要素認証</span><span class="back" hidden><span class="def">異なる分類を2つ以上組み合わせる認証。一方が破られても、もう一方で防げる。</span><span class="note">パスワードと秘密の質問は共に知識。同じ分類を重ねても多要素にならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep164-authentication-factors:ic-card">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ICカード</span><span class="back" hidden><span class="def">所持の分類の例。パスワードと組み合わせれば、カードを落としても、パスワードを知らない人は使えない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep164-authentication-factors:false-reject-accept">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">本人拒否・他人受入</span><span class="back" hidden><span class="def">生体認証で起きる2種類の誤り。本人を拒否する誤りと、他人を受け入れる誤りで、完全にはゼロにできない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep164-authentication-factors:biometric-unchangeable">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">生体情報は変更できない</span><span class="back" hidden><span class="def">身体の特徴は変えられないため、漏えいすると取り返しがつかない。パスワードのように変更で対処できない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep164-authentication-factors:tolerance-alternative">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">許容度の調整と代替手段</span><span class="back" hidden><span class="def">生体認証の誤りに備え、誤りの許容度を調整し、別の認証手段を用意しておく運用。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep164-authentication-factors:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>生体認証の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>誤りが起きない方式なので、別の代替手段を用意する必要は全くない</span></button><p class="why" hidden>誤りはゼロにならない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>漏えいしても、パスワードのように、あとから変更すればよい</span></button><p class="why" hidden>身体の特徴は変更できない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>身体の特徴を使う方式なので、本人を拒否する誤りも起こりうる</span></button><p class="why" hidden>本人拒否の誤りも起こりうる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>本人が持つ物を使う方式なので、紛失しても他人に悪用されない</span></button><p class="why" hidden>紛失・盗難で悪用されうる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep164-authentication-factors:q0" data-answer="3">
+  <p class="q">社内システムが、ログイン時にパスワードに加えて「秘密の質問」への回答も求めるようにした。これで多要素認証になったと言えるかについて、適切な説明はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>入力を2回に分けて求めるので、手順が増えるぶん多要素認証と言える</span></button><p class="why" hidden>手順が増えても、同じ分類を重ねただけ。多要素認証は異なる分類を2つ以上組み合わせることをいう。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>秘密の質問の答えは本人しか知らない情報なので、所持に分類される</span></button><p class="why" hidden>本人しか知らない情報は知識に分類される。台本でも、パスワードと秘密の質問はどちらも知識と説明している。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>質問の答えをパスワードより長く複雑にすれば、多要素認証になる</span></button><p class="why" hidden>長く複雑にしても知識のまま。分類が変わらないので、多要素認証にはならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>どちらも知識に分類されるので、2つ求めても多要素認証にならない</span></button><p class="why" hidden>正解。パスワードも秘密の質問も知識で、同じ分類を重ねても多要素にならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep164-authentication-factors:q1" data-answer="0">
+  <p class="q">入退室は、ICカードの提示と暗証番号の入力の両方を求める方式にしている。カードを拾った第三者が暗証番号を知らない場合の説明として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>知識と所持の2分類を組み合わせており、カード単独では認証されない</span></button><p class="why" hidden>正解。暗証番号は知識、ICカードは所持で、異なる分類の組み合わせ。カードを落としても、暗証番号を知らなければ使えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>暗証番号も所持の一種なので、カードが手元にあれば認証は成立してしまう</span></button><p class="why" hidden>暗証番号は知識に分類される。所持にあたるのはICカードのほう。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>2つの要素は同じ分類なので、カード単独でも認証は成立する</span></button><p class="why" hidden>知識と所持は異なる分類。同じ分類を重ねたときに多要素にならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>生体と所持の組み合わせなので、暗証番号の入力は必須ではない</span></button><p class="why" hidden>ICカードは所持、暗証番号は知識。生体情報は使っておらず、暗証番号の入力も必要。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep164-authentication-factors:q2" data-answer="1">
+  <p class="q">指紋認証の入室管理で、登録済みの本人が拒否される事象が起きた。今後の運用の考え方として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>機器を新しくすれば、本人拒否も他人受入も起きなくなる</span></button><p class="why" hidden>本人を拒否する誤りも他人を受け入れる誤りも、完全にはゼロにできない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>誤りはゼロにできない前提で、許容度の調整と代替手段を備える</span></button><p class="why" hidden>正解。誤りはゼロにできないので、誤りの許容度を調整し、代替手段を用意しておく。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>拒否された本人の生体情報を再登録すれば、以後の誤りは起きなくなる</span></button><p class="why" hidden>再登録で誤りが起きなくなる保証はない。誤りは完全にはゼロにできない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>本人拒否が起こりうる方式は不適切なので、生体認証は採用できない</span></button><p class="why" hidden>生体認証には忘れない・なくさない利点がある。誤りは許容度の調整と代替手段で備えるもの。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep164-authentication-factors:q3" data-answer="3">
+  <p class="q">顔認証で本人確認する社内システムで、登録してある顔の特徴データが漏えいした。パスワードが漏えいした場合と比べた説明として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パスワードと同じく、漏えい後に新しい値へ変更すれば影響を抑えられる</span></button><p class="why" hidden>身体の特徴は変更できない。パスワードのように、あとから新しい値へ変えることができない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>生体情報は本人に固有なので、漏えいしても悪用される可能性はない</span></button><p class="why" hidden>固有であることは悪用されない根拠にならない。漏えいすると取り返しがつかない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>所持の分類なので、紛失時と同様に無効化の手続きで影響を断てる</span></button><p class="why" hidden>顔などの身体の特徴は生体に分類される。所持はICカードや認証用の装置など。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>身体の特徴は変更できず、漏えいした場合の影響が大きくなる</span></button><p class="why" hidden>正解。身体の特徴は変えられず、漏えいすると取り返しがつかない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep164-authentication-factors:q4" data-answer="1">
+  <p class="q">次の3件を、課題となる分類に対応づけた。(1) 短いパスワードを推測された。(2) 従業員証を盗まれた。(3) 指紋が本人と認識されなかった。正しい組み合わせはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>(1)は所持の紛失、(2)は知識の漏えい、(3)は生体の誤認識</span></button><p class="why" hidden>パスワードは知識、従業員証は所持。(1)と(2)の分類が入れ替わっている。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>(1)は知識の推測、(2)は所持の盗難、(3)は生体の誤認識</span></button><p class="why" hidden>正解。知識は推測や漏えい、所持は紛失や盗難、生体は誤認識が課題になる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>(1)は生体の誤認識、(2)は知識の推測、(3)は所持の盗難</span></button><p class="why" hidden>パスワードは知識、従業員証は所持、指紋は生体。3件とも分類がずれている。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>(1)は所持の盗難、(2)は生体の誤認識、(3)は知識の推測</span></button><p class="why" hidden>パスワードは知識で、従業員証は所持、指紋は生体。3件とも分類がずれている。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">「パスワードに秘密の質問を足したが、多要素認証にならない」と言われる理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">多要素認証は、知識・所持・生体のうち異なる分類を2つ以上組み合わせるもの。パスワードも秘密の質問も知識で同じ分類なので、重ねても多要素にならない。ICカードなど別の分類を加える必要がある。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep164-authentication-factors-t0-0"> 異なる分類を2つ以上組み合わせるのが多要素</label></li><li><label><input type="checkbox" id="ep164-authentication-factors-t0-1"> パスワードも秘密の質問も知識で同じ分類</label></li><li><label><input type="checkbox" id="ep164-authentication-factors-t0-2"> 別の分類（所持など）を加える</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">生体認証を導入するときの課題と、その備えを頭の中で整理してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">本人拒否・他人受入の誤りはゼロにできない。また身体の特徴は変更できず、漏えいすると取り返しがつかない。そのため誤りの許容度を調整し、代替手段を用意する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep164-authentication-factors-t1-0"> 本人拒否・他人受入の誤りがゼロにならない</label></li><li><label><input type="checkbox" id="ep164-authentication-factors-t1-1"> 変更できず、漏えい時の影響が大きい</label></li><li><label><input type="checkbox" id="ep164-authentication-factors-t1-2"> 許容度の調整と代替手段</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="ログイン方式の見直しに関する検討記録（ダミー）"><div class="logtitle">ログイン方式の見直しに関する検討記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 社内システムのログインは、パスワードのみで行っている</span></div><div class="logrow"><span class="hl">全端末に読み取り装置が接続済み。配布できる所持物は従業員証のみ</span></div><div class="logrow"><span class="hl">社内規程で、生体情報は取得しないと定めている</span></div><div class="logrow"><span class="hl">パスワードの文字数は、すでに十分に長く設定されている</span></div><div class="logrow"><span class="hl">要件: 異なる分類の要素を加え、多要素認証にしたい</span></div></div></div>
+  <p class="q">多要素認証にする方法として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ICカードの読み取りを、パスワードに加えて求める</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>パスワードに加え、秘密の質問への回答を求める … どちらも知識で、異なる分類にならない</li><li>指紋で認証し、パスワードと組み合わせる … 生体情報は、社内規程で取得しない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>6.2.2 認証の分類</li></ul>
+  <p>知識・所持・生体それぞれの強みと弱みを対応づける。多要素認証が成り立つ条件（異なる分類）を、具体例で確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep163-authentication-basics.html">← #63 認証とは 名乗りと確認は別もの</a><a href="ep165-fixed-password.html">#65 固定式パスワードの特徴 保存の仕方で被害が変わる →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

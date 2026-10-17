@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#8 FIDO2・WebAuthn 秘密を渡さずに本人だと示す｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#8 ・ 追加テーマ（目次外）</p>
+  <h1>FIDO2・WebAuthn 秘密を渡さずに本人だと示す</h1>
+  <ol class="summary"><li>FIDO2は公開鍵暗号を使い、サイトごとの鍵ペアの秘密鍵は認証器にとどめ、サーバは公開鍵だけを保存する。</li><li>鍵はRP ID（ドメイン）に紐づき、作成したサイトのオリジンでしか使えないため、偽サイトに強い設計。</li><li>万能ではない。認証後のセッション盗用や端末のマルウェアは別の課題で、絶対安全とは言えない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep108-fido2:fido2">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">FIDO2</span><span class="back" hidden><span class="def">WebAuthn（ブラウザAPI）とCTAP（クライアントと認証器の通信）を合わせた、公開鍵暗号による認証の枠組み。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep108-fido2:webauthn">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">WebAuthn</span><span class="back" hidden><span class="def">W3Cのブラウザ向けAPI。登録はnavigator.credentials.create、認証はnavigator.credentials.getで行う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep108-fido2:ctap">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">CTAP</span><span class="back" hidden><span class="def">クライアント（ブラウザ・OS）と認証器の間の通信プロトコル。FIDO2はWebAuthnとCTAPで構成される。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep108-fido2:rp-id">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">RP ID（ドメインへの紐づけ）</span><span class="back" hidden><span class="def">鍵は、サービス（RP）のドメインに紐づく。作成したRPのオリジンでしか使えず、ブラウザと認証器が共同で強制する。</span><span class="note">原則からの帰結としてフィッシングに強い。FIDO Allianceは設計目標としている。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep108-fido2:key-pair">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">サイトごとの鍵ペア</span><span class="back" hidden><span class="def">登録時に認証器がサービスごとに鍵ペアを作る。秘密鍵は認証器にとどめ、サーバには公開鍵だけを保存する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep108-fido2:challenge">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">チャレンジと署名</span><span class="back" hidden><span class="def">認証時にサーバが出した値（チャレンジ）に、認証器が秘密鍵で署名して応答し、サーバが公開鍵で検証する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep108-fido2:up-uv">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">本人存在確認と本人確認</span><span class="back" hidden><span class="def">本人存在確認（UP）はタッチ等、本人確認（UV）は生体やPINによる。両者は別物。</span><span class="note">生体情報は端末内にとどまり、サーバにはローカル検証に成功した結果だけが渡る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep108-fido2:authenticator-types">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">プラットフォーム型とローミング型</span><span class="back" hidden><span class="def">プラットフォーム型は端末に内蔵の認証器、ローミング型はUSB・BLE・NFCで接続する外部のセキュリティキー。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep108-fido2:passkey">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">パスキー</span><span class="back" hidden><span class="def">FIDOの資格情報の呼称（FIDO Alliance）。公開鍵暗号に基づき、パスワードの代わりに使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep108-fido2:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>FIDO2の認証の説明として適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>秘密のパスワードをサイトに送る</span></button><p class="why" hidden>パスワード認証の説明</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>秘密鍵は端末にとどめ、署名で示す</span></button><p class="why" hidden>秘密鍵は端末にとどめ、署名で示す</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>利用者の指紋をサーバに保存する</span></button><p class="why" hidden>生体情報は端末の中にとどまる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ワンタイムコードを毎回メールで送る</span></button><p class="why" hidden>コード送付型の認証の説明</p></li></ol>
+</li>
+<li class="quiz" data-key="ep108-fido2:q0" data-answer="2">
+  <p class="q">FIDO2だけでログインさせるサイトのデータベースが漏えいした。保存されていた認証情報について最も適切な説明はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>秘密鍵が含まれるので、攻撃者が署名を作れてしまう</span></button><p class="why" hidden>秘密鍵は認証器にとどまり、サーバには保存されない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>利用者の指紋データが含まれ、変更もできないため、影響が特に大きい</span></button><p class="why" hidden>生体情報は端末内にとどまる。サーバには、ローカル検証に成功した結果だけが渡る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>公開鍵のみで、そのまま認証に使える情報は含まれない設計</span></button><p class="why" hidden>正解。サーバには共有する秘密が無く、保存されるのは公開鍵だけ。そのまま認証に使える情報は含まれない設計。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>パスワードのハッシュが含まれ、辞書攻撃で破られうる</span></button><p class="why" hidden>FIDO2のみのサイトでは、パスワードを保存しない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep108-fido2:q1" data-answer="0">
+  <p class="q">認証器が、ボタンへのタッチだけで署名する設定になっている（指紋やPINは要求しない）。説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>タッチは本人存在の確認で、指紋やPINによる本人確認とは別物</span></button><p class="why" hidden>正解。本人存在確認（UP）と本人確認（UV）は別。タッチだけでは、操作している人が本人かは確かめない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>タッチも指紋もPINも、同じ本人確認として扱われる</span></button><p class="why" hidden>タッチは存在の確認で、本人確認ではない。区別して扱う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>署名の検証は公開鍵で行うため、タッチの有無は安全性に影響しない</span></button><p class="why" hidden>署名の検証は公開鍵で行うが、署名を生成する操作の条件は安全性に影響する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>タッチを求めるのは、サーバ側で利用者の生体情報を照合するためである</span></button><p class="why" hidden>生体情報はサーバに送られず、端末内で検証される。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep108-fido2:q2" data-answer="1">
+  <p class="q">FIDO2だけでログインできるようにしたサイトで、ログイン後のセッションIDがXSSで盗まれた。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>FIDO2は署名で本人を確認しているので、盗まれたIDは使えない</span></button><p class="why" hidden>FIDO2が守るのは認証の場面。ログイン後のセッションIDは別に守る必要がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認証後のセッション盗用は別の課題で、別の対策が要る</span></button><p class="why" hidden>正解。認証後のセッションの盗用は別の課題。セッション管理やXSS対策が別に要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>署名の検証は公開鍵で行うため、IDを盗まれても再利用はできない</span></button><p class="why" hidden>署名の検証は認証時の話で、ログイン後のIDの再利用を防ぐものではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>FIDO2の鍵がドメインに紐づくので、XSSによるセッション盗用は起きない</span></button><p class="why" hidden>鍵の紐づけは認証の場面での話。XSSによる盗用を防ぐ仕組みではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep108-fido2:q3" data-answer="3">
+  <p class="q">WebAuthnで、新しい鍵ペアを作る登録処理と、チャレンジに署名する認証処理で呼ぶAPIの組み合わせとして正しいものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>登録時は credentials.get を呼び、認証時は credentials.create を呼ぶ</span></button><p class="why" hidden>登録と認証が逆になっている。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>登録時も認証時も credentials.create を呼び、渡す引数で処理を切り替える</span></button><p class="why" hidden>認証では get を呼ぶ。create は登録用。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>登録時は credentials.store を呼び、認証時は credentials.get を呼ぶ</span></button><p class="why" hidden>登録に使うのは create。store は取り違えやすいが、ここでの登録用ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>登録時は credentials.create、認証時は credentials.get</span></button><p class="why" hidden>正解。登録は navigator.credentials.create、認証は navigator.credentials.get。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep108-fido2:q4" data-answer="2">
+  <p class="q">利用者が共用PCから認証する運用で、PCに内蔵の認証器が使えない。FIDO2を使い続けるための選択肢として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>秘密鍵をサイトに預け、どの端末からでも署名できるようにする</span></button><p class="why" hidden>秘密鍵は認証器にとどめる設計。サイトに預けると前提が崩れる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>プラットフォーム型の認証器を使い、端末ごとに利用者の指紋をサーバへ登録する</span></button><p class="why" hidden>生体情報は端末内にとどまり、サーバには登録しない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>USB・NFC・BLEで接続するローミング型の認証器を使う</span></button><p class="why" hidden>正解。外部のセキュリティキー（ローミング型）なら、内蔵の認証器が無いPCでも使える。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>認証器を使わず、ワンタイムコードをメールで送る方式に切り替える</span></button><p class="why" hidden>メールでコードを送る方式はFIDO2ではなく、別の方式。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">偽サイトにFIDO2で認証しようとしても、攻撃者がログインできない理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">鍵は作成したサイトのドメイン（RP ID）に紐づき、そのオリジンでしか使えない。偽サイトでは正規サイト向けの鍵が使われず、正しい応答を作れない。パスワードのように使い回せる秘密を渡さない点も一因。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep108-fido2-t0-0"> 鍵はドメイン（RP ID）に紐づく</label></li><li><label><input type="checkbox" id="ep108-fido2-t0-1"> 偽サイトでは正規の鍵が使えない</label></li><li><label><input type="checkbox" id="ep108-fido2-t0-2"> 渡せる共有の秘密が無い</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">「FIDO2にすれば、もうアカウント乗っ取りは起きない」と言い切れない理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">FIDO2が守るのは認証の場面。認証後のセッションの盗用や、端末自体のマルウェアは別の課題で、別の対策が要る。「絶対安全」とは言えず、運用とセットで考える。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep108-fido2-t1-0"> FIDO2が守るのは認証の場面</label></li><li><label><input type="checkbox" id="ep108-fido2-t1-1"> セッション盗用・端末のマルウェアは別の課題</label></li><li><label><input type="checkbox" id="ep108-fido2-t1-2"> 絶対安全とは言えず運用とセットで考える</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="不正ログインの記録（ダミー）"><div class="logtitle">不正ログインの記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">利用者が fake-shop.example に ID とパスワードを入力</span></div><div class="logrow"><span class="hl">攻撃者が、その値を使って正規サイトにログインした</span></div><div class="logrow"><span class="hl">// 正規サイトの認証は、パスワードのみだった</span></div><div class="logrow"><span class="hl">// 仮定: サイトが FIDO2 のみを許可し、利用者は登録済み</span></div></div></div>
+  <p class="q">FIDO2が、この被害を防ぎやすい主な理由は？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">鍵が正規ドメインに紐づき、偽サイトでは応答を作れない</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>ワンタイムパスワードを使うから … FIDO2の仕組みではない</li><li>パスワードを送らないから … 一因だが、決め手はドメインとの紐づけ</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>EX-04 FIDO2 / WebAuthn / パスキー</li></ul>
+  <p>登録・認証の流れ、ドメインへの紐づけが効く理由、そして認証後のセッションなど守備範囲の外を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep107-session.html">← #7 セッション管理の不備 IDの扱いを誤るとなりすまされる</a><a href="ep109-tls13.html">#9 TLS 1.3 通信を守る仕組みの何が変わった？ →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#31 悪意あるモバイルコードとスパイウェア 閲覧だけで動く仕組みと対策｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#31 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>悪意あるモバイルコードとスパイウェア 閲覧だけで動く仕組みと対策</h1>
+  <ol class="summary"><li>モバイルコードはページ等とともに届き、端末で実行される。閲覧だけで動くことがあり、携帯端末とは無関係。</li><li>成立には、届き、実行環境が許し、その権限で動くことが要る。動いた権限が被害の上限になる。</li><li>スパイウェアは気づかれずに情報を送る。更新・最小権限・通信の監視を重ねる。多要素認証にも限界がある。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep131-mobilecode-spyware:mobile-code">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">モバイルコード</span><span class="back" hidden><span class="def">ページやメールとともに届き、端末（実行環境）で実行されるプログラム。閲覧だけで動く場合がある。</span><span class="note">「モバイル」は携帯端末のことではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep131-mobilecode-spyware:execution-env">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">実行環境</span><span class="back" hidden><span class="def">モバイルコードが動くブラウザなどの環境。その脆弱性や、許された権限が、悪用の入口になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep131-mobilecode-spyware:drive-by-download">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ドライブバイダウンロード</span><span class="back" hidden><span class="def">実行操作がなくても成立しうる攻撃。モバイルコードがその入口になることがある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep131-mobilecode-spyware:privilege-ceiling">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">動いた権限＝被害の上限</span><span class="back" hidden><span class="def">モバイルコードが実行された権限が、被害の上限になる。最小権限で閲覧すると、上限を絞れる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep131-mobilecode-spyware:spyware">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">スパイウェア</span><span class="back" hidden><span class="def">利用者に気づかれないよう、入力内容・閲覧履歴・画面の内容などを収集し、外部へ送るマルウェア。</span><span class="note">目立つ被害が出にくく、気づきにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep131-mobilecode-spyware:spyware-entry">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">スパイウェアの入り方</span><span class="back" hidden><span class="def">フリーソフトへの同梱、他のマルウェア経由、モバイルコード経由などがある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep131-mobilecode-spyware:outbound-control">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">外部通信の監視と送信先の制限</span><span class="back" hidden><span class="def">スパイウェアが情報を送る出口を見張り、絞る対策。暗号化されると、通信の中身では判断しにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep131-mobilecode-spyware:mfa">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">多要素認証</span><span class="back" hidden><span class="def">入力内容だけでは使えなくする認証。入力内容が盗まれても悪用されにくくなる。</span><span class="note">中継型の攻撃には効かない場合もある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep131-mobilecode-spyware:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>悪意あるモバイルコードへの対策として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ファイルの拡張子を、常に非表示に設定する</span></button><p class="why" hidden>偽装を見抜きにくくなる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>常に管理者権限で、全てのサイトを閲覧する</span></button><p class="why" hidden>被害の上限が広がる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ブラウザ更新と不要機能の無効化を行う</span></button><p class="why" hidden>更新と、不要な機能の無効化</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>閲覧履歴を、毎日定期的に削除するようにする</span></button><p class="why" hidden>実行されるコードは止まらない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep131-mobilecode-spyware:q0" data-answer="0">
+  <p class="q">取引先の正規サイトだからと、Webフィルタの対象から外して運用している。この判断の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>改ざんされた正規サイトからも届くので、信頼だけを根拠にできない</span></button><p class="why" hidden>正解。正規サイトの改ざんでも届く。信頼だけを根拠にフィルタを外すのは危うい。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>正規サイトの閲覧では、モバイルコードは届かないので、判断は妥当である</span></button><p class="why" hidden>正規サイトでも、改ざんされればモバイルコードが届く。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>対象から外しても、最小権限で閲覧していれば、被害はまったくなくなるので問題ない</span></button><p class="why" hidden>最小権限は被害の上限を絞るもので、なくすものではない。「まったくなくなる」は言い過ぎ。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利用者がファイルを実行しない限り、モバイルコードは動かないので、問題ない</span></button><p class="why" hidden>モバイルコードは閲覧しただけで動くことがあり、ファイルの実行は必須ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep131-mobilecode-spyware:q1" data-answer="3">
+  <p class="q">スパイウェアが入力内容を暗号化した通信で外部に送っている。監視の考え方として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>暗号化されていても内容を確認できるので、通信内容の監視だけで十分である</span></button><p class="why" hidden>暗号化されると、通信の中身を見て判断しにくい。内容の監視だけに頼れない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>暗号化された通信は正規のものなので、監視の対象から外す</span></button><p class="why" hidden>暗号化されていることは正規である根拠にならない。外す理由がない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>暗号化通信はスパイウェアでは使われないので、対象は平文の通信だけにする</span></button><p class="why" hidden>暗号化されると中身で判断しにくいという前提を読み落としている。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>中身では判断しにくいので、送信先の制限も併用する</span></button><p class="why" hidden>正解。外部通信の監視に加え、送信先の制限を併用する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep131-mobilecode-spyware:q2" data-answer="1">
+  <p class="q">入力内容が盗まれる場合に備え、多要素認証を導入する。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>導入すれば、中継型の攻撃も含め、入力内容の盗用による被害をすべて防げる</span></button><p class="why" hidden>中継型の攻撃には効かない場合がある。「すべて防げる」は言い過ぎ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>入力内容だけでは使えなくできるが、中継型の攻撃には効かない場合もある</span></button><p class="why" hidden>正解。入力内容だけでは使えなくする効果があるが、限界もある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>多要素認証は、スパイウェアの感染そのものを防ぐ</span></button><p class="why" hidden>感染を防ぐ対策ではなく、盗まれた入力内容を使えなくする対策である。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>多要素認証があれば、不審なソフトを入れない運用だけで足りる</span></button><p class="why" hidden>1つで防げないので、重ねて使う。更新・最小権限・通信の監視なども併用する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep131-mobilecode-spyware:q3" data-answer="0">
+  <p class="q">「モバイルコード」という用語の説明として、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ページなどとともに届き、端末で実行される</span></button><p class="why" hidden>正解。ページやメールとともに届き、端末（実行環境）で実行される。携帯端末とは無関係。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>スマートフォンなど、携帯端末の上だけで動くプログラムを指す用語である</span></button><p class="why" hidden>携帯端末とは無関係。名前から連想して取り違えやすい。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>利用者がUSBメモリで持ち運んで、端末で実行した実行ファイルを指す用語である</span></button><p class="why" hidden>ページ・メールとともに届くプログラムを指す。持ち運んだファイルの話ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>端末から端末へ、自分で移動して増えるプログラムを指す用語である</span></button><p class="why" hidden>自分で移動して増えるのはワームの説明で、モバイルコードの定義ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep131-mobilecode-spyware:q4" data-answer="3">
+  <p class="q">閲覧用端末を管理者権限で常用している。モバイルコードが実行された場合の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>管理者権限なら、実行環境がモバイルコードの実行を許さなくなる</span></button><p class="why" hidden>実行を許すかは、脆弱性や設定で決まる。管理者権限だからといって許さなくなる根拠はない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>権限は被害の大きさと無関係で、実行環境の脆弱性の有無だけで決まる</span></button><p class="why" hidden>動いた権限が被害の上限になる。権限は被害の大きさに関わる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>管理者権限で動くコードは検出されやすくなるので、被害は小さくなる</span></button><p class="why" hidden>権限が広いほど上限が広がる。検出されやすくなるという根拠はない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>動いた権限が被害の上限になるので、権限が広いと被害も広がりうる</span></button><p class="why" hidden>正解。だから最小権限で閲覧して、上限を絞る。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">モバイルコードが「閲覧しただけで」被害に至る成立条件を、順に頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">①コードがページなどとともに実行環境に届く。②実行環境が脆弱性や設定のために実行を許す。③その権限で動く。動いた権限が被害の上限になる。正規サイトが改ざんされても届く。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep131-mobilecode-spyware-t0-0"> 実行環境に届く</label></li><li><label><input type="checkbox" id="ep131-mobilecode-spyware-t0-1"> 実行環境が許す（脆弱性・設定）</label></li><li><label><input type="checkbox" id="ep131-mobilecode-spyware-t0-2"> 動いた権限が被害の上限</label></li><li><label><input type="checkbox" id="ep131-mobilecode-spyware-t0-3"> 正規サイトの改ざんでも届く</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">スパイウェアによる情報の流出に備える対策を、予防と検知の観点で挙げ、限界も説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">予防は、ブラウザやプラグインの更新、不要な実行機能の無効化、不審なソフトを入れないこと。検知は、対策ソフトと外部通信の監視・送信先の制限。通信が暗号化されると中身で判断しにくく、多要素認証も中継型には効かない場合があるので、重ねて使う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep131-mobilecode-spyware-t1-0"> 更新と不要な機能の無効化、不審なソフトを入れない</label></li><li><label><input type="checkbox" id="ep131-mobilecode-spyware-t1-1"> 対策ソフトと外部通信の監視・送信先の制限</label></li><li><label><input type="checkbox" id="ep131-mobilecode-spyware-t1-2"> 暗号化通信は中身で判断しにくい</label></li><li><label><input type="checkbox" id="ep131-mobilecode-spyware-t1-3"> 1つで防げないので重ねる</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="営業端末の調査記録（ダミー）"><div class="logtitle">営業端末の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 営業担当の端末（ダミー）。取引先の情報サイト（正規）を閲覧しただけ</span></div><div class="logrow"><span class="hl">閲覧したページに、悪意あるスクリプトが含まれていた（利用者が実行したファイルはなし）</span></div><div class="logrow"><span class="hl">閲覧時、ブラウザのプラグインは修正プログラム未適用の旧版で動作 / 既知の脆弱性を突かれた</span></div><div class="logrow"><span class="hl">その後、常駐プロセスが生成され、入力内容が外部の宛先へ定期送信</span></div><div class="logrow"><span class="hl">// 常駐プロセスの動作は、入力内容の収集と送信のみ / 利用者のファイルは変更されず、要求の表示もなし</span></div></div></div>
+  <p class="q">この事象の原因として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">閲覧で実行された悪意あるモバイルコードが、旧版プラグインの脆弱性を突き、スパイウェアを動かした</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>トロイの木馬 … 動いたのはページ内のスクリプトで、利用者が実行したファイルはない</li><li>ランサムウェア … 動作は入力内容の送信のみで、ファイルは変更されていない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.9.5 悪意あるモバイルコード</li><li>2.9.6 スパイウェア</li></ul>
+  <p>モバイルコードが動く条件（届く・許される・権限）と、スパイウェアの収集・送信を、各対策の限界とあわせて読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep130-trojan-defense.html">← #30 トロイの木馬とマルウェア対策 見せかけと多層防御</a><a href="ep132-dropper-targeted.html">#32 ドロッパと標的型攻撃 侵入から外への持ち出しまで →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

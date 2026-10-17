@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#51 FWの種類とアドレス変換 状態を見るか中身を見るか｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#51 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>FWの種類とアドレス変換 状態を見るか中身を見るか</h1>
+  <ol class="summary"><li>パケットフィルタ型は高速で単純だが状態も中身も見ない。ステートフル型は状態表で応答を許可するが、状態表は有限。</li><li>アプリケーションゲートウェイ型は中身まで検査できるが、処理が重く、対応するアプリが限られる。</li><li>NATはアドレス変換、NAPTはポートも変換して1つのアドレスを共有する。NATはFWの代わりにならない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep151-firewall-types-nat:packet-filter">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">パケットフィルタリング型</span><span class="back" hidden><span class="def">パケット1つ1つを、送信元・宛先のIPアドレス、ポート番号、プロトコル等の規則で判断する。高速で単純。</span><span class="note">状態も中身も見ないので、戻りの通信には戻り用の規則が別に要る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep151-firewall-types-nat:stateful">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ステートフルインスペクション型</span><span class="back" hidden><span class="def">通信の状態を状態表に記憶し、内部から開始した通信への応答を自動で許可する。状態に合わない通信は拒否する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep151-firewall-types-nat:state-table">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">状態表</span><span class="back" hidden><span class="def">ステートフル型が通信の状態を記憶する表。有限なので、大量の接続で枯渇しうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep151-firewall-types-nat:app-gateway">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">アプリケーションゲートウェイ（プロキシ）型</span><span class="back" hidden><span class="def">アプリケーション層で通信を中継し、中身まで検査できる。内部と外部の通信を分断する。</span><span class="note">処理は重く、対応するアプリが限られる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep151-firewall-types-nat:nat">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">NAT</span><span class="back" hidden><span class="def">IPアドレスを変換する仕組み。静的NATは、公開サーバ用に内外のアドレスを固定で対応づける。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep151-firewall-types-nat:napt">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">NAPT（IPマスカレード）</span><span class="back" hidden><span class="def">アドレスとポート番号を変換し、複数の端末が1つのグローバルアドレスを共有する。応答は変換表で内部に戻す。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep151-firewall-types-nat:private-address">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">プライベートアドレス（RFC 1918）</span><span class="back" hidden><span class="def">内部で使うアドレス。NATで変換し、内部のプライベートアドレスを外に見せない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep151-firewall-types-nat:nat-not-fw">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">NATはFWの代わりではない</span><span class="back" hidden><span class="def">NATの目的はアドレスの節約と隠蔽で、隠れるのは副次効果。通信の中身の攻撃は防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep151-firewall-types-nat:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>NAPT（IPマスカレード）の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IPアドレスだけを1対1で変換し、ポート番号は変えない</span></button><p class="why" hidden>それは、1対1のNAT</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>通信の中身を検査して、不正なデータを取り除く</span></button><p class="why" hidden>それは、ゲートウェイ型の機能</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ポート番号も変換して、1つのアドレスを共有する</span></button><p class="why" hidden>ポート番号も変換し、共有</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>外部から内部への通信を、すべて許可する機能</span></button><p class="why" hidden>通信を許可する機能ではない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep151-firewall-types-nat:q0" data-answer="0">
+  <p class="q">パケットフィルタ型のFWで、内部PCから外部のWebサイト（宛先ポート443）への要求を許可する規則だけを置いたところ、応答が内部PCに届かない。原因として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>状態を見ないので、戻りの通信を許可する規則が別に要るが、置かれていない</span></button><p class="why" hidden>正解。パケットフィルタ型は通信の状態を見ないので、戻りの通信を通すには戻り用の規則が別に要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>応答は内部から開始した通信の戻りとして自動で許可されるので、原因はFW以外にある</span></button><p class="why" hidden>応答を自動で許可するのは、状態を記憶するステートフル型の特徴。パケットフィルタ型にはない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>状態表が有限であり、大量の接続で枯渇したため、新しい応答が処理されなくなった</span></button><p class="why" hidden>状態表を持つのはステートフル型。パケットフィルタ型は状態を見ない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>アプリケーションの中身を検査した結果、応答が不正なデータと判定されて破棄された</span></button><p class="why" hidden>パケットフィルタ型はアプリケーションの中身を見ない。アドレスやポート等の規則で判断する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep151-firewall-types-nat:q1" data-answer="1">
+  <p class="q">社内の業務アプリの通信を、内部と外部を分断した状態で、アプリケーション層の中身まで検査したい。処理が重くなる点は許容できる。選択と留意点として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パケットフィルタ型を選ぶ。アドレスとポートで判断でき、中身まで見られるうえ処理も軽い</span></button><p class="why" hidden>パケットフィルタ型は高速で単純だが、アプリケーションの中身は見ない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>アプリケーションゲートウェイ型を選ぶ。対応するアプリが限られるので、対応可否を確認する</span></button><p class="why" hidden>正解。アプリ層で中継して中身まで検査できる。処理は重く、対応するアプリが限られる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ステートフルインスペクション型を選ぶ。状態表で通信を管理するので、アプリの中身の検査にも向いている</span></button><p class="why" hidden>中身まで検査できると整理されるのはアプリケーションゲートウェイ型。ステートフル型の要点は、状態の記憶と応答の許可。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>NAPTを導入する。アドレスとポートを変換するので、FWを置かなくても中身の攻撃は防げる</span></button><p class="why" hidden>NATはFWの代わりにならず、中身の攻撃は防げない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep151-firewall-types-nat:q2" data-answer="3">
+  <p class="q">社内の複数PCが、1つのグローバルアドレスを共有して外部のサイトへ同時に接続している。NAPT（IPマスカレード）で応答が正しいPCへ戻る仕組みとして適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>PCごとに別のグローバルアドレスを1対1で割り当て、ポート番号は変えないまま応答を返す</span></button><p class="why" hidden>アドレスだけを1対1で変えるのはNAT。NAPTはポート番号も変換して、1つのアドレスを共有する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>プライベートアドレスのまま外へ出るため、外部のサイトが応答を直接PCへ返す</span></button><p class="why" hidden>NATは内部のプライベートアドレスを外に見せない。外にはそのまま出ない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>FWが応答の中身を検査し、内容からどのPCへの通信かを判断して内部へ中継する</span></button><p class="why" hidden>応答は変換表で内部に戻す。中身の検査で判断するのではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>アドレスとポートを変換して表に記録し、応答を表に従って内部のPCへ戻す</span></button><p class="why" hidden>正解。アドレスとポート番号を変換し、変換表に従って応答を内部へ戻す。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep151-firewall-types-nat:q3" data-answer="2">
+  <p class="q">NAPTを導入したので、プライベートアドレスは外から見えず、専用のFWは要らないと提案された。評価として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>外部からプライベートアドレスが見えなければ到達もできないので、FWの許可・拒否の規則は不要である</span></button><p class="why" hidden>隠蔽は副次効果で、NATはFWの代わりではない。規則による許可・拒否は別に要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>NAPTの変換表が許可していない通信を拒否する働きを兼ねるので、FWの規則は最小限で足りる</span></button><p class="why" hidden>変換表は応答を内部に戻すためのもので、通信の許可・拒否の規則の代わりではない。NATはFWの代わりにならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>NATは節約と隠蔽が目的でFWの代わりにならず、許可した通信の中身の攻撃も防げない</span></button><p class="why" hidden>正解。NATの目的はアドレスの節約と隠蔽で、FWの代わりではない。中身の攻撃も防げない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>静的NATに切り替えれば、公開サーバを含めて外部からの攻撃を防げるのでFWは不要になる</span></button><p class="why" hidden>静的NATは公開サーバ用に固定で対応づける仕組み。攻撃を防ぐものではなく、FWの代わりにもならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep151-firewall-types-nat:q4" data-answer="0">
+  <p class="q">ステートフルインスペクション型FWの説明として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>内部開始の通信の応答を自動で許可し、状態に合わない通信は拒否する。状態表は有限</span></button><p class="why" hidden>正解。状態表に通信の状態を記憶して応答を自動で許可する。状態表は有限で、大量の接続で枯渇しうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>戻りの通信を通す規則を別に書く必要があり、規則の数はパケットフィルタ型より増える</span></button><p class="why" hidden>戻り用の規則が別に要るのはパケットフィルタ型。ステートフル型は応答を自動で許可する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>状態表は無制限なので、大量の接続要求を受けても新しい接続を受け付け続けられる</span></button><p class="why" hidden>状態表は有限で、大量の接続で枯渇しうる。受け付け続けられるとは言えない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>アプリケーションの中身まで検査するため、許可した通信に含まれる不正な入力も防げる</span></button><p class="why" hidden>中身まで検査できるのはアプリケーションゲートウェイ型。ステートフル型の特徴は状態の記憶。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">要件が「中身の検査は不要、処理は高速に保つ、応答は届く」のとき、どの方式を選び、何に注意するか、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ステートフルインスペクション型を選ぶ。通信の状態を状態表に記憶して応答だけを自動で許可でき、戻り用の規則が要らない。中身の検査は要件にないので、中身まで検査するゲートウェイ型は不要。注意点は、状態表が有限で大量の接続で枯渇しうること。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep151-firewall-types-nat-t0-0"> 状態を記憶して応答を自動で許可する</label></li><li><label><input type="checkbox" id="ep151-firewall-types-nat-t0-1"> 中身の検査は要件にないのでゲートウェイ型は不要</label></li><li><label><input type="checkbox" id="ep151-firewall-types-nat-t0-2"> 状態表は有限で枯渇しうる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">NAPTを使っているのにFWが必要な理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">NAPTの目的はアドレスの節約と隠蔽で、内部のアドレスが見えにくくなるのは副次効果。通信の許可・拒否の規則を担うものではなく、中身の攻撃も防げないので、FWの代わりにならない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep151-firewall-types-nat-t1-0"> 目的はアドレスの節約と隠蔽</label></li><li><label><input type="checkbox" id="ep151-firewall-types-nat-t1-1"> 隠れるのは副次効果</label></li><li><label><input type="checkbox" id="ep151-firewall-types-nat-t1-2"> 中身の攻撃は防げない</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="通信障害の調査記録（ダミー）"><div class="logtitle">通信障害の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社内PCから外部Webサイトへの通信（ダミー）。要件は、中身の検査は不要で、処理を高速に保つこと</span></div><div class="logrow"><span class="hl">FWの方針は、外部から始まる通信（新規接続）を、すべて拒否</span></div><div class="logrow"><span class="hl">FWの種類は、パケットフィルタリング型。パケット1つ1つを、アドレスとポート番号の規則で判断</span></div><div class="logrow"><span class="hl">PCが送った要求は、FWを通って、外部のWebサイトに届いている</span></div><div class="logrow"><span class="hl">Webサイトからの応答は、外部の443番ポートから、PCの一時的なポート番号へ戻るが、FWで遮断された</span></div></div></div>
+  <p class="q">高速を保ち、応答も届く方式として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">通信の状態を記憶し、応答の戻りだけを許可する方式</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>内部から外部への通信を禁止する … 要求は、FWを通って届いている</li><li>外部→内部のポートを全開にする … 方針は、外部から始まる通信を全拒否</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.5.3 フィルタリング方式から見たFWの種類</li><li>5.5.4 ファイアウォールのアドレス変換機能</li></ul>
+  <p>3方式が何を見て何を見ないか、状態表の限界、NATとNAPTの変換の違いと、NATがFWの代わりにならない理由を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep150-firewall-basics.html">← #50 ファイアウォールの概要と基本的な構成 DMZで被害を止める</a><a href="ep152-fw-limits-ext.html">#52 FWで防げないものと拡張機能 許可した通信の中身が盲点 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

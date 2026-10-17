@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#108 情報セキュリティポリシー 体系と策定の留意点｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#108 ・ 第4章 情報セキュリティマネジメントの実践</p>
+  <h1>情報セキュリティポリシー 体系と策定の留意点</h1>
+  <ol class="summary"><li>ポリシーは基本方針（取組み姿勢と目的）・対策基準（遵守事項）・実施手順（具体的な手順）の三階層で、上位に沿って下位を具体化する。</li><li>策定では、経営層の承認と組織全体への適用、現場で実行できる内容、法令・契約との整合、周知・教育、例外の扱いが要る。</li><li>基本方針は外部に示すことがあり、基準・手順は通常社内限り。文書だけでは守られず、遵守の確認と是正・定期的な見直しが要る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep208-security-policy:policy-system">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ポリシーの体系</span><span class="back" hidden><span class="def">基本方針・対策基準・実施手順の三階層。上位の方針に沿って、下位を具体化する。</span><span class="note">呼び方は資料により異なる（方針／スタンダード／プロシージャ等）。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep208-security-policy:basic-policy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">基本方針</span><span class="back" hidden><span class="def">組織の取組み姿勢と目的を、経営層が示す文書。取引先や利用者に示すことがある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep208-security-policy:standards">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">対策基準</span><span class="back" hidden><span class="def">守るべき事項（遵守事項）を定める文書。例はパスワードの最低文字数。通常は社内に限る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep208-security-policy:procedures">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">実施手順</span><span class="back" hidden><span class="def">具体的な手順や操作を手順書に定める文書。例はパスワードを変更する操作の手順。通常は社内に限る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep208-security-policy:approval">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">経営層の承認</span><span class="back" hidden><span class="def">ポリシーは経営層が承認し、組織全体に適用する。責任と権限も明らかにする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep208-security-policy:formalization">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">形骸化</span><span class="back" hidden><span class="def">守れない規則が実際には使われなくなること。現場で実行できる内容にして防ぐ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep208-security-policy:consistency">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">法令・契約・規程との整合</span><span class="back" hidden><span class="def">ポリシーは、法令・契約・既存の規程と矛盾させない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep208-security-policy:exception">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">例外の扱い</span><span class="back" hidden><span class="def">例外は、承認と期限を決めておく。決めないと例外が野放しになる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep208-security-policy:review-compliance">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">見直しと遵守の確認</span><span class="back" hidden><span class="def">事業・脅威・法令の変化に応じて定期的に改訂し、承認を経て周知する。遵守状況を確認し、逸脱は是正する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep208-security-policy:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>ポリシーの説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>基本方針は、画面ごとの操作手順を定める</span></button><p class="why" hidden>操作手順は実施手順に定める</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>基本方針は、経営層が取組み姿勢を示す</span></button><p class="why" hidden>経営層が取組み姿勢を示す</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>対策基準は、策定後は見直さなくてよい</span></button><p class="why" hidden>変化に応じて定期的に見直す</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>実施手順は、現場の実態に合わなくてもよい</span></button><p class="why" hidden>実行できる内容にする</p></li></ol>
+</li>
+<li class="quiz" data-key="ep208-security-policy:q0" data-answer="3">
+  <p class="q">取引先から、情報セキュリティへの取組みを示す文書の提出を求められた。外部に示すことがある文書として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>実施手順書。具体的な操作が書かれているため、取引先に示すのに向く</span></button><p class="why" hidden>実施手順は通常は社内に限る。詳細な内容は外へ出さない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>対策基準。遵守事項がまとまっているため、取引先に示すのに向く</span></button><p class="why" hidden>対策基準も通常は社内に限る。詳細な内容は外へ出さない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>対策基準と実施手順書の両方を、取引先へそのまま提出するのが望ましい</span></button><p class="why" hidden>対策基準と実施手順は通常は社内限りで、詳細な内容は外へ出さない。両方を提出するのは不適切。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>基本方針。取組み姿勢と目的を示す文書で、取引先に示すことがある</span></button><p class="why" hidden>正解。基本方針は、取引先や利用者に示すことがある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep208-security-policy:q1" data-answer="0">
+  <p class="q">対策基準の案に「全従業員は、業務外のWebサイトへ一切アクセスしない。例外は認めない」とあった。しかし調達担当は、業務上、外部の多様なサイトを日常的に閲覧する必要がある。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>守れない規則は形骸化する。実態に合わせて例外の扱いも見直す</span></button><p class="why" hidden>正解。現場で実行できない規則は形骸化する。実行できる内容にし、例外は承認と期限を決めて扱う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>現場の側を教育すれば足りるので、規則は変えずに周知だけを強化する</span></button><p class="why" hidden>周知や教育は要るが、現場で実行できない内容は形骸化する。まず実行できる内容にする。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>例外を認めると基準の効力が弱まるため、一切設けず厳格に運用する</span></button><p class="why" hidden>例外の扱い（承認と期限）を定めておくのが策定の留意事項。一切設けないと、守れない規則が形骸化しうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>経営層が承認済みの内容なので、実態と合わなくても変更しないで運用する</span></button><p class="why" hidden>経営層の承認に加え、現場で実行できる内容であることも必要。実態とのずれを放置すると形骸化する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep208-security-policy:q2" data-answer="2">
+  <p class="q">3年前に整備したポリシーについて、監査で、現場では手順書と違うやり方が広まっていることが分かった。整備後に遵守状況の確認は行われていない。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>文書は整備済みなので、逸脱した従業員を個別に注意するだけで足りる</span></button><p class="why" hidden>文書があるだけでは守られない。個別の注意だけでは、手順と実態がずれている原因が残る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>手順書は廃止して基本方針だけを残し、具体的な判断は現場に任せる</span></button><p class="why" hidden>実施手順は、具体的な手順を定める役割を持つ。廃止すると、どう行うかの判断が現場任せになる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>遵守状況を確認して逸脱は是正し、変化に応じて定期的に見直す</span></button><p class="why" hidden>正解。遵守状況を確認して逸脱は是正し、事業・脅威・法令の変化に応じて定期的に改訂する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ポリシーを全従業員へ再配布すれば、文書が守られるようになるので十分</span></button><p class="why" hidden>周知は必要だが、文書を配るだけでは守られない。遵守の確認と是正が要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep208-security-policy:q3" data-answer="1">
+  <p class="q">新しい対策基準の案が、取引先との契約で定めたデータの保管条件と食い違っていることが分かった。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>契約は個別の取り決めなので、ポリシーは契約と無関係に定めてよい</span></button><p class="why" hidden>ポリシーは、法令・契約・既存の規程と矛盾させない。契約と無関係には定められない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>法令・契約・既存の規程と矛盾しないよう、基準案を修正して整合を取る</span></button><p class="why" hidden>正解。策定の留意事項は、法令・契約・既存の規程と矛盾させないこと。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>基準が契約より後に承認されるので、基準の内容が契約に優先する</span></button><p class="why" hidden>承認の順序で優先が決まるわけではなく、矛盾させないことが求められる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>契約の条件を、取引先への事前の連絡なしにポリシーの内容へ合わせて変更する</span></button><p class="why" hidden>契約は取引先との取り決めで、一方的に変える前提は置けない。まず基準案を見直して矛盾させない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep208-security-policy:q4" data-answer="0">
+  <p class="q">開発部から、検証のため一部の端末で対策基準の遵守事項を例外的に外したいと申請があった。例外の扱いとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>承認の手続きと期限を決めたうえで例外を認め、期限が来たら見直す</span></button><p class="why" hidden>正解。例外は、承認と期限を決めておく。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>検証用の申請なので、部門長の口頭了解だけで、期限は設けないまま認める</span></button><p class="why" hidden>期限なく残る例外が、基準を形骸化させる。承認と期限を決めておく。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>例外を認めると基準が形骸化するため、理由を問わず一切認めない</span></button><p class="why" hidden>例外の扱い（承認と期限）を定めたうえで認めるのが留意事項。一切認めないと、守れない規則が形骸化しうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>例外にした端末は基準の対象外になるため、承認も記録も不要とする</span></button><p class="why" hidden>例外も承認と期限を決めて扱う。承認なしに対象外とすると、例外が野放しになる。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">対策基準と実施手順の違いを、パスワードを例に頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">対策基準は守るべき事項（遵守事項）を定める文書で、例はパスワードの最低文字数。実施手順は具体的な手順や操作を手順書に定める文書で、例はパスワードを変更する操作の手順。どちらも上位の基本方針に沿って具体化する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep208-security-policy-t0-0"> 対策基準＝守るべき事項（何を守るか）</label></li><li><label><input type="checkbox" id="ep208-security-policy-t0-1"> 実施手順＝具体的な手順・操作（どう行うか）</label></li><li><label><input type="checkbox" id="ep208-security-policy-t0-2"> 上位の方針に沿って具体化する</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">ポリシーを整備したのに守られない組織で、原因の候補と取るべき対応を頭の中で挙げてみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">現場で実行できない内容だと形骸化する。周知・教育の不足や、例外の扱いの曖昧さも原因になる。文書があるだけでは守られないので、遵守状況を確認して逸脱は是正し、事業・脅威・法令の変化に応じて定期的に見直す。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep208-security-policy-t1-0"> 実行できない内容は形骸化する</label></li><li><label><input type="checkbox" id="ep208-security-policy-t1-1"> 周知・教育・例外の扱い</label></li><li><label><input type="checkbox" id="ep208-security-policy-t1-2"> 遵守状況の確認と是正</label></li><li><label><input type="checkbox" id="ep208-security-policy-t1-3"> 変化に応じた定期的な見直し</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="ポリシー文書の整理メモ（ダミー）"><div class="logtitle">ポリシー文書の整理メモ（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">文書X: USBメモリの持出しは、部門長の承認がある場合に限る</span></div><div class="logrow"><span class="hl">文書Xは、従業員向けに配布されている</span></div><div class="logrow"><span class="hl">持出し申請の画面操作は、別の文書Yに記載されている</span></div><div class="logrow"><span class="hl">要件: 文書Xを、基本方針・対策基準・実施手順で分類する</span></div></div></div>
+  <p class="q">文書Xの位置づけとして、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">対策基準（遵守すべき事項を定める文書）</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>基本方針 … 取組み姿勢を示す文書ではなく、承認という具体的な条件を定めている</li><li>実施手順 … 操作の手順は別の文書Yにあり、Xは守る条件を定めている</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>4.3.1 情報セキュリティポリシーの概要</li><li>4.3.2 情報セキュリティポリシー策定における留意事項</li></ul>
+  <p>三階層（方針・基準・手順）の役割の違いと、策定の留意事項、運用での公表範囲・見直し・遵守の確認を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep207-tcpip-common-vuln.html">← #107 TCP/IP共通の脆弱性 平文・偽装・資源枯渇</a><a href="ep209-info-asset-client-pc.html">#109 情報資産の洗出し・分類とクライアントPC →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

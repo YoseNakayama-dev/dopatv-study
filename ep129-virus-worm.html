@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#29 ウイルスとワーム 宿主の有無と広がり方の違い｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#29 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>ウイルスとワーム 宿主の有無と広がり方の違い</h1>
+  <ol class="summary"><li>ウイルスは他のファイルに寄生して増え、宿主ファイルが実行されて動く。実行されなければ広がらない。</li><li>ワームは宿主を持たず単独で増える。広がるには到達できる経路と、未修正の脆弱性などが要る。</li><li>対策は修正プログラム適用・不要サービス停止・ネットワーク分離。検知ソフトだけでは未知の検体を取りこぼしうる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep129-virus-worm:malware">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">マルウェア</span><span class="back" hidden><span class="def">悪意のあるソフトウェアの総称。ウイルスやワームなどを含む。分類の軸には、増え方や目的がある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep129-virus-worm:virus">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">コンピュータウイルス</span><span class="back" hidden><span class="def">他のファイルに寄生（感染）して増えるマルウェア。寄生された宿主ファイルが実行されると動き出す。</span><span class="note">広義の定義では、寄生するかどうかを問わない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep129-virus-worm:host-file">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">宿主ファイル</span><span class="back" hidden><span class="def">ウイルスが寄生するファイル。これが実行されることが、ウイルスが動き出すきっかけになる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep129-virus-worm:virus-functions">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">自己伝染・潜伏・発病</span><span class="back" hidden><span class="def">ウイルスを説明する3つの機能。この3つの機能で、ウイルスの振る舞いを整理する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep129-virus-worm:worm">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ワーム</span><span class="back" hidden><span class="def">宿主を持たず、単独で自己増殖するマルウェア。ネットワークを通じて他の端末へ広がる。</span><span class="note">ウイルスとの分かれ目は宿主の有無。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep129-virus-worm:unpatched-vuln">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">未修正の脆弱性</span><span class="back" hidden><span class="def">修正プログラムが適用されていない弱点。これを突くタイプのワームは、利用者の操作なしで広がりうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep129-virus-worm:segmentation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ネットワークの分離（セグメント分割）</span><span class="back" hidden><span class="def">ネットワークを区切り、感染の拡大を抑える対策。ワームが到達できる経路を減らす。</span><span class="note">単独では十分でなく、修正プログラムの適用などと重ねる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep129-virus-worm:classification-axes">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">マルウェアの分類軸</span><span class="back" hidden><span class="def">どう増えるか（感染・増殖の仕方）と、何をするか（情報窃取・破壊・資源の悪用など）の2軸で整理できる。</span><span class="note">暗号資産の採掘は、目的の軸の一例。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep129-virus-worm:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>ウイルスとワームの違いとして、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ウイルスは宿主を持たず、単独で自己増殖する</span></button><p class="why" hidden>逆。ウイルスは宿主に寄生する</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ワームは感染するとデータを暗号化し金銭を要求する</span></button><p class="why" hidden>それは、ランサムウェアの挙動</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ウイルスは宿主ファイルを実行しなくても動き出す</span></button><p class="why" hidden>宿主ファイルの実行が、きっかけになる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ワームは宿主を持たず、単独で自己増殖する</span></button><p class="why" hidden>ワームは宿主を持たない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep129-virus-worm:q0" data-answer="1">
+  <p class="q">社内でワームが同一セグメントの端末に広がった。再発と拡大を抑える対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>検知ソフトのパターンを最新にしてあるので、未知の検体も含めて確実に防げると判断する</span></button><p class="why" hidden>検知ソフトだけでは未知の検体を取りこぼしうる。「確実に防げる」は言い過ぎ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>未適用の脆弱性を修正し、不要なサービスを止め、ネットワークを分ける</span></button><p class="why" hidden>正解。ワームの足がかりである未修正の脆弱性と不要なサービスを減らし、分離で拡大を抑える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>利用者に、不審なファイルを実行しないよう、あらためて周知する</span></button><p class="why" hidden>ウイルス向けの対策。脆弱性を突くワームは、利用者の操作なしで広がりうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>感染した宿主ファイルを探して削除し、そのファイルの実行を禁止する</span></button><p class="why" hidden>ワームは宿主を持たない。宿主ファイルを探す対処は、ウイルスの説明に当たる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep129-virus-worm:q1" data-answer="2">
+  <p class="q">ある端末のファイルがウイルスに寄生されているが、そのファイルは一度も実行されていない。（狭義の定義で）ウイルスの性質から言える評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ウイルスは宿主を持たないので、ファイルを実行しなくても、ネットワークを通じて他の端末へ広がる</span></button><p class="why" hidden>宿主を持たずに広がるのはワーム。ウイルスは他のファイルに寄生する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>自己伝染・潜伏・発病の3機能があるので、実行されなくても発病する</span></button><p class="why" hidden>3機能はウイルスの説明の枠組み。動き出すきっかけは宿主ファイルの実行である。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>宿主ファイルの実行で動き出すため、実行されなければ広がらない</span></button><p class="why" hidden>正解。宿主ファイルが動かなければ広がらない。なお広義の定義では、寄生を問わない場合がある。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>寄生されたファイルは、実行前でも、必ず他のファイルへ感染を広げる</span></button><p class="why" hidden>動き出すには宿主ファイルの実行が要る。「必ず」と言い切れる根拠はない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep129-virus-worm:q2" data-answer="0">
+  <p class="q">端末Aがワームに感染したが、ネットワークを分けた別セグメントの端末は感染しなかった。この結果の解釈として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ワームは到達できる経路が必要なので、分離は拡大を抑える手段になる</span></button><p class="why" hidden>正解。経路が閉じていれば、ワームは広がりにくい。ただし実際の挙動は検体ごとに異なる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>分離した別セグメントには、検体の挙動にかかわらず、どのワームも確実に届かないと言える</span></button><p class="why" hidden>実際の挙動は検体ごとに異なる。一度の結果から「確実に届かない」とは言えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ワームは宿主を持たないので、別セグメントでは宿主が見つからず感染しなかった</span></button><p class="why" hidden>ワームは宿主を持たない。感染しなかった理由は経路の有無で説明する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>分離していれば、修正プログラムの適用や不要なサービスの停止は省いてよい</span></button><p class="why" hidden>分離は拡大を抑える対策の1つ。足がかりとなる脆弱性を減らす対策とは役割が違い、重ねて使う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep129-virus-worm:q3" data-answer="3">
+  <p class="q">ワームへの対策として、修正プログラムの適用の効果が大きいとされる理由はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ワームは宿主ファイルに寄生して増えるので、修正により宿主ファイルを無効にできるため</span></button><p class="why" hidden>宿主ファイルに寄生して増えるのはウイルス。ワームは宿主を持たない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>修正プログラムがワームの検体を検出して、自動で駆除するため</span></button><p class="why" hidden>修正プログラムは脆弱性を直すもの。検体の検出や駆除は役割が違う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>修正すると、利用者が不審なファイルを実行しなくなるため</span></button><p class="why" hidden>利用者の行動を変えるものではない。脆弱性を突くワームは、操作なしでも広がりうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>足がかりとなる、未修正の脆弱性を無くせるため</span></button><p class="why" hidden>正解。脆弱性を突くタイプの足がかりは、ネットワーク上の未修正の脆弱性である。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep129-virus-worm:q4" data-answer="2">
+  <p class="q">暗号資産の採掘に端末を悪用するマルウェアが見つかった。ウイルスかワームかを判断する軸として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>目的が採掘なので、増え方によらず、ワームとして扱う</span></button><p class="why" hidden>目的と増え方は別の軸。目的だけでワームと決まるわけではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>採掘は増え方の軸の一種で、ワームの下位分類にあたる</span></button><p class="why" hidden>採掘は「何をするか」の軸の例で、増え方の軸ではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>採掘は目的の例であり、ウイルスかワームかは増え方で判断する</span></button><p class="why" hidden>正解。軸①は増え方、軸②は目的。ウイルスとワームは軸①で分ける。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>採掘を行うものは、ウイルスにもワームにも当てはまらず、増え方の軸では分類できない</span></button><p class="why" hidden>採掘をするものも、増え方（宿主の有無）で分類できる。軸が別なだけである。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ウイルスとワームの違いを、宿主の有無と「広がる条件」の観点で、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ウイルスは他のファイルに寄生して増え、宿主ファイルが実行されて動き出すので、実行されなければ広がらない。ワームは宿主を持たず単独で増え、到達できる経路と未修正の脆弱性などがあればネットワーク経由で広がる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep129-virus-worm-t0-0"> ウイルスは宿主に寄生する</label></li><li><label><input type="checkbox" id="ep129-virus-worm-t0-1"> ウイルスは宿主ファイルの実行が条件</label></li><li><label><input type="checkbox" id="ep129-virus-worm-t0-2"> ワームは宿主を持たず単独で増える</label></li><li><label><input type="checkbox" id="ep129-virus-worm-t0-3"> ワームは経路と未修正の脆弱性などが条件</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">修正プログラム未適用の端末だけが次々に感染し、利用者のファイル実行の記録は無い。種類の判断と、拡大を抑える対策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">宿主がなく、実行操作なしで脆弱性を介して広がっているので、ワームと判断する。修正プログラムの適用と不要なサービスの停止で足がかりを減らし、ネットワーク分離で拡大を抑える。ただし挙動は検体ごとに異なる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep129-virus-worm-t1-0"> ワームと判断した根拠（宿主なし・操作なし）</label></li><li><label><input type="checkbox" id="ep129-virus-worm-t1-1"> 修正プログラム適用と不要サービス停止</label></li><li><label><input type="checkbox" id="ep129-virus-worm-t1-2"> ネットワーク分離で拡大を抑える</label></li><li><label><input type="checkbox" id="ep129-virus-worm-t1-3"> 挙動は検体ごとに異なるという限界</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="社内端末の感染調査記録（ダミー）"><div class="logtitle">社内端末の感染調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社内の端末群（ダミー）。端末Aの感染のあと、同一セグメントの端末が次々に感染</span></div><div class="logrow"><span class="hl">感染した端末は、すべて修正プログラム未適用 / 適用済みの端末は感染なし</span></div><div class="logrow"><span class="hl">感染端末から、他端末の共有サービス用ポートへの接続が、連続して発生</span></div><div class="logrow"><span class="hl">最初の実行は、OSの共有サービスのプロセスから / 既存の実行ファイルに変更なし</span></div><div class="logrow"><span class="hl">感染時刻は、利用者のログオンの有無と無関係 / 利用者が実行したファイルの記録なし</span></div></div></div>
+  <p class="q">この感染の種類として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ワーム（単独で自己増殖し、脆弱性を介して広がる）</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>ウイルス … 既存の実行ファイルに変更がなく、宿主がない</li><li>トロイの木馬 … 感染は、利用者のログオンと無関係で、実行したファイルもない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.9.1 マルウェアの種類</li><li>2.9.2 コンピュータウイルス、ワーム</li></ul>
+  <p>ウイルスとワームを「宿主の有無」と「広がる条件」で区別し、それぞれの対策と限界を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep128-dir-traversal.html">← #28 ディレクトリトラバーサル 階層をさかのぼる仕組みと対策</a><a href="ep130-trojan-defense.html">#30 トロイの木馬とマルウェア対策 見せかけと多層防御 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

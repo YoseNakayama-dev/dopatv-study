@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#128 脆弱性管理 CVE・CVSS・KEV・EPSS 何を測る指標か｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#128 ・ 追加テーマ（目次外）</p>
+  <h1>脆弱性管理 CVE・CVSS・KEV・EPSS 何を測る指標か</h1>
+  <ol class="summary"><li>CVEは識別番号、CVSSは技術的な深刻度、KEVは悪用が確認された事実、EPSSは今後30日の悪用の予測。</li><li>CVSSの基本値は自社の危険度そのものではない。KEVに無いことは安全の証明にならず、EPSSは予測にすぎない。</li><li>悪用の状況・資産の公開有無と重要度・CVSSを組み合わせて決め、修正が困難なら緩和策、後で再確認する。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep228-vuln-mgmt-metrics:cve">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">CVE</span><span class="back" hidden><span class="def">公開された脆弱性を特定する、共通の識別番号。深刻度を表す数値ではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep228-vuln-mgmt-metrics:cvss">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">CVSS</span><span class="back" hidden><span class="def">脆弱性の技術的な深刻度を0.0〜10.0で示す共通尺度（FIRST）。攻撃のしやすさや影響の大きさから算出する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep228-vuln-mgmt-metrics:cvss-base">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">CVSSの基本値</span><span class="back" hidden><span class="def">脆弱性そのものの特性から決まる値。そのまま自社での危険度や優先度にはならず、自社の環境に合わせた評価も使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep228-vuln-mgmt-metrics:kev">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">KEV</span><span class="back" hidden><span class="def">米国CISAが公開する、悪用が確認された脆弱性のカタログ。現実の攻撃に使われた事実を示す。</span><span class="note">載っていない＝悪用されていない、ではない。連邦政府機関向けに対応期限が定められている。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep228-vuln-mgmt-metrics:epss">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">EPSS</span><span class="back" hidden><span class="def">FIRSTが公開する、今後30日以内に悪用される確率を統計で予測した値（0〜1）。</span><span class="note">予測であり、確定ではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep228-vuln-mgmt-metrics:fact-vs-prediction">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">事実と予測の違い</span><span class="back" hidden><span class="def">KEVは「すでに悪用された」という事実、EPSSは「今後悪用される確率」の予測。意味が違うので混同しない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep228-vuln-mgmt-metrics:asset-context">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">資産の状況</span><span class="back" hidden><span class="def">インターネットへの公開の有無と、業務上の重要度。同じ脆弱性でも、資産によって優先度は変わる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep228-vuln-mgmt-metrics:mitigation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">緩和策</span><span class="back" hidden><span class="def">修正の適用が難しいときに、被害や悪用の可能性を抑える代替の対応。対応後に効果を再確認する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep228-vuln-mgmt-metrics:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>脆弱性管理の指標の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>CVEは、脆弱性の深刻度を示す数値である</span></button><p class="why" hidden>CVEは識別番号</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>KEVは、悪用される確率を予測した値である</span></button><p class="why" hidden>KEVは確認された悪用の一覧</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>EPSSは、悪用が確認された脆弱性の一覧である</span></button><p class="why" hidden>EPSSは確率の予測</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>CVSSが高くても、資産の公開有無や重要度で、優先度は変わる</span></button><p class="why" hidden>資産の状況で優先度は変わる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep228-vuln-mgmt-metrics:q0" data-answer="1">
+  <p class="q">公開中の顧客向けサーバにある脆弱性が、KEVに載っていない。担当者は「載っていないので悪用されていない」と報告し、後回しを提案した。この判断の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>KEVに載っていないので、悪用はされていないと見なして後回しにする</span></button><p class="why" hidden>KEVに載るのは、悪用が確認されたものの一部。載っていなくても、悪用されていないとは言えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>掲載の有無だけで決めず、EPSSや資産も見る</span></button><p class="why" hidden>正解。載っていないことは安全の証明にならない。EPSSの値や、資産の公開有無・重要度もあわせて判断する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>KEVはCISAの一覧なので、日本の組織には掲載の有無が関係しない</span></button><p class="why" hidden>米国視点の一覧という限界はあるが、現実の攻撃に使われた事実を示す点は、自社の判断材料になる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>EPSSが低ければ、悪用の確率が低いため、資産の状況は見なくてよい</span></button><p class="why" hidden>EPSSは予測にすぎず、確定ではない。資産の公開有無や重要度は、EPSSが低くても確認する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep228-vuln-mgmt-metrics:q1" data-answer="0">
+  <p class="q">ある脆弱性のEPSSの値が0.02と報告された。この値の読み方として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>今後30日以内に悪用される確率の予測で、確定した値ではない</span></button><p class="why" hidden>正解。EPSSは今後30日以内に悪用される確率を統計で予測した値。予測であり確定ではないので、他の材料とあわせて判断する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>技術的な深刻度が低いことを示し、悪用に必要な条件が多いという意味だ</span></button><p class="why" hidden>技術的な深刻度を示すのはCVSS。EPSSは深刻度ではなく悪用される確率の予測。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>すでに確認された悪用のうち、約2%の事例に使われたという意味である</span></button><p class="why" hidden>確認された悪用の一覧はKEV。EPSSは事実の集計ではなく、将来の悪用の予測。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>自社の資産のうち、約2%に影響する脆弱性が含まれているという意味だ</span></button><p class="why" hidden>EPSSは自社の資産への影響の割合を表すものではない。脆弱性ごとの悪用の確率の予測。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep228-vuln-mgmt-metrics:q2" data-answer="2">
+  <p class="q">公開中の顧客向けサーバの脆弱性がKEVに掲載された。修正の適用は業務の都合で今月は難しい。最も適切な対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>CVSSの基本値が中程度なので、次の定例の修正作業まで待つ</span></button><p class="why" hidden>悪用が確認されたものは急ぐ。CVSSの基本値だけで先送りを決めない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>修正を適用できるまで、何も行わずに状況を記録するだけにする</span></button><p class="why" hidden>修正が困難な間も、対応を止めない。修正が難しければ緩和策を取る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>緩和策を取って被害を抑え、対応後に効果を再確認する</span></button><p class="why" hidden>正解。修正が困難なら緩和策を取る。対応したあとは、効果を再確認する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>KEVは米国の一覧なので、国内の公開サーバは対象外として扱う</span></button><p class="why" hidden>KEVは米国視点の一覧という限界はあるが、現実の攻撃に使われた事実を示す。公開サーバなら急ぐ材料になる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep228-vuln-mgmt-metrics:q3" data-answer="0">
+  <p class="q">公開サーバの脆弱性に、ベンダーの修正がまだ無い。アクセス元を制限する緩和策を適用し、修正は未適用のままチケットを完了にした。この扱いの評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>効果を再確認し、修正の適用が残る点も管理に残す</span></button><p class="why" hidden>正解。緩和策は修正の代わりに取る対応。対応したあとは効果を再確認し、修正が残っていることも管理に残す。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>緩和策を取った時点で脆弱性は解消されるので、再確認は要らない</span></button><p class="why" hidden>緩和策は被害を抑えるもので、脆弱性そのものが直るわけではない。効果は再確認する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>修正の適用が最優先なので、修正が出るまで緩和策は取らないでおく</span></button><p class="why" hidden>修正が困難なら、緩和策を取る。修正を待つ間に何もしないのは、公開サーバでは危険。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>緩和策で、そのCVEのCVSS基本値が下がるため、完了としてよい</span></button><p class="why" hidden>CVSSの基本値は脆弱性そのものの特性から決まる。緩和策を取っても基本値は変わらない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep228-vuln-mgmt-metrics:q4" data-answer="1">
+  <p class="q">自社の規程案に「KEVに載った脆弱性は、KEVの対応期限までに必ず修正する」とあった。この規程案の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>KEVの対応期限は掲載された全組織に適用されるので、規程案のままでよい</span></button><p class="why" hidden>KEVの対応期限は、連邦政府機関向けに定められたもの。民間の組織にそのまま適用されるわけではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>期限は連邦政府機関向け。自社は掲載を材料に期限を定める</span></button><p class="why" hidden>正解。期限は連邦政府機関向け。掲載は悪用が確認された事実なので、自社の資産の状況を踏まえて対応期限を定める材料にする。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>KEVは確率の予測なので、期限を設けること自体が適切でない</span></button><p class="why" hidden>確率の予測はEPSS。KEVは悪用が確認された事実の一覧であり、優先順位の材料として使える。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>CVSSが9.0以上のものだけを対象にすれば、KEVを使う必要はない</span></button><p class="why" hidden>CVSSの基本値は単独では優先順位を決めない。悪用の事実を示すKEVは、基本値とは別の判断材料。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">KEVとEPSSの違いを「事実」「予測」の言葉を使って説明し、それぞれの限界も頭の中で述べてみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">KEVは悪用が確認された事実の一覧（CISA）で、載っていないことは悪用されていない証明にならず、米国視点の一覧でもある。EPSSは今後30日以内に悪用される確率の統計的な予測（FIRST）で、確定ではない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep228-vuln-mgmt-metrics-t0-0"> KEVは確認された悪用の事実</label></li><li><label><input type="checkbox" id="ep228-vuln-mgmt-metrics-t0-1"> KEVの限界は、載っていない＝安全ではないこと</label></li><li><label><input type="checkbox" id="ep228-vuln-mgmt-metrics-t0-2"> EPSSは今後30日の確率の予測</label></li><li><label><input type="checkbox" id="ep228-vuln-mgmt-metrics-t0-3"> EPSSは予測で確定ではない</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">CVSSの高い順に直す運用が不十分な理由と、組み合わせるべき材料を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">CVSSの基本値は技術的な深刻度で、自社での危険度そのものではない。悪用の状況（KEV・EPSS）、資産の公開有無と業務上の重要度、悪用に必要な条件などを組み合わせて優先順位を決める。修正が困難なら緩和策を取り、対応後に再確認する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep228-vuln-mgmt-metrics-t1-0"> 基本値は自社の危険度ではない</label></li><li><label><input type="checkbox" id="ep228-vuln-mgmt-metrics-t1-1"> 悪用の状況（KEV・EPSS）を見る</label></li><li><label><input type="checkbox" id="ep228-vuln-mgmt-metrics-t1-2"> 資産の公開有無と重要度を見る</label></li><li><label><input type="checkbox" id="ep228-vuln-mgmt-metrics-t1-3"> 修正が困難なら緩和策、後で再確認</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="脆弱性対応の判断記録（ダミー）"><div class="logtitle">脆弱性対応の判断記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">方針: 悪用が確認された公開資産を優先して直す</span></div><div class="logrow"><span class="hl">今週に対応できるのは、次の3件のうち1件のみ</span></div><div class="logrow"><span class="hl">A CVSS 9.8 社内の検証機。悪用は未確認</span></div><div class="logrow"><span class="hl">B CVSS 7.5 公開中の顧客向けサーバ。悪用を確認済み</span></div><div class="logrow"><span class="hl">C CVSS 8.1 公開中の顧客向けサーバ。悪用は未確認</span></div></div></div>
+  <p class="q">今週に直すのは、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">B（公開サーバで、悪用を確認済み）</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>A … CVSSは最大だが、社内の検証機で、悪用も確認されていない</li><li>C … 公開サーバだが、悪用は確認されていない。Bは確認済み</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>EX-14 脆弱性管理 CVE / CVSS / KEV / EPSS</li></ul>
+  <p>四つの指標が何を測るか（番号・深刻度・事実・予測）と、それぞれの限界を確かめる。優先順位は組み合わせで決める流れを押さえる。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep227-edr-xdr-siem-soar.html">← #127 EDR・XDR・SIEM・SOAR 役割の使い分け</a><a href="ep229-ai-security.html">#129 AIシステム固有のセキュリティ 指示とデータ・権限・出力 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

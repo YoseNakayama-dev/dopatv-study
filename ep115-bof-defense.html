@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#15 BOF攻撃への対策 カナリア・DEP・ASLRの守備範囲と限界｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#15 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>BOF攻撃への対策 カナリア・DEP・ASLRの守備範囲と限界</h1>
+  <ol class="summary"><li>BOFが成功すると、脆弱なプロセスの権限で任意のコードが動く。影響の大きさは動いていた権限で決まる。</li><li>根本は長さの確認と修正。カナリア・DEP/NX・ASLRは緩和で、それぞれ防げる範囲に限界がある。</li><li>setuidの最小化はBOFを消さず被害を抑える。どれか1つで完全には防げないので、多層で守る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep115-bof-defense:safe-func">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">安全な関数・境界チェック</span><span class="back" hidden><span class="def">コピー前に入力の長さを確認し、長さを指定できる関数を使うこと。あふれる書き込み自体を防ぐ根本の対策。</span><span class="note">限界: 長さの計算を間違えれば脆弱性は残る。既存コードの修正漏れにも注意。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep115-bof-defense:canary">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">スタックカナリア（スタックプロテクタ）</span><span class="back" hidden><span class="def">バッファと戻りアドレスの間に番兵の値を置き、関数の復帰時に変化を検査して、変わっていれば異常終了させる仕組み。</span><span class="note">脆弱性は残る。止まるので可用性に影響する。値が漏れる場合や飛び越える書き込みには弱い。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep115-bof-defense:dep-nx">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DEP／NX</span><span class="back" hidden><span class="def">スタックやデータ領域を実行不可にする仕組み。注入されたコードがそのまま動くのを防ぐ。</span><span class="note">既存コードを使い回す手口（return-to-libcやROP）には効かない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep115-bof-defense:aslr">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ASLR</span><span class="back" hidden><span class="def">実行や起動のたびにメモリ上の配置を変え、攻撃者がアドレスを決め打ちするのを難しくする仕組み。</span><span class="note">確率的な対策。アドレスの漏えいや、対応していない部分では効果が落ちる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep115-bof-defense:min-setuid">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">setuid権限の最小化</span><span class="back" hidden><span class="def">不要なsetuid/setgidを外す、rootを避ける、特権が不要になったらすぐ手放す。BOFは消えず、被害を抑える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep115-bof-defense:mitigation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">緩和策</span><span class="back" hidden><span class="def">脆弱性そのものは消さず、悪用の成功や影響を減らす対策。カナリア・DEP/NX・ASLRが当たる。</span><span class="note">根本対策は、長さの確認と修正パッチ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep115-bof-defense:defense-in-depth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">多層防御</span><span class="back" hidden><span class="def">1つの対策に頼らず、根本対策と緩和策、被害抑制を組み合わせること。どれか1つでBOFが完全に消えるわけではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep115-bof-defense:impact-privilege">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">影響は動いていた権限で決まる</span><span class="back" hidden><span class="def">BOFで得られるのは脆弱なプロセスの権限。setuid rootならroot権限、つまり権限昇格になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep115-bof-defense:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>DEP／NXが防ぐのは、次のうちどれ？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>コピー時の長さ確認の漏れ</span></button><p class="why" hidden>安全な関数・境界チェックの役割</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>メモリ配置の予測</span></button><p class="why" hidden>ASLRの役割</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>データ領域上のコードの実行</span></button><p class="why" hidden>データ領域上のコードの実行</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>setuid権限の付与</span></button><p class="why" hidden>権限の話で、DEPは無関係</p></li></ol>
+</li>
+<li class="quiz" data-key="ep115-bof-defense:q0" data-answer="1">
+  <p class="q">BOFのある管理コマンドを、コードは修正せず、ビルド設定でスタック保護だけ有効にした。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>入力長の確認が不要になったため、BOFは解消され追加の対応は要らない</span></button><p class="why" hidden>コードは直っていない。カナリアは緩和で、脆弱性は残る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>戻りアドレスの書き換えを検知して停止できるが、脆弱性は残る</span></button><p class="why" hidden>正解。復帰時に番兵の値を検査し、変化があれば止める。止まるので可用性への影響もある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>あふれる書き込みそのものが、起きなくなる</span></button><p class="why" hidden>書き込み自体は起きる。それを検知する仕組み。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>setuid属性が自動で外れ、権限昇格しなくなる</span></button><p class="why" hidden>属性はそのまま。スタック保護はsetuidの設定を変えない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep115-bof-defense:q1" data-answer="0">
+  <p class="q">DEP／NXが有効な環境で、攻撃者が、入力に仕込んだコードではなく、プロセス内に既にあるコードを使い回す手口を使った。DEP／NXの評価はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>既存コードの再利用には効かない</span></button><p class="why" hidden>正解。DEP／NXは注入コードの実行を防ぐ。既存コードを使い回す手口には別の対策が要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>データ領域のコードは動かせないので、この手口も防げる</span></button><p class="why" hidden>防げるのは注入されたコードの実行。既存コードの再利用は実行可能な領域のコード。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ASLRと同じ仕組みで、配置の予測を困難にする</span></button><p class="why" hidden>配置をランダム化するのはASLR。DEP／NXは領域を実行不可にする。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>コピー時の長さ検査の代わりになり、BOFそのものが起きない</span></button><p class="why" hidden>長さの確認は安全な関数・境界チェックの役割。DEP／NXでは代わりにならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep115-bof-defense:q2" data-answer="3">
+  <p class="q">ASLRが有効な環境で、別の不備からアドレス情報が漏れていた。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ASLRは確率的なので、漏えいがなくても常に突破される</span></button><p class="why" hidden>確率的ではあるが、「常に突破される」は言い過ぎ。決め打ちを難しくする効果はある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ASLRが有効なら、アドレスが漏れても影響はない</span></button><p class="why" hidden>漏えいがあると配置を知られるので、影響がないとは言えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>DEP／NXを併用すれば、アドレスの漏えいも防げる</span></button><p class="why" hidden>DEP／NXは領域を実行不可にする仕組みで、アドレスの漏えいを防ぐものではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>配置を予測されうるため、ASLRの効果が下がる</span></button><p class="why" hidden>正解。アドレスの漏えいなどがあると、ASLRの効果は落ちる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep115-bof-defense:q3" data-answer="1">
+  <p class="q">BOFのあるsetuid rootの管理コマンドについて、被害を抑える方針として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>setuid rootのままで、スタック保護だけを有効にして済ませる</span></button><p class="why" hidden>緩和策だけでは脆弱性が残る。権限そのものの見直しも要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>不要な属性を外し、低権限ユーザーで動かす</span></button><p class="why" hidden>正解。不要なsetuidを外し、root以外の低権限ユーザーで動かす。BOFは消えず、被害を抑える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>特権が不要になった後も、プロセス終了まで権限を保持する</span></button><p class="why" hidden>特権が不要になったら、すぐ手放す。保持し続けると影響が大きいまま。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ファイルのハッシュ値を毎日記録して、改ざんを監視する</span></button><p class="why" hidden>ファイルの改ざん監視は、入力の処理で起きるBOFの悪用への対策ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep115-bof-defense:q4" data-answer="0">
+  <p class="q">同じ種類のBOFが、一般ユーザー権限のサービスと、setuid rootのコマンドの両方にある。悪用されたときの被害の判断として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>動いていた権限が大きい、setuid rootの側</span></button><p class="why" hidden>正解。影響の大きさは、脆弱なプロセスが動いていた権限で決まる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>入力が長い方。あふれる量で被害が決まる</span></button><p class="why" hidden>入力の長さは成立の条件で、被害の大きさを決めるものではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>どちらも同じ。BOFの影響は権限と無関係</span></button><p class="why" hidden>得られるのは脆弱なプロセスの権限なので、権限により影響は変わる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>カナリアを使う側。検知すると権限が下がるため</span></button><p class="why" hidden>カナリアは検知して止める仕組みで、権限を下げるものではない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">スタックカナリア・DEP/NX・ASLRを入れても、BOFの対策として十分とは言えない理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">これらは緩和策で、脆弱性そのものは直らない。カナリアは値の漏えいなどで、DEP/NXは既存コードの再利用で、ASLRはアドレスの漏えいで効果が落ちる。根本は長さの確認と修正パッチで、緩和策は組み合わせて使う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep115-bof-defense-t0-0"> 緩和策で脆弱性は残る</label></li><li><label><input type="checkbox" id="ep115-bof-defense-t0-1"> それぞれに限界がある</label></li><li><label><input type="checkbox" id="ep115-bof-defense-t0-2"> 根本は長さの確認と修正</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">setuid root のコマンドのBOFに対し、層をどう重ねるかを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">根本として長さの確認と修正を行い、緩和としてカナリア・DEP/NX・ASLRを有効にする。さらに不要なsetuidを外す、root以外の低権限ユーザーにする、特権を早く手放すことで、悪用されても被害を抑える。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep115-bof-defense-t1-0"> 根本: 長さの確認と修正</label></li><li><label><input type="checkbox" id="ep115-bof-defense-t1-1"> 緩和: カナリア・DEP/NX・ASLR</label></li><li><label><input type="checkbox" id="ep115-bof-defense-t1-2"> 被害抑制: setuidの最小化</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="対策後の動作確認記録（ダミー）"><div class="logtitle">対策後の動作確認記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 所有者root・setuid付きの管理コマンド（再ビルド後）</span></div><div class="logrow"><span class="hl">変更点: コンパイル時のスタック保護オプションを有効化のみ</span></div><div class="logrow"><span class="hl">以前に権限昇格した長い引数で実行 → uid変化なし</span></div><div class="logrow"><span class="hl">標準エラーに *** stack smashing detected *** を出力、SIGABRTで終了</span></div><div class="logrow"><span class="hl">// 入力長の確認コードは差分なし / ls -l で s 属性は残存</span></div></div></div>
+  <p class="q">この結果から言える内容として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">戻りアドレスの書き換えを実行時に検知し、プロセスを停止させた</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>脆弱性が修正された … 入力長の確認コードは差分なし</li><li>setuidが外れた … ls -l で s 属性が残っている</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.3.3 BOF攻撃による影響</li><li>2.3.4 BOF攻撃への対策</li></ul>
+  <p>影響が権限で決まる点と、各対策が防ぐ範囲・限界を区別し、根本対策と緩和策・被害抑制の違いを確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep114-bof.html">← #14 BOF攻撃の仕組み 戻りアドレスとsetuidの権限昇格</a><a href="ep116-password-crack.html">#16 パスワードクラックの種類と対策 ソルトとストレッチングの役割 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

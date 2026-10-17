@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#95 メール認証 SPF・DKIM・DMARC なりすましへの備え｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#95 ・ 追加テーマ（目次外）</p>
+  <h1>メール認証 SPF・DKIM・DMARC なりすましへの備え</h1>
+  <ol class="summary"><li>SPFは接続元IP、DKIMは署名の検証。見るのはMAIL FROMのドメインと署名のドメインで、ヘッダFromとは別。</li><li>DMARCは、SPFかDKIMが合格し、かつ合格したドメインがヘッダFromと一致して初めて合格になる。</li><li>転送や件名の追記で失敗しうる。攻撃者が自分のドメインで認証を通す類似ドメインは防げない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep195-mail-auth-spf-dkim-dmarc:spf">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SPF</span><span class="back" hidden><span class="def">送信ドメインがDNS(TXT)に許可する送信元IPを公開し、受信側が接続元IPを照合する仕組み。</span><span class="note">検証対象はMAIL FROM（封筒の送信者）のドメイン。ヘッダFromは直接見ない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep195-mail-auth-spf-dkim-dmarc:dkim">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DKIM</span><span class="back" hidden><span class="def">送信側が秘密鍵でヘッダの一部と本文に署名し、受信側が公開鍵で検証する仕組み。</span><span class="note">署名であり暗号化ではない。署名対象が書き換わると検証に失敗する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep195-mail-auth-spf-dkim-dmarc:dmarc">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DMARC</span><span class="back" hidden><span class="def">SPFまたはDKIMの合格に加え、そのドメインがヘッダFromと一致したとき合格とする仕組み。不合格時の扱いも宣言する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep195-mail-auth-spf-dkim-dmarc:mail-from">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">MAIL FROM（封筒の送信者）</span><span class="back" hidden><span class="def">SMTPの送信者として通知されるアドレス。SPFが検証するドメインで、表示されるFromとは別物。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep195-mail-auth-spf-dkim-dmarc:header-from">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ヘッダFrom</span><span class="back" hidden><span class="def">メールのヘッダに書かれ、受信者の画面に表示される差出人。DMARCは認証したドメインとの一致を見る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep195-mail-auth-spf-dkim-dmarc:alignment">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">識別子の一致（アライメント）</span><span class="back" hidden><span class="def">認証に合格したドメインがヘッダFromのドメインと一致していること。厳格と緩やかの2種類がある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep195-mail-auth-spf-dkim-dmarc:selector">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DKIMの公開鍵の置き場所</span><span class="back" hidden><span class="def">公開鍵は selector._domainkey.ドメイン のDNSに置かれる。DKIM-Signatureヘッダの内容で受信側が探す。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep195-mail-auth-spf-dkim-dmarc:dmarc-policy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DMARCポリシー（none/quarantine/reject）</span><span class="back" hidden><span class="def">不合格時の扱いを、ドメイン所有者がDNSの_dmarcに宣言する。何もしない・隔離・拒否の3段階。</span><span class="note">受信側は参考にしつつ、ローカルポリシーで上書きすることもある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep195-mail-auth-spf-dkim-dmarc:dmarc-report">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DMARCレポート（rua/ruf）</span><span class="back" hidden><span class="def">ruaは集計レポート、rufは失敗レポート。まずnoneで観測し、段階的にポリシーを強める運用に使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep195-mail-auth-spf-dkim-dmarc:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>DKIMの説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>秘密鍵で署名し、DNSの公開鍵で検証する</span></button><p class="why" hidden>秘密鍵で署名し、公開鍵で検証</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>送信元IPが、許可の一覧にあるか確かめる</span></button><p class="why" hidden>送信元IPの確認はSPF</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>失敗時の扱いを、ドメインの持ち主が宣言する</span></button><p class="why" hidden>失敗時の扱いの宣言はDMARC</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>本文を暗号化し、第三者に読めなくする</span></button><p class="why" hidden>DKIMは署名で、暗号化ではない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep195-mail-auth-spf-dkim-dmarc:q0" data-answer="1">
+  <p class="q">自社ドメイン corp.example のメールを、配信サービス経由で送っている。配信サービスはMAIL FROMに自社のものではないドメインを使い、メールには corp.example の署名（DKIM）を付けている。ヘッダFromは corp.example である。DMARCの判定として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SPFで合格したドメインがヘッダFromと別なので、SPFが一致せずDMARCも必ず不合格になる</span></button><p class="why" hidden>SPFが一致しないだけでは不合格にならない。DMARCはSPFまたはDKIMのどちらかが、合格かつFromと一致すれば合格になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>DKIMが合格しかつ署名ドメインがヘッダFromと一致するため、DMARCは合格しうる</span></button><p class="why" hidden>正解。SPFが一致しなくても、DKIMの署名ドメインがヘッダFromと一致して検証に合格すれば、DMARCは合格しうる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SPFとDKIMの両方がヘッダFromと一致しなければ、DMARCは合格にならない</span></button><p class="why" hidden>両方が必要なのではなく、どちらか一方で足りる。両方を要求すると、この構成の正規メールが落ちてしまう。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>署名の有無にかかわらず、MAIL FROMのドメインだけで合格かどうかが決まる</span></button><p class="why" hidden>MAIL FROMで決まるのはSPFの検証対象。DMARCはSPFとDKIMを束ね、ヘッダFromとの一致を見る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep195-mail-auth-spf-dkim-dmarc:q1" data-answer="2">
+  <p class="q">社員が会社のメールを個人のメールアドレスへ自動転送しており、転送先で一部のメールが迷惑メール扱いになるとの申告があった。自社ドメインはDMARCをrejectにする予定である。検討として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SPFの許可IPに、社員が使いうる個人向けメールサービスの転送サーバを全て追加し、転送時にも合格するよう整えておく</span></button><p class="why" hidden>転送先は不特定で、全てを許可IPとして列挙するのは現実的でない。転送でIPが変わる点はDKIMで補う考え方になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>転送ではどの認証も成立しないので、rejectにしても転送先での扱いに影響はないと判断する</span></button><p class="why" hidden>転送で失敗しやすいのはSPFで、DKIMは署名が保たれていれば検証できる。「どの認証も成立しない」は言い過ぎ。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>転送でSPFは失敗しうる。DKIMが書き換わらず合格すれば足りるため、署名を確認してから強める</span></button><p class="why" hidden>正解。転送では送信元IPが変わりSPFが失敗しうる。署名対象が書き換わらなければDKIMで合格し、DMARCも合格しうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SPFの失敗が確認された時点で、DMARCのポリシーはnoneに戻し、その後の強化は行わず運用する</span></button><p class="why" hidden>noneは観測の段階として有効だが、強化せず固定すると不合格時の扱いを宣言した意味が薄れる。観測しながら強める運用が基本。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep195-mail-auth-spf-dkim-dmarc:q2" data-answer="3">
+  <p class="q">経理に「取引先の請求書メール」が届いた。表示名は取引先名で、受信ヘッダではSPF・DKIM・DMARCがすべて合格だったが、送信ドメインは取引先のドメインに似た別の綴りだった。振込先の変更依頼が含まれている。適切な判断はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>三つの認証がすべて合格なので、正規の取引先からのメールと判断して手続きを進める</span></button><p class="why" hidden>攻撃者は自分のドメインで認証を通せる。合格は、そのドメインから送られたことしか示さない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>取引先がDMARCをrejectにしていなかったことが原因なので、先方に設定の強化を依頼して済ませる</span></button><p class="why" hidden>取引先のDMARCが守るのは取引先のドメインのなりすまし。別の綴りのドメインは攻撃者のものなので、先方の設定では防げない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>認証の失敗がないので、メールフィルタの追加設定は不要と判断して通常どおり処理する</span></button><p class="why" hidden>認証が合格でもこのメールは疑わしい。認証の結果だけでなく、ドメイン名や内容の確認が要る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>認証の合格は送信ドメインの確認だけ。ドメインを見比べ、振込先変更は別経路で確かめる</span></button><p class="why" hidden>正解。類似ドメインや表示名の偽装、本文の正当性は認証では保証されない。別経路での確認が必要。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep195-mail-auth-spf-dkim-dmarc:q3" data-answer="1">
+  <p class="q">自社ドメイン corp.example はDKIM署名を付けて送信しており、現在のDMARCは p=none で集計レポートを受け取っている。外部のメーリングリストに投稿すると、メーリングリストが件名に識別タグを追記して配信し、一部がDMARCで不合格と集計された。rejectへの切替えを検討している。原因の見立てと対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>DKIM鍵を長くすれば書き換えにも耐えるようになるので、鍵の更新を最優先で進める</span></button><p class="why" hidden>鍵長は署名の強さに関わり、署名後の本文や件名の変更で検証が失敗する問題は変わらない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>署名後の書換えでDKIMが失敗したと見て、レポートで影響を観測しつつ段階的に強める</span></button><p class="why" hidden>正解。件名の追記など署名対象の書き換えでDKIMは失敗しうる。noneなどで観測し、段階的に強める運用が基本になる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>原因の切り分けは後回しにして、まずポリシーをrejectにし、メーリングリスト側の対処を待つ</span></button><p class="why" hidden>原因を見ないまま拒否にすると、正当な投稿も拒否される。受信側がローカルポリシーで判断する場合もあるが、頼り切るのは危うい。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>転送の影響を避けるため、DKIM署名をやめてSPFだけを使う構成に切り替える</span></button><p class="why" hidden>転送ではSPFのほうが失敗しやすい。DKIMをやめると、合格する手段をさらに減らしてしまう。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep195-mail-auth-spf-dkim-dmarc:q4" data-answer="2">
+  <p class="q">自社ドメインにDMARCを導入する担当者が、まず p=none で公開した。経営層から「noneでは何も止められないので意味がない」と指摘された。担当者の説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>noneは不合格のメールを隔離する設定で、最低限の保護にはなっている</span></button><p class="why" hidden>隔離にあたるのはquarantine。noneは「何もしない」ポリシーで、不合格のメールの扱いは変わらない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>noneは受信側が必ず拒否するので、正規メールが落ちないか確認する段階である</span></button><p class="why" hidden>拒否にあたるのはreject。noneは受信側の扱いを変えず、「必ず拒否」は言い過ぎで取り違えになっている。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>noneは扱いを変えないが、集計で認証状況を観測でき、強める準備になる</span></button><p class="why" hidden>正解。noneは扱いを変えないが、ruaの集計で正規の送信元の状況を把握でき、段階的に強める運用の入口になる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>noneでも失敗レポートが全て届くので、攻撃者を特定する手段として十分に機能する</span></button><p class="why" hidden>レポートは認証の状況を知る手段で、攻撃者の特定は目的ではない。また、全てが届くとも限らない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">SPF・DKIM・DMARCは、それぞれ何を検証しているか。DMARCが「束ねる」とはどういうことか、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">SPFは接続元IPがMAIL FROMのドメインの許可リストにあるかを見る。DKIMは署名を公開鍵で検証し、改変を検知する。DMARCはそのどちらかが合格し、かつ合格したドメインがヘッダFromと一致したときに合格とし、不合格時の扱い（none/quarantine/reject）をドメイン所有者が宣言する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep195-mail-auth-spf-dkim-dmarc-t0-0"> SPFはIP、検証対象はMAIL FROM</label></li><li><label><input type="checkbox" id="ep195-mail-auth-spf-dkim-dmarc-t0-1"> DKIMは署名の検証</label></li><li><label><input type="checkbox" id="ep195-mail-auth-spf-dkim-dmarc-t0-2"> 合格したドメインとヘッダFromの一致</label></li><li><label><input type="checkbox" id="ep195-mail-auth-spf-dkim-dmarc-t0-3"> 不合格時のポリシーの宣言</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">3方式をすべて導入しても防げないなりすましは何か。理由とあわせて、頭の中で整理してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">攻撃者が自分のドメインで認証を通す類似ドメイン、表示名の偽装、本文の正当性は保証されない。認証されるのはドメインであり、そのドメインが信頼できる相手かは別の話になるため、送信ドメインの目視確認や別経路での確認が要る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep195-mail-auth-spf-dkim-dmarc-t1-0"> 類似ドメインは攻撃者のドメインで認証が通る</label></li><li><label><input type="checkbox" id="ep195-mail-auth-spf-dkim-dmarc-t1-1"> 表示名の偽装・本文の正当性は保証されない</label></li><li><label><input type="checkbox" id="ep195-mail-auth-spf-dkim-dmarc-t1-2"> 認証されるのはドメインであること</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="受信メールの判定記録（ダミー）"><div class="logtitle">受信メールの判定記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">ヘッダFrom : info@example.jp</span></div><div class="logrow"><span class="hl">SPFとDKIM : どちらも bad.test で合格</span></div><div class="logrow"><span class="hl">example.jp のDMARC : p=reject</span></div><div class="logrow"><span class="hl">DMARC合格の条件 : 合格ドメインがFromと同じ</span></div></div></div>
+  <p class="q">ポリシーに従う受信側は、どう扱う？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">DMARCは不合格となり、ポリシーに従って拒否する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>SPFが合格なので、そのまま受信箱へ配送する … 合格したのはbad.testで、Fromのexample.jpとは別のドメインである</li><li>DKIMが合格なので、example.jpの正規メールとして扱う … 署名したのもbad.testで、example.jpの署名ではない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>EX-09 メール認証 SPF / DKIM / DMARC</li></ul>
+  <p>SPF・DKIM・DMARCの検証対象の違いと、ヘッダFromとの一致の考え方、転送・書き換え・類似ドメインの限界を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep194-incident-forensics.html">← #94 インシデント対応とフォレンジック 証拠保全とログ相関</a><a href="ep196-infosec-properties.html">#96 情報セキュリティの特性 機密性・完全性・可用性と付加的な特性 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#37 DNSの脆弱性への対策 弱点ごとに塞ぐ｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#37 ・ 第3章 情報セキュリティにおける脆弱性</p>
+  <h1>DNSの脆弱性への対策 弱点ごとに塞ぐ</h1>
+  <ol class="summary"><li>仕様の弱点にはDNSSECと識別子・ポートのランダム化。署名と検証の両方が要り、ランダム化は確率を下げるだけ。</li><li>設定の弱点には、再帰とゾーン転送の限定、内部名を載せない、権威とキャッシュの分離で対応する。</li><li>実装の弱点は更新で塞ぐ。バージョン非表示は補助。どれか1つでは足りず、弱点ごとに重ねる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep137-dns-vuln-defense:dnssec">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DNSSEC</span><span class="back" hidden><span class="def">応答に電子署名を付け、検証側が正当性と改ざんの有無を確かめる仕組み。ゾーン側の署名と検証側の検証の両方が要る。</span><span class="note">通信の秘匿はしない。署名のないドメインは検証できない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep137-dns-vuln-defense:randomize">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">識別子とソースポートのランダム化</span><span class="back" hidden><span class="def">問い合わせの識別子とソースポートを予測しにくくし、偽の応答が通る確率を下げる対策。</span><span class="note">確率を下げるだけで、ゼロにはならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep137-dns-vuln-defense:limit-recursion">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">再帰問い合わせの限定</span><span class="back" hidden><span class="def">再帰問い合わせを許可したクライアントだけに限る設定。外から使えなければ、踏み台にされにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep137-dns-vuln-defense:limit-zone-transfer">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ゾーン転送の限定</span><span class="back" hidden><span class="def">ゾーン転送を許可した相手だけに限る設定。アドレスの制限に加えて、署名付きの認証も使える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep137-dns-vuln-defense:split-roles">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">権威とキャッシュの分離</span><span class="back" hidden><span class="def">権威サーバとキャッシュサーバを別にして、役割を分ける対策。役割を分けるほど攻撃を受ける面が狭まる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep137-dns-vuln-defense:split-view">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">内外で見せる情報の分離</span><span class="back" hidden><span class="def">公開ゾーンには内部の名前を載せず、内外で見せる情報を分ける対策。構成の漏えいと情報収集を防ぐ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep137-dns-vuln-defense:patch">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ソフトウェアの更新</span><span class="back" hidden><span class="def">実装の弱点への対策。修正プログラムを当てて更新する。遅れるほど、公開済みの穴が長く残る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep137-dns-vuln-defense:hide-version">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">バージョン情報の非表示</span><span class="back" hidden><span class="def">バージョン情報を外部に見せない設定。補助的な対策で、更新の代わりにはならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep137-dns-vuln-defense:layered">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">弱点ごとの重ね使い</span><span class="back" hidden><span class="def">仕様・設定・実装の弱点それぞれに対策を対応づけ、重ねて使う考え方。どれか1つでは足りない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep137-dns-vuln-defense:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>DNSキャッシュポイズニングへの対策として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>キャッシュのTTLを、できるだけ長くする</span></button><p class="why" hidden>長いほど、偽の答えも長く残る</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ゾーン転送を、すべての相手に許可する</span></button><p class="why" hidden>登録情報が、丸ごと見える</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>権威とキャッシュを、同じサーバで兼用する</span></button><p class="why" hidden>攻撃を受ける面が、広がる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>DNSSECの検証を有効にする</span></button><p class="why" hidden>署名の検証で、偽の応答を見抜く</p></li></ol>
+</li>
+<li class="quiz" data-key="ep137-dns-vuln-defense:q0" data-answer="0">
+  <p class="q">自社ドメインのゾーンに、DNSSECの署名をしていない。検証側のキャッシュサーバがDNSSECの検証を有効にしている場合、自社ドメインの名前解決の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>署名されていないドメインは検証できず、署名と検証の両方が要る</span></button><p class="why" hidden>正解。DNSSECはドメイン側が署名していなければ検証できず、検証側が有効でなければ効かない。両方が必要。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>検証側が有効なので、署名のないドメインでも応答の正当性を確かめられる</span></button><p class="why" hidden>署名がないドメインは、そもそも検証できない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>署名は通信の秘匿も行うので、署名がなくても盗聴は防げるようになる</span></button><p class="why" hidden>署名は通信の秘匿ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>識別子とポートのランダム化を併用すれば、署名がなくても検証できるようになる</span></button><p class="why" hidden>ランダム化は偽の応答が通る確率を下げるだけで、署名の代わりに検証を可能にするものではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep137-dns-vuln-defense:q1" data-answer="2">
+  <p class="q">キャッシュサーバで、問い合わせの識別子とソースポートのランダム化を実施した。この対策の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>偽の応答を完全に防ぐので、DNSSECは導入しなくてもよい</span></button><p class="why" hidden>ランダム化は確率を下げるだけで、完全には防げない。重ねて使う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>応答に電子署名を付けるので、改ざんの有無を検証側が確かめられる</span></button><p class="why" hidden>電子署名で正当性を確かめるのはDNSSECの役割。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>偽の応答が通る確率を下げるが、ゼロにはしない</span></button><p class="why" hidden>正解。ランダム化は偽の応答が当たる確率を下げるが、ゼロにはならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>通信を暗号化するので、問い合わせの内容を盗聴されなくなる</span></button><p class="why" hidden>通信の秘匿を行う対策ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep137-dns-vuln-defense:q2" data-answer="1">
+  <p class="q">セカンダリのDNSサーバにだけゾーンを渡したい。ゾーン転送の設定方針として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>要求元を問わずに許可し、ゾーンの内容は公開しても問題ない前提で運用する</span></button><p class="why" hidden>誰にでも許すと、登録情報が丸ごと見える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>許可した相手だけに限定し、アドレスの制限や署名付きの認証を使う</span></button><p class="why" hidden>正解。ゾーン転送は許可した相手だけに限定する。アドレスの制限に加えて、署名付きの認証も使える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>転送は許可したままにして、バージョン情報を非表示にして隠しておく</span></button><p class="why" hidden>バージョン情報の非表示は実装の弱点への補助で、転送の許可範囲の対策にはならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>キャッシュサーバと兼用にして、転送の要求も1台でまとめて受け付ける</span></button><p class="why" hidden>権威サーバとキャッシュサーバは分離する。兼用は攻撃を受ける面を広げる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep137-dns-vuln-defense:q3" data-answer="0">
+  <p class="q">DNSサーバソフトの脆弱性が公表された。「バージョン情報を外部に見せない設定にして対応を終えた」という報告への評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>非表示は補助で、修正プログラムの適用という更新の代わりにはならない</span></button><p class="why" hidden>正解。バージョン情報の非表示は補助で、更新の代わりにはならない。更新が遅れるほど公開済みの穴が長く残る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>バージョンを隠せば公開済みの弱点が悪用されなくなるので、更新は後回しにしてもよい</span></button><p class="why" hidden>更新が遅れるほど、公開済みの穴は長く残る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>更新が遅れても、非表示と再帰の限定を組み合わせれば、弱点は残らないと言える</span></button><p class="why" hidden>設定の限定は設定の弱点への対策で、ソフトの脆弱性は更新で塞ぐ。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>バージョン情報を隠せば、再帰やゾーン転送の設定の弱点も同時に解消される</span></button><p class="why" hidden>非表示は実装の弱点への補助。設定の弱点は、許可範囲の限定などで別に対応する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep137-dns-vuln-defense:q4" data-answer="2">
+  <p class="q">公開ゾーンに内部の名前を載せている設定を改めたい。方針として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>内部の名前も公開ゾーンに載せたまま、TTLを短くして見える時間を減らす</span></button><p class="why" hidden>載せたままでは構成が見える。見せない形にするのが対策。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>内部の名前を載せたまま、DNSSECで署名して、構成の漏えいを防ぐようにする</span></button><p class="why" hidden>DNSSECは正当性の確認で、通信の秘匿や構成の隠蔽をするものではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>内外で見せる情報を分け、公開ゾーンには内部の名前を載せない</span></button><p class="why" hidden>正解。公開ゾーンには内部の名前を載せず、内外で見せる情報を分ける。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>権威サーバとキャッシュサーバを兼用にして、内部の名前を一括で管理する</span></button><p class="why" hidden>兼用は攻撃を受ける面を広げる。権威とキャッシュは分離する。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">再帰問い合わせを誰にでも許すキャッシュサーバが、第三者へ大きな応答を大量に送りつける踏み台にされる流れと、その対策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">再帰を誰にでも許すと、外部から送られた問い合わせに応答する。UDPは送信元を偽れるため、第三者の送信元を装った問い合わせで、問い合わせより大きい応答がその第三者へ届く。再帰を許可したクライアントだけに限定し、外から使えないようにする。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep137-dns-vuln-defense-t0-0"> 誰にでも再帰を許し外部の問い合わせに応答する</label></li><li><label><input type="checkbox" id="ep137-dns-vuln-defense-t0-1"> 応答が問い合わせより大きく、第三者へ送られる</label></li><li><label><input type="checkbox" id="ep137-dns-vuln-defense-t0-2"> 許可したクライアントだけに限定する</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">DNSSECとランダム化を導入しても「完全には防げない」と言われる理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">DNSSECはドメイン側が署名していなければ検証できず、検証側が有効でなければ効かない。ランダム化は偽の応答が通る確率を下げるだけでゼロにはならない。だから弱点ごとに対策を重ねる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep137-dns-vuln-defense-t1-0"> 署名と検証の両方が必要</label></li><li><label><input type="checkbox" id="ep137-dns-vuln-defense-t1-1"> 署名のないドメインは検証できない</label></li><li><label><input type="checkbox" id="ep137-dns-vuln-defense-t1-2"> ランダム化は確率を下げるだけ</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="キャッシュDNSサーバの調査記録（ダミー）"><div class="logtitle">キャッシュDNSサーバの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社内のキャッシュDNSサーバ（ダミー）。外部の第三者から、大量の応答が届いたと苦情</span></div><div class="logrow"><span class="hl">このサーバは、インターネット上のどのアドレスからの再帰問い合わせにも応答していた</span></div><div class="logrow"><span class="hl">外部から届いた問い合わせの送信元は、第三者のアドレスで、応答はそこへ送られていた</span></div><div class="logrow"><span class="hl">各応答は、問い合わせより大きく、問い合わせは通常の名前解決の要求のみ</span></div><div class="logrow"><span class="hl">// キャッシュの登録値は、権威サーバの値と一致 / ゾーン転送の要求は0件</span></div></div></div>
+  <p class="q">この事象の原因として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">再帰問い合わせを誰にでも許す設定のため、第三者への応答の踏み台にされた</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>キャッシュポイズニング … キャッシュの値は、権威サーバの値と一致</li><li>ゾーン転送による漏えい … 要求はすべて通常の名前解決で、転送は0件</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>3.5.2 DNSの脆弱性への対策</li></ul>
+  <p>仕様・設定・実装の弱点それぞれに対応する対策と、各対策の限界（署名と検証の両方、確率を下げるだけ、適用漏れ）を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep136-dns-vuln.html">← #36 DNSの脆弱性 仕様・設定・実装のどこが弱いか</a><a href="ep138-http-session.html">#38 HTTPとセッション管理 IDを持つ人が本人になる仕組み →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

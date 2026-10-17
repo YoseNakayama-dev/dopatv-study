@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#73 主なID連携技術 認証と認可を分けて覚える｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#73 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
+  <h1>主なID連携技術 認証と認可を分けて覚える</h1>
+  <ol class="summary"><li>SAMLは署名付きXMLで認証結果を伝え、OpenID ConnectはOAuth上に署名付きIDトークンで認証を加える。</li><li>OAuth 2.0は認可の枠組みで、パスワードを渡さずトークンで権限を渡す。OAuth単体は本人確認の仕組みではない。</li><li>署名・宛先・期限を検証し、リダイレクトURIは事前登録と照合、state/nonceで対応づけ、スコープは最小に。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep173-id-federation-tech:saml">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SAML</span><span class="back" hidden><span class="def">署名付きのXML文書で認証結果を伝える方式。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep173-id-federation-tech:assertion">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">アサーション</span><span class="back" hidden><span class="def">SAMLで認証結果を伝えるXML文書。署名を確認する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep173-id-federation-tech:oauth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">OAuth 2.0</span><span class="back" hidden><span class="def">認可の枠組み。パスワードを渡さず、アクセストークンで権限を渡す。</span><span class="note">OAuth単体は、利用者の本人確認の仕組みではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep173-id-federation-tech:oidc">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">OpenID Connect</span><span class="back" hidden><span class="def">OAuth 2.0の上に認証を加えた仕組み。認証結果を署名付きのIDトークン（JWT）で伝える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep173-id-federation-tech:authn-authz">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証と認可</span><span class="back" hidden><span class="def">認証は本人の確認、認可は権限を与えること。</span><span class="note">ログインと許可は別物。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep173-id-federation-tech:redirect-uri">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">リダイレクトURIの照合</span><span class="back" hidden><span class="def">戻り先のURLを検証しないと、コードやトークンが攻撃者へ渡る。事前に登録したURLと照合し、登録にないURLへは返さない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep173-id-federation-tech:state-nonce">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">state / nonce</span><span class="back" hidden><span class="def">要求と応答を結びつける値。別の要求への応答を受け入れないために使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep173-id-federation-tech:scope">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">スコープ（権限の範囲）</span><span class="back" hidden><span class="def">権限の範囲が広いほど、漏えいの影響が大きい。範囲は最小限にし、トークンの期限は短くする。</span><span class="note">トークンは持っているだけで使えてしまう。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep173-id-federation-tech:result-check">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">署名・宛先・有効期限の検証</span><span class="back" hidden><span class="def">アサーションもIDトークンも、署名・宛先・有効期限を受け取る側が確認する。未検証だと偽の認証結果を受け入れたり、使い回されたりする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep173-id-federation-tech:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>OpenID Connectの説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>署名付きのXMLで認証結果を伝える、SAMLと同じ仕様に基づく方式</span></button><p class="why" hidden>XMLで伝えるのはSAML</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>OAuthの仕様とは独立しており、トークンを一切使わない方式である</span></button><p class="why" hidden>OAuthを土台にしている</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>OAuthを土台に認証を加え、IDトークンで認証結果を伝える方式</span></button><p class="why" hidden>OAuthの上に認証を加える</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>アクセストークンがあれば、署名の検証を省略できる方式である</span></button><p class="why" hidden>署名検証は省略しない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep173-id-federation-tech:q0" data-answer="3">
+  <p class="q">アプリが、OAuth 2.0のアクセストークンを受け取れたことだけを根拠に、利用者のログインを成立させている。この設計の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>アクセストークンは署名付きXMLなので、検証すれば本人確認になる</span></button><p class="why" hidden>署名付きのXMLで認証結果を伝えるのはSAMLである。OAuth単体は本人確認の仕組みではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>アクセストークンはパスワードの代わりに権限を渡すものなので、本人確認として十分である</span></button><p class="why" hidden>OAuthはパスワードを渡さずトークンで権限を渡す認可の枠組みで、OAuth単体は利用者の本人確認の仕組みではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>OAuthは認証の仕組みなので、このアプリの扱いに問題はない</span></button><p class="why" hidden>OAuth 2.0は認可の枠組みである。認証を加えたのはOpenID Connectである。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>OAuth単体では本人確認にならず、OpenID Connectなどが要る</span></button><p class="why" hidden>正解。OAuth単体は本人確認の仕組みではなく、認証を加えたのがOpenID Connectである。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep173-id-federation-tech:q1" data-answer="0">
+  <p class="q">OAuth 2.0の認可の結果を返す側が、リダイレクトURIを検証せず、要求に付いたURIへそのまま結果を返している。対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>リダイレクトURIを事前に登録し、登録と一致するURLにだけ結果を返す</span></button><p class="why" hidden>正解。リダイレクトURIは事前に登録したものと照合し、登録にないURLへは結果を返さない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>リダイレクトURIは要求側が自由に指定でき、署名が付いていれば、そのまま返してよい</span></button><p class="why" hidden>戻り先のURLを検証しないと、コードやトークンが攻撃者へ渡る。リダイレクトURIは事前登録したものと照合する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>stateを付ければ、リダイレクトURIの照合は省ける</span></button><p class="why" hidden>stateは要求と応答を結びつけるための対策で、リダイレクトURIの照合の代わりにはならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>トークンの期限を短くすれば、リダイレクトURIの照合は不要になる</span></button><p class="why" hidden>トークンの期限を短くするのは漏えいの影響を小さくする対策で、リダイレクトURIの事前登録と照合は別に必要である。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep173-id-federation-tech:q2" data-answer="1">
+  <p class="q">OAuth 2.0を使うアプリが、受け取った応答が自分の送った要求に対するものかを確かめたい。対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>アクセストークンの有効期間を長くして、応答を使い回せるようにする</span></button><p class="why" hidden>トークンの期限は短くする。要求と応答の対応づけには、stateやnonceを使う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>stateやnonceで要求と応答を結びつけ、別の要求への応答を受け入れない</span></button><p class="why" hidden>正解。stateやnonceで要求と応答を結びつける。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>スコープを広く取り、どの応答でも受け入れられるようにする</span></button><p class="why" hidden>権限の範囲は最小限にする。広いほど漏えいの影響が大きい。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>リダイレクトURIを複数登録しておけば、どれに返された応答もそのまま受け入れてよいことにする</span></button><p class="why" hidden>リダイレクトURIは事前に登録したものと照合し、登録にないURLへは結果を返さない。要求と応答の対応づけはstateやnonceで行う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep173-id-federation-tech:q3" data-answer="3">
+  <p class="q">外部アプリに、ストレージの広い範囲を操作できるスコープでアクセストークンを発行している。トークンが漏えいした場合に備える対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>権限の範囲は漏えいの影響に関係なく、トークンの種類で決まる</span></button><p class="why" hidden>権限の範囲が広いほど、漏えいの影響が大きい。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>権限の範囲は広く取っておき、トークンの期限も長くして、再発行の手間を減らす</span></button><p class="why" hidden>権限の範囲は最小限、トークンの期限は短くする。広く長くすると漏えいの影響が大きくなる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>トークンは持っているだけでは使えないので、権限の範囲は考慮不要</span></button><p class="why" hidden>トークンは持っているだけで使えてしまう。権限の範囲は最小限にする。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>スコープを最小限にし、トークンの期限を短くして、影響を小さくする</span></button><p class="why" hidden>正解。スコープを最小限にし、トークンの期限を短くして、漏えいの影響を小さくする。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep173-id-federation-tech:q4" data-answer="0">
+  <p class="q">サービス側が、SAMLのアサーションの署名を検証せず、中のメールアドレスだけで利用者を特定してログインさせている。評価と対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>署名が未検証で、偽の認証結果を受け入れうる。署名・宛先・有効期限を検証する</span></button><p class="why" hidden>正解。署名を検証しないと偽の認証結果を受け入れる。署名・宛先・有効期限を検証する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>アサーションはXML形式で届くので、形式が正しければ偽の認証結果は受け入れない</span></button><p class="why" hidden>SAMLは署名付きのXMLで認証結果を伝えるもので、署名を検証しないと偽の認証結果を受け入れる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>IdPを信頼しているので、署名の検証は省き、宛先と有効期限だけ確認すればよい</span></button><p class="why" hidden>署名の未検証で偽の認証結果を受け入れる。署名、宛先、有効期限のすべてを検証する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>署名の検証はIdP側の仕事なので、受け取る側のサービスは検証しなくてよい</span></button><p class="why" hidden>署名を付けるのはIdPだが、その署名が正しいかを確かめるのは受け取る側である。受け取る側が検証しないと、偽の認証結果を受け入れる。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">OAuth 2.0とOpenID Connectの違いを、認証と認可の言葉で、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">OAuth 2.0は認可の枠組みで、パスワードを渡さずアクセストークンで権限を渡す。OAuth単体は本人確認の仕組みではない。OpenID ConnectはOAuthの上に認証を加え、署名付きのIDトークンで認証結果を伝える。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep173-id-federation-tech-t0-0"> OAuthは認可で、トークンで権限を渡す</label></li><li><label><input type="checkbox" id="ep173-id-federation-tech-t0-1"> OAuth単体は本人確認ではない</label></li><li><label><input type="checkbox" id="ep173-id-federation-tech-t0-2"> OpenID Connectは認証を加え、IDトークンで伝える</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">リダイレクトURIを検証しないとなぜ危ないか、またどう防ぐかを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">戻り先のURLを検証しないと、コードやトークンが攻撃者へ渡る。リダイレクトURIを事前に登録して照合し、登録にないURLへは結果を返さない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep173-id-federation-tech-t1-0"> コードやトークンが攻撃者へ渡る</label></li><li><label><input type="checkbox" id="ep173-id-federation-tech-t1-1"> リダイレクトURIを事前に登録する</label></li><li><label><input type="checkbox" id="ep173-id-federation-tech-t1-2"> 登録と照合し、登録にないURLへは返さない</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="写真閲覧アプリの連携に関する調査記録（ダミー）"><div class="logtitle">写真閲覧アプリの連携に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 外部の写真閲覧アプリが、利用者のクラウド上の写真を表示する</span></div><div class="logrow"><span class="hl">外部アプリに、利用者のパスワードは渡したくない</span></div><div class="logrow"><span class="hl">外部アプリに、写真の閲覧以外の操作はさせたくない</span></div><div class="logrow"><span class="hl">クラウド側は、利用者の同意に基づく権限付与に対応している</span></div><div class="logrow"><span class="hl">要件: 権限は利用者が把握できる範囲に限り、有効期間に上限を設ける</span></div></div></div>
+  <p class="q">要件を満たす方法として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">利用者の同意のもと、閲覧に限り期限をつけた許可証を外部アプリに発行する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>利用者のパスワードを外部アプリに登録し、代わりにログインさせる … パスワードを渡さない要件に反する</li><li>ストレージ全体の管理者アカウントを外部アプリと共有する … パスワードも渡すことになり、範囲も期限も絞れない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>6.9.2 主なID連携技術</li></ul>
+  <p>SAML・OAuth・OpenID Connectで何が伝わるか（認証結果か権限か）を区別し、各注意点と対策の対応を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep172-id-federation.html">← #72 ID連携の概要 認証は持ち主に任せる</a><a href="ep174-crypto-basics.html">#74 暗号の概念と主な暗号方式 鍵の使い分けと渡し方 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

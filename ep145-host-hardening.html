@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#45 ホストの要塞化の概要 入口を減らす考え方｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#45 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>ホストの要塞化の概要 入口を減らす考え方</h1>
+  <ol class="summary"><li>要塞化は設定を見直し、攻撃される入口（攻撃対象領域）を減らす。初期状態は使いやすさ優先。</li><li>基本は最小構成・最小権限・既定値の見直し・維持。基準を決め、適用前に検証環境で確認する。</li><li>運用中の構成のずれが起きうる。未知の脆弱性は防げないので、多層防御の一部として使う。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep145-host-hardening:hardening">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">要塞化（ハードニング）</span><span class="back" hidden><span class="def">OSやソフトの設定を見直し、攻撃を受けにくくすること。対象はサーバ・端末・仮想マシンなどのホスト。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep145-host-hardening:attack-surface">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">攻撃対象領域</span><span class="back" hidden><span class="def">攻撃者が触れられる機能や接続口の総体。要塞化はこの入口を減らす考え方に立つ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep145-host-hardening:minimal-config">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">最小構成</span><span class="back" hidden><span class="def">必要なサービスとソフトだけを残すこと。使わないサービスは脆弱性の入口にもなりうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep145-host-hardening:least-privilege">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">最小権限</span><span class="back" hidden><span class="def">利用者やプロセスに必要な権限だけを与えること。管理者権限は必要な人に、必要な間だけ与える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep145-host-hardening:default-values">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">既定値の見直し</span><span class="back" hidden><span class="def">初期アカウント・初期パスワード・既定の設定を変えること。初期値は広く知られているため。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep145-host-hardening:config-baseline">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">構成基準</span><span class="back" hidden><span class="def">要塞化で満たす設定の基準。基準づくりには、公開されている構成の指針も参考になる。</span><span class="note">手順は基準を決める、適用する、検査する、維持する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep145-host-hardening:verification-env">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">検証環境での確認</span><span class="back" hidden><span class="def">基準を適用する前に、業務への影響を確かめておくこと。止めすぎると業務が止まるため。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep145-host-hardening:config-drift">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">構成のずれ</span><span class="back" hidden><span class="def">運用中に設定が変わり、構成基準から外れてしまうこと。設定の定期的な確認で見つける。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep145-host-hardening:defense-in-depth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">多層防御</span><span class="back" hidden><span class="def">複数の対策を重ねて守る考え方。要塞化では未知の脆弱性まで防げないため、その一部として使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep145-host-hardening:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>ホストの要塞化に沿った対応として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>作業の手間を減らすため、全利用者に管理者権限を与えておく</span></button><p class="why" hidden>権限が大きいほど、被害も広がる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>導入時の管理用アカウントを、初期パスワードのまま残しておく</span></button><p class="why" hidden>初期値は広く知られている</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>将来使うかもしれないので、不要なサービスも有効にしておく</span></button><p class="why" hidden>入口が増える</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>業務に必要な機能と権限だけを残す</span></button><p class="why" hidden>必要なものだけ残す</p></li></ol>
+</li>
+<li class="quiz" data-key="ep145-host-hardening:q0" data-answer="1">
+  <p class="q">新規サーバの要塞化を、チェックリストを使って進める。手順の組み立てとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>公開されたベンチマークを本番に一括適用し、問題が出たら検証環境で調べる</span></button><p class="why" hidden>基準は公開された指針を参考にできるが、適用の前に検証環境で業務への影響を確認する。本番に一括適用してはいけない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>構成基準を決め、検証環境で業務影響を確認して適用し、検査して維持する</span></button><p class="why" hidden>正解。構成基準を決める、適用する、検査する、維持する、の順。適用前に検証環境で業務への影響を確かめる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>適用後に基準を決める。基準は運用が安定してから一度だけ作る</span></button><p class="why" hidden>基準を決めるのは適用の前。後から作ると何に沿って適用したのかが定まらない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>検査を先に行い、不備があれば適用する。基準は維持の段階で決める</span></button><p class="why" hidden>最初に決めるのは構成基準で、検査は適用のあと。検査から始める順序ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep145-host-hardening:q1" data-answer="0">
+  <p class="q">障害対応のため、運用担当に管理者権限を付けたままにする運用が提案された。最小権限の考え方に沿った案はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>作業が必要な担当者に、必要な間だけ管理者権限を与え、作業が終わったら外す</span></button><p class="why" hidden>正解。管理者権限は、必要な人に、必要な間だけ与える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>管理者権限は付けたままにして、誰が何を使ったかは操作ログで事後に確認する運用にする</span></button><p class="why" hidden>ログは事後の調査に役立つが、権限が大きいほど侵害されたときの被害も広がる。権限を絞る対策の代わりにならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>全員に同じ強い権限を与えておけば、権限の切り替えの手間が省けて安全になる</span></button><p class="why" hidden>権限が大きいほど被害も広がる。全員に強い権限を与えるのは最小権限の逆。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>権限は変えず、管理者権限を使う端末だけをファイアウォールで絞って済ませる</span></button><p class="why" hidden>通信を絞るのは別の対策で、権限の範囲は変わらない。最小権限の対策にはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep145-host-hardening:q2" data-answer="2">
+  <p class="q">全サーバに構成基準を適用済みの組織で、「要塞化したので、未知の脆弱性による侵害も起きない」との説明があった。最も適切な評価はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>適切。入口を減らしてあれば、未知の脆弱性があっても攻撃の足がかりが無いので成立しない</span></button><p class="why" hidden>入口を減らしても、残った機能に未知の脆弱性があれば防げない。「成立しない」は言い過ぎ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>不適切。未知の脆弱性は防げないのだから、要塞化は効果がなく、実施する意味もない</span></button><p class="why" hidden>未知の脆弱性を防げないのは限界だが、入口を減らす効果はある。「意味がない」は言い過ぎ。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>不十分。未知の脆弱性までは防げないため、多層防御の一部として他の対策と併用する</span></button><p class="why" hidden>正解。要塞化では未知の脆弱性までは防げない。多層防御の一部として使う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>適切。検証環境で業務影響を確認してから適用していれば、未知の脆弱性による侵害も防げる</span></button><p class="why" hidden>検証環境での確認は、業務を止めないための手順。未知の脆弱性を防ぐ根拠にならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep145-host-hardening:q3" data-answer="3">
+  <p class="q">半年前に構成基準を適用して検査も済ませたサーバで、保守時に変更された設定が基準から外れたまま残っていた。対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>適用時に検査済みであり、運用中に設定が変わることは想定しなくてよいので、再確認は不要である</span></button><p class="why" hidden>運用中に設定が変わって基準から外れる恐れがある。定期的な確認が要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>変更を一切禁止して、修正プログラムの適用も止め、設定を固定したままにする</span></button><p class="why" hidden>維持には修正プログラムの適用も含まれる。適用を止めると脆弱性が残る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>基準を、外れた現在の設定に合わせて書き換え、ずれがある状態を無くしたことにする</span></button><p class="why" hidden>基準に合わせて設定を保つのが目的。基準を現状に合わせると、入口を減らす意味が失われる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>設定を定期的に確認して基準からのずれを見つけ、修正プログラムの適用も続けて維持する</span></button><p class="why" hidden>正解。維持は、修正プログラムの適用と、設定の定期的な確認で行う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep145-host-hardening:q4" data-answer="1">
+  <p class="q">サーバ導入時の管理用アカウントを初期パスワードのまま運用開始し、「変更は余裕のあるときに」という計画が出された。この計画への評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>妥当。初期状態は使いやすさを優先した設定なので、そのまま運用しても支障はない</span></button><p class="why" hidden>初期状態は使いやすさ優先で、不要な機能が有効なことが多い。だからそのままにしない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>不適切。初期値は広く知られているため、運用開始前に最初に変更する</span></button><p class="why" hidden>正解。初期値は広く知られているため、最初に変える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>妥当。変更する代わりに、修正プログラムを早く適用すれば初期値の問題は消える</span></button><p class="why" hidden>修正プログラムの適用は維持の項目で、初期値を変える代わりにはならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>不適切。ただし変更するのは初期パスワードだけで、初期アカウントは見直し対象外</span></button><p class="why" hidden>既定値の見直しは、初期アカウント・初期パスワード・既定の設定のすべてが対象。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">要塞化を進める手順と、適用の前に検証環境で確認する理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">構成基準を決める、適用する、検査する、維持する、の順に進める。適用前に検証環境で業務への影響を確認するのは、止めすぎると業務が止まるため。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep145-host-hardening-t0-0"> 基準、適用、検査、維持の順</label></li><li><label><input type="checkbox" id="ep145-host-hardening-t0-1"> 適用前に検証環境で確認する</label></li><li><label><input type="checkbox" id="ep145-host-hardening-t0-2"> 止めすぎると業務が止まる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">要塞化を実施しても安全とは言い切れない理由と、その位置づけを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">未知の脆弱性までは防げず、運用中に設定が基準から外れる恐れもあるため。要塞化は多層防御の一部として使う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep145-host-hardening-t1-0"> 未知の脆弱性は防げない</label></li><li><label><input type="checkbox" id="ep145-host-hardening-t1-1"> 運用中の構成のずれ</label></li><li><label><input type="checkbox" id="ep145-host-hardening-t1-2"> 多層防御の一部</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="Webサーバ導入時の記録（ダミー）"><div class="logtitle">Webサーバ導入時の記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 新規導入のWebサーバA（ダミー）。インターネットに公開</span></div><div class="logrow"><span class="hl">導入直後の待ち受け: HTTPS・リモート管理・ファイル共有・メール送信</span></div><div class="logrow"><span class="hl">このサーバの業務は、Webページの提供のみ</span></div><div class="logrow"><span class="hl">管理者は、リモート管理で運用する</span></div><div class="logrow"><span class="hl">4つとも、OSの初期設定で有効になっていた</span></div></div></div>
+  <p class="q">最小構成の考え方で、閉じるべき待ち受けは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ファイル共有とメール送信の待ち受け</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>リモート管理 … 管理者が運用で使う（必要な機能）</li><li>HTTPS … このサーバの業務（ページの提供）そのもの</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.2.1 ホストの要塞化の概要</li></ul>
+  <p>攻撃対象領域を減らす考え方と、最小構成・最小権限・既定値の見直し・維持の4つ。手順と限界も確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep144-risk-treatment.html">← #44 リスク対応手法の種類 低減・回避・移転・保有の選び方</a><a href="ep146-hardening-items.html">#46 要塞化の主な実施項目 アカウント・サービス・更新・ログ →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

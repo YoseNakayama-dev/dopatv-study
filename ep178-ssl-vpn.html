@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#78 TLSによるVPN（SSL-VPN） ソフトの要否で選ぶ三つの型｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#78 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
+  <h1>TLSによるVPN（SSL-VPN） ソフトの要否で選ぶ三つの型</h1>
+  <ol class="summary"><li>SSL-VPNはTLSで通信を暗号化し、HTTPSと同じ通り道なのでFWを通りやすい。方式はソフトの要否や使える範囲で選ぶ。</li><li>暗号化されても端末の安全は保証されない。弱い認証、感染端末、装置の脆弱性、広すぎる接続先が入口になる。</li><li>対策は多要素認証、接続前の端末確認、修正プログラムの速やかな適用、利用者ごとの接続先の限定。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep178-ssl-vpn:ssl-vpn">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SSL-VPN</span><span class="back" hidden><span class="def">TLSで通信を暗号化するリモートアクセス型のVPN。HTTPSと同じ通り道（443番）で使え、FWを通りやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep178-ssl-vpn:tls">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">TLS</span><span class="back" hidden><span class="def">SSL-VPNが通信の暗号化に使うプロトコル。通信は暗号化されるが、接続する端末の安全までは保証しない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep178-ssl-vpn:software-free">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ソフト不要でWeb中心の方式</span><span class="back" hidden><span class="def">専用ソフトを入れず、ブラウザでWebシステムを使う方式。対象はWebが中心になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep178-ssl-vpn:app-relay">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">専用ソフトで特定アプリを中継する方式</span><span class="back" hidden><span class="def">専用ソフトが特定のアプリの通信をTLSで運ぶ方式。専用ソフトが必要。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep178-ssl-vpn:lan-like">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">LANにつながったように使える方式</span><span class="back" hidden><span class="def">専用ソフトは必要だが、LANにつながったように使え、アプリを選ばない方式。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep178-ssl-vpn:mfa">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">多要素認証</span><span class="back" hidden><span class="def">IDとパスワードだけに頼らない認証。VPNは入口が一つに集まるため、乗っ取りを防ぐ対策として使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep178-ssl-vpn:endpoint-check">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">接続前の端末確認</span><span class="back" hidden><span class="def">接続の前に、更新とウイルス対策が済んでいる端末だけを接続させること。感染したPCからの入り込みを抑える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep178-ssl-vpn:vpn-vuln">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">VPN装置の脆弱性</span><span class="back" hidden><span class="def">VPN装置は外から見える場所に置かれるため、脆弱性を放置するとそこから突破される。修正プログラムを速やかに適用する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep178-ssl-vpn:access-scope">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">接続先の限定</span><span class="back" hidden><span class="def">利用者ごとに使える接続先を絞ること。社内の全体に接続できると被害が広がるため。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep178-ssl-vpn:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>SSL-VPNの説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>TLSを使い、ブラウザや専用ソフトで社内システムへ接続できる方式である</span></button><p class="why" hidden>TLSで暗号化し、ブラウザや専用ソフトで接続</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>利用者ごとに専用の暗号化装置を接続しないと、使えない方式である</span></button><p class="why" hidden>専用の暗号化装置は不要</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>通信にはIPsecのESPを使うので、ブラウザでは利用できない方式である</span></button><p class="why" hidden>ESPはIPsecの方式</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>通信を暗号化しないので、盗聴対策を別に用意する必要がある方式である</span></button><p class="why" hidden>TLSで通信を暗号化する</p></li></ol>
+</li>
+<li class="quiz" data-key="ep178-ssl-vpn:q0" data-answer="1">
+  <p class="q">会社支給のPCに専用ソフトを導入できる。利用するアプリを特定せず、社内のLANにつながったように使わせたい。SSL-VPNの方式の特徴として、条件に合うものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ブラウザだけで使え、専用ソフトは不要だが、対象はWebが中心になる方式</span></button><p class="why" hidden>ソフト不要でブラウザで使えるが、対象はWebが中心。アプリを特定せず使わせる条件には合わない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>専用ソフトを入れ、LANにつながったように使える方式で、アプリは選ばない</span></button><p class="why" hidden>正解。専用ソフトは必要だが、LANにつながったように使え、アプリを選ばない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>専用ソフトが特定のアプリの通信を中継する方式で、どのアプリでも同じように使える</span></button><p class="why" hidden>専用ソフトが中継するのは特定のアプリの通信。どのアプリでもという条件には合わない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>専用ソフトもブラウザも不要で、暗号化なしのまま社内へ接続できる方式</span></button><p class="why" hidden>SSL-VPNはTLSで通信を暗号化する。暗号化なしの方式ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep178-ssl-vpn:q1" data-answer="2">
+  <p class="q">SSL-VPN装置がインターネットに公開されており、認証はIDとパスワードだけである。評価と対策として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通信がTLSで暗号化されているので、認証が弱くても乗っ取られない</span></button><p class="why" hidden>TLSは通信を暗号化するが、IDとパスワードだけだと乗っ取られやすい。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>パスワードを複雑にすれば、認証の強化は十分となり、他の対策は不要になる</span></button><p class="why" hidden>認証の強化だけでは、感染した端末、装置の脆弱性、広すぎる接続先といった入口が残る。他の対策も必要。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>IDとパスワードだけでは乗っ取られやすいため、多要素認証を使う</span></button><p class="why" hidden>正解。IDとパスワードだけだと乗っ取られやすい。多要素認証を使って乗っ取りを防ぐ。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>接続先を絞れば、認証が弱くても乗っ取りそのものを防げる</span></button><p class="why" hidden>接続先を絞るのは、つながった後の被害を広げないための対策。乗っ取りそのものを防ぐ対策ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep178-ssl-vpn:q2" data-answer="3">
+  <p class="q">SSL-VPNに多要素認証を導入した。ある社員のPCがマルウェアに感染しているが、正しく認証を通過してVPNに接続した。この状況の説明として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>TLSで暗号化されるので、端末が感染していても社内には影響しない</span></button><p class="why" hidden>暗号化されても端末の安全は保証されない。感染したPCがつながると、社内へ入り込まれる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>多要素認証を通過した端末は安全だとみなせるので、接続前の端末の確認は不要である</span></button><p class="why" hidden>多要素認証は乗っ取りを防ぐ対策で、端末の状態は別に確認する。更新とウイルス対策が済んだ端末だけを接続させる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>感染の影響は端末の中に限られるので、VPN接続後の接続先は絞らなくてよい</span></button><p class="why" hidden>感染したPCから社内へ入り込まれうる。社内の全体に接続できると被害が広がるので、接続先は絞る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗号化されても端末の安全は保証されないため、接続前に端末の状態を確認する</span></button><p class="why" hidden>正解。暗号化されても端末の安全は保証されない。接続前に更新やウイルス対策の状態を確認する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep178-ssl-vpn:q3" data-answer="1">
+  <p class="q">SSL-VPN装置に修正プログラムが公開された。装置は外から見える場所に置かれている。適用の判断として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>TLSで暗号化されているので、装置の脆弱性があっても突破されない</span></button><p class="why" hidden>TLSは通信の暗号化。VPN装置の脆弱性を放置すると、突破される。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>脆弱性を放置すると突破されるため、修正プログラムを速やかに適用する</span></button><p class="why" hidden>正解。VPN装置は外から見える場所に置かれ、脆弱性を放置するとそこから突破される。修正プログラムを速やかに適用する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>多要素認証を導入済みなら、装置の脆弱性を放置しても突破されることはない</span></button><p class="why" hidden>認証の強化と装置の脆弱性への対応は別の対策。脆弱性を放置すると突破される。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利用者ごとに接続先を絞ってあれば、修正プログラムの適用は後回しでよい</span></button><p class="why" hidden>接続先の限定は、つながった後の被害範囲を抑える対策。装置の脆弱性への対応は修正プログラムの適用。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep178-ssl-vpn:q4" data-answer="2">
+  <p class="q">SSL-VPNの設定で、全社員が社内の全体に接続できるようになっていた。一人の利用者のアカウントが乗っ取られた場合の被害を抑える設計として、適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>接続時の通信をTLSで暗号化していれば、乗っ取られても被害は広がらない</span></button><p class="why" hidden>社内の全体に接続できると被害が広がる。通信の暗号化は接続先の範囲とは別の話。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>VPN装置の修正プログラムを適用すれば、乗っ取り後の被害範囲も限定される</span></button><p class="why" hidden>修正プログラムの適用は装置の突破を防ぐ対策。接続できる範囲は、利用者ごとに絞る対策で限定する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>利用者ごとに使える接続先を絞り、社内の全体に接続できないようにする</span></button><p class="why" hidden>正解。社内の全体に接続できると被害が広がるので、利用者ごとに使える先を絞る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>接続元の端末を更新済みに保てば、接続先の範囲が広くても被害は広がらない</span></button><p class="why" hidden>端末の確認は感染端末からの入り込みを抑える対策。社内の全体に接続できると被害が広がる点は残る。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">SSL-VPNは通信が暗号化されるのに、なぜ感染したPCからの入り込みを防げないのか。頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">TLSで暗号化されるのは通信で、端末の安全は保証されない。感染したPCがつながると、VPNが社内への入口になる。接続前に更新やウイルス対策の状態を確認する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep178-ssl-vpn-t0-0"> 暗号化されても端末の安全は保証されない</label></li><li><label><input type="checkbox" id="ep178-ssl-vpn-t0-1"> VPNが社内への入口になる</label></li><li><label><input type="checkbox" id="ep178-ssl-vpn-t0-2"> 接続前の端末確認が対策</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">SSL-VPNの入口を守る対策を、認証・端末・装置・範囲の四つの観点で頭の中で挙げてみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">認証は多要素認証で乗っ取りを防ぐ。端末は接続前に更新やウイルス対策を確認する。装置は修正プログラムを速やかに適用する。範囲は利用者ごとに使える接続先を絞る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep178-ssl-vpn-t1-0"> 認証：多要素認証</label></li><li><label><input type="checkbox" id="ep178-ssl-vpn-t1-1"> 端末：接続前の確認</label></li><li><label><input type="checkbox" id="ep178-ssl-vpn-t1-2"> 装置：修正プログラムの適用</label></li><li><label><input type="checkbox" id="ep178-ssl-vpn-t1-3"> 範囲：接続先を絞る</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="在宅勤務の接続方式に関する調査記録（ダミー）"><div class="logtitle">在宅勤務の接続方式に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 在宅の社員が、私物のPCから社内のWebシステムを使う</span></div><div class="logrow"><span class="hl">私物のPCに、ソフトウェアを導入させることはできない</span></div><div class="logrow"><span class="hl">社内のシステムは、すべてWebブラウザで操作する</span></div><div class="logrow"><span class="hl">要件: 通信を暗号化し、ブラウザだけで接続させたい</span></div></div></div>
+  <p class="q">要件を満たす構成として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">リバースプロキシ型のSSL-VPN装置を、社内の入口に置く</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>ポートフォワード型のSSL-VPNを使う … 専用ソフトが必要で、導入できない前提に反する</li><li>端末に、IPsecのクライアントを入れる … ソフトの導入が必要で、前提に反する</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>7.4.3 TLSによるインターネットVPN（SSL-VPN）</li></ul>
+  <p>方式の違いをソフトの要否と使える範囲で整理し、入口になるSSL-VPN装置を守る四つの観点を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep177-ipsec-functions.html">← #77 IPsecの機能と構成プロトコル 守る役と鍵を配る役</a><a href="ep179-ssh.html">#79 SSH 接続先と利用者を両方確かめる →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

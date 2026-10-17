@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#96 情報セキュリティの特性 機密性・完全性・可用性と付加的な特性｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#96 ・ 第1章 情報セキュリティ及びITの基礎</p>
+  <h1>情報セキュリティの特性 機密性・完全性・可用性と付加的な特性</h1>
+  <ol class="summary"><li>機密性・完全性・可用性の三つで、漏えい・改ざん・停止のどれが崩れたかを言い分ける。</li><li>付加的な特性は、真正性・責任追跡性・否認防止・信頼性の四つ。責任追跡性と否認防止は別物。</li><li>対策は抑止・予防・検知・回復で整理する（教材により分類は異なる）。限界があるので多層防御などで組み合わせる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep196-infosec-properties:confidentiality">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">機密性</span><span class="back" hidden><span class="def">認可されていない個人・主体・プロセスに対して、情報を使用させず、開示しない特性。崩れると情報が漏れる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep196-infosec-properties:integrity">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">完全性</span><span class="back" hidden><span class="def">情報が正確で、欠けていない特性。崩れると改ざんや欠落が起きる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep196-infosec-properties:availability">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">可用性</span><span class="back" hidden><span class="def">認可された主体が要求したときに、アクセスし使用できる特性。崩れるとサービスが止まる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep196-infosec-properties:authenticity">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">真正性</span><span class="back" hidden><span class="def">主体や情報が、主張どおりであること。なりすましがあると崩れる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep196-infosec-properties:accountability">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">責任追跡性</span><span class="back" hidden><span class="def">主体の行動を、その主体まで一意に追跡できる特性。共有IDだと、誰の操作か追えない。</span><span class="note">否認防止とは別。追跡できることと、後から否認されないことは異なる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep196-infosec-properties:non-repudiation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">否認防止</span><span class="back" hidden><span class="def">行為や事象の発生を、後から否認されないようにする特性。電子署名などで支える。</span><span class="note">責任追跡性（誰の操作か追える）とは別の特性。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep196-infosec-properties:reliability">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">信頼性</span><span class="back" hidden><span class="def">意図した動作と結果が、一貫していること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep196-infosec-properties:defense-in-depth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">多層防御</span><span class="back" hidden><span class="def">一つの対策が破られても、次の層で止める考え方。どの層にも限界があることを前提にする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep196-infosec-properties:least-privilege">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">最小権限</span><span class="back" hidden><span class="def">必要な権限だけを与えること。侵害されても被害を小さくできる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep196-infosec-properties:separation-of-duties">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">職務分離</span><span class="back" hidden><span class="def">一人で業務を完結させない設計。不正も誤りも防ぎやすくなる。</span><span class="note">最小権限とは目的が異なる。権限を絞るだけでは、一人完結の業務は残りうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep196-infosec-properties:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>付加的な特性の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>真正性 : 情報が、改ざんされていないこと</span></button><p class="why" hidden>改ざんされていないのは完全性</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>否認防止 : 許可された者だけが、情報を見られること</span></button><p class="why" hidden>許可された者だけが見られるのは機密性</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>責任追跡性 : 必要なときに、情報を使えること</span></button><p class="why" hidden>必要なときに使えるのは可用性</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>信頼性 : 意図した動作と結果が、一貫していること</span></button><p class="why" hidden>意図した動作と結果が一貫するのが信頼性</p></li></ol>
+</li>
+<li class="quiz" data-key="ep196-infosec-properties:q0" data-answer="0">
+  <p class="q">次の三つの事象で崩れた特性の組合せとして適切なものはどれか。（1）共有フォルダの誤設定で、権限のない他部署が顧客名簿を閲覧できた。（2）承認済みの見積書の金額が無断で書き換えられていた。（3）注文サイトが2時間停止し、注文を受け付けられなかった。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>（1）機密性（2）完全性（3）可用性。開示・改変・停止の点を重く見る</span></button><p class="why" hidden>正解。権限のない閲覧は機密性、無断の書換えは完全性、サービスの停止は可用性が崩れた事象にあたる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>（1）機密性（2）可用性（3）完全性。書き換えで見積書が使えなくなる点を重く見る</span></button><p class="why" hidden>書換えで見積書が使えなくなったかではなく、内容が不正に変えられた点が問題。これは完全性の崩れで、サイトの停止のほうが可用性にあたる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>（1）完全性（2）機密性（3）可用性。閲覧された名簿の内容が変わる点を重く見る</span></button><p class="why" hidden>閲覧されただけで名簿の内容は変わっていない。許可されていない者に開示された点が問題で、機密性にあたる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>（1）可用性（2）完全性（3）機密性。他部署が使えてしまった点を重く見る</span></button><p class="why" hidden>他部署が使えたことは、使える人が増えたという開示の問題。可用性は、認可された主体が必要なときに使えることを指す。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep196-infosec-properties:q1" data-answer="1">
+  <p class="q">取引先に電子発注システムを提供している。後日、取引先から「その発注は出していない」と主張される事態に備えたい。なりすましの形跡はなく、操作ログも残っている。この懸念に最も直接対応する特性と手段の組合せはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>責任追跡性。共有IDを廃止して利用者ごとにIDを発行し、操作者を一意に追跡できるようにして、誰の操作かを説明する</span></button><p class="why" hidden>責任追跡性は誰の操作かを追える特性で、行為を後から否認されないようにする否認防止とは別。懸念への直接の備えは否認防止になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>否認防止。発注データに電子署名を付け、発注の事実を後から否認されないよう支える</span></button><p class="why" hidden>正解。懸念は、行為が後から否認されること。電子署名などで発注の事実を支えるのが否認防止にあたる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>真正性。多要素認証などの強化によって、発注者が主張どおりの本人であることを確かめ、なりすましを防ぐ</span></button><p class="why" hidden>前提にあるのは、なりすましの形跡がないこと。本人確認を強めても、後からの否認という懸念には直接対応しない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>信頼性。システムが意図した動作と結果を一貫して返すよう、負荷試験や冗長化を行い、誤動作を減らす</span></button><p class="why" hidden>信頼性は動作と結果の一貫性の話。発注の事実を否認される懸念とは、観点が異なる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep196-infosec-properties:q2" data-answer="2">
+  <p class="q">ある組織の対策は、FWとアクセス制御による侵入の予防が中心で、不正アクセスの兆候の監視も、被害を受けた後の復旧手順もない。外部の評価でその点を指摘された。対応方針として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>予防の層をさらに厚くして破られないようにすれば、検知や回復の整備は後回しにしてよいと判断する</span></button><p class="why" hidden>どの対策にも限界があり、予防だけでは破られた事態に対応できない。予防だけでなく、検知と回復も欠かせない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>抑止を強めるため、監視カメラの設置と警告表示だけを追加し、予防と回復は現状のまま維持する</span></button><p class="why" hidden>抑止は一つの機能だが、それだけでは兆候に気づく手段も復旧する手順も整わない。指摘された欠けを埋めていない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>予防に加えて、不正の兆候の検知と復旧手順による回復を整え、破られた場合も想定する</span></button><p class="why" hidden>正解。抑止・予防・検知・回復を組み合わせ、予防が破られた場合も想定する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>検知を最優先にして監視を強化し、気づければ回復は不要になるので、復旧手順の整備は省く</span></button><p class="why" hidden>検知できても、被害を受けた後に元へ戻す手順がなければ、業務は止まったままになる。回復は検知で代えられない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep196-infosec-properties:q3" data-answer="0">
+  <p class="q">経理担当者Aは、支払の起票、承認の入力、振込の実行までを一人で行える。誤りも不正も、Aだけでは気づかれにくい。改善策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>起票と承認・実行を別の担当者に分け、一人では業務を完結できないようにする</span></button><p class="why" hidden>正解。職務分離は、一人で完結させない設計。不正も誤りも防ぎやすくなる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>Aの権限を業務に必要な範囲に絞る最小権限を適用すれば、一人での完結は防げると考える</span></button><p class="why" hidden>Aの業務に起票から振込までが必要なら、権限を絞っても一人で完結できる状態は残る。最小権限と職務分離は目的が異なる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>Aの操作を一意に追跡できるよう記録を整えれば、不正は事前に防げるので分離は不要と考える</span></button><p class="why" hidden>追跡できることは事後の説明に役立つが、不正を事前に防ぐ保証にはならない。一人完結の構造は残る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>多層防御として入口のFWを一台追加し、外部からの不正を防ぐ層を一枚増やす</span></button><p class="why" hidden>外部からの侵入を防ぐ層を足しても、内部の担当者が一人で完結できる構造は変わらない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep196-infosec-properties:q4" data-answer="1">
+  <p class="q">設計レビューで「境界のFWとWAFを二重に置いたので、侵害は防げる。ほかの対策は不要」と説明された。指摘として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>二重に置けば十分であり、設計のとおり進めてよい。層を増やすほど、限界は事実上なくなる</span></button><p class="why" hidden>層を重ねても、どの層にも限界は残る。限界がなくなるとは言えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>どの層にも限界があると考え、一つ破られても次で止める構成にして、検知や最小権限も組み合わせる</span></button><p class="why" hidden>正解。多層防御は、どの層にも限界があると考え、一つ破られても次の層で止める考え方。検知や最小権限などを組み合わせる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>FWとWAFは同種の対策なので、一つに統合して運用の手間を減らしたほうが、全体の安全性が高まる</span></button><p class="why" hidden>統合すれば層が減る。多層防御の考え方に反するうえ、安全性が高まるとは言えない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>層を増やすよりも、管理者の職務分離を徹底すれば、外部からの侵害は防げるので、境界の対策は不要になる</span></button><p class="why" hidden>職務分離は一人で完結させない設計で、外部からの侵害を防ぐ手段ではない。境界の対策の代わりにならない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">責任追跡性と否認防止の違いを、「共有ID」と「電子署名」を例に頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">責任追跡性は、主体の行動をその主体まで一意に追えること。共有IDだと誰の操作か追えず、損なわれる。否認防止は、行為の発生を後から否認されないこと。電子署名などで支える。追跡できても否認されうるし、署名があっても共有IDなら誰かは特定できないため、別の特性として扱う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep196-infosec-properties-t0-0"> 責任追跡性は操作者を一意に追えること</label></li><li><label><input type="checkbox" id="ep196-infosec-properties-t0-1"> 共有IDでは追跡できない</label></li><li><label><input type="checkbox" id="ep196-infosec-properties-t0-2"> 否認防止は後から否認されないこと（電子署名など）</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">「対策は予防だけでは足りない」と言える理由を、多層防御の考え方を使って頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">どの対策にも限界があり、予防が破られる場合を想定する必要がある。そこで抑止・予防・検知・回復を組み合わせ、一つ破られても次の層で止める多層防御にする。最小権限で被害を小さくし、検知で気づき、回復で元に戻す。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep196-infosec-properties-t1-0"> どの層にも限界がある</label></li><li><label><input type="checkbox" id="ep196-infosec-properties-t1-1"> 検知と回復も欠かせない</label></li><li><label><input type="checkbox" id="ep196-infosec-properties-t1-2"> 一つ破られても次の層で止める</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="在庫管理の更新調査記録（ダミー）"><div class="logtitle">在庫管理の更新調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">在庫管理の画面を、担当者全員が共有IDで使う</span></div><div class="logrow"><span class="hl">不審な更新があるが、在庫数は検証で正しかった</span></div><div class="logrow"><span class="hl">更新の間も、システムは止まらず利用できた</span></div><div class="logrow"><span class="hl">更新の事実と日時は、操作ログで確認できる</span></div><div class="logrow"><span class="hl">共有IDは正規に発行され、不正使用の形跡はない</span></div><div class="logrow"><span class="hl">要件: 疑いのある更新を、利用者ごとに説明したい</span></div></div></div>
+  <p class="q">この記録で、特に欠けている特性は？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">責任追跡性。操作者を一意に特定できない</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>完全性が損なわれている … 更新後の在庫数は、検証で正しいと確認されている</li><li>可用性が損なわれている … 更新の間も、システムは止まらず利用できた</li><li>否認防止・真正性が欠けている … 更新の事実はログで示せ、なりすましの形跡もない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>1.2.1 情報セキュリティの三つの特性</li><li>1.2.2 情報セキュリティの付加的な特性</li><li>1.2.3 情報セキュリティ対策の機能</li><li>1.2.4 情報セキュリティ対策における基本的な考え方</li></ul>
+  <p>三つの特性と付加的な特性を、どの事象でどれが崩れるかで区別しながら読む。責任追跡性と否認防止の違いに注意する。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep195-mail-auth-spf-dkim-dmarc.html">← #95 メール認証 SPF・DKIM・DMARC なりすましへの備え</a><a href="ep197-isms-pdca.html">#97 ISMSとPDCA 規格・認証・確立と運用の主な作業 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#120 ECMAScript関連技術 オリジン・CORS・JSON・DOMの扱い｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#120 ・ 第8章 システム開発におけるセキュリティ対策</p>
+  <h1>ECMAScript関連技術 オリジン・CORS・JSON・DOMの扱い</h1>
+  <ol class="summary"><li>オリジンはスキーム・ホスト名・ポートの組。別オリジンの応答は原則読めないが、送信は止まらない。</li><li>CORSは許可したオリジンにだけ読取りを許す。Cookie付きは特定のオリジンを指定し、認可の代わりにならない。</li><li>JSONはJSON.parseで解析し、DOMへはtextContentで出す。JSONPは提供元のコードを実行する古い方式。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep220-ecmascript-related:origin">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">オリジン</span><span class="back" hidden><span class="def">スキーム・ホスト名・ポート番号の組。どれか一つでも違えば別のオリジンになる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep220-ecmascript-related:same-origin-policy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">同一オリジンポリシー</span><span class="back" hidden><span class="def">別オリジンの応答を、スクリプトから原則読めなくするブラウザの制限。制限するのは読み取りで、送信は止めない。</span><span class="note">他サイトからの送信による被害は、CSRF対策など別の備えが要る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep220-ecmascript-related:cors">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">CORS</span><span class="back" hidden><span class="def">サーバが応答ヘッダで許可したオリジンにだけ、読み取りを許す仕組み。ブラウザが確認する。</span><span class="note">ブラウザの制限の緩和であり、サーバ側の認可の代わりではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep220-ecmascript-related:allow-origin">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Access-Control-Allow-Origin</span><span class="back" hidden><span class="def">読み取りを許可するオリジンを示す応答ヘッダ。Cookieなどの認証情報付きの要求では、*でなく特定のオリジンを指定する。</span><span class="note">要求のOriginをそのまま返す実装は、任意のオリジンに許可を与えることになり危険。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep220-ecmascript-related:preflight">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">プリフライト</span><span class="back" hidden><span class="def">ヘッダ付きの要求やPUT・DELETEなどの前に、ブラウザが行う事前確認（OPTIONS）。</span><span class="note">単純なGETでは行われない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep220-ecmascript-related:ajax">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Ajax</span><span class="back" hidden><span class="def">ページを再読込せずに、JavaScriptで非同期に通信する技術。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep220-ecmascript-related:json-parse">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">JSON.parse と eval</span><span class="back" hidden><span class="def">JSON文字列はJSON.parseで解析する。evalは文字列をコードとして実行するので、入力が混ざると危険。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep220-ecmascript-related:jsonp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">JSONP</span><span class="back" hidden><span class="def">script要素で他オリジンのデータを読む古い方式。提供元のコードをそのまま実行する。</span><span class="note">信頼できない提供元には使えない。CORSなどに置き換える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep220-ecmascript-related:textcontent">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">textContent と innerHTML</span><span class="back" hidden><span class="def">DOMへ入力値を出すときはtextContentを使う。innerHTMLやdocument.writeに入力を渡すと、DOM Based XSSの原因になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep220-ecmascript-related:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>ECMAScript関連の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>オリジンは、ホスト名だけで決まる</span></button><p class="why" hidden>スキームとポートも含む</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>CORSを設定すれば、サーバ側の認可は不要になる</span></button><p class="why" hidden>CORSは認可の代わりではない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>JSONPは、提供元を信頼しなくても安全に使える</span></button><p class="why" hidden>JSONPは提供元のコードを実行</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>JSONの文字列は、evalでなくJSON.parseで解析する</span></button><p class="why" hidden>JSON.parseで解析する</p></li></ol>
+</li>
+<li class="quiz" data-key="ep220-ecmascript-related:q0" data-answer="1">
+  <p class="q">社員向けポータルのAPIは、Cookieで認証し、更新の要求を受け付ける。設計レビューで「同一オリジンポリシーがあるので、他サイトからの要求は問題にならない」と説明された。この説明への指摘として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>同一オリジンポリシーが送信も止めるため、追加の対策は不要になる</span></button><p class="why" hidden>同一オリジンポリシーが制限するのは読み取りで、リクエストの送信自体は止めない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>制限されるのは読み取りのみ。送信対策のCSRFが別に要る</span></button><p class="why" hidden>正解。送信は届いてしまうので、その被害にはCSRF対策など別の備えが要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>別オリジンからの更新要求は、プリフライトで必ず拒否されるため問題ない</span></button><p class="why" hidden>事前確認（プリフライト）が行われるのは、ヘッダ付きの要求やPUT・DELETEなど一部の要求。単純なGETでは行われない。拒否される保証にもならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>CORSの許可ヘッダを設定すれば、送信による被害も防げる</span></button><p class="why" hidden>CORSは読み取りを許可する仕組みで、ブラウザの制限の緩和にあたる。送信による被害を防ぐものではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep220-ecmascript-related:q1" data-answer="0">
+  <p class="q">http://shop.example.test のページから、https://shop.example.test のAPIを呼ぶと、CORSの設定が無いためブラウザが応答の読み取りを拒否した。原因の説明として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>スキームが違い別オリジンのため、読み取りが制限された</span></button><p class="why" hidden>正解。オリジンはスキーム・ホスト名・ポート番号の組。httpとhttpsでスキームが違えば、別のオリジンになる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ホスト名が同じなので同一オリジンであり、別の原因を調べるべき</span></button><p class="why" hidden>オリジンはホスト名だけでは決まらない。スキームが違えば、ホスト名が同じでも別のオリジンになる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>Cookieを付けた要求は、オリジンを問わず読み取りが禁止される</span></button><p class="why" hidden>Cookie付きの要求でも、サーバが特定のオリジンを指定して許可すれば読み取れる。オリジンを問わず禁止されるわけではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>サーバ側の認可が未実装のため、ブラウザが応答を破棄した</span></button><p class="why" hidden>読み取りの制限はブラウザの仕組みで、サーバ側の認可の有無とは別のもの。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep220-ecmascript-related:q2" data-answer="2">
+  <p class="q">検索ページのJavaScriptが、URLの一部を取り出し、innerHTMLで結果欄に表示している。サーバ側のコードには、その値を出力する箇所がない。判断として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>サーバ側に出力箇所がないので、XSSの恐れは無いと判断してよい</span></button><p class="why" hidden>innerHTMLに入力を渡すと、ブラウザ上のJavaScriptだけでもDOM Based XSSの原因になる。サーバ側に出力箇所がなくても起こりうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>サーバ側のエスケープ処理を強化すれば、この問題は解消する</span></button><p class="why" hidden>原因はブラウザ上でinnerHTMLに入力を渡す書き込み側にある。サーバ側の処理を強化しても、この箇所は直らない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>DOM型XSSの恐れがある。textContentで表示する</span></button><p class="why" hidden>正解。入力値はtextContentで出す。innerHTMLやdocument.writeに入力を渡さない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>JSON.parseを経由すれば、HTMLとして解釈されなくなる</span></button><p class="why" hidden>JSON.parseはJSON文字列の解析に使うもの。その結果をinnerHTMLに渡せば、HTMLとして解釈される点は変わらない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep220-ecmascript-related:q3" data-answer="3">
+  <p class="q">APIは、Access-Control-Allow-Originを自社ポータルのオリジンだけに限定している。ところがログには、ブラウザではないクライアントが、認可の確認なしにAPI応答を取得した記録がある。この現象の説明として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>プリフライトの設定が不足しているため、OPTIONSの応答を強化する</span></button><p class="why" hidden>プリフライトは、ブラウザが一部の要求の前に行う事前確認。ブラウザ以外のクライアントによる取得とは関係しない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>同一オリジンポリシーが働いていないため、ブラウザを更新する</span></button><p class="why" hidden>同一オリジンポリシーもブラウザの制限。ブラウザを更新しても、ブラウザ以外からの呼び出しには効かない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>Allow-Originが自社のみなのは誤りで、許可対象の追加が要る</span></button><p class="why" hidden>自社のみの許可は設計意図どおり。それはブラウザが読み取れる範囲の話で、ブラウザ以外のクライアントには効かない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ブラウザ以外は制限されないので、API側の認可が別に必要</span></button><p class="why" hidden>正解。CORSはブラウザの制限の緩和で、サーバ側の認可の代わりにならない。ブラウザ以外のクライアントは制限されない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep220-ecmascript-related:q4" data-answer="0">
+  <p class="q">旧機能が、取引先の外部サイトのデータを、script要素を使うJSONPで取得している。提供元のサーバが改ざんされた場合に、考えられることはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>応答にコードが混ざり、自サイトで実行される恐れがある</span></button><p class="why" hidden>正解。JSONPは提供元のコードをそのまま実行する方式。信頼できない提供元には使えず、CORSなどに置き換える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>JSONの文字列として扱われるので、データの改ざんだけが起こる</span></button><p class="why" hidden>JSONPはscript要素で読み込むため、応答はデータではなくコードとして実行される。データの改ざんだけでは済まない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>同一オリジンポリシーにより、応答は読み取れずに破棄される</span></button><p class="why" hidden>script要素による読み込みは、別オリジンの応答を読み取る方式として使われてきた。そのため、読み取れずに破棄されるわけではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>CORSの許可リストが効いて、他オリジンの応答は実行されない</span></button><p class="why" hidden>JSONPはCORSを使う方式ではない。CORSの許可リストの設定は、この読み込みを止めない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">同一オリジンポリシーが防ぐものと、防がないものを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">防ぐのは、別オリジンの応答をスクリプトから読むこと。リクエストの送信自体は止めないので、他サイトから送られた要求は届く。その被害にはCSRF対策など別の備えが要る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep220-ecmascript-related-t0-0"> 制限されるのは読み取り</label></li><li><label><input type="checkbox" id="ep220-ecmascript-related-t0-1"> 送信は止めない</label></li><li><label><input type="checkbox" id="ep220-ecmascript-related-t0-2"> CSRF対策など別の備えが要る</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">Cookie付きでAPIを呼ばせる場合に、CORSをどう設定すべきか、その理由とともに頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">許可リストと照合した特定のオリジンだけを指定する。Cookie付きでは*は使えず、要求のOriginをそのまま返すと任意のオリジンに許可を与える。CORSは認可の代わりにならないので、サーバ側の認可も別に行う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep220-ecmascript-related-t1-0"> 特定のオリジンを許可リストと照合して指定する</label></li><li><label><input type="checkbox" id="ep220-ecmascript-related-t1-1"> Originのそのまま返しや*は避ける</label></li><li><label><input type="checkbox" id="ep220-ecmascript-related-t1-2"> サーバ側の認可は別に必要</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="社内ポータルの通信記録（ダミー）"><div class="logtitle">社内ポータルの通信記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">ポータルは、Cookie付きでAPIを呼び出して表示する</span></div><div class="logrow"><span class="hl">APIは、Originの値をそのまま許可し、Cookieも許可</span></div><div class="logrow"><span class="hl">外部サイトのスクリプトが、社員のAPI応答を読んだ</span></div><div class="logrow"><span class="hl">その要求はGETで、事前確認（プリフライト）はなし</span></div><div class="logrow"><span class="hl">要件: Cookie付きのまま、自社ポータルだけに読ませる</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">許可リストと照合して、自社ポータルのオリジンだけを許可する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>許可を*にする … Cookie付きでは使えず、使えても全オリジンに読ませてしまう</li><li>事前確認への応答を拒否する … 読まれたGETでは事前確認は行われない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>8.4.5 ECMAScriptに関連した各種技術</li></ul>
+  <p>読み取りの制限（同一オリジンポリシー）と許可（CORS）の関係、許可の範囲の決め方、DOMへの出力の安全な書き方を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep219-java-security.html">← #119 Javaのセキュリティ 実行環境の機構・留意点・例外処理</a><a href="ep221-standards-need.html">#121 セキュリティの規格と制度 15408・PCI DSS・20000 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

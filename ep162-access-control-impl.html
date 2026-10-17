@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#62 アクセス制御の実施 判定は画面でなくサーバ側で｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#62 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
+  <h1>アクセス制御の実施 判定は画面でなくサーバ側で</h1>
+  <ol class="summary"><li>実施の場所はファイルサーバ・アプリ・ネットワーク。判定は要求を受けるサーバ側で毎回行う。</li><li>画面の出し分けだけでは、直接送られた要求を止められない。ACLは許可したものだけ通し、他は拒否。</li><li>運用では特権IDの限定と非共有、権限変更の記録、期限付き付与、定期的な棚卸しを行う。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep162-access-control-impl:impl-places">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">アクセス制御の実施場所</span><span class="back" hidden><span class="def">ファイルサーバはファイル・フォルダ単位、アプリは機能・データ単位、ネットワークは送信元・宛先などで制御する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep162-access-control-impl:server-side-check">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">サーバ側での毎回の判定</span><span class="back" hidden><span class="def">権限の判定は、要求を受けるサーバ側で毎回行う。画面の出し分けだけでは、直接送られた要求を止められない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep162-access-control-impl:acl">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ACL</span><span class="back" hidden><span class="def">資源ごとに、主体と許可する操作を並べた一覧。例は、営業部は読み取りのみ、管理者は読み書き。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep162-access-control-impl:deny-by-default">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">既定で拒否</span><span class="back" hidden><span class="def">許可したものだけを通し、ほかは拒否する設定の考え方。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep162-access-control-impl:deny-list">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">禁止列挙型の設定</span><span class="back" hidden><span class="def">禁止したものだけを止める方式。設定漏れが、そのまま穴になる。</span><span class="note">既定で拒否とは逆の方向。許可したものだけを通す方式と区別する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep162-access-control-impl:minimum-start">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">必要最小限から与える</span><span class="back" hidden><span class="def">権限は、必要最小限のものから与え始める。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep162-access-control-impl:privileged-id">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">特権IDの管理</span><span class="back" hidden><span class="def">管理者権限を持つ特権IDは、使う人と目的を限定し、共有しない。共有すると誰の操作か追えなくなる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep162-access-control-impl:change-record">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">権限変更の記録</span><span class="back" hidden><span class="def">権限の付与や変更は記録して、あとから確認できるようにする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep162-access-control-impl:time-limited">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">期限付きの付与</span><span class="back" hidden><span class="def">一時的に与える権限は、期限を決めて外し忘れを防ぐ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep162-access-control-impl:inventory">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">棚卸し</span><span class="back" hidden><span class="def">付与した権限を定期的に確認すること。設定したあと、確認までが実施。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep162-access-control-impl:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>アクセス制御の設定の考え方として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>設定の手間を減らすため、禁止した操作以外は、すべて許可しておく</span></button><p class="why" hidden>禁止以外を許可は設定漏れが穴</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>例外を作らないよう、全利用者を一つのグループにまとめて扱う</span></button><p class="why" hidden>全員同一扱いでは使い分けられない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>運用を楽にするため、特権IDを共有し、権限の差をつけない</span></button><p class="why" hidden>共有IDは操作者を追えない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>許可した操作だけを通し、それ以外は、既定で拒否に設定しておく</span></button><p class="why" hidden>許可した操作だけ通す</p></li></ol>
+</li>
+<li class="quiz" data-key="ep162-access-control-impl:q0" data-answer="1">
+  <p class="q">障害対応のため、外部委託先に一時的に管理者権限を付与する。運用として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>次の障害対応にも備えて付与したままにし、定期の棚卸しで必要なら外す</span></button><p class="why" hidden>期限がないと、障害対応が終わったあとも管理者権限が棚卸しまで残る。一時的に与える権限は、期限を決めて外し忘れを防ぐ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>期限を決めて一時的に付与し、付与した事実を記録して確認できるようにする</span></button><p class="why" hidden>正解。一時的な権限は期限を決めて与え、付与や変更は記録してあとから確認できるようにする。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>委託先の担当者に、社内の特権IDを共有して渡し、作業後にパスワードを変更する</span></button><p class="why" hidden>特権IDは使う人と目的を限定し、共有しない。共有すると誰の操作か追えなくなる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>作業の邪魔にならないよう、付与と変更の記録は取らず作業ログのみとする</span></button><p class="why" hidden>作業ログは操作の記録で、権限をいつ誰が付与・変更したかは残らない。付与や変更は別に記録して、あとから確認できるようにする。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep162-access-control-impl:q1" data-answer="0">
+  <p class="q">ファイルサーバのフォルダ権限は適切に設定済みだが、同じ情報を扱うWebアプリの管理機能には権限判定がない。評価として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>アプリでも、機能やデータごとに利用者の権限を判定する必要がある</span></button><p class="why" hidden>正解。アプリケーションでは、機能やデータごとに利用者の権限を判定する。判定は要求を受けるサーバ側で毎回行う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ファイルサーバの権限設定が適切であれば、アプリでの判定は省略できる</span></button><p class="why" hidden>ファイルサーバの権限はファイル・フォルダ単位の制御。アプリの管理機能という機能単位の操作は、アプリ側で別に判定する必要がある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>通信の送信元をネットワークで制御していれば、判定は省略してよい</span></button><p class="why" hidden>ネットワークは送信元や宛先で通信の通過を制御するもの。機能やデータごとの判定は、アプリで行う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>管理機能へのリンクを権限に応じて画面で出し分けていれば、判定は足りる</span></button><p class="why" hidden>画面で隠すだけでは、直接送られた要求を止められない。判定はサーバ側で毎回行う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep162-access-control-impl:q2" data-answer="2">
+  <p class="q">権限を付与した覚えのない利用者が、機密フォルダに書き込める状態が見つかった。いつ誰が付与したかを調べるために、事前に必要だった運用はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>定期的に棚卸しをしているので、付与や変更の記録は別に取らなくてよい</span></button><p class="why" hidden>棚卸しは付与した権限の現状を確認するもので、いつ誰が付与したかの履歴は分からない。付与や変更は別に記録する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>必要最小限の権限から与えていれば、付与の経緯は記録しなくても追跡できる</span></button><p class="why" hidden>必要最小限から与えるのは与える権限の範囲の方針で、付与の履歴は残らない。記録がなければ、いつ誰が付与したかをあとから確認できない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>権限の付与・変更を記録し、あとから確認できるようにしておく</span></button><p class="why" hidden>正解。権限の付与や変更は記録して、あとから確認できるようにする。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>付与作業は特権IDを共有して行い、作業者ごとの記録は取らないようにする</span></button><p class="why" hidden>特権IDを共有すると、誰の操作か追えなくなる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep162-access-control-impl:q3" data-answer="0">
+  <p class="q">ログイン直後に一度だけ権限を判定し、以降の操作ではその結果を画面側に持たせて使い回している。見直しとして適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>要求を受けるサーバ側で、機能やデータへの操作のたびに権限を判定する</span></button><p class="why" hidden>正解。権限の判定は、要求を受けるサーバ側で毎回行う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ログイン時の判定結果を画面側の値として持たせておけば、サーバでの再確認は不要</span></button><p class="why" hidden>画面側に持たせた値では、直接送られた要求を止められない。判定はサーバ側で毎回行う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ブラウザ上の処理で権限を判定し、サーバには判定済みの要求だけを送る</span></button><p class="why" hidden>判定は要求を受けるサーバ側で行う。画面側の処理だけでは、直接送られた要求を止められない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログイン時の本人確認が強固であれば、以降の操作ごとの判定は省略できる</span></button><p class="why" hidden>識別、認証、認可は別の段階。本人確認ができていても、権限の判定は毎回サーバ側で行う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep162-access-control-impl:q4" data-answer="1">
+  <p class="q">ACLでは営業部は読み取りのみ、管理者は読み書きと定めている。営業部から、特定の資料だけ更新したいとの要望が出た。対応として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>営業部を管理者のグループに加えて、今後の要望にも対応できるようにする</span></button><p class="why" hidden>権限は必要最小限から与える。管理者グループへの追加は、要望の範囲を超える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>その資料のACLに営業部の書き込みだけを加え、付与の変更を記録しておく</span></button><p class="why" hidden>正解。必要な範囲の権限だけをACLに加え、付与や変更は記録してあとから確認できるようにする。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>画面に更新ボタンを営業部にも表示し、ACLは読み取りのままにしておく</span></button><p class="why" hidden>画面の表示を変えても、判定はサーバ側で行う。ACLが読み取りのままなら、更新は許可されない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>営業部の読み取りも含めて許可を外し、更新が必要なときは都度ID共有で対応する</span></button><p class="why" hidden>IDを共有すると、誰の操作か追えなくなる。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">特権IDを共有し、権限の変更も記録せず、一時的な権限に期限も付けていない運用で、何が困るかを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">共有した特権IDでは誰の操作か追えなくなる。変更を記録していないと、あとから確認できない。期限がないと外し忘れが起きる。特権IDの限定と非共有、変更の記録、期限付きの付与、定期的な棚卸しで運用する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep162-access-control-impl-t0-0"> 共有すると誰の操作か追えない</label></li><li><label><input type="checkbox" id="ep162-access-control-impl-t0-1"> 変更を記録しないとあとから確認できない</label></li><li><label><input type="checkbox" id="ep162-access-control-impl-t0-2"> 期限がないと外し忘れる</label></li><li><label><input type="checkbox" id="ep162-access-control-impl-t0-3"> 棚卸しで定期的に確認する</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">ACLの設定で、禁止したものだけを止める方式と、許可したものだけを通す方式の違いを、設定漏れの観点で頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">禁止したものだけ止める方式では、設定漏れがそのまま穴になる。許可したものだけを通しほかは拒否する既定で拒否なら、漏れたものは拒否される。権限は必要最小限から与え始める。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep162-access-control-impl-t1-0"> 禁止列挙型は設定漏れが穴になる</label></li><li><label><input type="checkbox" id="ep162-access-control-impl-t1-1"> 許可したものだけ通し、ほかは拒否する</label></li><li><label><input type="checkbox" id="ep162-access-control-impl-t1-2"> 必要最小限から与え始める</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="管理画面の権限に関する調査記録（ダミー）"><div class="logtitle">管理画面の権限に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 管理画面へのリンクは、権限に応じて画面上で出し分けている</span></div><div class="logrow"><span class="hl">一般利用者が管理画面のURLを直接入力すると、管理機能が実行できた</span></div><div class="logrow"><span class="hl">URLは、共有や履歴を通じて、利用者に知られることがある</span></div><div class="logrow"><span class="hl">一般利用者も、管理者と同じ社内ネットワークから接続している</span></div><div class="logrow"><span class="hl">要件: URLを知られても、権限のない操作は確実に拒否したい</span></div></div></div>
+  <p class="q">権限のない操作を確実に拒否する方法として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">操作を受け付けるサーバ側で、要求のたびに利用者の権限を確認する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>管理画面のURLを、推測されにくい長い文字列に変更する … URLが知られても拒否する、という要件を満たさない</li><li>管理者以外の画面では、リンクを隠し続ける … 現状がその方式で、URLの直接入力で実行できた</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>6.1.2 アクセス制御の実施</li></ul>
+  <p>実施の場所ごとの役割、サーバ側で毎回判定する理由、ACLと既定で拒否、特権IDや棚卸しなど運用の要点を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep161-access-control-basics.html">← #61 アクセス制御の概要 必要な人に必要な範囲だけ</a><a href="ep163-authentication-basics.html">#63 認証とは 名乗りと確認は別もの →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#27 メールヘッダインジェクション 改行が区切りになる仕組みと対策｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#27 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>メールヘッダインジェクション 改行が区切りになる仕組みと対策</h1>
+  <ol class="summary"><li>外部入力をメールヘッダの値に出力し、含まれる改行を除去・拒否しないと成立する。</li><li>影響は宛先の追加による第三者宛送信、件名・本文の改変、送信元の評判低下。実際の影響は送信機能による。</li><li>対策はライブラリのAPI、ヘッダ用入力の改行拒否。宛先固定・送信数制限・CAPTCHAは補助。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep127-mail-header-injection:mail-header-injection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">メールヘッダインジェクション</span><span class="back" hidden><span class="def">入力がメールヘッダの値として出力され、含まれる改行でヘッダが区切られ、意図しないヘッダが追加される攻撃。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep127-mail-header-injection:mail-structure">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">メールの構造</span><span class="back" hidden><span class="def">ヘッダは改行で区切られて1行ずつ並び（From, To, Subject など）、空行のあとに本文が続く。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep127-mail-header-injection:crlf">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">改行（CRLF）</span><span class="back" hidden><span class="def">ヘッダを区切る文字。入力に含まれると、そこでヘッダが区切られ、以降が新しいヘッダとして解釈される。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep127-mail-header-injection:contact-form">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">問い合わせフォームでの成立</span><span class="back" hidden><span class="def">件名や返信先をヘッダに入れる機能で、入力の改行が除去・拒否されていないと成立する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep127-mail-header-injection:relay">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">第三者宛送信（踏み台）</span><span class="back" hidden><span class="def">宛先（Bcc など）を追加され、第三者へメールを送らされること。自社の正規のサーバから送られてしまう。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep127-mail-header-injection:reputation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">送信元の評判低下</span><span class="back" hidden><span class="def">不正な送信が続くと送信元の評判が下がり、正規のメールも届きにくくなる。影響は送信機能の挙動による。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep127-mail-header-injection:mail-api">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">メール送信ライブラリのAPI</span><span class="back" hidden><span class="def">メール送信にライブラリのAPIを使う根本対策。改行を拒否する実装が多いが、挙動は確認しておく。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep127-mail-header-injection:newline-reject">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ヘッダ用入力の改行拒否</span><span class="back" hidden><span class="def">ヘッダに使う入力に改行が含まれる場合は、拒否するかエラーにする。対策の中心。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep127-mail-header-injection:fixed-recipient">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">宛先のサーバ側固定</span><span class="back" hidden><span class="def">宛先をサーバ側で固定する補助的な対策。宛先の入力を防ぐもので、改行の拒否が中心であることは変わらない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep127-mail-header-injection:spf-dkim">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SPF / DKIM</span><span class="back" hidden><span class="def">送信元の認証に使う仕組み。この攻撃は正規のサーバ経由で送られるため、SPF/DKIMでは防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep127-mail-header-injection:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>メールヘッダインジェクションへの、有効な対策は？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>本文の文字数を、200字以内に制限する</span></button><p class="why" hidden>文字数制限では、短い改行も通る</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>件名の文字列を、HTMLエスケープして出力する</span></button><p class="why" hidden>HTMLエスケープはXSS向け。改行は残る</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>入力の改行を拒否し、送信APIを使う</span></button><p class="why" hidden>改行の拒否と送信APIの利用</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>自社ドメインにSPFレコードを登録して公開する</span></button><p class="why" hidden>SPFは送信元の認証。正規サーバ経由は防げない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep127-mail-header-injection:q0" data-answer="0">
+  <p class="q">問い合わせフォームで宛先をサーバ側で固定した。件名はそのままSubjectヘッダに出力している。「宛先は固定したので安全」という判断の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>宛先の固定は補助で、改行の拒否が中心になる</span></button><p class="why" hidden>正解。宛先の固定は補助。ヘッダ用入力の改行を拒否することが中心になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>宛先を固定すれば十分なので、件名の改行の拒否は不要になる</span></button><p class="why" hidden>固定は宛先の入力を防ぐ補助で、改行の拒否の代わりにならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>件名はSubjectにしか使われないので、改行の扱いは無関係である</span></button><p class="why" hidden>Subjectに出力される入力でも、改行が除去・拒否されなければヘッダが区切られる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>宛先の固定は不要で、アドレス形式の検証だけで原因は解消する</span></button><p class="why" hidden>アドレス形式の検証も補助で、原因である改行の扱いは直らない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep127-mail-header-injection:q1" data-answer="3">
+  <p class="q">メールヘッダインジェクションの不具合に対して、フォームにCAPTCHAと送信数の制限を入れた。この対応の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>送信数を制限すれば、第三者宛の送信は起きなくなる</span></button><p class="why" hidden>制限は補助で、1回の送信でも第三者宛に送られうる点は残る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>CAPTCHAを通過した入力は信頼できるので、改行の拒否は省ける</span></button><p class="why" hidden>CAPTCHAは補助。入力の改行の扱いを直す代わりにならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>アドレス形式の検証が通れば、件名の改行も拒否済みといえる</span></button><p class="why" hidden>アドレス形式の検証は補助で、改行を拒否する処理とは別。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>悪用の量を抑える補助で、改行の扱いの不備は直らない</span></button><p class="why" hidden>正解。送信数の制限やCAPTCHAは補助で、原因の改行の扱いは別に直す。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep127-mail-header-injection:q2" data-answer="1">
+  <p class="q">SPFとDKIMを設定済みのドメインで、フォーム経由の第三者宛送信が起きた。SPF/DKIMに関する説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SPF/DKIMは送信元を認証するので、アプリ経由の不正送信も防げる</span></button><p class="why" hidden>不正な送信が自社の正規のサーバから行われるため、防げない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>正規サーバ経由の送信は、SPF/DKIMでは防げない</span></button><p class="why" hidden>正解。この攻撃は正規のサーバ経由で送られるので、SPF/DKIMでは防げない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SPF/DKIMを設定すれば、改行を拒否する処理は省いてよい</span></button><p class="why" hidden>SPF/DKIMで防げない以上、改行の拒否は省けない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SPFだけでは防げないが、DKIMと併用すれば防げる</span></button><p class="why" hidden>SPF/DKIMのいずれも、正規サーバ経由の送信は防げない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep127-mail-header-injection:q3" data-answer="0">
+  <p class="q">問い合わせフォームの不具合で、外部の宛先にも同じメールが届き、自社ドメインの正規メールが相手先で届きにくくなった。この二次的な影響の説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>送信元の評判が下がり、正規メールも届きにくくなりうる</span></button><p class="why" hidden>正解。送信元の評判低下は影響の一つ。実際の影響は送信機能やライブラリの挙動による。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>自社のSMTP認証が破られているため、まずパスワードを変更すべき</span></button><p class="why" hidden>原因は入力の改行の扱いで、認証の突破とは限らない。パスワード変更では直らない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>送信元IPやドメインへの影響はなく、宛先側の問題にとどまる</span></button><p class="why" hidden>送信元IPやドメインの評判が下がる影響がある。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>迷惑メールの踏み台になるだけで、評判には影響しない</span></button><p class="why" hidden>踏み台になるだけでなく、送信元の評判が下がる影響もある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep127-mail-header-injection:q4" data-answer="1">
+  <p class="q">フォームで入力させた返信先をReply-Toヘッダに出力したところ、アプリが出力していないヘッダが送信メールに追加されていた。原因として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>メール本文の文字数に、上限が設定されていなかったこと</span></button><p class="why" hidden>本文の文字数は、ヘッダが追加される原因ではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>返信先の入力の改行が、ヘッダの区切りになった</span></button><p class="why" hidden>正解。入力の改行が除去・拒否されず、ヘッダの区切りとして解釈された。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>返信先のアドレス形式の検証が、不十分だったこと</span></button><p class="why" hidden>形式の検証は補助。原因は改行を除去・拒否していないこと。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>送信数に制限がなく、短時間に大量の送信ができたこと</span></button><p class="why" hidden>送信数の制限は補助で、ヘッダが追加される原因ではない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">問い合わせフォームが第三者宛メールの踏み台にされる仕組みを、成立条件を入れて頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">件名や返信先などの入力がメールヘッダの値として出力され、改行が除去・拒否されていないと、改行でヘッダが区切られて宛先などの新しいヘッダが追加される。結果、第三者宛に自社の正規のサーバから送られる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep127-mail-header-injection-t0-0"> 外部入力をメールヘッダに出力</label></li><li><label><input type="checkbox" id="ep127-mail-header-injection-t0-1"> 改行の除去・拒否なし</label></li><li><label><input type="checkbox" id="ep127-mail-header-injection-t0-2"> 宛先の追加で第三者宛に送られる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">宛先の固定、送信数の制限、CAPTCHAを入れた。それでも根本対策にならない理由を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">これらは補助で、原因である入力の改行の扱いは直らない。中心はライブラリのAPIの利用とヘッダ用入力の改行拒否。SPF/DKIMも正規サーバ経由の送信は防げない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep127-mail-header-injection-t1-0"> 宛先固定・送信数制限・CAPTCHAは補助</label></li><li><label><input type="checkbox" id="ep127-mail-header-injection-t1-1"> 原因は改行の扱い</label></li><li><label><input type="checkbox" id="ep127-mail-header-injection-t1-2"> APIの利用と改行の拒否が中心</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="問い合わせフォームの調査記録（ダミー）"><div class="logtitle">問い合わせフォームの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 問い合わせフォーム（ダミー）。管理者宛に1通を送る機能</span></div><div class="logrow"><span class="hl">入力された件名を、そのままSubjectヘッダに出力 / 改行の除去なし</span></div><div class="logrow"><span class="hl">件名の入力値に、改行（CRLF）と、Bcc: 外部アドレス に相当する文字列が含まれていた</span></div><div class="logrow"><span class="hl">送信されたメールに、アプリが出力していないBccヘッダが追加</span></div><div class="logrow"><span class="hl">1回の送信で、外部の宛先にも同じメールが配信されていた</span></div><div class="logrow"><span class="hl">// 送信はすべて、アプリ自身の正規の送信アカウント / 件名の入力は、SQLには使われず、Subjectヘッダにのみ使われる</span></div></div></div>
+  <p class="q">この事象の原因として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">入力に含まれる改行が、ヘッダの区切りとして解釈された</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>SMTP認証の突破 … 送信は、アプリ自身の正規の送信アカウントのみ</li><li>SQLインジェクション … 件名の入力は、Subjectヘッダにのみ使われる</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.8.6 メールヘッダインジェクション</li></ul>
+  <p>ヘッダが改行で区切られる構造、影響の種類と環境依存、API・改行拒否が中心で宛先固定などが補助である点を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep126-http-header-injection.html">← #26 HTTPヘッダインジェクション 改行が区切りになる仕組みと対策</a><a href="ep128-dir-traversal.html">#28 ディレクトリトラバーサル 階層をさかのぼる仕組みと対策 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

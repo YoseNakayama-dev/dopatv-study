@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#116 IP-VPN・L2TP・S/MIME・PGP 閉域網とメール保護の整理｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#116 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
+  <h1>IP-VPN・L2TP・S/MIME・PGP 閉域網とメール保護の整理</h1>
+  <ol class="summary"><li>IP-VPNは経路を分離する閉域網で、暗号化は含まれないのが一般的。事業者の運用を信頼する前提がある。</li><li>L2TP自体に暗号化と認証の機能はない。IPsecと組み合わせて補う。</li><li>S/MIMEとPGPは暗号化と署名が目的。違いは鍵の持ち主の保証で、認証局か利用者同士の署名か。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep216-ipvpn-smime-pgp:ipvpn">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IP-VPN</span><span class="back" hidden><span class="def">通信事業者の閉域網で拠点間をつなぐサービス。インターネットを経由せず、事業者が利用者ごとに経路を分ける。</span><span class="note">暗号化は含まれないのが一般的。インターネットVPNとは別物。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep216-ipvpn-smime-pgp:closed-network">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">閉域網と暗号化は別</span><span class="back" hidden><span class="def">経路が分かれていることと、通信内容が暗号化されていることは別の話。事業者網内の漏えいが心配ならIPsecなどを併用する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep216-ipvpn-smime-pgp:l2tp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">L2TP</span><span class="back" hidden><span class="def">二点間にトンネルを作り、PPPのフレームを運ぶ仕組み。遠隔拠点やリモートアクセスの接続に使われる。</span><span class="note">L2TP自体に暗号化・メッセージ認証の機能はない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep216-ipvpn-smime-pgp:l2tp-ipsec">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">L2TP/IPsec</span><span class="back" hidden><span class="def">L2TPとIPsecを組み合わせる使い方。L2TPにない暗号化と認証をIPsecで補う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep216-ipvpn-smime-pgp:smime-encrypt">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">S/MIMEの暗号化</span><span class="back" hidden><span class="def">メール本文を受信者の公開鍵で暗号化し、受信者が自分の秘密鍵で復号する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep216-ipvpn-smime-pgp:smime-sign">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">S/MIMEの署名</span><span class="back" hidden><span class="def">送信者の秘密鍵で署名を付け、公開鍵で検証する。送信者の確認と改ざんの検知ができるが、本文は隠れない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep216-ipvpn-smime-pgp:x509-cert">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証局が発行する証明書</span><span class="back" hidden><span class="def">公開鍵の持ち主を保証する証明書（X.509）。S/MIMEは、これで鍵の持ち主を保証する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep216-ipvpn-smime-pgp:pgp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">PGP</span><span class="back" hidden><span class="def">S/MIMEと同じく、メールの暗号化と署名が目的。認証局に頼らず、利用者同士が互いの鍵に署名し合って信頼を築く。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep216-ipvpn-smime-pgp:web-of-trust">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">信頼の輪（Web of Trust）</span><span class="back" hidden><span class="def">利用者同士が互いの鍵に署名して信頼を築く仕組み。鍵の持ち主の確認は、利用者自身が行う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep216-ipvpn-smime-pgp:key-fingerprint">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">鍵の指紋</span><span class="back" hidden><span class="def">鍵を確かめるための識別情報。PGPでは、鍵を受け取った経路とは別の経路で相手に確かめる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep216-ipvpn-smime-pgp:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>通信とメールの保護の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IP-VPNは、それ自体で通信内容の暗号化を保証する</span></button><p class="why" hidden>IP-VPN自体は暗号化を保証しない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>L2TPは、単独で通信を暗号化できる</span></button><p class="why" hidden>L2TPに暗号化の機能はない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>S/MIMEの署名は、本文を暗号化して隠す</span></button><p class="why" hidden>署名は本文を隠さない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>PGPは、認証局に頼らず、利用者同士で信頼を築く</span></button><p class="why" hidden>利用者同士の署名で信頼を築く</p></li></ol>
+</li>
+<li class="quiz" data-key="ep216-ipvpn-smime-pgp:q0" data-answer="0">
+  <p class="q">A社の担当がB社の担当へ、S/MIMEで機密メールを送る。内容を第三者に読まれないようにし、かつ送信者が本人だと確認できるようにしたい。鍵の使い方として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>受信者の公開鍵で本文を暗号化し、自分の秘密鍵で署名を付ける</span></button><p class="why" hidden>正解。暗号化は受信者の公開鍵で行い、受信者の秘密鍵で復号する。署名は送信者の秘密鍵で付け、公開鍵で検証する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>自分の秘密鍵で本文を暗号化し、受信者の公開鍵で署名を付ける</span></button><p class="why" hidden>鍵の役割が逆になっている。暗号化は受信者の公開鍵、署名は送信者の秘密鍵を使う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>受信者の公開鍵で本文を暗号化すれば、署名は不要で送信者も確認できる</span></button><p class="why" hidden>受信者の公開鍵は誰でも使えるので、暗号化しても送信者の確認にならない。送信者の確認と改ざんの検知には署名が要る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>受信者の秘密鍵で本文を暗号化し、自分の公開鍵で署名を付ける</span></button><p class="why" hidden>受信者の秘密鍵は受信者だけが持つ鍵で、送信者は使えない。署名も送信者の公開鍵ではなく秘密鍵で付ける。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep216-ipvpn-smime-pgp:q1" data-answer="1">
+  <p class="q">初めて取引する相手から、PGPの公開鍵が添付されたメールが届いた。その鍵が本人のものかを確かめる方法として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>認証局が発行した証明書を確認すれば、PGPの鍵の持ち主を保証できる</span></button><p class="why" hidden>PGPは認証局に頼らない。鍵の持ち主の確認は利用者自身が行う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>鍵の指紋を、受け取ったメールとは別の経路で相手に確認する</span></button><p class="why" hidden>正解。PGPでは鍵の持ち主の確認を利用者自身が行い、鍵の指紋を別の経路で確かめる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>鍵が添付されたメールに書かれた指紋と、鍵の指紋が一致すれば本人と判断する</span></button><p class="why" hidden>鍵と指紋が同じメールで届いたのでは、同じ経路を通っただけで、別の経路での確認にならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>メールの送信元アドレスが相手のものなら、添付された鍵は本人のものとして扱う</span></button><p class="why" hidden>送信元アドレスが一致しても、鍵の持ち主の確認にはならない。指紋を別の経路で確かめる必要がある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep216-ipvpn-smime-pgp:q2" data-answer="2">
+  <p class="q">在宅勤務者が本社へL2TPだけでリモートアクセスしている。セキュリティ診断で、通信が暗号化されていないと指摘された。改善策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IP-VPNに乗り換えて、事業者の閉域網に通信を載せれば暗号化も含まれる</span></button><p class="why" hidden>IP-VPNは経路を分けるサービスで、暗号化は含まれないのが一般的。乗り換えても暗号化されるとは限らない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>L2TPのトンネルを複数本張り、経路を増やして暗号化の代わりにする</span></button><p class="why" hidden>トンネルを増やしても、暗号化や認証の機能がL2TPに加わるわけではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>L2TPにIPsecを組み合わせ、暗号化と認証を補う</span></button><p class="why" hidden>正解。L2TP自体に暗号化・認証の機能はないので、IPsecと組み合わせて補う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>S/MIMEに切り替えて、通信全体を暗号化と署名で保護する</span></button><p class="why" hidden>S/MIMEはメールの暗号化と署名の仕組みで、リモートアクセスの通信全体を保護するものではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep216-ipvpn-smime-pgp:q3" data-answer="3">
+  <p class="q">本社と支店を事業者のIP-VPNでつなぎ、事業者網内で経路が利用者ごとに分離されている。この構成のリスク評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>インターネットを経由しないので、事業者網内でも通信は暗号化されて読まれない</span></button><p class="why" hidden>インターネットを経由しないことと、暗号化されていることは別。暗号化は含まれないのが一般的である。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>利用者ごとに経路が分かれているため、事業者の運用は信頼性の評価から外してよい</span></button><p class="why" hidden>IP-VPNは事業者の運用を信頼することが前提になる。評価から外すことはできない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>インターネットVPNと同じ仕組みなので、IPsecの設定が必須になる</span></button><p class="why" hidden>IP-VPNは閉域網のサービスで、インターネットVPN（IPsec VPN・SSL-VPN）とは別物。IPsecは必須ではなく、事業者網内の漏えいが心配なときに併用する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗号化は一般に含まれず、事業者の運用を信頼する前提が残る</span></button><p class="why" hidden>正解。経路は分離されても暗号化は一般に含まれず、事業者の運用を信頼する前提がある。心配ならIPsecなどを併用する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep216-ipvpn-smime-pgp:q4" data-answer="0">
+  <p class="q">取引先からS/MIMEの署名付きメールが届いた。署名の検証には取引先の公開鍵を使う。その鍵が本当に取引先のものだと判断する根拠として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>認証局発行の証明書で、公開鍵の持ち主が保証されているか確認する</span></button><p class="why" hidden>正解。S/MIMEでは、公開鍵の持ち主を認証局が発行した証明書（X.509）で保証する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>鍵の指紋を別の経路で確かめ、利用者同士の署名の連鎖で信頼を判断する</span></button><p class="why" hidden>これはPGPの信頼の築き方。S/MIMEは認証局の証明書で鍵の持ち主を保証する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>署名の検証に成功すれば、送信者の公開鍵の持ち主も保証されたことになる</span></button><p class="why" hidden>署名の検証は、その公開鍵で署名が合うかを確かめるだけである。鍵の持ち主の保証は証明書が担う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>メールの送信元アドレスが取引先のドメインであれば、鍵の持ち主も本物とみなせる</span></button><p class="why" hidden>送信元アドレスは鍵の持ち主の保証にならない。証明書で確認する。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">S/MIMEの暗号化と署名で、使う鍵と守れることの違いを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">暗号化は受信者の公開鍵で行い、受信者の秘密鍵で復号して本文を隠す。署名は送信者の秘密鍵で付け、公開鍵で検証して送信者の確認と改ざんの検知をする。署名は本文を隠さない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep216-ipvpn-smime-pgp-t0-0"> 暗号化は受信者の公開鍵、復号は受信者の秘密鍵</label></li><li><label><input type="checkbox" id="ep216-ipvpn-smime-pgp-t0-1"> 署名は送信者の秘密鍵、検証は公開鍵</label></li><li><label><input type="checkbox" id="ep216-ipvpn-smime-pgp-t0-2"> 署名は本文を隠さない</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">S/MIMEとPGPで、公開鍵の持ち主を信頼する仕組みがどう違うか。PGPの注意点も頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">S/MIMEは認証局が発行した証明書で持ち主を保証する。PGPは認証局に頼らず、利用者同士が互いの鍵に署名し合う。PGPでは鍵の持ち主の確認を利用者自身が行い、指紋を別の経路で確かめる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep216-ipvpn-smime-pgp-t1-0"> S/MIMEは認証局の証明書</label></li><li><label><input type="checkbox" id="ep216-ipvpn-smime-pgp-t1-1"> PGPは利用者同士の署名（信頼の輪）</label></li><li><label><input type="checkbox" id="ep216-ipvpn-smime-pgp-t1-2"> 持ち主の確認は利用者自身が行い、指紋を別経路で確かめる</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="IP-VPN構成の確認記録（ダミー）"><div class="logtitle">IP-VPN構成の確認記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">本社と支店3拠点を、IP-VPNの閉域網で接続</span></div><div class="logrow"><span class="hl">検討中のどの事業者も、通信の暗号化を含まない</span></div><div class="logrow"><span class="hl">回線の帯域は十分で、通信の遅延もない</span></div><div class="logrow"><span class="hl">要件: 事業者網内でも、通信内容を読まれないこと</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">拠点間でIPsecによる暗号化を併用する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>帯域の大きい回線に変更する … 帯域は十分で、暗号化にも関係しない</li><li>別の事業者のIP-VPNに乗り換える … 検討中のどの事業者も、暗号化は含まない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>7.5.1 IP-VPN</li><li>7.5.5 S/MIME</li><li>7.5.6 PGP</li></ul>
+  <p>閉域網と暗号化が別であること、L2TPにIPsecが要る理由、メール保護の鍵の使い分けと信頼の築き方の違いを確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep215-biometric.html">← #115 バイオメトリック認証 仕組み・誤り・方式の特徴</a><a href="ep217-wlan.html">#117 無線LANのセキュリティ 脅威・暗号化方式・強化策 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

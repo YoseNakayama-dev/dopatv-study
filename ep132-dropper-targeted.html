@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#32 ドロッパと標的型攻撃 侵入から外への持ち出しまで｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#32 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>ドロッパと標的型攻撃 侵入から外への持ち出しまで</h1>
+  <ol class="summary"><li>ドロッパは内部に持つ別のマルウェアを書き出して実行する。自身は悪質な動作が少なく、検出されにくい。</li><li>標的型攻撃は特定の組織や人を狙い、長期間続きやすく、既知の対策を回避するよう作り込まれる。</li><li>対策は入口・内部・出口で重ねる。入口だけでは防ぎきれないので、検知後の対応手順も用意する。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep132-dropper-targeted:dropper">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ドロッパ</span><span class="back" hidden><span class="def">内部に持つ別のマルウェアを、端末に書き出して実行するマルウェア。自身は悪質な動作が少なく、検出されにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep132-dropper-targeted:downloader">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ダウンローダ</span><span class="back" hidden><span class="def">外部から別のマルウェアを取得するマルウェア。ドロッパとは、取得元が外部か内部かが違う。</span><span class="note">ドロッパは外部取得がないので、通信先の制限だけでは足りない場合がある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep132-dropper-targeted:targeted-attack">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">標的型攻撃</span><span class="back" hidden><span class="def">特定の組織や人を狙い、相手に合わせて仕立てる攻撃。目的は情報の窃取など。長期間続きやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep132-dropper-targeted:targeted-mail">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">標的型メール</span><span class="back" hidden><span class="def">取引先などを装って届くメール。添付ファイルやURLから侵入される入口になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep132-dropper-targeted:c2">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">指令サーバ（C&amp;C）</span><span class="back" hidden><span class="def">侵入した端末と通信し、遠隔操作の指令を出す外部のサーバ。出口で通信を止めることが対策になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep132-dropper-targeted:lateral-movement">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">内部調査・横展開</span><span class="back" hidden><span class="def">侵入後に内部を調べ、他の端末へ広がる段階。情報の収集と外部送信の前に起きる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep132-dropper-targeted:edr">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">EDR</span><span class="back" hidden><span class="def">端末の挙動を監視する仕組み。内部の層の対策として、最小権限やネットワークの分離と重ねる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep132-dropper-targeted:entry-inside-exit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">入口・内部・出口の対策</span><span class="back" hidden><span class="def">入口は注意喚起・訓練・添付ファイルの規則、内部は挙動監視・最小権限・分離、出口は外部通信の監視と制限。</span><span class="note">入口だけでは防ぎきれない。検知後の対応手順も用意する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep132-dropper-targeted:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>標的型攻撃への対策として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>入口・内部・出口を重ね、侵入を前提に検知と封じ込めを備える</span></button><p class="why" hidden>多層で、侵入を前提に備える</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>送信元が取引先のアドレスなら、添付ファイルを開いてよい</span></button><p class="why" hidden>送信元は偽装でき、乗っ取りもある</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>入口のメールフィルタがあれば、内部の対策は不要</span></button><p class="why" hidden>すり抜ける攻撃が、内部で動く</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>攻撃は短時間で終わるので、事後のログ調査は不要</span></button><p class="why" hidden>長期間続き、ログが経路の手がかり</p></li></ol>
+</li>
+<li class="quiz" data-key="ep132-dropper-targeted:q0" data-answer="1">
+  <p class="q">標的型攻撃への備えとして、外部への通信先を制限している。ドロッパについての評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ドロッパも外部から追加のマルウェアを取得するので、通信先の制限だけで防げる</span></button><p class="why" hidden>外部から取得するのはダウンローダ。ドロッパは内部に持つものを書き出す。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>内部に持つものを書き出すので、通信先の制限だけでは足りない場合がある</span></button><p class="why" hidden>正解。外部取得がないので、通信先の制限だけでは足りない場合がある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ドロッパ自体は悪質な動作が多いので、通常の挙動監視で見つけやすい</span></button><p class="why" hidden>ドロッパ自体は悪質な動作が少なく、検出されにくい。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ドロッパとダウンローダは同じ動作なので、対策も区別しなくてよい</span></button><p class="why" hidden>ダウンローダは外部から取得する点が違う。対策を考える上でも区別が要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep132-dropper-targeted:q1" data-answer="2">
+  <p class="q">訓練と添付ファイルの取扱い規則を整えたので、内部と出口の対策は省略したい、という提案があった。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>妥当。訓練を受けた利用者が添付ファイルを開かなければ、標的型攻撃は成立しない</span></button><p class="why" hidden>入口だけでは防ぎきれない。訓練を受けても、すり抜ける攻撃は起こりうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>妥当。送信元が取引先であることを確認すれば、標的型メールは見分けられる</span></button><p class="why" hidden>送信元は偽装でき、乗っ取られた正規の送信元もある。送信元の確認だけでは見分けられない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>入口だけでは防ぎきれないので、内部・出口と対応手順も要る</span></button><p class="why" hidden>正解。入口をすり抜けたものは内部で動く。内部と出口で被害を小さくし、検知後の手順も用意する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>不十分。ただし出口の通信制限さえあれば、内部の対策は省いてよい</span></button><p class="why" hidden>内部の対策（挙動監視・最小権限・分離）も重ねる層の1つ。出口だけでは足りない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep132-dropper-targeted:q2" data-answer="3">
+  <p class="q">侵入された端末が、外部の指令サーバ（C&amp;C）と通信して遠隔操作されることを抑えたい。最も適切な対策はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>添付ファイルの取扱い規則を見直して、侵入そのものを防ぐ入口対策を強める</span></button><p class="why" hidden>入口の対策。すでに侵入された後の遠隔操作を止める手段ではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>標的型メールの訓練の回数を増やして、利用者の見分ける力を高める</span></button><p class="why" hidden>入口の対策。侵入後の通信には効かない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>メールの注意喚起を全社に再送して、不審な添付ファイルを開かないよう促す</span></button><p class="why" hidden>入口の対策。侵入後の通信を止める手段ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>外部への通信を監視し、指令サーバへの通信を制限する</span></button><p class="why" hidden>正解。出口の対策として、指令サーバへの通信を止める。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep132-dropper-targeted:q3" data-answer="1">
+  <p class="q">添付ファイルの検査で、悪質な動作が見つからなかった。ドロッパの性質をふまえた、この結果の扱いとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>検出されなかったので、このファイルは安全と判断し、以後の調査を省く</span></button><p class="why" hidden>ドロッパ自体は悪質な動作が少なく検出されにくい。無検出を安全の証拠にはできない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>検出されにくい性質があるので、無検出は安全の根拠にならない</span></button><p class="why" hidden>正解。ドロッパは悪質な動作が少なく、検出されにくい。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ドロッパは外部から取得する型なので、外部通信の記録がなければ問題ないと判断してよい</span></button><p class="why" hidden>外部から取得するのはダウンローダ。ドロッパは内部に持つものを書き出す。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ドロッパは必ず検出できる方式があるので、検出できなかった検査方式は使わないことにする</span></button><p class="why" hidden>「必ず検出できる」という根拠はない。言い過ぎの断定である。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep132-dropper-targeted:q4" data-answer="2">
+  <p class="q">パターンファイルの更新だけを徹底している組織の、標的型攻撃への備えの評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>標的型攻撃は既知の特徴に合わせて作られるので、更新を徹底すれば防げる</span></button><p class="why" hidden>既知の対策に検出されにくいよう作り込まれる。更新の徹底だけでは防げない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>標的型攻撃は短期間で終わるので、検知後の対応手順は用意しなくてよい</span></button><p class="why" hidden>長期間続きやすい。検知後の対応手順も用意する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>既知の対策に検出されにくく作り込まれるので、更新だけでは足りない</span></button><p class="why" hidden>正解。既知の対策を回避するよう作られるので、入口・内部・出口で重ねて備える。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>標的型攻撃は不特定多数に同じ内容を送るので、既知の特徴で対処できる</span></button><p class="why" hidden>特定の組織や人を狙い、相手に合わせて仕立てる攻撃である。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">標的型攻撃で「入口だけでは防ぎきれない」と言われる理由と、入口を抜けられた後の備えを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">標的型攻撃は相手に合わせて仕立てられ、既知の対策に検出されにくいよう作り込まれるため、入口をすり抜ける場合がある。内部では挙動監視（EDR）・最小権限・ネットワークの分離、出口では外部通信の監視と制限で被害を小さくし、検知後の対応手順も用意する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep132-dropper-targeted-t0-0"> 相手に合わせて仕立て、既知の対策を回避する</label></li><li><label><input type="checkbox" id="ep132-dropper-targeted-t0-1"> 内部の対策（挙動監視・最小権限・分離）</label></li><li><label><input type="checkbox" id="ep132-dropper-targeted-t0-2"> 出口の対策（外部通信の監視と制限）</label></li><li><label><input type="checkbox" id="ep132-dropper-targeted-t0-3"> 検知後の対応手順</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">検知した指令サーバ（C&amp;C）への通信を遮断した。これだけで対応を終えてよいかを、侵入の流れをふまえて説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">終えてよいとは言えない。通信の遮断は出口の対策で、すでに侵入した端末や、内部調査・横展開で他の端末へ広がった影響は残りうる。検知後の対応手順に沿って、影響範囲を調べて対処する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep132-dropper-targeted-t1-0"> 出口の対策であり、侵入済みの影響は残りうる</label></li><li><label><input type="checkbox" id="ep132-dropper-targeted-t1-1"> 内部調査・横展開で他の端末へ広がりうる</label></li><li><label><input type="checkbox" id="ep132-dropper-targeted-t1-2"> 検知後の対応手順で影響範囲を調べる</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="総務部端末の調査記録（ダミー）"><div class="logtitle">総務部端末の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 総務部の端末（ダミー）。取引先を名乗るメールの添付ファイルを開いた</span></div><div class="logrow"><span class="hl">開いた直後、一時フォルダに実行ファイルXが作られ、起動された</span></div><div class="logrow"><span class="hl">Xのハッシュ値は、添付ファイルの内部に格納されていたデータと一致</span></div><div class="logrow"><span class="hl">外部への通信は、Xのプロセスだけが行っていた / 添付ファイル自体は通信なし</span></div></div></div>
+  <p class="q">最初に開かれた添付ファイルの役割として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">内部に格納した実行ファイルを書き出して起動する、ドロッパ</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>ダウンローダ … Xは添付ファイルの内部のデータと一致</li><li>スパイウェア本体 … 通信しているのはXのプロセス</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.9.9 ドロッパ</li><li>2.9.10 標的型攻撃</li></ul>
+  <p>ドロッパとダウンローダの違い、標的型攻撃の流れの各段階に、入口・内部・出口のどの対策が対応するかを確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep131-mobilecode-spyware.html">← #31 悪意あるモバイルコードとスパイウェア 閲覧だけで動く仕組みと対策</a><a href="ep133-fileless-detect.html">#33 ファイルレス攻撃とマルウェアの検出手法 ファイルがなくても見つける →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

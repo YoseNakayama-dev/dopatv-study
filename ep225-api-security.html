@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#125 APIセキュリティ 守る場所は画面ではなくサーバ側｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#125 ・ 追加テーマ（目次外）</p>
+  <h1>APIセキュリティ 守る場所は画面ではなくサーバ側</h1>
+  <ol class="summary"><li>APIは画面を介さず直接呼べるので、画面の制限は守りにならない。権限・入力・応答はサーバ側で守る。</li><li>認可は操作のたびに、オブジェクト単位・機能単位で確認する。認証済みでもすべてを許可しない。</li><li>回数制限は過剰な利用や負荷を抑えるが、認可の不備や必要以上の応答は防げない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep225-api-security:api-direct">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">APIの直接呼び出し</span><span class="back" hidden><span class="def">APIは画面を介さず、プログラムから直接呼ばれる。画面でボタンや項目を隠しても、APIの呼び出しは防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep225-api-security:server-side">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">サーバ側で守る原則</span><span class="back" hidden><span class="def">権限・入力・応答の制限をサーバで実施し、利用者から送られる値は信用しない考え方。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep225-api-security:token-scope">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">トークンの期限と範囲</span><span class="back" hidden><span class="def">認証に使うトークンは、有効期限を短くし、使える範囲を絞る。必要な操作だけに許す工夫。</span><span class="note">認可の代わりにはならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep225-api-security:authorization">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認可</span><span class="back" hidden><span class="def">操作のたびに、サーバが権限を確認すること。認証済みでも、すべての操作を許可するわけではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep225-api-security:bola">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">BOLA</span><span class="back" hidden><span class="def">他人のオブジェクトを操作できてしまう認可の不備。IDORのAPI版の呼び名。対策はオブジェクト単位の判定。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep225-api-security:bfla">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">BFLA</span><span class="back" hidden><span class="def">管理者用の機能を、一般の利用者が呼べてしまう認可の不備。対策は機能単位の判定。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep225-api-security:input-validation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">入力検証</span><span class="back" hidden><span class="def">型・長さ・範囲などをサーバ側で検証し、想定外の値は拒否すること。</span><span class="note">クライアント側の検証だけでは不十分。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep225-api-security:response-minimizing">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">応答の絞り込み</span><span class="back" hidden><span class="def">画面に出す項目に限らず、業務に必要な項目だけをサーバが返すこと。応答に含まれれば通信上で見える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep225-api-security:rate-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">回数制限（レート制限）</span><span class="back" hidden><span class="def">単位時間あたりの要求数を抑え、過剰な利用・総当たり・負荷を抑える対策。</span><span class="note">認可の不備や応答の過剰は防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep225-api-security:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>APIの保護の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>画面でボタンを隠せば、権限のない操作もAPIで防げる</span></button><p class="why" hidden>画面の制限はAPIに及ばない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認証済みなら、すべてのデータの操作を許可してよい</span></button><p class="why" hidden>認証済みでも認可が要る</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>回数の制限は、過剰な利用や総当たりを抑える</span></button><p class="why" hidden>回数の制限で過剰な利用を抑える</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>入力の検証は、画面側で行えば、サーバ側では不要</span></button><p class="why" hidden>検証はサーバ側で行う</p></li></ol>
+</li>
+<li class="quiz" data-key="ep225-api-security:q0" data-answer="3">
+  <p class="q">一般会員のトークンで注文詳細のAPIを呼ぶと、注文番号を書き換えるだけで他の会員の注文が返ってくる（ダミー環境）。認証は正しく動いている。有効な対策はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>トークンの有効期限をさらに短くし、攻撃に使える時間を狭める</span></button><p class="why" hidden>期限を短くしても、有効なトークンの間は他人の注文を取得できる。問題は認可であって認証ではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>1分あたりの要求数に上限を設け、連続した試行の数を抑える</span></button><p class="why" hidden>回数制限は過剰な利用を抑えるが、認可の不備は防げない。1回の要求でも他人の注文が返る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>注文番号の入力を数字だけに限定する検証を、サーバ側で追加する</span></button><p class="why" hidden>数字だけを受け付ける検証は入力の型を整えるだけ。他人の正しい注文番号なら、そのまま通る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>操作のたびに、サーバが対象の注文の所有者かを確認する</span></button><p class="why" hidden>正解。操作のたびに、オブジェクト単位でサーバが権限を確認する。これがBOLAへの対策になる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep225-api-security:q1" data-answer="0">
+  <p class="q">外部連携アプリに発行したトークンは、閲覧しか使わない用途なのに、書き込みや削除もできる範囲で、有効期限も長い。流出に備えた見直しとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>有効期限を短くし、使える範囲を用途に必要な分へ絞る</span></button><p class="why" hidden>正解。トークンは有効期限を短く、使える範囲を絞る。閲覧だけの用途なのに、書き込みや削除までできる範囲は広すぎる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>画面側で書き込みのボタンを隠せば、トークンの範囲は絞らなくてよい</span></button><p class="why" hidden>画面で隠してもAPIは直接呼べる。範囲はトークンとサーバ側で絞る必要がある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>要求数の上限をより厳しくして、書き込みの回数そのものを減らす</span></button><p class="why" hidden>回数を減らしても、書き込める権限そのものは残る。権限の範囲の問題を回数では解決できない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>応答に含める項目を必要最小限に絞れば、書き込み権限も絞られる</span></button><p class="why" hidden>応答の項目と、書き込みの権限は別の話。応答を絞っても、トークンの範囲は変わらない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep225-api-security:q2" data-answer="1">
+  <p class="q">管理者用の機能のAPIを、一般の利用者のトークンで呼べることが判明した。回数制限はすでに十分に厳しく設定している。最も適切な対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>回数制限をさらに厳しくして、一般利用者が呼び出せる回数を減らす</span></button><p class="why" hidden>制限しても認可の不備は防げない。1回でも呼べれば、管理機能が実行されてしまう。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>機能ごとに、呼び出す利用者の権限をサーバが確認する</span></button><p class="why" hidden>正解。機能単位の判定を、サーバ側で行う。管理者用の機能を一般の利用者が呼べる不備への対策。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>管理者用の画面にだけ該当の操作ボタンを表示し、一般の画面には出さない</span></button><p class="why" hidden>画面で隠しても、APIは直接呼べる。権限の確認はサーバ側で行う必要がある。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>トークンの有効期限を短くして、一般利用者が管理機能を使える時間を狭める</span></button><p class="why" hidden>期限を短くしても、有効な間は呼べる。認証の強化は、機能ごとの認可の代わりにならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep225-api-security:q3" data-answer="0">
+  <p class="q">画面の入力欄は数量を1〜99に制限している。ところがAPIを直接呼ぶと、数量に -5 を指定したリクエストが受理され、在庫が増えてしまった（ダミー環境）。最も適切な対策はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>サーバ側で型と範囲を検証し、範囲外の値は拒否する</span></button><p class="why" hidden>正解。型・長さ・範囲をサーバ側で検証し、想定外の値は拒否する。画面の制限はAPIには及ばない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>画面の入力欄の下限と上限を、より厳しく見直して配布し直す</span></button><p class="why" hidden>画面を厳しくしても、APIを直接呼べば回避される。検証はサーバ側で行う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>回数制限を設けて、範囲外の値を送れる回数そのものを減らす</span></button><p class="why" hidden>回数を減らしても、1回で不正な値が受理されれば被害は出る。値の検証の代わりにならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>トークンの使える範囲を絞って、不正な値を受け付けなくする</span></button><p class="why" hidden>トークンの範囲は、どの操作を許すかの話。送られた値の妥当性は、入力検証で確認する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep225-api-security:q4" data-answer="3">
+  <p class="q">認証・認可・入力検証は適切に実装済みで、応答も必要な項目に絞ってある。それでも1つのトークンから短時間に大量の要求が続き、API全体の負荷が高まっている。追加すべき対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>認可の判定を、オブジェクト単位からさらに細かい単位へと見直して強化する</span></button><p class="why" hidden>認可は権限の確認で、要求の量は変わらない。大量の要求そのものは認可の強化では抑えられない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>トークンの有効期限をさらに短くし、再発行の頻度を増やして対処する</span></button><p class="why" hidden>期限を短くしても、有効な間は大量に要求できる。要求数は抑えられない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>入力の型・長さ・範囲の検証を、現状よりさらに厳しいものへ強化する</span></button><p class="why" hidden>検証は値の妥当性の確認。正当な値による大量の要求は、検証を厳しくしても減らない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>単位時間あたりの要求数に上限を設けて、過剰な利用を抑える</span></button><p class="why" hidden>正解。単位時間あたりの要求数を制限する回数制限は、過剰な利用や負荷の増大を抑える。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">「画面でボタンを隠したので、権限のない操作はできない」という説明が成り立たない理由と、直し方を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">APIは画面を介さず、プログラムから直接呼べるので、画面の制限はAPIに及ばない。権限・入力・応答はサーバ側で守る。具体的には、操作のたびにサーバがオブジェクト単位・機能単位で権限を確認する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep225-api-security-t0-0"> APIは直接呼べる</label></li><li><label><input type="checkbox" id="ep225-api-security-t0-1"> 画面の制限は守りにならない</label></li><li><label><input type="checkbox" id="ep225-api-security-t0-2"> サーバ側で操作ごとに権限を確認</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">APIの回数制限を入れても残るリスクを2つ挙げ、それぞれの対策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">回数制限は過剰な利用・総当たり・負荷を抑えるが、認可の不備と、必要以上の応答は防げない。認可の不備にはオブジェクト・機能ごとの権限確認、必要以上の応答にはサーバ側で必要な項目に絞る対策を重ねる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep225-api-security-t1-0"> 認可の不備は残る</label></li><li><label><input type="checkbox" id="ep225-api-security-t1-1"> 必要以上の応答は残る</label></li><li><label><input type="checkbox" id="ep225-api-security-t1-2"> 認可の確認と応答の絞り込みを重ねる</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="会員検索APIの調査記録（ダミー）"><div class="logtitle">会員検索APIの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">店舗スタッフ用の、会員検索APIを調査した</span></div><div class="logrow"><span class="hl">画面の表示項目は、氏名と会員ランクのみ</span></div><div class="logrow"><span class="hl">応答のJSONには、この業務で使わない住所と電話番号も含む</span></div><div class="logrow"><span class="hl">認証とオブジェクト単位の認可は適切。通信もTLS保護済み</span></div><div class="logrow"><span class="hl">要件: 業務に不要な個人情報を、端末へ渡さない</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">サーバ側で、応答に含める項目を必要なものに絞る</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>画面側で、住所と電話番号を表示しない … 画面ではすでに非表示。応答には残る</li><li>トークンの有効期限を、さらに短くする … 応答に含まれる項目は変わらない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>EX-11 APIセキュリティ</li></ul>
+  <p>画面の外で守る原則を軸に、認証・認可、入力検証、応答の絞り込み、回数制限が何を防ぎ、何を防げないかを確かめる。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep224-dnssec-doh-dot.html">← #124 DNSSECとDoH・DoT 真正性と秘匿性の違い</a><a href="ep226-container-k8s.html">#126 コンテナ・Kubernetesのセキュリティ 分離の弱さと設定の落とし穴 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

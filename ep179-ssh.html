@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#79 SSH 接続先と利用者を両方確かめる｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#79 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
+  <h1>SSH 接続先と利用者を両方確かめる</h1>
+  <ol class="summary"><li>SSHは遠隔ログインやファイル転送を暗号化する。接続先はホスト鍵、利用者はパスワードか公開鍵で別に確かめる。</li><li>穴は、初回の指紋を確認せず承認すること、パスワードの総当たり、秘密鍵の流出、ポートフォワードの悪用。</li><li>対策は公開鍵認証＋パスワード認証の停止、パスフレーズ、指紋の別経路確認、転送の許可限定とログ。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep179-ssh:ssh">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SSH</span><span class="back" hidden><span class="def">遠隔ログインやファイル転送（SFTP/SCP）などを暗号化して行う仕組み。平文のTelnetやFTPの代わりに使う。TCP22番。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep179-ssh:host-key">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ホスト鍵</span><span class="back" hidden><span class="def">サーバが本物であることを示す鍵。利用者は初回接続時に指紋を確認して記録する（known_hosts）。</span><span class="note">利用者を確かめる鍵ではない。確認を省くと偽サーバ（中間者）につながる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep179-ssh:fingerprint">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ホスト鍵の指紋</span><span class="back" hidden><span class="def">初回接続時に確認するホスト鍵の情報。表示されたまま承認せず、電話など別経路でサーバ管理者に確認する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep179-ssh:server-vs-user-auth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">サーバ認証と利用者認証</span><span class="back" hidden><span class="def">サーバ認証はホスト鍵で接続先の本物を確かめ、利用者認証はパスワードか公開鍵で利用者を確かめる。別々の仕組み。</span><span class="note">公開鍵認証にしても、接続先の確認（指紋）は別に必要。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep179-ssh:password-auth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">パスワード認証</span><span class="back" hidden><span class="def">利用者認証の方式の一つ。外から見える22番では、総当たりの試行を受け続ける。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep179-ssh:pubkey-auth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">公開鍵認証</span><span class="back" hidden><span class="def">公開鍵をサーバに登録し、秘密鍵で署名を作って利用者を認証する方式。パスワード認証を止めて、この方式に一本化する。</span><span class="note">サーバに登録するのは公開鍵。秘密鍵は端末に置く。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep179-ssh:passphrase">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">パスフレーズ</span><span class="back" hidden><span class="def">秘密鍵を守るための合言葉。無いと、盗まれた秘密鍵がそのまま使われて本人になりすませる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep179-ssh:port-forward">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ポートフォワード</span><span class="back" hidden><span class="def">他の通信をSSHで包んで運ぶ機能。許可していない転送が使われると、社内への抜け道になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep179-ssh:sftp-scp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SFTP・SCP</span><span class="back" hidden><span class="def">SSHの道を使うファイル転送。平文のFTPの代わりに使える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep179-ssh:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>SSHの公開鍵認証の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>秘密鍵をサーバに登録し、公開鍵で署名を作って認証する方式である</span></button><p class="why" hidden>登録するのは公開鍵。秘密鍵は端末に置く</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>利用者のパスワードをサーバへ送り、サーバが照合して認証する方式</span></button><p class="why" hidden>それはパスワード認証</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>サーバの公開鍵を使って、利用者の端末を認証する方式である</span></button><p class="why" hidden>サーバの確認はホスト鍵。利用者認証とは別</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>公開鍵をサーバに登録し、秘密鍵で署名を作り認証する方式である</span></button><p class="why" hidden>公開鍵を登録し、秘密鍵で署名</p></li></ol>
+</li>
+<li class="quiz" data-key="ep179-ssh:q0" data-answer="0">
+  <p class="q">公開鍵認証を設定済みのサーバへ初めて接続すると、ホスト鍵の指紋の確認表示が出た。適切な対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>指紋を、サーバ管理者に電話など別経路で確認してから承認する</span></button><p class="why" hidden>正解。初回に指紋を確認して記録することで、偽サーバへの接続を防ぐ。確認は電話など別経路で行う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>公開鍵認証が設定済みなので、表示をそのまま承認して接続を進める</span></button><p class="why" hidden>公開鍵認証は利用者の認証で、接続先の確認はホスト鍵で行う別の仕組み。承認するだけでは偽サーバを見抜けない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ホスト鍵の確認はサーバ側の設定なので、利用者は何もしなくてよい</span></button><p class="why" hidden>初回に指紋を確認して記録するのは利用者側の作業で、サーバ側の設定では済まない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗号化されるので、指紋の確認を省いても偽サーバにはつながらない</span></button><p class="why" hidden>初回に指紋を確認しないと、偽サーバにつながる。確認不足が中間者の入口になる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep179-ssh:q1" data-answer="1">
+  <p class="q">パスワード認証を止め、公開鍵認証だけにしたサーバがある。管理者のノートPCから、パスフレーズの無い秘密鍵が盗まれた。起きうることはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パスワード認証を止めてあるので、盗まれた秘密鍵では接続できない</span></button><p class="why" hidden>秘密鍵が盗まれると本人になりすませる。パスワード認証の停止は、この流出を防がない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>秘密鍵で本人になりすませ、パスフレーズが無ければそのまま使える</span></button><p class="why" hidden>正解。秘密鍵が流出すると本人になりすませ、パスフレーズが無いとそのまま使われる。だから秘密鍵はパスフレーズで守り、端末から出さない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ホスト鍵が変わるので、利用者がサーバの本物を確認できなくなる</span></button><p class="why" hidden>ホスト鍵はサーバが本物かを示す鍵で、利用者の秘密鍵の流出とは別。今回の影響は利用者へのなりすまし。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>総当たりの試行を受け続けるので、パスワード認証の再開が必要になる</span></button><p class="why" hidden>パスワード認証を止めれば、総当たりの的にならなくなる。問題になるのは秘密鍵の流出のほう。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep179-ssh:q2" data-answer="2">
+  <p class="q">SSHサーバのポートフォワードを、社内への抜け道にさせないための対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ポートフォワードはSSHで暗号化されるので、全利用者に許可してよい</span></button><p class="why" hidden>ポートフォワードは社内への抜け道にもなる。暗号化されていることは、全員に許可してよい理由にならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>パスワード認証を止めれば、許可していない転送も使えなくなる</span></button><p class="why" hidden>認証方式の変更と、転送の許可は別の対策。転送は許可を限定し、ログを残す対策が必要。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>転送は必要な利用者だけに許可し、利用の記録をログに残して確認する</span></button><p class="why" hidden>正解。転送は必要な利用者だけに許可し、ログを残す。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>初回に指紋を確認済みなら、許可していない転送が使われることはない</span></button><p class="why" hidden>指紋の確認は接続先の確認で、転送の許可とは別。許可していない転送が使われることもある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep179-ssh:q3" data-answer="0">
+  <p class="q">Telnetで行っていた保守をSSHに置き換えた。ファイル転送はFTPのままである。評価として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ファイル転送もSFTPかSCPに置き換えれば、SSHの道で暗号化できる</span></button><p class="why" hidden>正解。SFTPやSCPはSSHの道を使い、平文のFTPの代わりに使える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SSHはログインだけを暗号化するので、ファイル転送の暗号化は別に要る</span></button><p class="why" hidden>SSHは遠隔ログインだけでなく、ファイル転送も暗号化する。SFTPやSCPがその道を使う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SSHへ置き換えれば、残したFTPも自動的にSSHで包まれて暗号化される</span></button><p class="why" hidden>FTPは平文で、置き換えただけでは包まれない。他の通信を包めるのはポートフォワードを使う場合。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SFTPやSCPはSSHと別の仕組みなので、ホスト鍵の確認は要らない</span></button><p class="why" hidden>SFTPやSCPはSSHの道を使う。接続先の確認はSSHのホスト鍵で行うので、省けない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep179-ssh:q4" data-answer="1">
+  <p class="q">インターネットから22番に到達できるサーバで、パスワードの認証失敗が大量に記録された。対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パスワードを長く複雑にして、パスワード認証は引き続き使う運用にする</span></button><p class="why" hidden>パスワードに頼る認証のままでは、総当たりの試行を受け続ける点は変わらない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>パスワード認証を止めて公開鍵認証にし、秘密鍵はパスフレーズで守る</span></button><p class="why" hidden>正解。パスワード認証を止めて公開鍵認証にすれば、総当たりの的にならなくなる。秘密鍵の流出に備え、パスフレーズで守る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>サーバのホスト鍵を作り直し、全利用者に指紋を再確認してもらう</span></button><p class="why" hidden>ホスト鍵は接続先の確認に使う鍵で、利用者認証への総当たりとは別。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ポートフォワードを全面的に禁止して、外からの試行を受けなくする</span></button><p class="why" hidden>ポートフォワードは別の通信を運ぶ機能で、パスワード認証への試行とは別。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">公開鍵認証に切り替え済みなのに、初回の指紋の確認表示をそのまま承認する運用が続いている。残るリスクと直し方を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">公開鍵認証は利用者の認証で、接続先の確認はホスト鍵と指紋で別に行う。承認するだけでは偽サーバにつながる。初回に指紋を、サーバ管理者に電話など別経路で確認する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep179-ssh-t0-0"> 公開鍵認証は利用者認証で、接続先の確認とは別</label></li><li><label><input type="checkbox" id="ep179-ssh-t0-1"> 承認だけでは偽サーバにつながる</label></li><li><label><input type="checkbox" id="ep179-ssh-t0-2"> 指紋を電話など別経路で確認する</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">パスワード認証を止めて公開鍵認証にすれば、SSHの認証面は十分か。残る点と対策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">総当たりの的にはならなくなるが、秘密鍵が盗まれると本人になりすませる。秘密鍵はパスフレーズで守り、端末から出さない。ほかに、転送は必要な利用者だけに許可してログを残す。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep179-ssh-t1-0"> 総当たりの的にならなくなる</label></li><li><label><input type="checkbox" id="ep179-ssh-t1-1"> 秘密鍵の流出でなりすまされる</label></li><li><label><input type="checkbox" id="ep179-ssh-t1-2"> パスフレーズで守り、端末から出さない</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="サーバの遠隔保守に関する調査記録（ダミー）"><div class="logtitle">サーバの遠隔保守に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 管理者が、インターネット越しにサーバへ遠隔ログインする</span></div><div class="logrow"><span class="hl">サーバ管理者は、管理者から渡された情報を登録できる</span></div><div class="logrow"><span class="hl">サーバ管理者とは、電話でも連絡が取れる</span></div><div class="logrow"><span class="hl">要件: 推測や総当たりに頼る認証を使わず、偽サーバに接続しない</span></div></div></div>
+  <p class="q">要件を満たす方法として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">パスワード認証を無効にして公開鍵認証にし、初回にサーバの指紋を電話で確認する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>パスワード認証のまま、長いパスワードを設定する … 推測や総当たりに頼る認証のままで、要件に反する</li><li>パスワード認証を無効にして公開鍵認証にするが、初回の確認表示はそのまま承認する … 偽のサーバに接続しない要件に反する</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>7.5.2 SSH</li></ul>
+  <p>サーバ認証（ホスト鍵・指紋）と利用者認証（パスワード・公開鍵）が別の仕組みであることを、本の記述で確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep178-ssl-vpn.html">← #78 TLSによるVPN（SSL-VPN） ソフトの要否で選ぶ三つの型</a><a href="ep180-pki-certificate.html">#80 PKIとデジタル証明書 署名をたどって信頼する →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

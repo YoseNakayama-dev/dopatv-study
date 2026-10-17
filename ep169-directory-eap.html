@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#69 ディレクトリサービスとEAP 名簿と入口を整える｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#69 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
+  <h1>ディレクトリサービスとEAP 名簿と入口を整える</h1>
+  <ol class="summary"><li>ディレクトリは利用者・機器の情報を一元管理しLDAPで参照する。通信は暗号化し、匿名の参照は制限する。</li><li>EAPは認証方式を差し替える枠組みで802.1Xで使う。EAP-TLSは証明書の配布が要り、PEAPはパスワード認証を続ける。</li><li>PEAPは端末がサーバ証明書を検証しないと偽の親機に渡しうる。管理者権限は奪われると影響が全体に及ぶ。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep169-directory-eap:directory">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ディレクトリサービス</span><span class="back" hidden><span class="def">利用者・機器・グループの情報を階層的に一元管理し、LDAPなどで問い合わせられる仕組み。認証・認可の判断に他システムが使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep169-directory-eap:ldap">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">LDAP</span><span class="back" hidden><span class="def">ディレクトリを参照するためのプロトコル。通信はLDAPSやStartTLSで暗号化し、匿名の参照は制限する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep169-directory-eap:active-directory">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Active Directory</span><span class="back" hidden><span class="def">ディレクトリサービスの代表的な実装。</span><span class="note">管理者権限が奪われると、影響が全体に及ぶ。管理者を絞り、操作を記録する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep169-directory-eap:eap">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">EAP</span><span class="back" hidden><span class="def">認証方式を差し替えられる拡張可能な枠組み。無線LANやスイッチでは802.1Xと組み合わせて使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep169-directory-eap:ieee-8021x">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IEEE 802.1X</span><span class="back" hidden><span class="def">端末（サプリカント）・認証装置（オーセンティケータ）・認証サーバで接続を制御する。認証装置は結果が出るまで通信を通さない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep169-directory-eap:radius">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">RADIUS</span><span class="back" hidden><span class="def">802.1Xの認証サーバとしてよく使われる。</span><span class="note">ディレクトリを参照するプロトコルのLDAPとは役割が違う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep169-directory-eap:eap-tls">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">EAP-TLS</span><span class="back" hidden><span class="def">クライアント・サーバ双方の証明書で互いを確認する方式。パスワードは使わないが、端末への証明書の配布が必要。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep169-directory-eap:peap">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">PEAP</span><span class="back" hidden><span class="def">サーバ証明書で保護したTLSトンネルの中で、パスワード認証を行う方式。端末側の準備が軽い。</span><span class="note">端末がサーバ証明書を検証しないと、偽の親機に資格情報を渡しうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep169-directory-eap:cert-revoke">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">証明書の失効</span><span class="back" hidden><span class="def">紛失した端末の証明書を無効にする運用。証明書で認証する方式では、端末の紛失時に失効させる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep169-directory-eap:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>ディレクトリサービスの説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者や機器の情報を階層的に管理し、LDAPなどで問い合わせる仕組み</span></button><p class="why" hidden>一元管理し、LDAPなどで問い合わせ</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>利用者の情報を、端末ごとに別々に保存して、各端末で管理する仕組みである</span></button><p class="why" hidden>端末ごとでなく、一元管理する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>通信の暗号化だけを担い、利用者の情報は一切管理しない仕組みである</span></button><p class="why" hidden>利用者の情報を管理する</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>認証の結果だけを保存し、利用者の属性やグループは扱えない仕組みである</span></button><p class="why" hidden>属性やグループも扱える</p></li></ol>
+</li>
+<li class="quiz" data-key="ep169-directory-eap:q0" data-answer="1">
+  <p class="q">PEAPで無線LAN認証を行っているが、端末側でサーバ証明書の検証が無効になっている。このときの問題として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>TLSトンネル内で送るので資格情報は守られ、サーバ証明書の検証は省いてよい</span></button><p class="why" hidden>PEAPなどでは端末にサーバ証明書を検証させる必要があり、検証しないと偽の親機に資格情報を渡しうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>端末が偽の親機を正規の親機と区別できず、資格情報を渡してしまうおそれがある</span></button><p class="why" hidden>正解。端末がサーバ証明書を検証しないと、偽の親機に資格情報を渡しうる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>PEAPは端末へのクライアント証明書の配布が必須なので、配布漏れの端末が接続できない</span></button><p class="why" hidden>PEAPはサーバ証明書で保護した中でパスワード認証を行い、端末側の準備が軽い。端末への証明書の配布が要るのはEAP-TLSである。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>認証装置は結果が出る前から通信を通すので、検証の有無は影響しない</span></button><p class="why" hidden>802.1Xの認証装置は、認証の結果が出るまで通信を通さない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep169-directory-eap:q1" data-answer="3">
+  <p class="q">802.1XとEAPで無線LANを構成する。認証結果が出るまで端末の通信を通さない機器と、認証サーバについての説明の組合せとして適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通さないのはサプリカント（端末）。認証サーバにはRADIUSがよく使われる</span></button><p class="why" hidden>サプリカントは認証を受ける側の端末で、通信を通さない役割は認証装置が担う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>通さないのは認証サーバ。認証装置にはRADIUSがよく使われる</span></button><p class="why" hidden>通信を通さない役割は認証装置で、認証サーバではない。RADIUSは認証サーバとしてよく使われる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>通さないのは認証装置。認証サーバにはLDAPがよく使われる</span></button><p class="why" hidden>LDAPはディレクトリを参照するプロトコルで、802.1Xの認証サーバにはRADIUSがよく使われる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>通さないのは認証装置。認証サーバにはRADIUSがよく使われる</span></button><p class="why" hidden>正解。認証装置は結果が出るまで通信を通さず、認証サーバにはRADIUSがよく使われる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep169-directory-eap:q2" data-answer="2">
+  <p class="q">EAP-TLSで無線LANに接続している。従業員が証明書を導入した端末を紛失した。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パスワードを使わない方式なので、漏れる資格情報が無く、対応は不要である</span></button><p class="why" hidden>パスワードを使わないEAP-TLSでも、紛失した端末の証明書は失効させる必要がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>利用者のパスワードを変更すれば、証明書は有効なまま残しても問題ない</span></button><p class="why" hidden>パスワードを変えても、証明書で認証するEAP-TLSでは証明書自体は無効にならない。証明書が有効なままだと、紛失した端末から接続されるおそれが残るため、証明書を失効させる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>紛失した端末の証明書を失効させ、その端末では接続できなくする</span></button><p class="why" hidden>正解。紛失した端末の証明書は失効させる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ディレクトリの管理者を絞れば、紛失端末の証明書も無効になる</span></button><p class="why" hidden>管理者を絞って操作を記録するのは管理者権限への対策で、紛失した端末の証明書の扱いとは別である。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep169-directory-eap:q3" data-answer="1">
+  <p class="q">社内アプリがLDAPでディレクトリに問い合わせている。通信は暗号化されておらず、認証なしの匿名参照も許可されている。見直し方針として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者情報は認証の判断にだけ使うものなので、暗号化も匿名参照の制限も要らない</span></button><p class="why" hidden>暗号化されていないLDAPの通信は途中で内容を読まれうる。匿名参照を許すと、認証なしでディレクトリの情報を引き出される。通信は暗号化し、匿名の参照は制限する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>LDAPSやStartTLSで通信を暗号化し、匿名の参照を制限する</span></button><p class="why" hidden>正解。LDAPの通信は暗号化し、匿名の参照は制限する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>管理者の数を絞れば、通信の暗号化も匿名参照の制限も不要になる</span></button><p class="why" hidden>管理者を絞って操作を記録するのは管理者権限への対策で、LDAPの暗号化や匿名参照の制限の代わりにはならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>EAP-TLSを導入すれば、LDAPの通信の暗号化は不要になる</span></button><p class="why" hidden>EAP-TLSは認証方式を差し替える枠組みEAPの一方式で、ディレクトリを参照するLDAPの通信保護とは別の話である。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep169-directory-eap:q4" data-answer="3">
+  <p class="q">ディレクトリサービスで利用者・機器の情報を一元管理している。管理者権限の扱いとして適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>情報が一か所にあるので、管理者権限が奪われても、影響は個々のシステムに限られる</span></button><p class="why" hidden>管理者権限は、奪われると影響が全体に及ぶ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ディレクトリは階層構造なので、奪われても下位の階層には影響しない</span></button><p class="why" hidden>情報は階層的に整理されているが、管理者権限が奪われると影響は全体に及ぶ。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>管理者権限は一人に集中させ、操作の記録は取らない</span></button><p class="why" hidden>管理者は絞り、操作を記録する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>管理者を絞って操作を記録する。奪われると影響が全体に及ぶと考えて運用する</span></button><p class="why" hidden>正解。管理者を絞って操作を記録する。管理者権限は奪われると影響が全体に及ぶ。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">PEAPの無線LANで、端末にサーバ証明書の検証をさせないとどうなるか、どう防ぐかを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">端末が偽の親機を正規のものと区別できず、パスワードなどの資格情報を渡してしまうおそれがある。PEAPなどでは端末にサーバ証明書を検証させる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep169-directory-eap-t0-0"> 偽の親機に資格情報を渡しうる</label></li><li><label><input type="checkbox" id="ep169-directory-eap-t0-1"> 端末にサーバ証明書を検証させる</label></li><li><label><input type="checkbox" id="ep169-directory-eap-t0-2"> PEAPはサーバ証明書で保護した中でパスワード認証をする</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">ディレクトリサービスで利用者情報を一元管理する利点と、運用上の注意を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">認証や認可の判断に同じ情報を使い回せ、異動や退職の反映も一か所で済む。注意として、LDAPの通信は暗号化して匿名の参照は制限し、管理者権限は奪われると影響が全体に及ぶので、管理者を絞って操作を記録する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep169-directory-eap-t1-0"> 認証・認可に同じ情報を使い回せる</label></li><li><label><input type="checkbox" id="ep169-directory-eap-t1-1"> LDAPは暗号化し、匿名の参照を制限する</label></li><li><label><input type="checkbox" id="ep169-directory-eap-t1-2"> 管理者権限が奪われると影響が全体に及ぶ</label></li><li><label><input type="checkbox" id="ep169-directory-eap-t1-3"> 管理者を絞り、操作を記録する</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="無線LAN認証の見直しに関する調査記録（ダミー）"><div class="logtitle">無線LAN認証の見直しに関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 無線LANは、全員共通の事前共有鍵で接続している</span></div><div class="logrow"><span class="hl">退職者も鍵を知っており、鍵の変更は全端末の再設定が要る</span></div><div class="logrow"><span class="hl">全端末は管理下で証明書を導入でき、親機は802.1Xに対応する</span></div><div class="logrow"><span class="hl">要件: 利用者ごとに認証し、パスワード入力は求めない</span></div></div></div>
+  <p class="q">要件を満たす方式として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">802.1XとEAP-TLSを使い、証明書で端末とサーバが互いに確認する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>共通の事前共有鍵を、毎月変更する … 共通のままで、利用者ごとの認証にならない</li><li>PEAPで、利用者のパスワードを送って認証する … パスワードの入力を求めない要件を満たさない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>6.7.4 ディレクトリサービス</li><li>6.7.5 EAP</li></ul>
+  <p>ディレクトリサービスの役割とLDAPの保護、EAP-TLSとPEAPの違い、サーバ証明書の検証と証明書の失効の位置づけを確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep168-radius-kerberos.html">← #68 RADIUSとKerberos 認証を集めてチケットで通す</a><a href="ep170-sso-overview.html">#70 SSOの概要 一度の認証で全部使う →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

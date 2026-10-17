@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#112 情報セキュリティ対策の分類 機能と実施方法の二つの軸｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#112 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>情報セキュリティ対策の分類 機能と実施方法の二つの軸</h1>
+  <ol class="summary"><li>機能は抑止・予防・検知・回復、実施方法は組織的・人的・物理的・技術的。二つの軸を組み合わせて抜けを点検する。</li><li>予防だけに偏ると、起きたとき気付けず戻せない。検知は気付くだけで被害を止めないので、対応につなげる。</li><li>一つの対策が複数の機能を持つことがある。分類は整理の道具で十分さは示さないので、リスクに応じて組み合わせる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep212-measure-classification:deterrence">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">抑止</span><span class="back" hidden><span class="def">不正をためらわせる機能。警告の表示や監視の周知が例。心理に働きかけ、実行そのものは止めない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep212-measure-classification:prevention">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">予防</span><span class="back" hidden><span class="def">起こさせない機能。アクセス制御、入室制限、パッチ適用が例。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep212-measure-classification:detection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">検知</span><span class="back" hidden><span class="def">起きたことに気付く機能。ログの監視やIDSが例。</span><span class="note">気付くだけでは被害は止まらない。対応につなげる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep212-measure-classification:recovery">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">回復</span><span class="back" hidden><span class="def">元に戻す機能。バックアップや復旧の手順が例。予防が破られたときの備えになる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep212-measure-classification:organizational">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">組織的対策</span><span class="back" hidden><span class="def">方針・規程・体制・監査など。ほかの面の対策の土台になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep212-measure-classification:human">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">人的対策</span><span class="back" hidden><span class="def">教育や訓練など。</span><span class="note">規程があっても、守る人の理解がなければ働かない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep212-measure-classification:physical">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">物理的対策</span><span class="back" hidden><span class="def">入退室管理、施錠、設備の保護など。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep212-measure-classification:technical">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">技術的対策</span><span class="back" hidden><span class="def">アクセス制御、暗号化、ネットワークの対策など。</span><span class="note">技術だけで守りきれるわけではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep212-measure-classification:gap-check">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">抜けの点検</span><span class="back" hidden><span class="def">機能と実施方法の二つの軸を組み合わせて、対策の抜けや偏りを見つけること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep212-measure-classification:classification-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">分類の限界</span><span class="back" hidden><span class="def">分類は整理の道具で、対策が十分かどうかは示さない。リスクに応じて組み合わせて選ぶ。</span><span class="note">一つの対策が複数の機能を持つことがある（監視カメラは抑止と検知）。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep212-measure-classification:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>対策の分類の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>抑止は、被害を元の状態に戻す機能である</span></button><p class="why" hidden>元に戻すのは回復</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>検知は、異常に気付き、対応につなげる機能</span></button><p class="why" hidden>気付いて対応につなげる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>技術的対策だけで、十分に守れる</span></button><p class="why" hidden>他の面の対策も組み合わせる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>監視カメラは、検知の機能しか持たない</span></button><p class="why" hidden>抑止にもなる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep212-measure-classification:q0" data-answer="2">
+  <p class="q">ある事業者の対策は、アクセス制御の設定、パッチ適用、サーバ室の入室制限の三つだけである。機能と実施方法の二つの軸で点検したときの指摘として、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>予防策が複数そろっているので、分類上の抜けはなく、対策は十分な水準だと判断してよい</span></button><p class="why" hidden>分類は整理の道具で、対策が十分かどうかは示さない。予防が複数あっても、機能の面では抜けが残る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>実施方法の軸で人的対策が無いことだけが問題で、教育を足せば機能の面の抜けも解消される</span></button><p class="why" hidden>教育は人的対策で、実施方法の軸の補強になる。機能の軸の抜け（検知と回復）は、別に点検して補う必要がある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>機能の軸では予防に偏り、起きたとき気付けず戻せない。検知と回復の対策を足して点検する</span></button><p class="why" hidden>正解。三つとも起こさせないための予防で、機能の軸では偏っている。検知（ログの監視など）と回復（バックアップなど）を足す。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>検知と回復は予防が破られた後の対策なので、予防の水準を上げ続ければ、検知や回復を足す必要は生じない</span></button><p class="why" hidden>予防は破られることがある。破られたときに気付き、戻すために検知と回復が要る。予防の強化だけでは代わりにならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep212-measure-classification:q1" data-answer="0">
+  <p class="q">不正持出しを防ぐため、「持出しは監視している」と全従業員に周知し、各部屋に掲示した。この対策の機能と効果についての評価として、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>不正をためらわせる抑止であり、実行そのものは止めない。予防や検知の対策と組み合わせる</span></button><p class="why" hidden>正解。周知は心理に働きかける抑止で、実行そのものは止めない。起こさせない予防や、気付く検知と組み合わせる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ためらわせる効果があるので予防と同等の水準で不正を起こさせず、ほかの対策は不要である</span></button><p class="why" hidden>抑止は実行そのものを止めない。ためらわせるだけで、起こさせない予防と同等とは言えず、ほかの対策も要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>監視していると周知すれば、実際に起きた不正にも気付けるので、検知の機能も満たしている</span></button><p class="why" hidden>周知はためらわせるもので、起きたことに気付くものではない。気付くには、ログの監視などの検知の対策が別に要る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>効果を測れないため機能による分類には入れず、実施方法の軸の組織的対策としてだけ扱うのが妥当である</span></button><p class="why" hidden>抑止も機能による分類の一つで、警告の表示や監視の周知が例。機能の軸と実施方法の軸の両方で整理する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep212-measure-classification:q2" data-answer="3">
+  <p class="q">ログ監視の仕組みから不正なログイン試行の通知が毎日届いているが、確認する担当者が決まっておらず、誰も対応していない。この状況への判断として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通知が届いているので検知の機能は満たされており、被害は通知によって止まっていると見てよい</span></button><p class="why" hidden>検知は気付くだけで、被害は止まらない。通知を確認して対応につなげて初めて、被害を抑えられる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>通知が多すぎるのは設定の誤りなので、ログの監視はやめて予防の対策に集中するのが望ましい</span></button><p class="why" hidden>通知が多いことを理由に監視をやめると、起きたことに気付けなくなる。予防だけに偏ると、気付けず戻せない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>通知の件数が多い間は、回復の対策であるバックアップの取得を増やすことで、検知の代わりにできる</span></button><p class="why" hidden>バックアップは元に戻す回復の対策で、起きたことに気付く検知の代わりにはならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>検知は気付くだけで被害を止めないため、確認と対応の体制を組織的に定めて対応につなげる</span></button><p class="why" hidden>正解。検知は気付くだけで被害を止めない。確認と対応の体制は組織的対策で、決めておくことで対応につながる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep212-measure-classification:q3" data-answer="0">
+  <p class="q">情報セキュリティ規程は整備済みだが、従業員は内容をよく知らず、禁止された私物USBメモリの持込みが続いている。規程の見直し案が出る一方、現場からは「内容が伝わっていない」との声がある。最も適切な対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>人的対策の教育や訓練で内容を理解させ、規程は組織的対策としてほかの面の土台に保つ</span></button><p class="why" hidden>正解。規程があっても、守る人の理解がなければ働かない。教育や訓練で理解させつつ、規程は組織的対策の土台として維持する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>守られないのは規程が緩いためなので、禁止事項を厳しく改訂して罰則を設ければ人的対策は不要になる</span></button><p class="why" hidden>規程があっても、守る人の理解がなければ働かない。内容を厳しくするだけでは、伝わっていない問題が残る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>USBメモリの接続を技術的対策で制御すれば、規程も教育も不要になり対策として足りる</span></button><p class="why" hidden>技術的対策は有効だが、技術だけで守りきれるわけではない。規程や教育など、ほかの面と組み合わせる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>入退室管理を強化する物理的対策を進めれば、私物の持込みという規程の違反は起きなくなる</span></button><p class="why" hidden>入退室管理は物理的対策で、人の出入りに関するもの。規程を理解して守る人を育てる人的対策の代わりにはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep212-measure-classification:q4" data-answer="2">
+  <p class="q">サーバの障害で業務データが破損した。バックアップは毎日取得しているが、復旧の手順書は無く、担当者の記憶に頼っている。機能の軸で見たとき、最も適切な見直しはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>バックアップを取得しているので回復の機能は満たされており、手順は障害時に考えれば足りる</span></button><p class="why" hidden>回復の例はバックアップと復旧の手順。バックアップだけでは元に戻す備えとして足りず、手順も整える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>回復は予防が破られたときの備えなので、予防策を強化すれば復旧の手順書の整備は不要である</span></button><p class="why" hidden>予防は破られることがある。その備えが回復なので、予防の強化は復旧の手順の代わりにならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>回復にはバックアップと復旧の手順が含まれるので、手順を定めて備える</span></button><p class="why" hidden>正解。回復はバックアップや復旧の手順で、元に戻す機能。予防が破られたときの備えとして、手順も定めておく。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>復旧の手順の整備は検知の機能に当たるため、ログの監視を強化して異常に早く気付けば代替できる</span></button><p class="why" hidden>検知は起きたことに気付く機能で、元に戻す手順は回復に当たる。早く気付いても、戻す手順の代わりにはならない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">予防の対策だけに偏った構成が問題になる理由と、補うべき対策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">予防は破られることがある。予防だけでは、起きたときに気付けず、戻せない。そこで、起きたことに気付く検知（ログの監視など）と、元に戻す回復（バックアップや復旧の手順など）を足す。検知は気付くだけで被害を止めないので、対応につなげる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep212-measure-classification-t0-0"> 予防だけでは起きたとき気付けず戻せない</label></li><li><label><input type="checkbox" id="ep212-measure-classification-t0-1"> 検知と回復を足す</label></li><li><label><input type="checkbox" id="ep212-measure-classification-t0-2"> 検知は気付くだけで、対応につなげる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">監視カメラを例に、一つの対策が複数の機能を持つ場合と、分類という方法の限界を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">監視カメラは、映っていることがためらわせる抑止と、起きたことに気付く検知を兼ねる。分類は整理の道具で、対策が十分かどうかは示さない。リスクに応じて、二つの軸を組み合わせて対策を選ぶ。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep212-measure-classification-t1-0"> 監視カメラは抑止と検知を兼ねる</label></li><li><label><input type="checkbox" id="ep212-measure-classification-t1-1"> 分類は十分さを示さない</label></li><li><label><input type="checkbox" id="ep212-measure-classification-t1-2"> リスクに応じて組み合わせて選ぶ</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="サーバ室の管理記録（ダミー）"><div class="logtitle">サーバ室の管理記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">先月、サーバ室から、機器が無断で持ち出された</span></div><div class="logrow"><span class="hl">入口は扉だけで、誰でも出入りできる状態</span></div><div class="logrow"><span class="hl">出入りの記録は、取っていない</span></div><div class="logrow"><span class="hl">要件: 無断の持出しを、未然に防ぎたい</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">入室できる人を限定し、入口を施錠する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>出入りの記録を取り、毎月確認する … 記録を取っても、誰でも入れる状態は変わらず、持出しは止められない</li><li>機器の再調達の予算を確保する … 持ち出された後の備えで、未然には防げない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.1.1 情報セキュリティ対策の分類</li></ul>
+  <p>機能（抑止・予防・検知・回復）と実施方法（組織的・人的・物理的・技術的）の二つの軸で、対策の抜けを点検する考え方を確かめる。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep211-security-audit.html">← #111 情報セキュリティ監査とシステム監査 独立と証拠で測る</a><a href="ep213-sandbox.html">#113 サンドボックス 隔離して動かして見る仕組みと限界 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

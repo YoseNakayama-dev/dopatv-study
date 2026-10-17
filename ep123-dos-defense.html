@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#23 DoS攻撃への総合的な対策 型に合わせた守備範囲と限界｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#23 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>DoS攻撃への総合的な対策 型に合わせた守備範囲と限界</h1>
+  <ol class="summary"><li>DoS対策は型ごとに違う。帯域は上流での吸収やCDN、接続はSYNクッキー等、アプリはWAFやレート制限とキャッシュ。</li><li>どの対策にも限界がある。攻撃規模が上回れば自社では防げず、厳しすぎる設定は正規の通信も落とす。</li><li>脆弱性型はパッチ適用が基本だが未公開の弱点には間に合わない。平常時の把握と連絡手順の整備も要る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep123-dos-defense:upstream">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">上流での吸収・遮断</span><span class="back" hidden><span class="def">ISPやDDoS対策サービスなど、自社より上流で攻撃の通信を吸収・遮断する。帯域型への基本的な備え。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep123-dos-defense:cdn">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">CDNによる拠点分散</span><span class="back" hidden><span class="def">配信を複数の拠点に分散して負荷を受け止める。ただし攻撃規模が上回れば、それでも防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep123-dos-defense:syn-cookie">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SYNクッキー</span><span class="back" hidden><span class="def">接続の状態をサーバに保持しないで済ませる工夫。SYNフラッドで未完了の接続が溜まるのを避ける（RFC 4987）。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep123-dos-defense:conn-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">接続数上限・タイムアウトの見直し</span><span class="back" hidden><span class="def">接続数の上限や待ち時間を調整し、FWや負荷分散装置で制限する。厳しすぎる設定は正規の接続も落とす。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep123-dos-defense:waf">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">WAF</span><span class="back" hidden><span class="def">Webアプリへの要求を検査して制御する仕組み。アプリ型への対策の一つ。</span><span class="note">正規に見える要求とは区別しにくい。WAFだけで防げるとは限らない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep123-dos-defense:rate-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">レート制限</span><span class="back" hidden><span class="def">同じ相手や同じ種類の要求の数を制限して、負荷の集中を抑える。アプリ型への対策の一つ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep123-dos-defense:cache">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">キャッシュによる負荷軽減</span><span class="back" hidden><span class="def">同じ要求の結果を再利用して、DBなどの処理負荷を減らす。アプリ型への対策の一つ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep123-dos-defense:patch-input">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">パッチ適用・入力値検査</span><span class="back" hidden><span class="def">脆弱性型への基本の対策。異常な入力でも停止しない設計も含む。未公開の弱点には間に合わない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep123-dos-defense:baseline">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">平常時の把握（ベースライン）</span><span class="back" hidden><span class="def">平常時の通信量や負荷を把握しておくこと。攻撃かどうかの判断や、ISP・委託先への連絡の材料になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep123-dos-defense:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>帯域を埋める大量通信への備えとして、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>入力値の検査を厳しくする</span></button><p class="why" hidden>入力値の検査は、インジェクションの対策</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>CDNや上流での遮断を利用する</span></button><p class="why" hidden>CDNや上流での遮断</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>パスワードを長くする</span></button><p class="why" hidden>パスワードは、認証の強化</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログインの試行回数を制限する</span></button><p class="why" hidden>試行回数の制限は、ログイン攻撃の対策</p></li></ol>
+</li>
+<li class="quiz" data-key="ep123-dos-defense:q0" data-answer="2">
+  <p class="q">SYNフラッド対策として接続数の上限を極端に低くし、タイムアウトも大幅に短縮した。その後、正規の利用者の接続が切れるという苦情が出た。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>安全側に倒した設定なので、苦情があっても維持する</span></button><p class="why" hidden>厳しすぎる設定は正規の接続も落とす。サービスの継続を損なうので、維持すべきではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SYNクッキーは状態を保持するので、併用は逆効果になる</span></button><p class="why" hidden>SYNクッキーは状態を保持しないで済ませる工夫。説明が逆である。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>厳しすぎる設定は正規接続も落とすので、見直しが要る</span></button><p class="why" hidden>正解。接続型の対策には、厳しすぎる設定が正規接続を落とすという限界がある。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WAFでHTTP要求の内容を検査すれば、設定の見直しは不要</span></button><p class="why" hidden>WAFはHTTP要求を扱う対策で、接続の確立段階の設定とは別の話。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep123-dos-defense:q1" data-answer="0">
+  <p class="q">帯域型のDDoSに備えて、自社の回線と設備に余裕を持たせた。それでも十分とは言えない場合がある。その理由として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>攻撃規模が上回れば自社では防げず、上流の対応が要るため</span></button><p class="why" hidden>正解。自社の回線と設備には限りがあり、攻撃規模が上回ると防げない。上流での吸収・遮断が要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>余裕を持たせると、平常時の回線使用率が把握できなくなるため</span></button><p class="why" hidden>余裕を持たせても使用率は把握できる。平常時の把握はむしろ必要な運用である。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>CDNを使うと、攻撃を受けるサーバが1拠点に集中してしまうため</span></button><p class="why" hidden>CDNは拠点を分散して負荷を受け止める。1拠点に集中するという説明は逆である。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>回線の増強は、アプリ型の攻撃にしか効果がないと決まっているため</span></button><p class="why" hidden>回線の増強は帯域型に効果がありうる。アプリ型にしか効かないと決めつけるのは言い過ぎ。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep123-dos-defense:q2" data-answer="3">
+  <p class="q">脆弱性型のDoSへの対策として、パッチ適用を徹底している。それでも残るリスクとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パッチを適用済みなので、残るリスクはないと言える</span></button><p class="why" hidden>パッチは公開された弱点への対処。未公開の弱点には間に合わないため、残るリスクはある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>パッチ適用は帯域型の攻撃を防ぐ主な手段であり、効果が高い</span></button><p class="why" hidden>帯域型の主な備えは上流での吸収・遮断やCDN。パッチは脆弱性型への対策である。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>入力値検査をしていれば、新しい弱点でも必ず防げる</span></button><p class="why" hidden>入力値検査は有効だが、新しい弱点を必ず防げるとは言えない。断定が過ぎる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>公開前の弱点には、パッチが間に合わない場合がある</span></button><p class="why" hidden>正解。パッチは公開された弱点への対処で、未公開の弱点には間に合わない。異常時も停止しない設計で補う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep123-dos-defense:q3" data-answer="2">
+  <p class="q">DDoSを受けた際、平常時の通信量を把握しておらず、異常かどうかの判断と上流への連絡に時間がかかった。事前の備えとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>WAFを導入すれば、平常時の通信の把握は不要になる</span></button><p class="why" hidden>WAFがあっても、平常時の把握は異常の判断に必要。不要にはならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>攻撃を受けてから、ISPとの連絡手順を決める</span></button><p class="why" hidden>連絡手順は事前に決めておく。攻撃を受けてからでは対応が遅れる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>平常時の把握と、ISPへの連絡手順・訓練を整える</span></button><p class="why" hidden>正解。平常時の把握（ベースライン）、ISP・委託先との連絡手順、縮退・切替の訓練が共通の運用になる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>回線の増強だけを行い、手順の整備は行わない方針にする</span></button><p class="why" hidden>増強だけでは攻撃規模が上回る場合に防げない。連絡手順や訓練も要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep123-dos-defense:q4" data-answer="0">
+  <p class="q">アプリ型のDoS対策として、WAFを導入した。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>有効な対策の一つだが、正規に見える要求とは区別しにくい</span></button><p class="why" hidden>正解。WAFはアプリ型への対策の一つだが、正規に見える要求とは区別しにくいという限界がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>WAFがあれば、帯域型・接続型の攻撃も同時に防げる</span></button><p class="why" hidden>帯域型や接続型は別の資源を狙う攻撃で、別の対策が要る。WAFで同時には防げない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>WAFを導入すれば、アプリ型は完全に防げるので他は不要</span></button><p class="why" hidden>完全に防げるとは言えず、レート制限やキャッシュなどとの組合せが要る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>正規に見える要求なので、WAFで区別できないため無意味である</span></button><p class="why" hidden>区別しにくい場合があっても、WAFが無意味とは言えない。限界を踏まえて他の対策と併用する。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">回線を増強したのに、帯域型のDDoSで再びサービスが止まった。自社だけでは防げない理由と、次に取る手を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">攻撃規模が自社の回線と設備の余裕を上回れば、自社だけでは防げない。上流のISPやDDoS対策サービスでの吸収・遮断を使い、CDNで拠点を分散する。平常時からISPなどとの連絡手順を決めておく。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep123-dos-defense-t0-0"> 攻撃規模が上回れば自社では防げない</label></li><li><label><input type="checkbox" id="ep123-dos-defense-t0-1"> 上流での吸収・遮断とCDNの活用</label></li><li><label><input type="checkbox" id="ep123-dos-defense-t0-2"> ISPなどとの連絡手順</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">DoSの型ごとの対策には、それぞれ限界がある。接続型とアプリ型について、限界を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">接続型は、接続数の上限やタイムアウトを厳しくしすぎると、正規の接続も落としてしまう。アプリ型は、WAFやレート制限を使っても、正規に見える要求とは区別しにくい。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep123-dos-defense-t1-0"> 接続型：厳しすぎる設定は正規接続も落とす</label></li><li><label><input type="checkbox" id="ep123-dos-defense-t1-1"> アプリ型：正規に見える要求と区別しにくい</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="障害後の検討メモ（ダミー）"><div class="logtitle">障害後の検討メモ（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 公開Webサイトの障害後の検討メモ（ダミー）</span></div><div class="logrow"><span class="hl">回線の使用率は平常時並み / 接続待ちの異常な増加はない</span></div><div class="logrow"><span class="hl">特定の検索URLへのHTTP要求が急増し、同じ検索語の繰り返しが多い</span></div><div class="logrow"><span class="hl">要求は通常のブラウザに似た形式で、送信元は多数</span></div><div class="logrow"><span class="hl">// 帯域・接続数の上限は未到達 / DBの負荷が上限に到達</span></div></div></div>
+  <p class="q">再発防止の対策として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">特定URLの要求数を制限し、同じ検索結果のキャッシュでDB負荷を減らす</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>回線帯域の増強 … 使用率は平常時並み</li><li>接続数の上限の見直し … 接続待ちの増加はない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.7.2 DoS攻撃への総合的な対策</li></ul>
+  <p>型ごとの対策とその限界を対応づけ、上流での吸収、SYNクッキー、WAF・レート制限・キャッシュ、平常時の準備の位置づけを確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep122-dos.html">← #22 DoS攻撃の種類 狙う資源で4つに分ける</a><a href="ep124-script-attacks.html">#24 命令を実行させる攻撃の種類 解釈される場所で整理する →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

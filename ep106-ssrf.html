@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#6 SSRF サーバを踏み台にされると何が起こる？｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#6 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>SSRF サーバを踏み台にされると何が起こる？</h1>
+  <ol class="summary"><li>SSRFは、利用者指定のURLをサーバが取得する機能で、送信先を限定しないと内部へ届いてしまう。</li><li>許可リストが最優先。送信先が決まるなら、スキームやパスは固定し、リダイレクトの追従を無効にする。</li><li>拒否リストや名前の検査だけでは回避されうる。解決IPの検証、ネットワーク制限、クラウド設定で重ねる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep106-ssrf:ssrf">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SSRF（サーバサイド・リクエスト・フォージェリ）</span><span class="back" hidden><span class="def">攻撃者が、サーバ側アプリを使って内部・外部のネットワークや自分自身へリクエストを送らせる攻撃。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep106-ssrf:ssrf-vs-csrf">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SSRFとCSRFの違い</span><span class="back" hidden><span class="def">CSRFは利用者のブラウザにリクエストを送らせ、SSRFはサーバにリクエストを送らせる。送る主体が違う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep106-ssrf:allowlist">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">許可リスト（allowlist）</span><span class="back" hidden><span class="def">送信先を既知の安全なものに限定して照合する方式。作れるなら最優先で、拒否リストより回避されにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep106-ssrf:denylist">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">拒否リスト（denylist）</span><span class="back" hidden><span class="def">内部アドレスなどを禁止する方式。回避されやすく、任意の外部へ送る必要がある場合の次善策にとどまる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep106-ssrf:fixed-url">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">URLを丸ごと受け取らない</span><span class="back" hidden><span class="def">送信先が既知なら、完全なURLを受け取らず、スキーム・ポート・パスは固定して組み立てる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep106-ssrf:scheme">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">HTTP以外のスキーム</span><span class="back" hidden><span class="def">file:// gopher:// dict:// などもSSRFで悪用されうる。任意の外部へ送る場合でも、HTTP/HTTPSだけに限る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep106-ssrf:redirect">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">リダイレクトの自動追従</span><span class="back" hidden><span class="def">許可先から内部へ転送されるおそれがあるため、無効にする。追従は頼るべきでない実装の一つ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep106-ssrf:dns-rebinding">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DNSリバインディング</span><span class="back" hidden><span class="def">名前の検証後に別のIPへ解決され直す手口。名前の検証だけでは防げず、解決したIPを検証してそのIPへ接続する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep106-ssrf:metadata-imds">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">クラウドのメタデータサービス（IMDS）</span><span class="back" hidden><span class="def">クラウド上のサーバが持つ管理用の窓口。認証情報やトークンが取られる例が多い。AWSではIMDSv2が多層防御として有効。</span><span class="note">IMDSv1は無効化する。IMDSv2はアプリ側の対策の代わりにはならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep106-ssrf:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>SSRFの対策として最も適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>出力時にHTMLエスケープする</span></button><p class="why" hidden>XSSの対策</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>送信先を許可リストで限定する</span></button><p class="why" hidden>送信先を許可リストで限定する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>秘密情報を埋め込み、照合する</span></button><p class="why" hidden>CSRFの対策</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SQLのプレースホルダを使う</span></button><p class="why" hidden>SQLインジェクション向けの対策</p></li></ol>
+</li>
+<li class="quiz" data-key="ep106-ssrf:q0" data-answer="2">
+  <p class="q">アイコン画像は自社の画像配信サーバ（img.cdn.example）からだけ取得する仕様である。URLを利用者から受け取る機能の方針として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>内部アドレスや特殊用途のレンジを拒否リストに入れ、それ以外は取得を許す</span></button><p class="why" hidden>拒否リストは回避されやすい。送信先が既知なら許可リストを使う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>正規表現でURLを検査し、内部らしい名前を含むものを弾く</span></button><p class="why" hidden>正規表現だけのURL検証は、頼るべきでない方法の一つ。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>許可リストと照合し、スキームやパスは固定して組み立てる</span></button><p class="why" hidden>正解。送信先が既知なら許可リストと照合し、完全なURLは受け取らず固定部分を組み立てる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ブラウザ側でURLを検査し、サーバはそのまま取得する</span></button><p class="why" hidden>ブラウザ側の検査は、攻撃者が迂回できる。サーバ側で限定する必要がある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep106-ssrf:q1" data-answer="0">
+  <p class="q">ホスト名の検証は許可リストと一致して通過したが、取得時に名前が内部IPへ解決され、内部に接続された。見直しとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>名前の解決結果のIPを検証し、そのIPへ接続する</span></button><p class="why" hidden>正解。DNSリバインディングは名前の検証だけでは防げない。解決したIPを検証し、そのIPへ接続する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>検証のときと接続のときに別々に名前解決し、結果が違えば再試行する</span></button><p class="why" hidden>検証と接続が別のDNS解決だと、間に解決結果が変わる。頼るべきでない実装。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ホスト名を小文字に正規化し、比較をより厳密にする</span></button><p class="why" hidden>名前の比較をいくら厳密にしても、解決先IPの変化は防げない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>リダイレクトの自動追従を有効にして、最終URLを再検証する</span></button><p class="why" hidden>リダイレクトの自動追従は無効にする。有効化は逆の対応。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep106-ssrf:q2" data-answer="3">
+  <p class="q">許可リストにあるホストのURLだけ取得している。許可先が内部アドレスへのリダイレクトを返す場合に備える対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>許可リストのホスト数を増やして、取得の失敗を減らす</span></button><p class="why" hidden>許可先を増やすほど、リスクの入り口が増える。リダイレクトの対策にならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>リダイレクトを追従したうえで、最終応答の本文だけを検査して返す</span></button><p class="why" hidden>追従した時点で、内部へのリクエストはすでに送られている。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>応答のステータスコードが200のときだけ、本文を利用者に返す</span></button><p class="why" hidden>最終的な応答の種類を見ても、内部への接続自体は防げない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>リダイレクトの自動追従を無効にする</span></button><p class="why" hidden>正解。許可先から内部へ転送されないよう、リダイレクトは自動で追わない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep106-ssrf:q3" data-answer="1">
+  <p class="q">AWS上のWebサーバにSSRFの懸念がある。アプリの対策に加え、多層防御としてメタデータサービスに行う設定として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IMDSv1を有効のままにして、アプリ側の検査だけに任せる</span></button><p class="why" hidden>アプリ側の検査だけでは単一の層になる。IMDSv1は無効化する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>IMDSv1を無効にして、IMDSv2を利用する</span></button><p class="why" hidden>正解。IMDSv2は多層防御として有効で、IMDSv1は無効化する。アプリ側の対策の代わりにはならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>メタデータの窓口のアドレスを拒否リストに1件だけ登録し、他は許す</span></button><p class="why" hidden>拒否リストだけに頼るのは避ける。回避されうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>インスタンスに付ける権限を広げ、取得が失敗しにくいようにする</span></button><p class="why" hidden>権限を広げると、認証情報を取られたときの被害が増える。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep106-ssrf:q4" data-answer="3">
+  <p class="q">画像取得機能がhttpとhttpsのURLを想定しているが、実装はHTTPクライアントが対応するスキームを全て受け付ける。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>httpとhttps以外は画像を返せないので、リスクは無い</span></button><p class="why" hidden>画像を返せなくても、file:// などを通じて内部の情報に届く場合がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>スキームの違いは、通信が暗号化されるかどうかだけの問題である</span></button><p class="why" hidden>スキームによっては、HTTP以外の経路で別のサービスにも届く。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>スキームをhttpsに限定すれば、送信先の検証やネットワーク分離は不要になる</span></button><p class="why" hidden>スキームの限定は一つの層にすぎない。送信先の限定とネットワークでの制限も要る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>fileなども悪用されうるので、必要なスキームだけ許可する</span></button><p class="why" hidden>正解。file:// gopher:// dict:// なども悪用されうる。必要なスキームだけ許可する。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">外から届かない内部システムの情報が、SSRFで利用者に返ってくる仕組みを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">利用者が指定したURLを、サーバが送信先を限定せずに取得し、その結果を返すため。外から届かなくても、サーバから届く構成なら内部に届き、サーバが踏み台になる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep106-ssrf-t0-0"> 利用者が指定したURLを取得</label></li><li><label><input type="checkbox" id="ep106-ssrf-t0-1"> 送信先を限定していない</label></li><li><label><input type="checkbox" id="ep106-ssrf-t0-2"> サーバからは内部に届き、結果が返る</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">「内部アドレスを拒否リストに入れたので大丈夫」と言えない理由と、代わりの方針を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">拒否リストや単純な文字列の検査は回避されやすい。許可リストが作れるなら最優先とし、解決したIPの検証、リダイレクトの無効化、ネットワーク制限も重ねる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep106-ssrf-t1-0"> 拒否リストは回避されやすい</label></li><li><label><input type="checkbox" id="ep106-ssrf-t1-1"> 許可リストを最優先にする</label></li><li><label><input type="checkbox" id="ep106-ssrf-t1-2"> 解決IP検証・リダイレクト無効・ネットワーク制限</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="プレビューAPIのアクセスログ（ダミー）"><div class="logtitle">プレビューAPIのアクセスログ（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">GET /preview?url=http://img.cdn.example/a.png  200</span></div><div class="logrow"><span class="hl">GET /preview?url=http://internal.example/admin  200</span></div><div class="logrow"><span class="hl">// 内部システムは、Webサーバからのみ到達できる</span></div><div class="logrow"><span class="hl">// プレビューAPIは、指定URLをそのまま取得して返す</span></div></div></div>
+  <p class="q">ログの現象を生んだ、設計上の不備は？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">送信先を限定せず、利用者指定のURLを取得した</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>内部に認証が無い … 到達可否の話。今回は送信先を限定しない点が不備</li><li>ログの出力レベルが低い … 記録の話で、現象の原因ではない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.8.8 サーバサイドリクエストフォージェリ（SSRF）</li></ul>
+  <p>なぜ内部に届くのか、許可リストが最優先な理由、DNSリバインディングやリダイレクトという限界を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep105-csrf.html">← #5 CSRF 本人の意図かを確認しないと何が起こる？</a><a href="ep107-session.html">#7 セッション管理の不備 IDの扱いを誤るとなりすまされる →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

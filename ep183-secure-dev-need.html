@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#83 システム開発とセキュリティ 後付けせず作り込む｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#83 ・ 第8章 システム開発におけるセキュリティ対策</p>
+  <h1>システム開発とセキュリティ 後付けせず作り込む</h1>
+  <ol class="summary"><li>脆弱性の多くは、設計の考慮漏れや実装の誤りとして、開発の中で作り込まれる。</li><li>一般に工程が進むほど修正の手間・費用・影響範囲は大きい。要件・設計の不備は実装では直せない。</li><li>セキュリティバイデザインで上流から組み込む。委託では書いた対策だけが作られ、ゼロにはならず運用で修正を続ける。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep183-secure-dev-need:built-in-vuln">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">作り込まれる脆弱性</span><span class="back" hidden><span class="def">設計の考慮漏れや実装の誤りとして、開発の中で入り込む脆弱性。脆弱性の多くはこの形。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep183-secure-dev-need:security-by-design">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">セキュリティバイデザイン</span><span class="back" hidden><span class="def">企画・設計の段階から対策を組み込む考え方。完成後に足す後付けとは逆の発想。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep183-secure-dev-need:upstream-flaw">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">上流工程の不備</span><span class="back" hidden><span class="def">要件や設計の不備は実装では直せず、仕様の見直しが必要になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep183-secure-dev-need:fix-cost">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">修正コストの傾向</span><span class="back" hidden><span class="def">一般に、工程が進むほど修正の手間・費用・影響範囲は大きい。公開後は修正の配布や利用者対応も要る。</span><span class="note">「傾向」であり、常に一定の比率で増えるという意味ではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep183-secure-dev-need:retrofit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">後付けの対策</span><span class="back" hidden><span class="def">完成後に対策を足すこと。設計の不備は作り直しになりやすく、画面や機能の構成まで変わることもある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep183-secure-dev-need:security-req">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">セキュリティ要件</span><span class="back" hidden><span class="def">要件定義で決める、守る対象と必要な対策。文書に残す。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep183-secure-dev-need:outsourcing">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">委託開発とセキュリティ</span><span class="back" hidden><span class="def">要件・仕様書・契約に明記した対策しか作られない。委託しても、発注側の責任は残る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep183-secure-dev-need:residual-vuln">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">運用での修正</span><span class="back" hidden><span class="def">すべて対策しても脆弱性はゼロにならない。運用で脆弱性情報を集め、修正を続ける。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep183-secure-dev-need:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>セキュリティバイデザインの説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>公開後に診断を行い、見つかった脆弱性を順次直していく考え方である</span></button><p class="why" hidden>公開後に直すのは、後付けの考え方</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>公開の直前に、まとめて脆弱性を探して修正する進め方である</span></button><p class="why" hidden>直前の一括修正は、手戻りが大きい</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>企画や設計の段階から、セキュリティ対策を組み込む考え方である</span></button><p class="why" hidden>企画・設計の段階から対策を組み込む</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>開発を外部へ委託し、セキュリティの責任も移す考え方である</span></button><p class="why" hidden>委託しても、発注側の責任は残る</p></li></ol>
+</li>
+<li class="quiz" data-key="ep183-secure-dev-need:q0" data-answer="1">
+  <p class="q">テスト工程で、機能ごとの権限チェックが設計に無いため、権限のない操作ができると判明した。原因は設計の不備である。最も適切な対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>実装側にチェックを足せば、仕様を見直さなくても根本から直せる</span></button><p class="why" hidden>要件や設計の不備は、実装では直せない。仕様の見直しが必要になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>設計を見直して仕様から改め、影響する実装とテストをやり直す</span></button><p class="why" hidden>正解。設計の不備は仕様の見直しが必要で、実装やテストにも影響する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>不備は設計の問題なので、公開後に利用者へ注意を呼びかけて済ませる</span></button><p class="why" hidden>公開後の修正は、修正の配布や利用者への影響が大きい。見つかった不備は公開前に直す。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ゼロにできない種類の不備なので、設計を変えずにそのまま公開する</span></button><p class="why" hidden>脆弱性がゼロにならないので運用で修正を続けるのであり、見つかった設計不備を放置する理由にならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep183-secure-dev-need:q1" data-answer="0">
+  <p class="q">委託開発の仕様書にはセキュリティ対策の記載が無い。受託側は仕様どおりに完成させたが、検収後に脆弱性が見つかった。本質的な原因はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>必要な対策を、要件・仕様書・契約に明記しておくべきだった</span></button><p class="why" hidden>正解。委託開発では、要件に書かれた対策しか作られない。必要な対策は仕様書や契約に明記する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>受託側に任せたので、責任は受託側だけにあり発注側には残らない</span></button><p class="why" hidden>委託しても、発注側の責任は残る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>仕様書に書かなくても、受託側が必要な対策を必ず作るので問題ない</span></button><p class="why" hidden>要件に書かれていない対策は作られない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>脆弱性は開発の中では作り込まれないので、委託先の実装は原因にならない</span></button><p class="why" hidden>脆弱性の多くは、設計の考慮漏れや実装の誤りとして開発の中で作り込まれる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep183-secure-dev-need:q2" data-answer="3">
+  <p class="q">全工程で対策を組み込み、診断でも指摘がないままサービスを公開する。運用の方針として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>診断で指摘がなかったので、脆弱性は残っておらず運用での修正体制は不要</span></button><p class="why" hidden>すべて対策しても、脆弱性はゼロにならない。指摘がないことは、残っていない証明にならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>公開後の修正は影響が小さいので、運用段階の体制は最小限でよい</span></button><p class="why" hidden>公開後の修正は、修正の配布や利用者への対応が要り、影響が大きい。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>上流の工程で対策を組み込めば、公開後に修正する必要はなくなる</span></button><p class="why" hidden>上流で組み込んでも、脆弱性はゼロにならない。公開後も修正を続ける。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ゼロにならないので、運用で脆弱性情報を集めて修正を続ける</span></button><p class="why" hidden>正解。対策を尽くしてもゼロにはならないので、運用で情報を集めて修正を続ける。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep183-secure-dev-need:q3" data-answer="1">
+  <p class="q">設計の不備が公開後に見つかった場合、設計段階で見つかった場合と比べて増えることとして適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>工程が進んでも修正の手間は変わらないので、見つかる時期は費用に影響しない</span></button><p class="why" hidden>一般に、工程が進むほど修正の手間・費用・影響範囲は大きい。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>修正の配布や利用者への連絡・対応が加わり、影響範囲も広がりやすい</span></button><p class="why" hidden>正解。公開後は修正の配布や利用者への対応も要り、影響範囲が広がりやすい。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>設計の不備は実装を直せば済むので、利用者への連絡は必要にならない</span></button><p class="why" hidden>設計の不備は実装では直せず、仕様の見直しが必要になる。公開後は利用者への連絡も要る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>公開後は修正の影響が限られるので、一般に費用は設計段階より小さい</span></button><p class="why" hidden>一般に工程が進むほど費用は大きくなる。公開後は、修正の配布や利用者への影響が大きい。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep183-secure-dev-need:q4" data-answer="0">
+  <p class="q">会員Webの設計レビューで、画面とDBの設計は終わったが、脅威の洗い出しをしていないと分かった。セキュリティバイデザインに沿う進め方はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>脅威を洗い出し、対策を設計に入れ込んでから実装に進める</span></button><p class="why" hidden>正解。設計では脅威を洗い出し、対策を入れ込む。企画・設計の段階から対策を組み込む考え方。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>実装中に気付いた分だけ対策を後から足し、設計は変えずに進める</span></button><p class="why" hidden>気付いた分だけ足すのは後付けの発想。設計の不備は作り直しになりやすい。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>脅威の洗い出しは運用工程の作業なので、設計では行わず公開後に回す</span></button><p class="why" hidden>設計では脅威を洗い出して対策を入れ込む。運用で行うのは、脆弱性情報を集めて修正を続けること。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>洗い出しは診断ツールの役割なので、設計では対策を入れず実装後に行う</span></button><p class="why" hidden>設計の段階で脅威を洗い出して対策を入れ込む。実装後に回すと、設計の不備は作り直しになりやすい。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">公開後に設計の不備が見つかり、作り直しになった。実装で直せない理由と、今後どの工程で何を決めておくべきかを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">要件・設計の不備は実装では直せず、仕様の見直しが必要になる。工程が進むほど修正の手間・費用・影響範囲は大きい。要件定義で守る対象と必要な対策を決め、設計で脅威を洗い出して対策を入れ込む。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep183-secure-dev-need-t0-0"> 要件・設計の不備は実装では直せない</label></li><li><label><input type="checkbox" id="ep183-secure-dev-need-t0-1"> 工程が進むほど修正が重くなる傾向</label></li><li><label><input type="checkbox" id="ep183-secure-dev-need-t0-2"> 要件定義と設計で対策を組み込む</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">セキュリティ対策を受託側に任せきりにしてはいけない理由と、発注側がすべきことを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">委託開発では、要件・仕様書・契約に明記した対策しか作られず、委託しても発注側の責任は残る。必要な対策を仕様書や契約に明記する。それでも脆弱性はゼロにならないので、運用で修正を続ける。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep183-secure-dev-need-t1-0"> 明記した対策しか作られない</label></li><li><label><input type="checkbox" id="ep183-secure-dev-need-t1-1"> 委託しても発注側の責任は残る</label></li><li><label><input type="checkbox" id="ep183-secure-dev-need-t1-2"> 必要な対策を仕様書・契約に明記する</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="Webシステム開発の計画書（ダミー）"><div class="logtitle">Webシステム開発の計画書（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 会員向けWebの要件定義が完了し、設計の開始前である</span></div><div class="logrow"><span class="hl">過去: 似た機能で、公開後に認可の設計不備が見つかり作り直した</span></div><div class="logrow"><span class="hl">公開後の修正には、サービスの停止と利用者への連絡が必要になる</span></div><div class="logrow"><span class="hl">要件: 手戻りと、公開後の修正を、できるだけ減らしたい</span></div></div></div>
+  <p class="q">設計の開始前に行う対策として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">セキュリティ要件を追加し、設計に反映する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>実装の完了後に脆弱性診断を行う … 設計の開始前ではなく、設計の不備が見つかると作り直しになる</li><li>公開後に問題が出てから修正する … 公開後の修正には、サービスの停止と利用者への連絡が必要になる</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>8.1.1 システム開発におけるセキュリティ対策の必要性</li></ul>
+  <p>脆弱性が作り込まれる流れと、工程が進むほど修正が重くなる点、委託時に要件へ明記する必要性を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep182-longterm-signature.html">← #82 電子文書の長期保存 時刻の証拠を付け直す</a><a href="ep184-dev-process.html">#84 開発工程ごとの対策 上流から重ねて防ぐ →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

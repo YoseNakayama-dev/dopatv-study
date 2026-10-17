@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#90 OAuth・OIDC・SAML 認可コードフローとトークン検証｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#90 ・ 追加テーマ（目次外）</p>
+  <h1>OAuth・OIDC・SAML 認可コードフローとトークン検証</h1>
+  <ol class="summary"><li>認可コードはブラウザ経由でリダイレクトURIに返り、クライアントが認可サーバと直接通信してトークンに交換する。</li><li>PKCEは乱数のハッシュを認可要求に付け、交換時に元の乱数を求める。リダイレクトURIの厳密な照合は省けない。</li><li>IDトークンは署名・発行元・宛先・期限・nonceを検証する。SAMLも署名・Issuer・Audience等を確かめる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep190-oauth-oidc-saml:oauth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">OAuth 2.0</span><span class="back" hidden><span class="def">認可の枠組み。代表的な認可コードフローでは、認可コードをトークンに交換して使う。</span><span class="note">認可（OAuth）と認証（OIDC）を区別する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep190-oauth-oidc-saml:oidc">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">OpenID Connect（OIDC）</span><span class="back" hidden><span class="def">OAuthの上に認証を加えたもの。署名付きのIDトークン（JWT）で認証結果を伝える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep190-oauth-oidc-saml:code-flow">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認可コードフロー</span><span class="back" hidden><span class="def">クライアントが利用者を認可サーバへ誘導、認証・同意の後、認可コードがリダイレクトURIへ返り、クライアントがトークンに交換する。</span><span class="note">コードはブラウザ経由で渡る。交換は認可サーバとの直接通信で行う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep190-oauth-oidc-saml:redirect-uri">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">リダイレクトURI</span><span class="back" hidden><span class="def">認可コードが返される宛先のURI。認可コードはブラウザ経由で渡る。</span><span class="note">PKCEを使っても、リダイレクトURIの厳密な照合は省けない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep190-oauth-oidc-saml:pkce">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">PKCE</span><span class="back" hidden><span class="def">コードの横取り対策。乱数（code_verifier）のハッシュ（code_challenge）を認可要求に付け、交換時に元の乱数を提示させる。</span><span class="note">乱数ごと奪われる場合は防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep190-oauth-oidc-saml:public-client">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">公開クライアント</span><span class="back" hidden><span class="def">ネイティブアプリなど、秘密を安全に持てないクライアント。PKCEが特に必要になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep190-oauth-oidc-saml:state">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">state</span><span class="back" hidden><span class="def">認可要求と応答の対応づけに使う値（CSRF対策）。</span><span class="note">奪われた認可コードの交換は止められない。PKCEの代わりにならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep190-oauth-oidc-saml:id-token-verify">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IDトークンの検証</span><span class="back" hidden><span class="def">署名（改ざん）、発行元iss、宛先aud（自分のクライアントID）、期限exp、要求時のnonceとの一致を確かめる。</span><span class="note">署名が正しくても、宛先の確認は別に必要。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep190-oauth-oidc-saml:saml">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SAML</span><span class="back" hidden><span class="def">IdPがアサーションを発行し、SPが受け取る方式。署名・Issuer・Audience・有効期限等を検証する。</span><span class="note">宛先の確認を省くと、別のサービス向けの証明を受け入れてしまう。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep190-oauth-oidc-saml:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>IDトークンを受け取ったクライアントの検証として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>宛先が自分のクライアントIDであることを、確認する</span></button><p class="why" hidden>宛先(aud)の確認が必要</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>署名が正しければ、宛先の確認は省略する</span></button><p class="why" hidden>署名と宛先の確認は別</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>期限が切れていても、署名が正しければ受け入れる</span></button><p class="why" hidden>期限切れは受け入れない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>発行元がどこでも、署名を検証できれば受け入れる</span></button><p class="why" hidden>発行元が想定どおりか確認する</p></li></ol>
+</li>
+<li class="quiz" data-key="ep190-oauth-oidc-saml:q0" data-answer="1">
+  <p class="q">認可サーバがPKCEを必須にしたため、リダイレクトURIの照合は緩くても構わないという意見が出た。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>PKCEで交換の際に元の乱数を求めるので、URIの照合は不要になる</span></button><p class="why" hidden>PKCEは交換時に元の乱数を求めてコードの横取りに備えるが、リダイレクトURIの厳密な照合の代わりにはならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>PKCEがあっても、リダイレクトURIの厳密な照合は省かない</span></button><p class="why" hidden>正解。PKCEはコードの横取りへの対策で、リダイレクトURIの厳密な照合の代わりにはならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>PKCEとstateを併用すれば、URIの照合は省いてよい</span></button><p class="why" hidden>stateは要求と応答の対応づけ（CSRF対策）で、奪われたコードの交換を止めるものではない。併用してもURIの照合は省けない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>トークンの有効期限を短くすれば、URIの照合は緩めてよい</span></button><p class="why" hidden>トークンの有効期限を短くしても、コードの交換自体は止められない。URIの照合を緩める理由にならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep190-oauth-oidc-saml:q1" data-answer="2">
+  <p class="q">SPが受け取ったSAMLアサーションを検証したところ、署名は正しく、有効期限内で、Issuerも想定のIdPだった。ただしAudienceは別のサービスを指していた。処理として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>署名と期限が正しければ、Audienceが別でも受け入れる</span></button><p class="why" hidden>署名と期限が正しくても、Audience（宛先）の確認は別に必要。確認しないと、別のサービス向けの証明を受け入れてしまう。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>Audienceの確認はIdPが済ませたので、SP側では省略する</span></button><p class="why" hidden>SAMLも署名・Issuer・Audience・有効期限等を検証する。宛先の確認を省くと、別のサービス向けの証明を受け入れてしまう。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>Audienceが自サービス向けでないので、受け入れない</span></button><p class="why" hidden>正解。Audienceが自サービス向けでなければ、署名などが正しくても受け入れない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>宛先が別なのは署名の不備のためなので、署名検証を直す</span></button><p class="why" hidden>問題文では署名は正しい。署名の確認と宛先の確認は別の確認なので、署名が正しくても宛先は別に確かめる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep190-oauth-oidc-saml:q2" data-answer="3">
+  <p class="q">スマートフォンアプリが認可コードフローを使う。設計案は、アプリ内に埋め込んだクライアントシークレットで交換を認証し、PKCEは使わないというものだった。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>埋め込んだシークレットで交換を認証できるので、PKCEは使わなくてよい</span></button><p class="why" hidden>公開クライアントは秘密を安全に持てない。アプリに埋め込んだシークレットは、交換の認証に頼れない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>シークレットを難読化すれば、PKCEと同等の対策になる</span></button><p class="why" hidden>公開クライアントは秘密を安全に持てない。PKCEは、元の乱数を交換時に求める別の仕組み。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>コードがブラウザ経由で返るため、認可コードフローは使えない</span></button><p class="why" hidden>認可コードがブラウザ経由で返るのは、認可コードフローの通常の流れ。PKCEは、そのコードの横取りへの対策として使う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>公開クライアントは秘密を安全に持てないので、PKCEを併用する</span></button><p class="why" hidden>正解。ネイティブアプリなどの公開クライアントは秘密を安全に持てないため、PKCEで元の乱数の提示を求める。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep190-oauth-oidc-saml:q3" data-answer="0">
+  <p class="q">クライアントが受け取ったIDトークンは、署名・発行元・宛先・期限がすべて正しい。しかし、中のnonceが認可要求時に送った値と異なっていた。処理として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>要求時のnonceと一致しないため、このIDトークンを受け入れない</span></button><p class="why" hidden>正解。要求時のnonceとの一致も、IDトークンの検証項目のひとつ。一致しなければ受け入れない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>署名・発行元・宛先・期限がすべて正しければ、nonceは参考値にとどめる</span></button><p class="why" hidden>nonceの一致は検証項目のひとつ。ほかの項目が正しくても、省略できない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>stateが一致していれば、nonceの不一致は問題にならない</span></button><p class="why" hidden>stateは要求と応答の対応づけ（CSRF対策）。IDトークンの検証では、要求時のnonceとの一致を別に確かめる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>PKCEを使っているので、nonceの照合は省略してよい</span></button><p class="why" hidden>PKCEはコード交換時に元の乱数を求める仕組みで、コードの横取りへの対策。IDトークンのnonceの一致という検証項目の代わりにはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep190-oauth-oidc-saml:q4" data-answer="1">
+  <p class="q">あるサービスは、OAuthで受け取ったトークンを「利用者がログインした証明」としてそのまま扱っている。設計の見直しとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>OAuthは認証の枠組みなので、トークンを持つ者を、そのまま本人とみなしてよい</span></button><p class="why" hidden>OAuthは認可の枠組み。認証結果は、OIDCがその上に加える署名付きのIDトークンで伝える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認証結果が必要なら、OIDCを使って署名付きのIDトークンを検証する</span></button><p class="why" hidden>正解。OAuthは認可、OIDCがその上に認証を加え、署名付きのIDトークン（JWT）で認証結果を伝える。受け取ったら署名・発行元・宛先・期限・nonceを検証する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SAMLに置き換えれば、署名や宛先の検証は不要になる</span></button><p class="why" hidden>SAMLも署名・Issuer・Audience・有効期限等を検証する。置き換えても検証は省けない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>IDトークンはJWTなので、署名を検証せず中身を読めば足りる</span></button><p class="why" hidden>IDトークンは署名付きのJWTで、署名で改ざんの有無を確かめる。署名を検証せずに中身だけ読むのは誤り。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">PKCEが認可コードの横取りにどう備えるかと、それでも残る限界を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">認可要求に、乱数（code_verifier）のハッシュ（code_challenge）を付ける。コード交換時に元の乱数を提示させ、認可サーバがハッシュと対応するか照合する。コードだけ奪われても、元の乱数を知らなければ交換できない。限界として、リダイレクトURIの厳密な照合の代わりにはならず、乱数ごと奪われる場合は防げない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep190-oauth-oidc-saml-t0-0"> 乱数のハッシュを認可要求に付ける</label></li><li><label><input type="checkbox" id="ep190-oauth-oidc-saml-t0-1"> 交換時に元の乱数を提示し、サーバが照合する</label></li><li><label><input type="checkbox" id="ep190-oauth-oidc-saml-t0-2"> リダイレクトURIの厳密な照合は省けない</label></li><li><label><input type="checkbox" id="ep190-oauth-oidc-saml-t0-3"> 乱数ごと奪われる場合は防げない</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">IDトークンを受け取ったクライアントが確かめる項目を挙げ、署名の確認だけでは足りない理由を説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">署名（改ざんの有無）、発行元iss、宛先aud（自分のクライアントID）、期限exp、要求時のnonceとの一致を確認する。署名が正しくても、宛先を確かめないと別のサービス向けの証明を受け入れてしまう。SAMLも、署名・Issuer・Audience・有効期限等を同様に検証する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep190-oauth-oidc-saml-t1-0"> 署名・発行元・宛先・期限・nonceを確認する</label></li><li><label><input type="checkbox" id="ep190-oauth-oidc-saml-t1-1"> 宛先を確かめないと、別のサービス向けの証明を受け入れる</label></li><li><label><input type="checkbox" id="ep190-oauth-oidc-saml-t1-2"> SAMLでも同様に検証する</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="認可コード受け渡しの調査記録（ダミー）"><div class="logtitle">認可コード受け渡しの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">クライアントは、ネイティブアプリで、秘密を持てない</span></div><div class="logrow"><span class="hl">リダイレクトを、端末上の別アプリも受け取れる</span></div><div class="logrow"><span class="hl">別アプリが、認可コードをトークンへ交換しようとした</span></div><div class="logrow"><span class="hl">要件: コードを奪われても、トークンを渡したくない</span></div></div></div>
+  <p class="q">要件を満たす対策として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">認可要求に乱数のハッシュを付け、交換時に元の乱数を求める</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>認可要求のstateを、応答で照合する … stateは要求と応答の対応づけ。別アプリによるコードの交換は止められない</li><li>トークンの有効期限を、短くする … 期限を短くしても、コードの交換は止められない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>EX-03 OAuth 2.0 / OpenID Connect / SAML</li></ul>
+  <p>認可コードフローの各段の通信経路、PKCEが防ぐものと防げないもの、IDトークンとSAMLの検証項目を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep189-cyber-keiei-guideline.html">← #89 サイバーセキュリティ経営ガイドライン 経営者の三原則と十項目</a><a href="ep191-cloud-shared-responsibility.html">#91 クラウドの責任共有モデル IAMと設定不備 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

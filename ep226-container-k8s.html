@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#126 コンテナ・Kubernetesのセキュリティ 分離の弱さと設定の落とし穴｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#126 ・ 追加テーマ（目次外）</p>
+  <h1>コンテナ・Kubernetesのセキュリティ 分離の弱さと設定の落とし穴</h1>
+  <ol class="summary"><li>コンテナはホストのカーネルを共有するので、VMより分離は弱め。設定しだいで壁はさらに薄くなる。</li><li>特権・root実行・ホスト領域のマウントは危険。古い部品の脆弱性や焼き込んだ秘密情報も響く。</li><li>Kubernetesは既定のままでは守れない。RBACの最小化、Secretの扱い、通信の制限が要る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep226-container-k8s:kernel-sharing">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">カーネル共有</span><span class="back" hidden><span class="def">コンテナはホストのカーネルを共有し、プロセスを分ける。OSごと分けるVMより分離は弱め。</span><span class="note">カーネルの弱点は、ホスト全体に響きうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep226-container-k8s:privileged">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">特権コンテナ・root実行</span><span class="back" hidden><span class="def">特権での実行やroot実行は、分離の壁を薄くする設定。非rootでの実行と権限の削減が対策。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep226-container-k8s:host-mount">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ホスト領域のマウント</span><span class="back" hidden><span class="def">ホストのディレクトリなどをコンテナに共有すること。共有は必要な領域だけにする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep226-container-k8s:image-parts">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">イメージの古い部品</span><span class="back" hidden><span class="def">イメージに古い部品が入っていれば、その既知の脆弱性もそのまま入る。構築時と運用中に検査して更新する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep226-container-k8s:pinned-image">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">取得元と版の固定</span><span class="back" hidden><span class="def">信頼できる提供元の、版を固定したイメージを使う。latestのような可変のタグは、中身が変わりうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep226-container-k8s:baked-secret">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">秘密情報の焼き込み</span><span class="back" hidden><span class="def">パスワードなどの秘密情報をイメージに入れてしまうこと。イメージから取り出されうるので避ける。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep226-container-k8s:rbac">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">RBAC</span><span class="back" hidden><span class="def">Kubernetesで、利用者とPodの権限を最小限にする仕組み。広い権限は、奪われたときの被害を広げる。</span><span class="note">APIに対する権限の話。Pod間の通信は制限しない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep226-container-k8s:secret">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Secret</span><span class="back" hidden><span class="def">Kubernetesで秘密情報を扱う仕組み。既定ではBase64の符号化で暗号化ではない。アクセス制御と保存時の暗号化で守る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep226-container-k8s:network-policy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ネットワークポリシー</span><span class="back" hidden><span class="def">Pod間の通信を、必要なものだけ許可する仕組み。既定ではPod間の通信が許可されている。</span><span class="note">対応するネットワークの仕組みが必要。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep226-container-k8s:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>コンテナとKubernetesの説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>Secretは、既定ではBase64の符号化で、暗号化されていない</span></button><p class="why" hidden>Secretは暗号化ではない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>コンテナは、VMと同様に、OSごと分離される</span></button><p class="why" hidden>カーネルを共有する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>特権コンテナは、安全のため、積極的に使うべきである</span></button><p class="why" hidden>特権は分離を弱める</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>latestのタグを使えば、イメージは常に安全である</span></button><p class="why" hidden>latestは可変で安全を保証しない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep226-container-k8s:q0" data-answer="1">
+  <p class="q">ログ収集のため、特権コンテナとして起動し、ホストのルートディレクトリ全体をマウントしている。アプリの不備でこのコンテナが侵害された場合の評価と対策として、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>コンテナはVMと同様にOSごと分離されるので、ホストへの影響は出ない</span></button><p class="why" hidden>コンテナはホストのカーネルを共有する。OSごと分けるVMより分離は弱く、特権やマウントでさらに薄くなる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>共有は必要な領域だけにし、特権とroot実行を避ける</span></button><p class="why" hidden>正解。特権・root実行・ホスト領域のマウントは分離の壁を薄くする。非rootで動かし、権限を削り、共有は必要な領域だけにする。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>イメージの脆弱性検査を強化すれば、実行時の設定の危険も解消する</span></button><p class="why" hidden>検査はイメージの部品の脆弱性を見つけるもの。特権やマウントといった実行時の設定の危険は、検査では解消しない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>RBACで権限を最小限にすれば、ホスト領域の露出も防げる</span></button><p class="why" hidden>RBACはKubernetesのAPIに対する権限。ホスト領域をコンテナに共有する設定の危険は、RBACでは防げない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep226-container-k8s:q1" data-answer="3">
+  <p class="q">半年前に構築して検査を通したイメージが稼働している。その後、含まれる部品に新しい脆弱性が公表された。最も適切な対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>構築時に検査して問題がなければ、稼働中の再検査は必要としない</span></button><p class="why" hidden>検査の時点で見つからなかった脆弱性は、あとから公表されうる。検査は構築時と運用中の両方で行う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>コンテナはプロセスが分離されるので、古い部品の脆弱性は問題にならない</span></button><p class="why" hidden>イメージに古い部品が入っていれば、その脆弱性もそのまま入る。分離されていても、部品自体の問題は残る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>RBACの権限を最小限にすれば、部品の脆弱性は悪用されなくなる</span></button><p class="why" hidden>RBACは権限を絞って被害を抑える対策の一つ。部品の脆弱性そのものをなくすものではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>構築時だけでなく運用中も定期的に検査し、更新する</span></button><p class="why" hidden>正解。構築時と運用中の両方で検査し、見つかれば更新する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep226-container-k8s:q2" data-answer="2">
+  <p class="q">データベースのパスワードをDockerfileに書き込んでイメージを作り、社内のレジストリで共有している。この運用の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>レジストリを社内限定にしているので、イメージ内の秘密情報は取り出せない</span></button><p class="why" hidden>社内限定でも、イメージを取得できる人や侵害された環境からは取り出されうる。焼き込み自体が問題。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>非rootで実行しているので、イメージ内の秘密情報は読み取られない</span></button><p class="why" hidden>非rootは実行時の権限を絞る対策。イメージに入っている秘密情報は、イメージ自体から取り出されうる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>秘密情報は焼き込まず、別の手段で渡して管理する</span></button><p class="why" hidden>正解。秘密情報はイメージに焼き込まない。取り出されうるので、別の手段で渡してアクセスを管理する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ネットワークポリシーで通信を絞れば、イメージからの取り出しも防げる</span></button><p class="why" hidden>ネットワークポリシーはPod間の通信を制限するもの。イメージの中身の取り出しは防げない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep226-container-k8s:q3" data-answer="1">
+  <p class="q">アプリのPodが使うサービスアカウントに、クラスタ全体の管理者に近い権限が付与されている。このPodが侵害された場合の評価として、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ネットワークポリシーを適用すれば、Kubernetes APIに対する権限も絞られる</span></button><p class="why" hidden>ネットワークポリシーはPod間の通信を制限するもの。KubernetesのAPIの権限はRBACで絞る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>Podの権限を必要最小限にして、奪われたときの被害を抑える</span></button><p class="why" hidden>正解。RBACで利用者とPodの権限を最小限にする。広い権限は、奪われたときの被害を広げる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>イメージの検査が済んでいれば、侵害されても権限の広さは問題にならない</span></button><p class="why" hidden>検査はイメージの脆弱性を見つける対策。侵害された後に、広い権限で何ができるかは別の問題。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>非rootで実行していれば、Kubernetes上の権限が広くても被害は広がらない</span></button><p class="why" hidden>非rootは、コンテナの分離を強める対策の一つ。KubernetesのRBACの権限が広いままなら、奪われたときの被害は広がる。「広がらない」は言い過ぎ。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep226-container-k8s:q4" data-answer="3">
+  <p class="q">ネットワークポリシーのマニフェストを作成して適用したのに、Pod間の通信は許可されたままだった。最も疑うべきものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>RBACの権限が広いため、通信の制限が打ち消されている可能性が高い</span></button><p class="why" hidden>RBACはAPIに対する権限の仕組みで、Pod間の通信は制御しない。通信の制限が打ち消される原因とは考えにくい。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>イメージに古い部品が含まれているため、通信の制限が効かなくなる</span></button><p class="why" hidden>イメージの部品の脆弱性は、通信の制限の有効性とは別の話。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>Pod間の通信は既定で拒否のはずなので、観測結果の側が誤りである</span></button><p class="why" hidden>Pod間の通信は既定では許可されている。既定で拒否という前提が誤り。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ネットワークの仕組みが、ポリシーに対応していない可能性</span></button><p class="why" hidden>正解。ネットワークポリシーは、対応するネットワークの仕組みが無いと効かない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">コンテナをVMと同じ強さの分離だと考えてはいけない理由と、設定で壁を薄くしてしまう例を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">コンテナはホストのカーネルを共有してプロセスを分けるだけで、OSごと分けるVMより分離は弱い。カーネルの弱点がホスト全体に響きうる。特権での実行、root実行、ホスト領域のマウントは、さらに壁を薄くする。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep226-container-k8s-t0-0"> カーネルを共有する</label></li><li><label><input type="checkbox" id="ep226-container-k8s-t0-1"> VMより分離は弱め</label></li><li><label><input type="checkbox" id="ep226-container-k8s-t0-2"> 特権・root・ホスト領域のマウントで薄くなる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">Kubernetesで、既定のままだと危ない点を2つ挙げ、それぞれの対策を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">Secretは既定ではBase64の符号化で暗号化ではないので、アクセス制御と保存時の暗号化で守る。Pod間の通信は既定で許可されているので、ネットワークポリシーで必要な通信だけを許可する。ただし対応するネットワークの仕組みが要る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep226-container-k8s-t1-0"> Secretは暗号化ではない</label></li><li><label><input type="checkbox" id="ep226-container-k8s-t1-1"> アクセス制御と保存時の暗号化</label></li><li><label><input type="checkbox" id="ep226-container-k8s-t1-2"> Pod間の通信は既定で許可</label></li><li><label><input type="checkbox" id="ep226-container-k8s-t1-3"> ネットワークポリシーと対応する仕組み</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="クラスタ侵害の調査記録（ダミー）"><div class="logtitle">クラスタ侵害の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">ECサイトの画像配信用Podが、アプリの不備で侵害された</span></div><div class="logrow"><span class="hl">そのPodはDBのPodと通信不要。だが接続できた</span></div><div class="logrow"><span class="hl">NetworkPolicyは、1つも作成していない</span></div><div class="logrow"><span class="hl">検査とRBACの最小化は実施済み。ネットワークはポリシー対応</span></div><div class="logrow"><span class="hl">要件: 侵害されたPodから、不要な通信先へ届かせない</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ネットワークポリシーで、Pod間の通信を必要なものだけ許可する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>イメージの脆弱性検査を強化する … 実施済み。侵害後のPod間の通信は制限されない</li><li>RBACの権限をさらに絞る … Kubernetes APIの権限で、Pod間の通信は制限されない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>EX-12 コンテナ/Kubernetesセキュリティ</li></ul>
+  <p>カーネル共有による分離の弱さと、設定で薄くなる点を確かめる。Kubernetesの既定の挙動と、各対策の限界も確認する。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep225-api-security.html">← #125 APIセキュリティ 守る場所は画面ではなくサーバ側</a><a href="ep227-edr-xdr-siem-soar.html">#127 EDR・XDR・SIEM・SOAR 役割の使い分け →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

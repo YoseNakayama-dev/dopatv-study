@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#107 TCP/IP共通の脆弱性 平文・偽装・資源枯渇｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#107 ・ 第3章 情報セキュリティにおける脆弱性</p>
+  <h1>TCP/IP共通の脆弱性 平文・偽装・資源枯渇</h1>
+  <ol class="summary"><li>TCP/IPは相手を信頼する前提の設計。平文は盗聴・改ざんされ、送信元アドレスは申告で偽れ、認証は含まれない。</li><li>接続状態に資源を使うためSYNフラッドで枯渇しうる。番号の推測は割込みを、偽の送信元は反射を招く。</li><li>暗号化・送信元の遮断・接続数の制限で備える。ただし暗号化は偽装や過負荷を止めず、多層で備える。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep207-tcpip-common-vuln:trust-model">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">信頼を前提とした設計</span><span class="back" hidden><span class="def">TCP/IPの初期の設計は、通信相手を信頼する前提だった。守る仕組みは後から足されたものが多い。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep207-tcpip-common-vuln:cleartext">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">平文の通信</span><span class="back" hidden><span class="def">暗号化がなく、経路上で盗聴・改ざんされうる通信。TelnetやHTTPが例。</span><span class="note">対策は、TLS・SSH・IPsecなど暗号化できるものへの置き換え。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep207-tcpip-common-vuln:spoofing">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">送信元アドレスの偽装</span><span class="back" hidden><span class="def">送信元アドレスは申告で、偽ることができる。アドレスだけで相手を信用できない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep207-tcpip-common-vuln:syn-flood">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SYNフラッド</span><span class="back" hidden><span class="def">SYNだけを大量に送り、接続の管理に使う資源を使い果たさせる攻撃。</span><span class="note">暗号化では止まらない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep207-tcpip-common-vuln:syn-cookie">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SYNクッキー</span><span class="back" hidden><span class="def">確認が済むまで接続の情報を持たない工夫。接続数の上限と並ぶ、資源の消費を抑える対策。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep207-tcpip-common-vuln:seq-number">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">シーケンス番号</span><span class="back" hidden><span class="def">推測されると、通信に割り込まれうる。初期値は推測されにくくする必要がある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep207-tcpip-common-vuln:reflection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">反射と増幅</span><span class="back" hidden><span class="def">偽った送信元へ応答を返させる手口。UDPなどでは、応答が大きいと増幅にもなる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep207-tcpip-common-vuln:source-filtering">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">不自然な送信元の遮断</span><span class="back" hidden><span class="def">境界で、不自然な送信元（自組織のアドレスを名乗る外部からの通信など）を遮断する対策。ingress/egress filtering。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep207-tcpip-common-vuln:encryption-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">暗号化とその限界</span><span class="back" hidden><span class="def">TLS・SSH・IPsecは盗聴と改ざんを防ぐ。ただし送信元の偽装を使う反射や、SYNフラッドは止めない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep207-tcpip-common-vuln:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>TCP/IPの弱点の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>送信元アドレスは、通信路が必ず検証している</span></button><p class="why" hidden>送信元は申告で、検証されない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>暗号化は、TCPが標準で行う</span></button><p class="why" hidden>TCP自体に暗号化はない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SYNフラッドは、盗聴で認証情報を得る攻撃である</span></button><p class="why" hidden>SYNフラッドは資源を使い果たさせる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>送信元アドレスは申告で、偽ることができる</span></button><p class="why" hidden>送信元アドレスは偽ることができる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep207-tcpip-common-vuln:q0" data-answer="1">
+  <p class="q">外部から境界に届いたパケットの送信元が、自社内のアドレスになっていることがファイアウォールのログで分かった。最も適切な解釈と対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>送信元が社内のアドレスなので、社内の端末からの通信として通過させる</span></button><p class="why" hidden>送信元アドレスは申告で偽れる。外部から届いた通信が社内のアドレスを名乗るのは、不自然な送信元にあたる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>自組織のアドレスを名乗る外部の通信は偽装が疑われ、境界で遮断する</span></button><p class="why" hidden>正解。境界で、不自然な送信元（自組織のアドレスを名乗る外部からの通信など）を遮断する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>通信がTLSで暗号化されていれば送信元の偽装は防げるため、暗号化を必須にする</span></button><p class="why" hidden>暗号化は盗聴と改ざんへの対策で、送信元の偽装を使う攻撃は止めない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>接続数の上限を設ければ、偽装された送信元の通信は排除される</span></button><p class="why" hidden>接続数の上限は資源の消費を抑える対策で、送信元の偽装を見抜いて排除するものではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep207-tcpip-common-vuln:q1" data-answer="2">
+  <p class="q">公開Webサーバで、SYNを受けて確認待ちになった接続が大量に残り、新規の接続を受け付けられない。原因と対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通信が平文であることが原因なので、公開サーバの全通信をTLSに置き換える</span></button><p class="why" hidden>平文は盗聴・改ざんの弱点。資源の枯渇は暗号化では止まらない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>シーケンス番号を推測された割込みなので、通信を切断して再接続する</span></button><p class="why" hidden>シーケンス番号の推測は通信への割込みの話で、確認待ちの接続が溜まる現象とは別。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>資源の枯渇なので、接続数の上限やSYNクッキーで消費を抑える</span></button><p class="why" hidden>正解。接続の管理に資源を使い果たさせるSYNフラッド。接続数の上限やSYNクッキーで消費を抑える。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ポートスキャンによる偵察なので、不要なポートを閉じれば被害は止まる</span></button><p class="why" hidden>ポートスキャンは偵察で、別の話。公開しているポート宛ての大量のSYNは、不要なポートを閉じても受けてしまう。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep207-tcpip-common-vuln:q2" data-answer="0">
+  <p class="q">公開サーバの全通信をTLSに置き換えた後も、送信元を偽った大量のパケットで応答が遅くなる事象が起きた。置き換えの評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>暗号化は偽装や過負荷を止めないため、接続数の制限なども要る</span></button><p class="why" hidden>正解。暗号化は偽装や過負荷を止めない。接続数の上限やSYNクッキー、不自然な送信元の遮断などと多層で備える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>暗号化済みの通信なので、送信元の偽装は検証され攻撃は成立しない</span></button><p class="why" hidden>暗号化は盗聴・改ざん対策で、送信元の偽装を使う攻撃は止められない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>暗号化が不十分なためで、鍵長を長くすれば資源の枯渇も防げる</span></button><p class="why" hidden>暗号化の強さと資源の枯渇は別の問題。暗号化は反射やSYNフラッドを止めない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗号化の処理が資源を消費しているのが原因なので、平文に戻すのが妥当</span></button><p class="why" hidden>平文に戻すと盗聴と改ざんを受けうるだけで、偽装や過負荷への対策にはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep207-tcpip-common-vuln:q3" data-answer="3">
+  <p class="q">ある機器のTCP実装は、接続ごとの初期シーケンス番号が規則的で、外部から予測できる。この状態への対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>平文でなければ影響はないので、暗号化を使っている限り対応は不要とする</span></button><p class="why" hidden>問題は番号の推測のしやすさで、通信が暗号化されているかとは別の観点。初期値は推測されにくくする必要がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>接続数に上限を設ければ、通信への割込みの恐れは解消されるとみなす</span></button><p class="why" hidden>接続数の上限は資源の消費を抑える対策で、番号の推測による割込みを防ぐものではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>送信元アドレスが正しいパケットなら、割込みの恐れは生じないとみなす</span></button><p class="why" hidden>送信元アドレスは申告で偽れる。アドレスが正しく見えても、割込みの恐れは消えない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>番号を推測されて割り込まれうるため、初期値を推測されにくくする</span></button><p class="why" hidden>正解。シーケンス番号を推測されると通信に割り込まれうる。初期値は推測されにくくする。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep207-tcpip-common-vuln:q4" data-answer="1">
+  <p class="q">自社が公開するUDPのサービスが、送信元を偽られた小さな要求に対し、大きな応答を第三者へ送っていた。起きていることの説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>シーケンス番号を推測されて、確立済みの通信に割り込まれている状態</span></button><p class="why" hidden>割込みは、確立した通信の番号を推測される場合の話。ここでは偽った送信元宛てに応答が送られている。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>偽った送信元へ応答が返る反射で、応答が大きいため増幅にもなる</span></button><p class="why" hidden>正解。偽った送信元へ応答を返させる反射。UDPなどでは応答が大きいと増幅にもなる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SYNフラッドで、接続の管理に使う資源が使い果たされている状態</span></button><p class="why" hidden>SYNフラッドは接続状態の資源の枯渇。UDPの大きな応答が第三者へ送られる現象とは別。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>平文の通信を盗聴されて、応答の内容が第三者に読み取られている状態</span></button><p class="why" hidden>盗聴は平文の通信の弱点。ここでは応答が偽った送信元へ送られていることが問題。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">暗号化を導入しても残るTCP/IPの弱点と、それぞれの対策を、頭の中で整理してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">TLS・SSH・IPsecは盗聴と改ざんを防ぐが、送信元の偽装を使う反射やSYNフラッドは止めない。偽装には、境界で不自然な送信元を遮断する。資源の枯渇には、接続数の上限やSYNクッキーで備える。一つに頼らず、多層で備える。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep207-tcpip-common-vuln-t0-0"> 暗号化は盗聴・改ざんを防ぐ</label></li><li><label><input type="checkbox" id="ep207-tcpip-common-vuln-t0-1"> 反射・SYNフラッドは止まらない</label></li><li><label><input type="checkbox" id="ep207-tcpip-common-vuln-t0-2"> 不自然な送信元の遮断、接続数の上限・SYNクッキー</label></li><li><label><input type="checkbox" id="ep207-tcpip-common-vuln-t0-3"> 多層で備える</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">SYNクッキーが資源の消費を抑えられる理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">SYNフラッドは、接続の管理に資源を使い果たさせる攻撃。SYNクッキーは、確認が済むまで接続の情報を持たないので、確認が済まない大量の要求を受けても資源を消費しにくい。接続数の上限とあわせて、資源の消費を抑える対策として挙げられる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep207-tcpip-common-vuln-t1-0"> SYNフラッドは接続管理の資源を使い果たさせる</label></li><li><label><input type="checkbox" id="ep207-tcpip-common-vuln-t1-1"> 確認が済むまで接続の情報を持たない</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="通信の調査記録（ダミー）"><div class="logtitle">通信の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">サーバの管理に、Telnetを使っている（社内LAN）</span></div><div class="logrow"><span class="hl">同じLAN上の端末で、パケットを取得して確認した</span></div><div class="logrow"><span class="hl">取得内容に、管理者のIDとパスワードが読み取れた</span></div><div class="logrow"><span class="hl">要件: 認証情報を、通信中に読み取られないようにする</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">管理の通信を暗号化する（代表がSSH）</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>外部からのTelnetをFWで遮断する … 取得は同じLAN内で、通信は境界のFWを通らない</li><li>パスワードを長く複雑にする … 平文で流れるため、長くても通信中にそのまま読み取られる</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>3.3.1 TCP/IPプロトコル全般における共通の脆弱性</li><li>3.3.2 TCP/IPプロトコル全般における共通の脆弱性への対策</li></ul>
+  <p>設計上の弱点（信頼前提・平文・偽装・認証なし）と仕組みから生じる弱点を対応づけ、暗号化の限界を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep206-network-config-vuln.html">← #106 ネットワーク構成の脆弱性 区画・公開・経路・障害</a><a href="ep208-security-policy.html">#108 情報セキュリティポリシー 体系と策定の留意点 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

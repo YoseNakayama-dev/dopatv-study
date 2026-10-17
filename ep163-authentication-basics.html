@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#63 認証とは 名乗りと確認は別もの｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#63 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
+  <h1>認証とは 名乗りと確認は別もの</h1>
+  <ol class="summary"><li>識別は名乗ること、認証は本人かを確かめること。流れは識別、認証、認可の順。</li><li>対象は利用者・機器・サーバ。目的はなりすましの防止と、操作した人の特定。</li><li>認証情報は暗号化した通信で送り、失敗の理由は教えすぎない。ロックは締め出しに悪用されうる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep163-authentication-basics:identification">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">識別</span><span class="back" hidden><span class="def">利用者を区別するために、IDなどを示すこと。自分は誰かを名乗る段階。</span><span class="note">名乗りだけでは、誰でも他人のふりができてしまう。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep163-authentication-basics:authentication">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証</span><span class="back" hidden><span class="def">その利用者が本人であることを確かめること。流れは識別、認証、そのあとに認可。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep163-authentication-basics:impersonation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">なりすまし</span><span class="back" hidden><span class="def">認証が破られると起きる、他人の権限を使われること。認証の目的は、なりすましの防止と、操作した人の特定。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep163-authentication-basics:authn-targets">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証の対象</span><span class="back" hidden><span class="def">利用者のほか、接続してくる端末や機器、接続先のサーバも対象になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep163-authentication-basics:server-auth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">サーバの認証</span><span class="back" hidden><span class="def">接続先が本物のサーバかを、証明書などを使って確かめること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep163-authentication-basics:encrypted-send">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">認証情報は暗号化した通信で送る</span><span class="back" hidden><span class="def">認証情報は、暗号化した通信で送る。実装のポイントのひとつ。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep163-authentication-basics:same-error">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">誤りの理由を示さない</span><span class="back" hidden><span class="def">失敗時に、IDとパスワードのどちらが誤りかを示さない。示すと、IDが登録されているかが外部に分かってしまう。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep163-authentication-basics:lockout">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">失敗回数の制限とロック</span><span class="back" hidden><span class="def">失敗の回数に上限を設け、一時的にロックする方法。ロックは、利用者の締め出しにも使われうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep163-authentication-basics:reauth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">重要な操作の前の再認証</span><span class="back" hidden><span class="def">重要な操作を実行する前に、再度認証を求めること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep163-authentication-basics:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>識別と認証の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>識別は利用者を区別すること、認証は本人であることを確かめること</span></button><p class="why" hidden>区別が識別、確認が認証</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>識別は本人であることを確かめ、認証はIDを利用者に割り当てること</span></button><p class="why" hidden>識別と認証の役割が逆</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>識別は操作の権限を判断し、認証は操作の履歴を記録すること</span></button><p class="why" hidden>権限の判断は認可、履歴は記録</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>IDを入力させれば、識別も認証も、同時に完了したことになる</span></button><p class="why" hidden>IDは名乗りで本人確認ではない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep163-authentication-basics:q0" data-answer="2">
+  <p class="q">ログイン失敗が一定回数続いたら、アカウントを一時的にロックする設定を入れる。この方式の説明として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>一定回数でロックすれば、認証情報の推測を防げるため、他の対策は不要</span></button><p class="why" hidden>ロックは試行を抑える手段の一つで、推測を防ぎ切るものではない。認証情報を暗号化した通信で送るなど、ほかの実装のポイントも別に必要。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ロックの代わりに失敗の理由を詳しく表示すれば、締め出しの心配はなくなる</span></button><p class="why" hidden>失敗の理由を詳しく示しても、締め出しの懸念は変わらない。かえって、IDが登録されているかが外部に分かってしまう。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>試行を抑えられるが、利用者の締め出しに使われうる点に注意が要る</span></button><p class="why" hidden>正解。失敗回数に上限を設け一時的にロックする方法はあるが、ロックは利用者の締め出しにも使われうる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ロックは悪用されうるため、失敗回数の制限は設けないのが原則である</span></button><p class="why" hidden>回数の制限がないと、失敗を際限なく繰り返せる。ロックが締め出しに悪用されうる点は、使うときの注意点であり、制限を設けない理由にはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep163-authentication-basics:q1" data-answer="1">
+  <p class="q">ログイン済みの利用者が、アカウントの設定を大きく変える重要な操作を行おうとしている。認証の面で適切な設計はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ログイン時に認証が済んでいるので、以後の重要な操作では認証を求めない</span></button><p class="why" hidden>ログイン時の認証は、その後の重要な操作を行う人が本人であることまでは確かめていない。重要な操作の前には、再度認証を求める。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>重要な操作を実行する前に、あらためて認証を求めて本人かを確かめる</span></button><p class="why" hidden>正解。重要な操作は、実行の前に再度認証を求める。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>重要な操作では認証の代わりに、利用者IDの入力だけを再度求める</span></button><p class="why" hidden>IDは名乗りにすぎず、本人かどうかを確かめたことにならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>重要な操作を実行した後に認証を求め、失敗した場合に限って結果を取り消す</span></button><p class="why" hidden>実行したあとに認証を求めても、操作はすでに完了している。再認証は、重要な操作を実行する前に求める。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep163-authentication-basics:q2" data-answer="3">
+  <p class="q">ログイン画面は、失敗回数の制限と、失敗時に同じメッセージを返す実装が済んでいる。ただ、認証情報は暗号化しない通信で送っている。評価として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>失敗回数の制限があれば、認証情報の通信を暗号化する必要はない</span></button><p class="why" hidden>失敗回数の制限は、試行を抑える対策。通信路上で認証情報が読み取られることは防げないので、暗号化した通信で送る必要がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>失敗時に同じメッセージを返す実装があれば、暗号化した通信と同等の保護になる</span></button><p class="why" hidden>同じメッセージを返すのはIDの登録有無を知られないための対策で、通信の保護とは目的が別。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>社内向けのシステムなら、暗号化しない通信でも認証情報を送ってよい</span></button><p class="why" hidden>社内の通信でも、経路上で認証情報が読み取られるおそれは残る。社内向けでも、認証情報は暗号化した通信で送る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ほかの対策が済んでいても、認証情報は暗号化した通信で送る必要がある</span></button><p class="why" hidden>正解。実装のポイントは個別に必要で、認証情報は暗号化した通信で送る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep163-authentication-basics:q3" data-answer="1">
+  <p class="q">利用者のブラウザが、接続先のサイトが本物のサーバかを確かめたい。これに当たるものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者の認証。利用者のIDとパスワードで、操作する人が本人かどうかを確かめる</span></button><p class="why" hidden>利用者の認証は、操作する人が本人かを確かめるもの。接続先が本物かを確かめるものではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>サーバの認証。証明書などを使い、接続先が本物のサーバかどうかを確かめる</span></button><p class="why" hidden>正解。サーバの認証は、接続先が本物かを証明書などで確かめる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>機器の認証。接続してくる端末や機器を確かめる</span></button><p class="why" hidden>機器の認証は、接続してくる端末や機器を確かめるもの。ブラウザが接続先のサーバを確かめる向きとは逆。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>認可。接続先のサーバで、利用者に権限があるかを確認する</span></button><p class="why" hidden>認可は、認証のあとに権限があるかを確認すること。接続先が本物かを確かめるものではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep163-authentication-basics:q4" data-answer="2">
+  <p class="q">複数の担当者が共通のIDとパスワードで管理画面を使っており、障害後に誰が操作したかを特定できなかった。認証の目的に照らした見直しはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>共通IDのパスワードを長いものに変更し、定期的にも変更し続ける</span></button><p class="why" hidden>共通のIDでは、パスワードを強くしても誰が操作したかは特定できない。認証の目的のひとつは操作した人の特定。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認証の目的はなりすましの防止だけなので、操作者の特定は見直しの対象にはならない</span></button><p class="why" hidden>認証の目的は、なりすましの防止と、誰が操作したかを特定できるようにすることの二つ。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>担当者ごとにIDを分けて識別し、認証で操作者が本人であることを確かめる</span></button><p class="why" hidden>正解。IDを分けて識別し、認証で本人を確かめることで、なりすましを防ぎ、操作した人を特定できる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>認可の設定を厳しくして、共通IDで行える操作の範囲を狭める</span></button><p class="why" hidden>認可は権限の範囲を決めるもの。範囲を狭めても、誰が操作したかを特定できるようにはならない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">アカウントのロックを導入するときの狙いと、設計時に気をつける点を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">失敗の回数に上限を設け、一時的にロックする方法がある。ただし、ロックは利用者の締め出しにも使われうるので、その点を踏まえて使う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep163-authentication-basics-t0-0"> 失敗回数に上限を設ける</label></li><li><label><input type="checkbox" id="ep163-authentication-basics-t0-1"> 一時的にロックする</label></li><li><label><input type="checkbox" id="ep163-authentication-basics-t0-2"> 締め出しに使われうる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">認証の対象が利用者だけではない理由を、サーバの認証を例に、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">認証の対象は利用者のほか、機器やサーバもある。サーバの認証では、接続先が本物かを証明書などで確かめる。目的はなりすましの防止で、利用者の認証が破られると他人の権限を使われる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep163-authentication-basics-t1-0"> 対象は利用者・機器・サーバ</label></li><li><label><input type="checkbox" id="ep163-authentication-basics-t1-1"> サーバは証明書などで接続先が本物かを確かめる</label></li><li><label><input type="checkbox" id="ep163-authentication-basics-t1-2"> 目的はなりすましの防止</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="ログイン画面の応答に関する調査記録（ダミー）"><div class="logtitle">ログイン画面の応答に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 会員向けサイトのログイン画面（ダミー）</span></div><div class="logrow"><span class="hl">現状: IDがなければ「IDがありません」と表示する</span></div><div class="logrow"><span class="hl">現状: パスワードの誤りなら「パスワードが違います」と表示する</span></div><div class="logrow"><span class="hl">メッセージの違いから、IDの登録有無を外部から判別できた</span></div><div class="logrow"><span class="hl">要件: 失敗は伝えつつ、IDの登録有無を外部に知られたくない</span></div></div></div>
+  <p class="q">ログイン失敗時の応答として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">どちらの誤りかを示さず、同じ内容のメッセージを返す</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>失敗が続いたら、アカウントを一時的にロックする … メッセージの違いが残り、IDの登録有無は分かる</li><li>誤りの内容に応じて、メッセージを出し分け続ける … 現状がその方式で、登録有無を判別できた</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>6.2.1 認証とは</li></ul>
+  <p>識別と認証の区別、認証の対象と目的、失敗時の応答・ロック・再認証など実装のポイントとその注意点を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep162-access-control-impl.html">← #62 アクセス制御の実施 判定は画面でなくサーバ側で</a><a href="ep164-authentication-factors.html">#64 認証の分類 知識・所持・生体を重ねる →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

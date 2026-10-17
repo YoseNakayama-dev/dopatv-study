@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#42 詳細リスク分析・評価の手順 ベースラインとの使い分け｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#42 ・ 第4章 情報セキュリティマネジメントの実践</p>
+  <h1>詳細リスク分析・評価の手順 ベースラインとの使い分け</h1>
+  <ol class="summary"><li>進め方はベースライン・詳細リスク分析・組合せ。費用と精度のバランスで選ぶ。</li><li>詳細は、資産・脅威・既存の管理策と脆弱性の特定、リスクの算定、受容基準と比べる評価の順。</li><li>定量はALE＝1回の損失額×年間の発生回数。手間がかかり見積もりは不確実なので、前提を明示する。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep142-detailed-risk:baseline">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ベースラインアプローチ</span><span class="back" hidden><span class="def">標準的な基準に照らして対策を選ぶ方法。手間は少ないが、組織固有のリスクを見落としうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep142-detailed-risk:detailed-analysis">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">詳細リスク分析</span><span class="back" hidden><span class="def">資産ごとに脅威と脆弱性を分析し、リスクを算定する方法。細かい分、手間がかかる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep142-detailed-risk:combined">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">組合せアプローチ</span><span class="back" hidden><span class="def">まず全体にベースラインを適用し、重要・高リスクの資産には詳細リスク分析を行う進め方。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep142-detailed-risk:risk-identification">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">リスク特定（資産・脅威・脆弱性）</span><span class="back" hidden><span class="def">資産の特定と評価、脅威の特定、既存の管理策と脆弱性の特定。ここまでがリスク特定にあたる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep142-detailed-risk:risk-calc">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">リスクの算定</span><span class="back" hidden><span class="def">リスクの大きさを見積もる段階。リスク分析にあたる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep142-detailed-risk:risk-eval">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">リスクの評価</span><span class="back" hidden><span class="def">算定した大きさを受容基準と比べ、対応の要否を判断する段階。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep142-detailed-risk:ale">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">年間予想損失額（ALE）</span><span class="back" hidden><span class="def">定量的な指標。1回の損失額 × 年間の発生回数で求める。</span><span class="note">6000万円の損失が年0.1回なら600万円。1回の損失額と取り違えない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep142-detailed-risk:qualitative">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">定性的な見積もり</span><span class="back" hidden><span class="def">高・中・低などの段階で表す方法。リスクマトリックスなどを使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep142-detailed-risk:acceptance-criteria">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">受容基準</span><span class="back" hidden><span class="def">これ以下なら受容できるという線引き。超えたら対応する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep142-detailed-risk:estimate-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">見積もりの限界</span><span class="back" hidden><span class="def">手間がかかり、見積もりの値は不確実。前提を明示し、見直し続ける。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep142-detailed-risk:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>ベースラインアプローチの特徴として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>標準的な基準に照らすため、手間が少ない</span></button><p class="why" hidden>標準的な基準に照らす</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>資産ごとに脅威と脆弱性を個別に分析して、リスクを算定する</span></button><p class="why" hidden>それは詳細リスク分析の説明</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>リスクの算定は行わず、すべてのリスクを受容する</span></button><p class="why" hidden>基準に沿って、対策を選ぶ</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>組織固有のリスクを、見落とすことが一切ない</span></button><p class="why" hidden>固有のリスクは見落としうる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep142-detailed-risk:q0" data-answer="1">
+  <p class="q">顧客DBについて、1回の損失額は2000万円、不正アクセスの発生は年0.5回と見積もった。受容基準は「年間予想損失額が800万円を超えたら対応する」である。適切な判断はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>年間予想損失額は4000万円（2000万円を0.5で割る）で、基準を超えるため対応する</span></button><p class="why" hidden>年間予想損失額は、1回の損失額に年間の発生回数を掛けて求める。割ってはいけない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>年間予想損失額は1000万円で、基準の800万円を超えるため、対応が必要と判断する</span></button><p class="why" hidden>正解。2000万円 × 0.5回 = 1000万円で、基準の800万円を超えるので対応する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>年間予想損失額は1000万円だが、発生が年1回未満なので、基準にかかわらず受容できる</span></button><p class="why" hidden>頻度だけでは決めない。基準は年間予想損失額なので、金額を基準と比べる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>年間予想損失額は2000万円で、1回の損失額が基準を超えるため、対応する</span></button><p class="why" hidden>2000万円は1回の損失額。発生回数を掛けて算定した値を基準と比べる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep142-detailed-risk:q1" data-answer="2">
+  <p class="q">社内に多数のシステムがあり、すべてに詳細リスク分析を行う工数はない。顧客情報DBと決済システムは特に重要である。進め方として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>すべての資産にベースラインだけを適用し、重要な資産にも個別の分析は行わない</span></button><p class="why" hidden>ベースラインだけでは、組織固有のリスクを見落としうる。重要な資産には詳細な分析を加える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>重要な資産にはベースラインを適用し、そのほかの資産に詳細リスク分析を行う</span></button><p class="why" hidden>適用が逆になっている。重要・高リスクの資産こそ詳細リスク分析を行う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>全体にまずベースラインを適用し、重要な資産には詳細リスク分析も行う</span></button><p class="why" hidden>正解。組合せアプローチ。全体にベースライン、重要・高リスクの資産は詳細に行う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>詳細リスク分析のほうが精度が高いので、手間や費用にかかわらず全資産に実施する</span></button><p class="why" hidden>費用と精度のバランスで選ぶ。全部を詳しく行うとは限らない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep142-detailed-risk:q2" data-answer="3">
+  <p class="q">詳細リスク分析の手順のうち、「リスク特定」にあたる作業の組合せとして適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>脅威の特定、リスクの算定、リスクの評価（受容基準との比較）</span></button><p class="why" hidden>算定と評価は、リスク特定のあとの段階。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>資産の特定と評価、リスクの算定、受容基準との比較による評価</span></button><p class="why" hidden>算定と、受容基準との比較による評価は、リスク特定には含まれない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>既存の管理策と脆弱性の特定、リスクの算定、リスクの評価</span></button><p class="why" hidden>リスクの算定と評価は、特定のあとの段階。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>資産の特定と評価、脅威の特定、既存の管理策と脆弱性の特定</span></button><p class="why" hidden>正解。資産、脅威、既存の管理策と脆弱性の特定までがリスク特定。そのあとに算定、評価が続く。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep142-detailed-risk:q3" data-answer="1">
+  <p class="q">金額の算出根拠が乏しい資産について、リスクを高・中・低の段階で表し、リスクマトリックスで比較した。この方法の説明として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>定量的な方法で、年間予想損失額を金額で算出し、受容基準と比較している</span></button><p class="why" hidden>金額などの数値で見積もるのが定量的。段階で表す方法ではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>定性的な方法で、段階で表す。見積もりは不確実で、前提を明示して使う</span></button><p class="why" hidden>正解。高・中・低の段階やリスクマトリックスは定性的な方法。見積もりの不確実さへの注意は同じ。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ベースラインアプローチで、標準的な基準に照らして、対策を選んでいる</span></button><p class="why" hidden>ベースラインは、進め方（アプローチ）の名前。見積もりの表し方とは別の話。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>受容基準の設定にあたる作業なので、リスクの算定は別の方法で行う必要がある</span></button><p class="why" hidden>受容基準は対応の要否を決める線引き。段階で表すのは、リスクの見積もりの表し方。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep142-detailed-risk:q4" data-answer="2">
+  <p class="q">3年前に算定した年間予想損失額を、前提を確認せずに今年の評価にもそのまま使おうとしている。評価として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>算定は一度行えば足り、環境が変わっても結果は変わらないので、見直しは不要</span></button><p class="why" hidden>見積もりの値は不確実なので、前提を明示して見直し続ける。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>手間を減らすため、前提は省いて数値だけを残し、基準との比較を簡略化する</span></button><p class="why" hidden>前提を省くと、値の確からしさを確かめられなくなる。前提は明示する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>発生回数や損失額は見積もりで不確実なので、前提を明示し、見直し続ける</span></button><p class="why" hidden>正解。見積もりの値は不確実なので、前提を明示し、見直し続ける。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>不確実な値は基準との比較に使えないため、担当者の感覚で対応の要否を決める</span></button><p class="why" hidden>不確実さは前提の明示と見直しで扱う。感覚だけで決めるのは適切でない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">「重要な資産だけ詳細に分析し、ほかはベースライン」という進め方の利点と注意点を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">全体にベースラインを使うので手間が少なく、重要・高リスクの資産には詳細リスク分析を行うので、組織固有のリスクの見落としを減らせる。費用と精度のバランスで選ぶ。ベースラインだけの資産には、固有のリスクの見落としが残りうる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep142-detailed-risk-t0-0"> 全体にベースライン、重要な資産は詳細</label></li><li><label><input type="checkbox" id="ep142-detailed-risk-t0-1"> 費用と精度のバランス</label></li><li><label><input type="checkbox" id="ep142-detailed-risk-t0-2"> ベースラインは固有のリスクを見落としうる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">年間予想損失額と受容基準を使って、対応の要否を決める流れを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">1回の損失額に年間の発生回数を掛けて年間予想損失額を算定する。受容基準（これ以下なら受容できる線引き）と比べ、超えたら対応する。値は不確実なので、前提を明示して見直す。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep142-detailed-risk-t1-0"> 1回の損失額 × 年間の発生回数</label></li><li><label><input type="checkbox" id="ep142-detailed-risk-t1-1"> 受容基準と比べ、超えたら対応する</label></li><li><label><input type="checkbox" id="ep142-detailed-risk-t1-2"> 前提を明示して見直す</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="顧客DBのリスク評価記録（ダミー）"><div class="logtitle">顧客DBのリスク評価記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 顧客DB（ダミー）。漏えい時の損失は、1回6000万円</span></div><div class="logrow"><span class="hl">脅威: 外部からの不正アクセス。発生は年0.1回（10年に1回）</span></div><div class="logrow"><span class="hl">脆弱性: 修正プログラムが未適用。対策はまだ追加していない</span></div><div class="logrow"><span class="hl">受容基準: 年間予想損失額が300万円を超えたら、対応する</span></div><div class="logrow"><span class="hl">年間予想損失額 = 1回の損失額 × 年間の発生回数</span></div></div></div>
+  <p class="q">このリスクの評価として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">年間予想損失額は600万円で、受容基準を超えるため、対応する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>10年に1回で低い … 基準は年間予想損失額</li><li>年間予想損失額は6000万円 … 6000万は1回の損失額</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>4.1.4 詳細リスク分析・評価の手順</li></ul>
+  <p>ベースライン・詳細・組合せの違い、特定→算定→評価の対応、年間予想損失額の計算と受容基準との比較を、自分で手を動かして確かめる。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep141-risk-components.html">← #41 リスクの構成要素と損失 資産・脅威・脆弱性とアセスメント</a><a href="ep143-risk-process.html">#43 リスクマネジメントのプロセスとリスク対応 残留リスクを管理する →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

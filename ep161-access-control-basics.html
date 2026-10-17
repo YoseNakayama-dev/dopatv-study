@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#61 アクセス制御の概要 必要な人に必要な範囲だけ｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#61 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
+  <h1>アクセス制御の概要 必要な人に必要な範囲だけ</h1>
+  <ol class="summary"><li>アクセス制御は、主体が客体に行える操作を制限する。流れは識別、認証、認可の順。</li><li>方式は、所有者が設定する任意、管理者の方針で一律の強制、役割に権限を与えるロールベース。</li><li>最小権限で与え、職務を分離し、異動や退職で不要になった権限は定期的に見直す。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep161-access-control-basics:access-control">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">アクセス制御</span><span class="back" hidden><span class="def">誰が、どの資源に、どの操作をできるかを制限する仕組み。操作の例は読み取り・書き込み・実行。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep161-access-control-basics:subject-object">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">主体と客体</span><span class="back" hidden><span class="def">操作する側が主体（利用者のほかプロセスもある）、操作される側が客体（ファイルなどの資源）。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep161-access-control-basics:authz-flow">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">識別・認証・認可</span><span class="back" hidden><span class="def">識別は名乗ること、認証は本人かを確かめること、認可はその主体に権限があるかを確認すること。この順に進む。</span><span class="note">本人確認と権限の確認は別のもの。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep161-access-control-basics:dac">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">任意アクセス制御（DAC）</span><span class="back" hidden><span class="def">資源の所有者が権限を設定する方式。柔軟だが、設定が利用者任せになりばらつきやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep161-access-control-basics:mac">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">強制アクセス制御（MAC）</span><span class="back" hidden><span class="def">資源と利用者に区分を付け、管理者の方針で一律に制御する方式。所有者でも変更できず厳格だが、区分付けの負担が大きい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep161-access-control-basics:rbac">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ロールベース（RBAC）</span><span class="back" hidden><span class="def">役割に権限を与え、利用者に役割を割り当てる方式。異動のときは役割を付け替えればよい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep161-access-control-basics:least-privilege">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">最小権限の原則</span><span class="back" hidden><span class="def">業務に必要な範囲に限って権限を与える考え方。侵害や誤操作があっても、被害を小さくできる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep161-access-control-basics:separation-of-duties">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">職務分離</span><span class="back" hidden><span class="def">重要な作業を一人に集中させない考え方。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep161-access-control-basics:privilege-review">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">権限の見直し</span><span class="back" hidden><span class="def">異動や退職で不要になった権限を定期的に確認すること。放っておくと権限が積み上がり、権限クリープと呼ばれる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep161-access-control-basics:need-to-know">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">知る必要性</span><span class="back" hidden><span class="def">必要な人にだけ、必要な情報を見せる考え方。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep161-access-control-basics:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>最小権限の原則の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>緊急時に備え、運用担当者には、管理者権限を常時付与する</span></button><p class="why" hidden>常時の管理者権限は必要な範囲を超える</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>異動後も作業が止まらないよう、前の部署の権限は、一年間は残す</span></button><p class="why" hidden>不要になった権限を残すと積み上がる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>業務の遂行に必要な範囲に限って、権限を付与し、不要なら外す</span></button><p class="why" hidden>必要な範囲に限って付与</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>申請された権限は、承認した範囲で付与し、以後は見直さず維持する</span></button><p class="why" hidden>見直さず維持すると不要な権限が残る</p></li></ol>
+</li>
+<li class="quiz" data-key="ep161-access-control-basics:q0" data-answer="0">
+  <p class="q">文書の所有者が共有範囲を自分で変更できないようにし、管理者の方針で一律に制御したい。適した方式はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>強制アクセス制御。資源と利用者の区分を管理者の方針で一律に適用する</span></button><p class="why" hidden>正解。資源と利用者に区分を付け、管理者の方針で一律に制御する。所有者でも変更できない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>任意アクセス制御。資源の所有者が権限を設定し、共有範囲も柔軟に決められる</span></button><p class="why" hidden>任意アクセス制御は所有者が権限を設定する方式で、所有者が共有範囲を変えられない条件に合わない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ロールベースアクセス制御。役割に権限を与え、利用者に役割を割り当てる</span></button><p class="why" hidden>ロールベースは役割単位で権限を与える方式で、区分を付けて一律に制御する方式ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>職務分離。重要な作業を一人に集中させないよう、担当を分ける</span></button><p class="why" hidden>職務分離は基本の考え方のひとつで、アクセス制御の方式ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep161-access-control-basics:q1" data-answer="3">
+  <p class="q">定期的な確認で、異動した利用者に前の部署の権限が残っていることが見つかった。再発を防ぐ運用として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>権限が積み上がらないよう、新規の権限付与の申請を原則受け付けない</span></button><p class="why" hidden>付与を止めると、業務に必要な権限まで与えられなくなる。しかも、すでに付いた不要な権限は外れない。必要なのは不要になった権限の見直し。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>前の部署の権限も維持し、不要なものは利用者の申告で外してもらう</span></button><p class="why" hidden>利用者の申告に頼ると、気づかない権限や申告されない権限が残る。異動や退職で不要になった権限は、管理側が定期的に確認して外す。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ロールベースに切り替えれば、権限の見直しは一切不要になる</span></button><p class="why" hidden>ロールベースは役割の付け替えで異動に対応しやすいが、不要な権限の定期的な見直しは基本の考え方として残る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>異動・退職で不要になった権限を、定期的に確認して外す運用にする</span></button><p class="why" hidden>正解。異動や退職で不要になった権限を定期的に見直し、権限が積み上がる権限クリープを防ぐ。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep161-access-control-basics:q2" data-answer="1">
+  <p class="q">経理システムで、同じ担当者が支払いの申請・承認・実行をすべて行える。職務分離の観点で適切な見直しはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>最小権限の原則に従い、その担当者の権限を定期的に見直すだけにする</span></button><p class="why" hidden>見直しだけでは、重要な作業が一人に集中した状態は変わらない。職務分離は別の考え方。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>申請・承認・実行の担当を分け、重要な作業を一人に集めない</span></button><p class="why" hidden>正解。職務分離は、重要な作業を一人に集中させないこと。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>重要な作業を一人が担う方が責任が明確になるので、現状のまま維持する</span></button><p class="why" hidden>一人で申請から実行まで完結できると、誤りや不正を他の人が確認する機会がなくなる。責任の所在とは別に、重要な作業は一人に集中させない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>知る必要性の考え方に従い、支払いの情報を担当者以外に見せない</span></button><p class="why" hidden>知る必要性は、必要な人にだけ必要な情報を見せる考え方。作業を一人に集中させない職務分離とは別。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep161-access-control-basics:q3" data-answer="0">
+  <p class="q">部署ごとに文書の所有者が共有範囲を設定した結果、同種の文書でも公開範囲にばらつきが出た。説明と対応として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>所有者任せの設定はばらつきやすい。重要度と運用の負担で方式を選ぶ</span></button><p class="why" hidden>正解。任意アクセス制御は柔軟だが、設定が利用者任せになりばらつきやすい。方式は情報の重要度と運用の負担で選ぶ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>強制アクセス制御は区分付けの負担が小さいため、全資源に即時採用すべきである</span></button><p class="why" hidden>強制アクセス制御は厳格だが、区分付けの負担が大きい。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ばらつきは方式とは無関係で、利用者への注意喚起だけで必ず解消できる</span></button><p class="why" hidden>ばらつきの原因は、所有者が個別に設定する任意アクセス制御の性質にある。注意喚起だけでは設定の統一は保証できず、必ず解消できるとは言えない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ロールベースでは役割ごとに権限を定義するため、異動時の対応は不要になる</span></button><p class="why" hidden>ロールベースの異動時の対応は、役割の付け替えで行う。不要にはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep161-access-control-basics:q4" data-answer="3">
+  <p class="q">ある利用者がIDを提示し、パスワードで本人確認が済んだあと、ファイルへの書き込みを要求した。システムが次に行う処理はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者を区別するため、IDを改めて示させて識別をやり直してから進める</span></button><p class="why" hidden>識別はIDを示す段階で、すでに済んでいる。次は認可。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>本人であることを再度確かめ、その結果を権限の確認の代わりとする</span></button><p class="why" hidden>認証は本人かを確かめること、認可は権限があるかを確認すること。別のものなので代わりにならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>要求をいったん許可し、権限の確認は後日の定期的な見直しで行う</span></button><p class="why" hidden>流れは識別、認証、認可の順。権限の確認は、要求を許可する前に行う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>その主体に、対象のファイルへの書き込み権限があるかを確認する</span></button><p class="why" hidden>正解。識別、認証のあとは認可。その主体に権限があるかを確認する。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">最小権限の原則を守るために、権限を与えるときと与えたあとにやることを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">業務に必要な範囲に限って権限を与える。異動や退職で不要になった権限は定期的に見直して外し、権限が積み上がる権限クリープを防ぐ。侵害や誤操作があっても被害を小さくできる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep161-access-control-basics-t0-0"> 業務に必要な範囲に限って与える</label></li><li><label><input type="checkbox" id="ep161-access-control-basics-t0-1"> 異動・退職で不要になった権限を定期的に見直す</label></li><li><label><input type="checkbox" id="ep161-access-control-basics-t0-2"> 権限クリープを防ぐ</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">重要度の高い情報に強制アクセス制御を採用するとき、利点と負担を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">資源と利用者に区分を付け、管理者の方針で一律に制御するため、所有者でも変更できず厳格。一方、区分付けの負担が大きい。方式は情報の重要度と運用の負担で選ぶ。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep161-access-control-basics-t1-0"> 管理者の方針で一律、所有者でも変更できない</label></li><li><label><input type="checkbox" id="ep161-access-control-basics-t1-1"> 区分付けの負担が大きい</label></li><li><label><input type="checkbox" id="ep161-access-control-basics-t1-2"> 重要度と運用の負担で選ぶ</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="権限管理の見直しに関する調査記録（ダミー）"><div class="logtitle">権限管理の見直しに関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 権限は作成者が利用者・ファイル単位で個別に設定している</span></div><div class="logrow"><span class="hl">人事異動の後も、前の部署の閲覧権限が残っていた利用者がいた</span></div><div class="logrow"><span class="hl">閲覧範囲は部署・職務ごとに異なり、同じ職務の利用者は共通</span></div><div class="logrow"><span class="hl">権限の設定・変更は、情報システム部門が一元的に行える</span></div><div class="logrow"><span class="hl">要件: 付け替えを少ない手間で。全ファイルへの機密区分付与は不可</span></div></div></div>
+  <p class="q">権限管理の方式として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">役割ごとに権限を定義し、利用者に役割を割り当てる</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>全員に同一の権限を与えて、権限の管理を単純にする … 閲覧範囲は、部署・職務ごとに異なる</li><li>作成者が、利用者・ファイル単位で個別に設定し続ける … 異動のたびに全ファイルを直す必要があり、少ない手間を満たさない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>6.1.1 アクセス制御の概要</li></ul>
+  <p>識別・認証・認可の区別、任意・強制・ロールベースの違いと向き不向き、最小権限と権限の見直しがなぜ必要かを確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep160-log-analysis-effects.html">← #60 ログ分析の効果と限界 残し方と守り方で価値が決まる</a><a href="ep162-access-control-impl.html">#62 アクセス制御の実施 判定は画面でなくサーバ側で →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

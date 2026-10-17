@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#14 BOF攻撃の仕組み 戻りアドレスとsetuidの権限昇格｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#14 ・ 第2章 情報セキュリティにおける脅威</p>
+  <h1>BOF攻撃の仕組み 戻りアドレスとsetuidの権限昇格</h1>
+  <ol class="summary"><li>BOFは、固定長バッファに長さを確認せず入力をコピーし、戻りアドレスまで上書きされることで起きる。</li><li>setuidは所有者の権限で動く。所有者rootのsetuidにBOFがあり、入力を渡せると権限昇格になる。</li><li>setuid rootだけでは成立せず、BOFでも得られるのは動いたプロセスの権限分。配置は環境で違う。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep114-bof:bof">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">バッファオーバーフロー（BOF）</span><span class="back" hidden><span class="def">固定長のバッファに、長さを確認せず入力をコピーし、バッファより先のメモリまで書き込まれてしまう不備。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep114-bof:return-address">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">戻りアドレス</span><span class="back" hidden><span class="def">関数の処理が終わったあとに戻る先のアドレス。書き換えられると、攻撃者が選んだ場所で処理が続く。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep114-bof:stack-layout">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">スタックの配置（x86系の例）</span><span class="back" hidden><span class="def">バッファの先に保存された値と戻りアドレスが並び、書き込みは低位から高位へ進む。配置は環境・コンパイラで異なる。</span><span class="note">動画の図は典型的な一例。どの環境でも同じとは限らない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep114-bof:bounds-check">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">境界チェックの欠如</span><span class="back" hidden><span class="def">コピー前にバッファの大きさと入力の長さを比べていない状態。BOFの根本の原因。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep114-bof:arbitrary-code">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">任意のコード実行</span><span class="back" hidden><span class="def">戻りアドレスが書き換わった結果、攻撃者が選んだコードが動くこと。権限は脆弱なプロセスのもの。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep114-bof:setuid">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">setuid属性</span><span class="back" hidden><span class="def">付いた実行ファイルを動かすと、プロセスの実効ユーザーIDが実行者ではなくファイルの所有者になる属性。</span><span class="note">ls -l では所有者の実行位置が s になる（例 rwsr-xr-x）。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep114-bof:setgid">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">setgid属性</span><span class="back" hidden><span class="def">実効グループIDがファイルの所有グループになる属性。所有グループの権限で動く（rootグループとは限らない）。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep114-bof:euid">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">実ユーザーIDと実効ユーザーID</span><span class="back" hidden><span class="def">実ユーザーIDは実行した人、実効ユーザーIDは権限の判定に使われるID。setuidでは実効ユーザーIDが所有者になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep114-bof:priv-escalation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">権限昇格</span><span class="back" hidden><span class="def">一般ユーザーが、より強い権限を得ること。所有者rootのsetuidプログラムのBOFで、root権限のコードが動く例。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep114-bof:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>setuid属性付きの実行ファイルを実行したとき、プロセスの実効ユーザーは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>実行した人</span></button><p class="why" hidden>それは属性がない通常の場合</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>常にroot</span></button><p class="why" hidden>所有者がrootのときだけ</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ファイルの所有者</span></button><p class="why" hidden>ファイルの所有者</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>親プロセスの所有者</span></button><p class="why" hidden>親プロセスは関係しない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep114-bof:q0" data-answer="0">
+  <p class="q">関数内のローカル変数である固定長バッファへ、引数の文字列を長さの確認なしでコピーしている。x86系の典型的な配置で、バッファより長い入力が来たとき、起こりうることはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>戻りアドレスなど、隣のメモリが上書きされる</span></button><p class="why" hidden>正解。書き込みは低位から高位へ進み、保存された値や戻りアドレスに届きうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>バッファより手前の低位側の領域だけが、上書きされる</span></button><p class="why" hidden>書き込みはバッファより先（高位側）へ進むので、手前だけが書き換わるわけではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>入力の末尾が自動で切り捨てられ、何も起きない</span></button><p class="why" hidden>長さを確認していないので、切り捨てる処理は働かない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ディスク上の実行ファイルが、書き換わる</span></button><p class="why" hidden>書き換わるのはメモリ上の内容。ディスク上のファイルとは別の話。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep114-bof:q1" data-answer="3">
+  <p class="q">所有者が一般ユーザー appuser で、setuid属性が付いたコマンドにBOFがあり、別の一般ユーザーに乗っ取られた。このとき動くコードの権限として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>setuidが付いているため、常にroot権限になる</span></button><p class="why" hidden>setuidはファイルの所有者の権限で動く。所有者がrootでなければrootにはならない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>実行した一般ユーザーの権限のまま</span></button><p class="why" hidden>setuidが付いているので、実行者の権限のままではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>親プロセスの所有者の権限</span></button><p class="why" hidden>親プロセスの所有者は関係しない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>所有者appuserの権限</span></button><p class="why" hidden>正解。得られるのは、乗っ取られたプロセスが持っていた権限。ここでは所有者の権限。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep114-bof:q2" data-answer="1">
+  <p class="q">所有者rootのsetuidコマンドが見つかった。脆弱性は確認されていない。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>setuid rootである時点で、一般ユーザーが入力を渡せば権限昇格できる</span></button><p class="why" hidden>setuid rootだけでは乗っ取れない。BOFなどの脆弱性が必要。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>脆弱性が無ければ成立せず、重なると被害が大きい</span></button><p class="why" hidden>正解。脆弱性が無ければこの経路は成立しない。2つが重なると影響が大きくなる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>攻撃者がプログラムを実行できなくても、権限昇格は成立する</span></button><p class="why" hidden>前提は、攻撃者がローカルでそのプログラムを実行でき、入力を与えられること。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>setgidに替えれば、必ずrootグループの権限になる</span></button><p class="why" hidden>setgidは所有グループの権限で、rootグループとは限らない。「必ず」も言い過ぎ。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep114-bof:q3" data-answer="0">
+  <p class="q">BOFの解説図でスタックの配置を示すとき、説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>環境により異なり、図は典型的な一例</span></button><p class="why" hidden>正解。配置はコンパイラ・アーキテクチャ・OSなどで異なる。図はx86系の例。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>どの環境でも、バッファの直後に戻りアドレスが置かれる</span></button><p class="why" hidden>バッファの直後とは限らない。間に保存された値などがあり、環境でも異なる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>戻りアドレスは、バッファより低位のアドレスに置かれる</span></button><p class="why" hidden>x86系の例では、戻りアドレスはバッファより高位にある。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>スタックは必ず高位から低位に伸び、書き込みも同じ向きに進む</span></button><p class="why" hidden>スタックは高位から低位へ伸びるが、書き込みは低位から高位へ進む。「必ず」も言い過ぎ。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep114-bof:q4" data-answer="3">
+  <p class="q">BOFの根本の原因として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>所有者がrootのプログラムに、setuid属性が付いていること</span></button><p class="why" hidden>setuidは被害を大きくする条件で、BOFの原因ではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>管理者のパスワードが、推測されやすいこと</span></button><p class="why" hidden>BOFは認証の突破ではなく、入力処理の不備で起きる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>関数の戻りアドレスを、スタックに保存する仕組みそのもの</span></button><p class="why" hidden>戻りアドレスが書き換わる経路ではあるが、不備の原因は長さを確認しないコピー。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>コピーのとき、入力の長さを確認していないこと</span></button><p class="why" hidden>正解。長さを確認せずにコピーしているのが根本の原因。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">所有者rootのsetuidコマンドがあるだけでは、権限昇格は起きない。成立に必要な条件を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">そのプログラムに、入力の長さを確認しないなどのBOFの脆弱性があること、攻撃者がローカルでそのプログラムを実行して入力を渡せることが要る。2つが重なると、乗っ取られたコードがroot権限で動く。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep114-bof-t0-0"> 所有者rootのsetuid</label></li><li><label><input type="checkbox" id="ep114-bof-t0-1"> BOFの脆弱性がある</label></li><li><label><input type="checkbox" id="ep114-bof-t0-2"> 攻撃者が実行して入力を渡せる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">長い入力が戻りアドレスに届く流れと、その結果を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">長さを確認せずにコピーするとバッファを超え、あふれた分が隣のメモリを上書きして戻りアドレスに届く。関数の終了時に書き換わった先へ移るので、脆弱なプロセスの権限で任意のコードが動く。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep114-bof-t1-0"> 長さを確認しないコピー</label></li><li><label><input type="checkbox" id="ep114-bof-t1-1"> 戻りアドレスが書き換わる</label></li><li><label><input type="checkbox" id="ep114-bof-t1-2"> 脆弱なプロセスの権限で任意のコード実行</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="権限昇格の調査記録（ダミー）"><div class="logtitle">権限昇格の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 所有者root、setuid属性付きの管理用コマンド</span></div><div class="logrow"><span class="hl">一般ユーザーが、非常に長い引数を渡して実行した</span></div><div class="logrow"><span class="hl">直前に当該コマンドが SIGSEGV で異常終了した記録あり</span></div><div class="logrow"><span class="hl">その直後、同じ端末のシェルが euid=0（実効UID=0）に</span></div><div class="logrow"><span class="hl">// 認証失敗の記録なし / ファイルのハッシュは配布時と一致</span></div></div></div>
+  <p class="q">権限昇格が成立した原因として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">setuid rootのコマンドが入力長を確認せず、戻りアドレスを書き換えられた</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>管理者パスワードの推測 … 認証失敗の記録はない</li><li>コマンドの改ざん … ハッシュは配布時と一致していた</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>2.3.1 BOF攻撃の仕組み</li><li>2.3.2 setuid/setgid属性を悪用したBOF攻撃</li></ul>
+  <p>スタック上の配置と戻りアドレスの書き換わり方、setuidが権限昇格に結びつく条件と、setuid rootだけでは成立しない点を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep113-killchain.html">← #13 サイバーキルチェーンとATT&amp;CK 攻撃を整理する共通の言葉</a><a href="ep115-bof-defense.html">#15 BOF攻撃への対策 カナリア・DEP・ASLRの守備範囲と限界 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

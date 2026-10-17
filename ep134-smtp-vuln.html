@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#34 SMTPの脆弱性と対策 送信者を確かめない仕組みの弱点｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#34 ・ 第3章 情報セキュリティにおける脆弱性</p>
+  <h1>SMTPの脆弱性と対策 送信者を確かめない仕組みの弱点</h1>
+  <ol class="summary"><li>SMTPは送信者を確かめず、差出人の表示も自由に書け、そのままでは暗号化されない。</li><li>第三者中継は仕様ではなく設定の不備で成立し、踏み台化とブロックリスト登録を招く。</li><li>対策は送信者認証の必須化・TLS・送信ドメイン認証。TLSは強制しないと戻され、認証結果の扱いは運用次第。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep134-smtp-vuln:smtp">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SMTP</span><span class="back" hidden><span class="def">メールを送り、複数のサーバを中継して届ける古い仕組み。送信者を確かめる機能を持たず、そのままでは暗号化もされない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep134-smtp-vuln:open-relay">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">第三者中継（オープンリレー）</span><span class="back" hidden><span class="def">自社と無関係な送信者・宛先のメールも受け付けて転送してしまう状態。迷惑メールの踏み台にされる。</span><span class="note">仕様の弱点ではなく、サーバの設定の不備で成立する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep134-smtp-vuln:blocklist">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ブロックリスト</span><span class="back" hidden><span class="def">迷惑メールの送信元として登録されたIPアドレスの一覧。載ると、正規のメールも他社に届かなくなる恐れがある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep134-smtp-vuln:smtp-auth">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SMTP-AUTH（送信者認証）</span><span class="back" hidden><span class="def">メールを送る側に認証を求める仕組み。必須にして、認証のない中継を拒否する。後から追加された。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep134-smtp-vuln:submission">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">サブミッションポート</span><span class="back" hidden><span class="def">利用者のメール送信を、認証つきで受け付ける別の入口。サーバ間の中継と利用者の送信を分ける。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep134-smtp-vuln:op25b">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">OP25B</span><span class="back" hidden><span class="def">事業者が、自社網から外へ向かう25番の通信を制限する迷惑メール対策。</span><span class="note">サーバ側の中継拒否（SMTP-AUTH必須）とは別の対策。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep134-smtp-vuln:starttls">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">TLS（STARTTLS等）</span><span class="back" hidden><span class="def">メールの通信を暗号化し、盗聴・改ざんの余地を小さくする。強制しないと暗号化なしに戻される余地が残る。</span><span class="note">MTA-STSなどで補う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep134-smtp-vuln:spf-dkim-dmarc">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SPF / DKIM / DMARC</span><span class="back" hidden><span class="def">受信側が、届いたメールの送信ドメインを確かめる仕組み。なりすましへの備えで、結果の扱いは運用で決める。</span><span class="note">中継の防止とは別の話。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep134-smtp-vuln:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>第三者中継を防ぐ対策として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SMTP-AUTHを必須にして、中継を拒否する</span></button><p class="why" hidden>認証のない中継を拒否</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>受信用のPOP3を有効にして、受信側の認証を強くする</span></button><p class="why" hidden>POP3は受信用で、送信の許可と無関係</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>メール本文を圧縮してから、送信するようにしておく</span></button><p class="why" hidden>圧縮は、送信者の確認と無関係</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>待ち受けのポート番号を、標準以外の番号に変えるだけにする</span></button><p class="why" hidden>中継を許す設定は、変わらない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep134-smtp-vuln:q0" data-answer="1">
+  <p class="q">調査記録: 外部の1つのIPが、SMTP-AUTHなしで、自社ドメインではない差出人・宛先のメールの転送を依頼し、サーバはすべて受理していた。最も適切な対処はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者全員のパスワードを強いものに変更させ、あわせて定期的な変更も義務づける</span></button><p class="why" hidden>ログイン(SMTP-AUTH)を経ていないので、アカウントの漏えいが原因ではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認証のない中継を拒否する設定にし、利用者の送信は認証つきの入口へ集める</span></button><p class="why" hidden>正解。原因は認証なしの第三者中継を許す設定。SMTP-AUTHを必須にして拒否し、利用者の送信は認証つきのサブミッションポートへ分ける。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>自社サーバでSPFを有効にして、送信ドメインを確かめてから転送させるようにする</span></button><p class="why" hidden>SPFなどは送信ドメインを確かめる、なりすましへの備え。中継の防止とは別の話。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>待ち受けのポート番号を標準以外に変えて、外部から見つかりにくくしておく</span></button><p class="why" hidden>ポートを変えても、中継を許す設定はそのまま残る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep134-smtp-vuln:q1" data-answer="3">
+  <p class="q">メールサーバにSTARTTLSを設定したが、TLSの利用は必須にしていない。盗聴・改ざんに関する評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>STARTTLSに対応していれば、すべての通信が必ず暗号化されるので、盗聴や改ざんの余地は残らない</span></button><p class="why" hidden>強制しないと暗号化なしに戻される余地がある。「必ず」とは言えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>強制しない設定では暗号化がまったく行われないので、設定しても効果はない</span></button><p class="why" hidden>暗号化できる通信では、盗聴や改ざんの余地は小さくなる。効果がないわけではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>TLSの代わりにDMARCを設定すれば、通信の暗号化も確保され、強制は不要になる</span></button><p class="why" hidden>DMARCは送信ドメインを確かめる仕組みで、通信の暗号化とは別。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗号化なしに戻される余地が残るため、強制する設定やMTA-STS等で補う必要がある</span></button><p class="why" hidden>正解。TLSは強制しないと戻される余地があり、強制やMTA-STS等で補う。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep134-smtp-vuln:q2" data-answer="2">
+  <p class="q">自社のメールサーバでSPF・DKIM・DMARCによる送信ドメインの確認を導入した。認証なしの中継を許す設定が残っている場合の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>送信ドメインを確かめる仕組みなので、自社サーバが関係のない宛先へ中継する動作も止まる</span></button><p class="why" hidden>送信ドメイン認証は、なりすましへの備え。中継の防止とは別の話。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>認証結果の扱いを運用で決めなくても、なりすましは完全に防がれる</span></button><p class="why" hidden>確認結果をどう扱うかは運用で決める必要があり、完全に防げるとは言えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>なりすましへの備えで中継の防止とは別。認証なしの中継は別途拒否する</span></button><p class="why" hidden>正解。中継の拒否はSMTP-AUTHの必須化で行い、送信ドメイン認証はそれとは別の備え。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>中継の拒否はSMTP-AUTHに任せ、送信ドメイン認証の結果は無視してよい</span></button><p class="why" hidden>SMTP-AUTHは中継の拒否の対策。確認結果の扱いは運用で決める必要があり、無視してよいわけではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep134-smtp-vuln:q3" data-answer="0">
+  <p class="q">OP25Bの説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>事業者が自社網から外へ向かう25番の通信を制限して、迷惑メールを抑える対策</span></button><p class="why" hidden>正解。OP25Bは事業者が行う、迷惑メール対策としての25番の出口の制限。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>受信側が届いたメールの送信ドメインを確かめて、なりすましを見分ける仕組み</span></button><p class="why" hidden>これはSPF・DKIM・DMARCの説明。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>自社のメールサーバが認証のない中継を拒否するように、サーバ側で行う設定のこと</span></button><p class="why" hidden>これはSMTP-AUTHを必須にして中継を拒否する対策。OP25Bは別物。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>メールの通信を暗号化して、経路上での盗聴や改ざんの余地を小さくする仕組み</span></button><p class="why" hidden>これはTLS（STARTTLS等）の説明。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep134-smtp-vuln:q4" data-answer="1">
+  <p class="q">第三者中継を許す設定のため迷惑メールの踏み台にされ、自社のIPアドレスがブロックリストに載った。この影響として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者のメールボックスの内容が外部に読み取られて、情報が漏えいする</span></button><p class="why" hidden>起きているのは送信の依頼の悪用で、受信箱の読み出しではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>自社の正規のメールも、他社に届かなくなる恐れがある</span></button><p class="why" hidden>正解。ブロックリストに載ると、正規のメールまで他社に届かなくなる恐れがある。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>社員のログインパスワードが盗まれ、アカウントが乗っ取られた状態になる</span></button><p class="why" hidden>ここで起きているのは中継の悪用で、アカウントの漏えいとは別の問題。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>メールの通信が暗号化されなくなり、盗聴されやすい状態に変わってしまう</span></button><p class="why" hidden>暗号化の有無は中継の悪用とは別の弱点。ブロックリスト登録の影響ではない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">第三者中継が「仕様の弱点」ではなく「設定の不備」と言われる理由と、直し方を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">SMTPが送信者を確かめない点は仕様だが、自社と無関係なメールまで受理して転送するのはサーバの設定で成立する。SMTP-AUTHを必須にして、認証のない中継を拒否する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep134-smtp-vuln-t0-0"> 送信者を確かめないのは仕様</label></li><li><label><input type="checkbox" id="ep134-smtp-vuln-t0-1"> 無関係なメールの受理・転送は設定の不備</label></li><li><label><input type="checkbox" id="ep134-smtp-vuln-t0-2"> SMTP-AUTHを必須にして中継を拒否する</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">外部のIPがログインなしで送信を依頼し、読み出しはない調査記録。「パスワード漏えい」「盗聴」を原因から外せる根拠を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">ログイン(SMTP-AUTH)を経ていないので、アカウントの漏えいは原因でない。盗聴はサーバの記録に残らないが、仮にあっても認証なしの送信依頼を受理した事象の説明にならない。原因は認証なしの中継を許す設定。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep134-smtp-vuln-t1-0"> ログインを経ていない</label></li><li><label><input type="checkbox" id="ep134-smtp-vuln-t1-1"> 盗聴は受理の理由にならない</label></li><li><label><input type="checkbox" id="ep134-smtp-vuln-t1-2"> 原因は認証なしの中継を許す設定</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="メールサーバの調査記録（ダミー）"><div class="logtitle">メールサーバの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 自社のメールサーバ（ダミー）。外部へ大量送信している</span></div><div class="logrow"><span class="hl">接続元は外部の1つのIP。ログイン(SMTP-AUTH)なしで依頼</span></div><div class="logrow"><span class="hl">依頼は、宛先指定と本文の送信。受信箱の読み出しはなし</span></div><div class="logrow"><span class="hl">差出人も宛先も自社ドメインではなく、サーバは全て受理して転送</span></div><div class="logrow"><span class="hl">結果: 他社のブロックリストに、自社のIPが登録された</span></div></div></div>
+  <p class="q">この事象の原因として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">認証なしの第三者の中継を許可する、サーバの設定</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>利用者アカウントの漏えい … ログインを経ていない</li><li>メール本文の盗聴 … 盗聴は読み取る行為。読み出しはなし</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>3.4.1 SMTPの脆弱性</li><li>3.4.2 SMTPの脆弱性への対策</li></ul>
+  <p>仕様の弱点と第三者中継（設定の不備）の区別、TLSを強制しない限界、送信ドメイン認証が中継の防止とは別である点を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep133-fileless-detect.html">← #33 ファイルレス攻撃とマルウェアの検出手法 ファイルがなくても見つける</a><a href="ep135-pop3-vuln.html">#35 POP3の脆弱性と対策 平文の認証を守る →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

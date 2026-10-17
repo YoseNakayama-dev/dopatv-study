@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#85 Cookieの扱い 属性で守る範囲が違う｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#85 ・ 第8章 システム開発におけるセキュリティ対策</p>
+  <h1>Cookieの扱い 属性で守る範囲が違う</h1>
+  <ol class="summary"><li>Cookieはサーバが渡し、ブラウザが保存して自動で送り返す。値は書き換えられるので権限や個人情報は入れない。</li><li>Secureは送信をHTTPSに限り、HttpOnlyはスクリプトから読めなくし、SameSiteは他サイトからの送信を制限する。</li><li>どの属性も補助。HttpOnlyでもXSSは残り、SameSiteにはトークンの確認も併用し、サーバ側の期限は長くしない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep185-cookie:cookie">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Cookie</span><span class="back" hidden><span class="def">サーバが Set-Cookie で渡し、ブラウザが保存して、以降のリクエストで自動的に送り返す情報。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep185-cookie:secure-attr">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Secure属性</span><span class="back" hidden><span class="def">HTTPSの通信にだけCookieを送る属性。暗号化されない通信での送信を避け、盗聴対策になる。</span><span class="note">付けないと、HTTPで接続されたときにもCookieが送られる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep185-cookie:httponly-attr">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">HttpOnly属性</span><span class="back" hidden><span class="def">スクリプトからCookieを読めなくする属性。XSSでスクリプトが動いても、値を読み取られにくい。</span><span class="note">XSSそのものは防げず、画面の改ざんなども防げない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep185-cookie:samesite-attr">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SameSite属性</span><span class="back" hidden><span class="def">他サイトからのリクエストでの、Cookieの送信を制限する属性。CSRF対策の補助になる。</span><span class="note">CSRFにはトークンの確認も併用する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep185-cookie:csrf-token">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">CSRFトークンの確認</span><span class="back" hidden><span class="def">SameSite属性に加えて併用する、CSRF対策の仕組み。属性だけに頼らない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep185-cookie:session-id">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">セッションID</span><span class="back" hidden><span class="def">Cookieに入れて利用者を区別する値。推測されにくい値にする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep185-cookie:cookie-contents">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">Cookieの中身</span><span class="back" hidden><span class="def">権限や個人情報を直接入れてはいけない。利用者が書き換えられるので、改ざんされうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep185-cookie:server-expiry">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">サーバ側の有効期限</span><span class="back" hidden><span class="def">セッションをサーバ側で有効とみなす期間。長いと、盗まれたIDが長く使われる。必要以上に長くしない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep185-cookie:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>SameSite属性の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>他サイトからのリクエストに、Cookieを付けて送る範囲を制限する</span></button><p class="why" hidden>他サイトからの送信を制限する</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>HTTPSで接続したときにだけ、Cookieをサーバへ送るようにする</span></button><p class="why" hidden>それはSecure属性</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>スクリプトからCookieを読み取れないようにして、盗用を防ぐ設定</span></button><p class="why" hidden>それはHttpOnly属性</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>Cookieを保持する期間を指定して、期限が来たら削除させる設定</span></button><p class="why" hidden>期間を指定するのは有効期限</p></li></ol>
+</li>
+<li class="quiz" data-key="ep185-cookie:q0" data-answer="2">
+  <p class="q">ログイン後のセッションIDを入れたCookieに、HttpOnly だけを付けている。サイトはHTTPSで配信しているが、利用者が暗号化されないHTTPで接続する場合がある。評価として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>HttpOnlyで、暗号化されない通信にはCookieが送られない</span></button><p class="why" hidden>HttpOnlyはスクリプトから読めなくする属性で、送る通信の種類は制限しない。送信をHTTPSに限るのはSecure。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SameSiteが無いため、HTTPの通信でIDが送られうる</span></button><p class="why" hidden>SameSiteは他サイトからのリクエストでの送信を制限する属性。HTTPかHTTPSかを制限するのはSecure。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>Secureが無く、HTTPで接続されるとIDが送られうる</span></button><p class="why" hidden>正解。Secureを付けないと、暗号化されない通信でもCookieが送られる。HTTPで接続されるとIDが送られてしまう。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>HttpOnlyを外すと、HTTPSの通信にだけCookieが送られる</span></button><p class="why" hidden>HttpOnlyは送る通信を制限しない。HttpOnlyの有無でHTTPSだけに送られるようにはならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep185-cookie:q1" data-answer="1">
+  <p class="q">XSSの脆弱性が残るページで、セッションIDのCookieに HttpOnly を付けた。報告書には「これでXSS対策は完了」とある。評価として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>HttpOnlyでXSSそのものも防げているので、対策は完了している</span></button><p class="why" hidden>HttpOnlyはスクリプトからCookieを読めなくする属性で、XSSそのものは防げない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>XSSの脆弱性は残り、スクリプトによる画面の改ざんなどは防げない</span></button><p class="why" hidden>正解。HttpOnlyがあってもXSSの脆弱性は残る。スクリプトによる画面の改ざんなどは防げない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SameSiteも付ければ、XSSの脆弱性そのものが解消される</span></button><p class="why" hidden>SameSiteは他サイトからの送信を制限する属性で、XSSの脆弱性は直らない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>Secureも付ければ、スクリプトが動いても画面の改ざんは起きない</span></button><p class="why" hidden>Secureは送信をHTTPSの通信に限る属性で、スクリプトによる画面の改ざんは防げない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep185-cookie:q2" data-answer="3">
+  <p class="q">ログイン済みのサイトで、CSRF対策としてセッションIDのCookieにSameSite属性を付けた。トークンの確認は実装していない。評価として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SameSiteは完全な対策なので、トークンの確認は不要である</span></button><p class="why" hidden>SameSiteはCSRF対策の補助。トークンの確認も併用する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SameSiteは盗聴を防ぐ属性なので、CSRFには関係しない</span></button><p class="why" hidden>盗聴対策はSecure。SameSiteは他サイトからのリクエストでの送信を制限し、CSRF対策の補助になる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SameSiteでスクリプトからCookieを読めなくし、CSRFを防ぐ</span></button><p class="why" hidden>スクリプトから読めなくするのはHttpOnly。SameSiteは他サイトからの送信を制限する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SameSiteは補助的な対策なので、トークンの確認も併用する</span></button><p class="why" hidden>正解。SameSiteはCSRF対策の補助で、トークンの確認も併用する。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep185-cookie:q3" data-answer="0">
+  <p class="q">あるサイトはCookieに role=admin と会員の氏名を保存し、サーバはその値を信用して権限を判定している。この設計への評価として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>権限や個人情報を直接入れず、推測されにくいIDだけを入れる</span></button><p class="why" hidden>正解。Cookieの中身は利用者が書き換えられるので、権限や個人情報は直接入れない。セッションIDは推測されにくい値にする。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>HttpOnlyとSecureを付ければ、権限を入れても改ざんされない</span></button><p class="why" hidden>HttpOnlyはスクリプトからの読み取りを禁じ、Secureは送信をHTTPSに限る属性。利用者が値を書き換える問題は別。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>有効期限を短くすれば、権限や個人情報を入れても問題ない</span></button><p class="why" hidden>期限の長短は中身の問題と別。権限や個人情報を直接入れること自体が、改ざんされる原因になる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SameSiteを付ければ、他サイトからの書き換えを防げるので問題ない</span></button><p class="why" hidden>SameSiteは他サイトからのリクエストでの送信を制限する属性で、利用者が値を書き換える問題は別。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep185-cookie:q4" data-answer="1">
+  <p class="q">盗まれたセッションIDが長く使われる被害を抑えたい。現在、サーバ側のセッション有効期限が長く設定されている。対応として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>HttpOnlyを付ければ盗まれないので、期限は長いままでよい</span></button><p class="why" hidden>HttpOnlyはスクリプトからの読み取りを禁じる属性で、盗まれないことの保証ではない。XSSそのものも防げない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>サーバ側の有効期限を、必要以上に長くしないよう見直す</span></button><p class="why" hidden>正解。サーバ側の有効期限が長いと、盗まれたIDが長く使われる。必要以上に長くしない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>Cookieの有効期限だけを短くし、サーバ側の期限は変えない</span></button><p class="why" hidden>サーバ側の有効期限が長いままだと、盗まれたIDは長く使われる。サーバ側を見直す必要がある。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>推測されにくいIDにしたので、盗まれても期限は長くてよい</span></button><p class="why" hidden>推測されにくい値にするのはIDを当てられにくくする対策。盗まれたIDが長く使われる問題は、サーバ側の期限に関わる。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">「HttpOnlyを付けたからXSS対策は済み」と言えない理由と、Secure・HttpOnly・SameSiteの守る範囲の違いを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">HttpOnlyはスクリプトからCookieを読めなくするだけで、XSSの脆弱性は残り、スクリプトによる画面の改ざんなどは防げない。Secureは送信をHTTPSに限り、SameSiteは他サイトからの送信を制限する。三つは守る範囲が違うので使い分ける。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep185-cookie-t0-0"> HttpOnlyはCookieを読めなくするだけ</label></li><li><label><input type="checkbox" id="ep185-cookie-t0-1"> XSSの脆弱性や画面の改ざんは残る</label></li><li><label><input type="checkbox" id="ep185-cookie-t0-2"> Secure・SameSiteは守る範囲が別</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">セッションIDをCookieで扱う設計で、値・属性・期限について何をすべきか、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">値は推測されにくいIDだけにして、権限や個人情報は入れない。属性はSecureとHttpOnlyを付け、SameSiteで他サイトからの送信を制限し、CSRFにはトークンの確認も併用する。サーバ側の有効期限は必要以上に長くしない。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep185-cookie-t1-0"> 推測されにくいIDだけを入れる</label></li><li><label><input type="checkbox" id="ep185-cookie-t1-1"> SecureとHttpOnly、SameSiteを使い分ける</label></li><li><label><input type="checkbox" id="ep185-cookie-t1-2"> CSRFにはトークンも併用する</label></li><li><label><input type="checkbox" id="ep185-cookie-t1-3"> サーバ側の期限を長くしない</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="Cookieの設定に関する調査記録（ダミー）"><div class="logtitle">Cookieの設定に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: ログイン後のセッションIDを、Cookieに入れている</span></div><div class="logrow"><span class="hl">画面にXSSの脆弱性が残り、修正は次のリリースになる</span></div><div class="logrow"><span class="hl">サイトは全ページをHTTPSで配信している</span></div><div class="logrow"><span class="hl">要件: スクリプトによるセッションIDの読み取りを防ぎたい</span></div></div></div>
+  <p class="q">要件を満たす設定として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">CookieにHttpOnly属性を付ける</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>CookieにSecure属性だけを付ける … Secureは送信をHTTPSに限る設定で、スクリプトの読み取りは防げない</li><li>CookieにSameSite属性を付ける … 他サイトからの送信を制限する設定で、スクリプトの読み取りは防げない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>8.4.4 Cookieの扱い</li></ul>
+  <p>Secure・HttpOnly・SameSiteそれぞれが何を守り、何を守らないかを対応づけて読む。中身と期限の注意点も確かめる。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep184-dev-process.html">← #84 開発工程ごとの対策 上流から重ねて防ぐ</a><a href="ep186-nist-csf.html">#86 NISTサイバーセキュリティフレームワーク 機能とプロファイルで見る →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

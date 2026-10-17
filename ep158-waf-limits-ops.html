@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#58 WAFの限界と運用の課題 入れて終わりではない補助の守り｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#58 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>WAFの限界と運用の課題 入れて終わりではない補助の守り</h1>
+  <ol class="summary"><li>WAFは根本対策ではなく、影響を低減する補助。通信が正常に見える認可・業務ロジックの不備は防げない場合がある。</li><li>導入初期は検知のみで動かし、誤検知を確認してから遮断。除外は最小限にし、アプリ変更時は見直す。</li><li>遮断・通過の両方のログを確認し、WAF自体の故障時の動作も決める。脆弱性診断と修正を併用する。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep158-waf-limits-ops:not-root">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">根本対策ではないという限界</span><span class="back" hidden><span class="def">WAFは実装面の根本対策ではなく、攻撃による影響を低減する対策。脆弱性そのものは残る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep158-waf-limits-ops:normal-looking">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">通信が正常に見える不備</span><span class="back" hidden><span class="def">認可制御の不備や業務ロジックの不備など。通信自体は正常に見えるため、WAFでは防げない場合がある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep158-waf-limits-ops:false-detect">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">誤検知と検知漏れ</span><span class="back" hidden><span class="def">誤検知は正常な通信の遮断、検知漏れは攻撃の見逃し。どちらも起きうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep158-waf-limits-ops:detect-first">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">検知のみから始める運用</span><span class="back" hidden><span class="def">導入初期は検知のみで動かし、誤検知を確認して、ルールを調整してから遮断にする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep158-waf-limits-ops:exclusion">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">除外ルール</span><span class="back" hidden><span class="def">誤検知を避けるために検査から外すルール。必要最小限にする。増やしすぎると守れない範囲が広がる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep158-waf-limits-ops:rule-review">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ルールの見直しと更新</span><span class="back" hidden><span class="def">アプリを変更したときはルールが合っているか見直す。新たな攻撃に備えて、更新も必要。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep158-waf-limits-ops:log-check">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">遮断・通過のログ確認</span><span class="back" hidden><span class="def">遮断したものだけでなく、通過したものも確認する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep158-waf-limits-ops:spof">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">WAF自体が障害点になる</span><span class="back" hidden><span class="def">WAF自身が故障すると通信に影響しうる。故障時の動作を決めておく。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep158-waf-limits-ops:positioning">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">WAFの位置づけ</span><span class="back" hidden><span class="def">修正が困難・間に合わない場合の補助的な対策。脆弱性診断と修正を併用し、時間を稼いで確実に直す。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep158-waf-limits-ops:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>WAFの運用として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>設定が完了したら、ルールは変更せずに、そのまま使い続ける</span></button><p class="why" hidden>変更や新たな攻撃に合わせ、見直しが要る</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>誤検知が出たら、検査をすべて無効にして、運用を続ける</span></button><p class="why" hidden>全部無効だと、守れなくなる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>アプリを変更したときは、ルールが合っているかを、見直す</span></button><p class="why" hidden>アプリの変更時はルールを見直す</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログは、遮断した通信だけを確認し、通過した通信は見ない</span></button><p class="why" hidden>通過した通信のログも確認する</p></li></ol>
+</li>
+<li class="quiz" data-key="ep158-waf-limits-ops:q0" data-answer="0">
+  <p class="q">「WAFを導入したので、Webアプリの脆弱性対策は完了した」と報告された。この評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>WAFは修正までの間を補う補助で、脆弱性は残るため、アプリの修正が本筋である</span></button><p class="why" hidden>正解。WAFは根本対策ではなく、修正までの間を補う補助。脆弱性診断で見つけて修正する流れと組み合わせる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>WAFが遮断モードで稼働していれば、アプリの脆弱性は解消されるので、診断や修正は不要である</span></button><p class="why" hidden>遮断モードでも脆弱性そのものは残る。診断と修正は引き続き必要。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>WAFで攻撃による影響を低減できているため、脆弱性診断の対象からは外してよい</span></button><p class="why" hidden>影響を低減しても脆弱性は残る。脆弱性診断と修正を併用する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WAFに任せられるため、認可の確認や入力値の検証などアプリ側の対策は省略してよい</span></button><p class="why" hidden>認可の確認や入力値の検証などアプリ側の対策も欠かせない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep158-waf-limits-ops:q1" data-answer="1">
+  <p class="q">誤検知で正常な入力が遮断される問い合わせが続いたため、該当する検査をすべてのURLで広く除外した。この対応への評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>除外は多いほど誤検知が減って安全になるので、さらに広げて問題ない</span></button><p class="why" hidden>除外を増やしすぎると、守れない範囲が広がる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>除外ルールは必要最小限にする。増やしすぎると守れない範囲が広がる</span></button><p class="why" hidden>正解。誤検知を避ける除外ルールは必要最小限にする。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>除外を広げると遮断された通信の確認が不要になるので、ログ確認は省略できる</span></button><p class="why" hidden>ログは遮断したものも通過したものも確認する。除外を広げてもログ確認は省略できない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>誤検知を避けるため遮断をやめて、以後はルールの見直しも更新も行わない運用に切り替える</span></button><p class="why" hidden>見直しと更新は必要。アプリの変更や新たな攻撃に合わせて、ルールを見直す。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep158-waf-limits-ops:q2" data-answer="3">
+  <p class="q">Webアプリに画面と入力項目を追加する改修をリリースする。WAFの扱いとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>WAFは通信を検査するだけなので、アプリの変更とは無関係であり、ルールはそのままでよい</span></button><p class="why" hidden>アプリを変更したときは、ルールが合っているかを見直す。無関係ではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>新しい入力項目はWAFが自動で学習して追従するので、運用側の確認や見直しは要らない</span></button><p class="why" hidden>新しい入力項目にルールが自動で追従するとは限らない。アプリを変更したときは、運用側がルールが合っているかを見直す。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>アプリの変更が終わるまで一時的にWAFを停止し、リリース後に初期設定へ戻す</span></button><p class="why" hidden>停止すると検査されなくなる。必要なのはルールの見直しである。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>アプリの変更に対してルールが合っているかを見直し、新たな攻撃への更新も続ける</span></button><p class="why" hidden>正解。アプリの変更時にはルールを見直し、新たな攻撃に備えた更新も必要。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep158-waf-limits-ops:q3" data-answer="0">
+  <p class="q">WAFをWebサイトの手前の通信経路に1台置いている。可用性の観点で最も適切な考え方はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>WAF自体が障害点になりうるので、故障時の動作を事前に決めておく</span></button><p class="why" hidden>正解。WAF自身が障害点になりうるため、故障時の動作も決めておく。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>WAFは検査するだけで通信の経路には影響しないので、故障時の動作は考えなくてよい</span></button><p class="why" hidden>WAFは障害点になりうる。故障時の動作を考えなくてよいとは言えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>WAFを2台置けば故障の心配はなくなるので、故障時の動作の検討は不要になる</span></button><p class="why" hidden>「故障の心配はなくなる」は言い過ぎ。WAFは障害点になりうるので、故障時の動作は決めておく。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>故障時は必ず通信を止める設定にするのが決まりなので、事前に決めておく必要はない</span></button><p class="why" hidden>故障時の動作は決めておく対象で、必ずこうと決まっているわけではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep158-waf-limits-ops:q4" data-answer="1">
+  <p class="q">注文手続きで、個々の通信は正しい形式で通常の操作と同じ形のまま、業務ロジックの不備により不正な結果が得られると分かった。対策の評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>攻撃パターンをWAFに追加すれば、正常な操作と同じ形の通信でも見分けられるので、WAFで十分である</span></button><p class="why" hidden>通常の操作と同じ形の通信は、パターンに当たらず判断できないことが多い。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>通信が正常に見えるので、WAFでは防げない場合があり、アプリ側の対策が要る</span></button><p class="why" hidden>正解。通信が正常に見える業務ロジックの不備は、WAFでは防げない場合がある。アプリ側の対策が欠かせない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>脆弱性診断で見つかった不備はWAFの導入で解消されるため、アプリの改修は不要である</span></button><p class="why" hidden>WAFは根本対策ではない。脆弱性そのものは残るので、アプリの修正が本筋。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗号化通信だけが検査できない限界なので、復号できる位置に置けばWAFで防げる</span></button><p class="why" hidden>暗号化通信は復号できる位置が必要だが、それとは別の限界。正常に見える通信の不備は復号しても判断できないことが多い。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">WAFを遮断モードで運用しているのに、会員サイトで他人の情報が見られてしまった。なぜWAFで防げなかったか、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">他人の情報が見られる認可の不備は、通信自体が正常に見えるため、WAFは判断できないことが多い。WAFは根本対策ではなく補助なので、サーバ側で本人の情報かを確認する対策が要る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep158-waf-limits-ops-t0-0"> 通信自体が正常に見える不備（認可・業務ロジック）</label></li><li><label><input type="checkbox" id="ep158-waf-limits-ops-t0-1"> WAFは根本対策ではなく補助</label></li><li><label><input type="checkbox" id="ep158-waf-limits-ops-t0-2"> アプリ側（サーバ側）の対策が要る</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">WAFの導入から運用までの流れを、誤検知と除外ルールに触れながら頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">導入初期は検知のみで動かし、誤検知を確認してルールを調整してから遮断にする。除外ルールは必要最小限にし、アプリの変更や新たな攻撃に合わせて見直し・更新する。遮断・通過の両方のログを確認する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep158-waf-limits-ops-t1-0"> 検知のみ→誤検知を確認→調整してから遮断</label></li><li><label><input type="checkbox" id="ep158-waf-limits-ops-t1-1"> 除外ルールは必要最小限</label></li><li><label><input type="checkbox" id="ep158-waf-limits-ops-t1-2"> アプリ変更・新たな攻撃への見直しとログ確認</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="会員サイトの情報漏えいの調査記録（ダミー）"><div class="logtitle">会員サイトの情報漏えいの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">会員サイトの前段にWAFを導入済み。遮断モードで稼働中</span></div><div class="logrow"><span class="hl">ある利用者が、URLの会員番号を変え、他人の情報を閲覧した</span></div><div class="logrow"><span class="hl">会員番号は正しい形式で、要求は、通常の操作と同じ形だった</span></div><div class="logrow"><span class="hl">サーバは、ログイン済みであることだけを確認して、返していた</span></div><div class="logrow"><span class="hl">要件: 他の利用者の情報は返さない。アプリの改修は可能</span></div></div></div>
+  <p class="q">情報漏えいを防ぐ対策として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">サーバ側で、要求された情報が本人のものか確認して返す</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>WAFに攻撃パターンを追加して、不審な通信を遮断する … 要求は通常の操作と同じ形で、パターンに当たらない</li><li>WAFで会員番号の形式を厳しく検査して、不正な要求を遮断する … 番号は正しい形式で、形式では区別できない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.8.2 WAFの機能上の限界及び運用上の課題</li></ul>
+  <p>WAFで防げない場合と、運用（検知のみ→遮断、除外の最小化、見直し、ログ確認）を、アプリ修正との併用という位置づけとあわせて読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep157-waf-basics.html">← #57 WAFの種類と主な機能 Webアプリの手前で中身を見る門番</a><a href="ep159-log-analysis-basics.html">#59 ログ分析の概要 突き合わせて初めて見える不正の足取り →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

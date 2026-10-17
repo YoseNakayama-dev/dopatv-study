@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#59 ログ分析の概要 突き合わせて初めて見える不正の足取り｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#59 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>ログ分析の概要 突き合わせて初めて見える不正の足取り</h1>
+  <ol class="summary"><li>ログ分析の目的は、不正の検知・インシデントの調査・証跡の確保。残すログを前提として決めておく。</li><li>複数機器のログを突き合わせる相関分析は、機器の時刻が同期していることが前提になる。</li><li>保管は目的に応じた期間で改ざんされにくく。基準を決めてアラート化しても、最終判断は人が行う。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep159-log-analysis-basics:log-purpose">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ログ分析の目的</span><span class="back" hidden><span class="def">不正の検知、インシデントの調査、証跡の確保の3つ。何が起きたかを後から説明する根拠にもなる。</span><span class="note">残していないログは見られない。どのログをいつまでどこに残すかを前提として決める。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep159-log-analysis-basics:log-flow">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ログの対象と流れ</span><span class="back" hidden><span class="def">FW・プロキシ・Webサーバ・認証・OS・DNSなどのログが対象。収集、形式をそろえる、分析、対応の順で進める。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep159-log-analysis-basics:normalize">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">形式をそろえる（正規化）</span><span class="back" hidden><span class="def">機器ごとに違うログの形式をそろえる作業。収集と分析の間にあり、ログを突き合わせる前に必要になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep159-log-analysis-basics:correlation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">相関分析</span><span class="back" hidden><span class="def">複数の機器のログを突き合わせ、侵入から情報の持ち出しまでの一連の動きをたどる分析。</span><span class="note">個別の確認は、ひとつのログから異常な値や回数を見つけること。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep159-log-analysis-basics:time-sync">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">機器の時刻の同期</span><span class="back" hidden><span class="def">相関分析の前提。機器の時刻がずれていると、正しい順序でログを突き合わせられない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep159-log-analysis-basics:siem">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SIEM</span><span class="back" hidden><span class="def">ログを集約し、相関分析やアラートを自動化する仕組み。</span><span class="note">自動化しても、最終的な判断と対応は人が行う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep159-log-analysis-basics:retention-fields">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">保管と取得項目</span><span class="back" hidden><span class="def">保管は目的に応じた期間、改ざんされにくい場所に残す。取得項目は時刻・送信元・宛先・結果・利用者などを含める。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep159-log-analysis-basics:anomaly-rule">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">異常の基準</span><span class="back" hidden><span class="def">何を異常とみなすかを決め、アラートの基準に使う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep159-log-analysis-basics:log-privacy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">個人情報への配慮</span><span class="back" hidden><span class="def">ログに個人情報が含まれる場合は、取り扱いにも配慮する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep159-log-analysis-basics:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>ログ分析の「相関分析」の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ひとつの機器のログを、古い順に並べて、一定期間保管すること</span></button><p class="why" hidden>それは、ログの整理と保管</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ログに含まれる個人情報を、見えないように加工して、保管すること</span></button><p class="why" hidden>それは、マスキングなどの加工</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>保管期間が過ぎたログを、定期的に削除して、容量を確保すること</span></button><p class="why" hidden>それは、ログの廃棄</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>複数の機器のログを突き合わせて、一連の不審な動きを見つけること</span></button><p class="why" hidden>複数のログを突き合わせる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep159-log-analysis-basics:q0" data-answer="0">
+  <p class="q">ログ収集基盤を導入し、アラートを自動化することにした。運用方針として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>異常とみなす基準を決めてアラートに使い、最終判断と対応は人が行う</span></button><p class="why" hidden>正解。何を異常とみなすか基準を決めてアラートに使い、自動化しても最終的な判断と対応は人が行う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>アラートの判定結果を自動化の成果として、そのまま最終判断にして対応する</span></button><p class="why" hidden>アラートは決めた基準に基づく通知で、誤検知や見落としがありうる。自動化しても最終的な判断と対応は人が行う。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>製品の既定の基準をそのまま使い、自組織で基準は決めない</span></button><p class="why" hidden>製品の既定の基準では、自組織で何を異常とみなすかが定まらない。基準は自組織で決めてアラートに使う。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SIEMで集約すれば、機器ごとの形式をそろえる作業は不要になる</span></button><p class="why" hidden>SIEMは集約・相関分析・アラートを自動化するが、機器ごとに形式が違うログを突き合わせるには、収集と分析の間で形式をそろえる作業が別に要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep159-log-analysis-basics:q1" data-answer="1">
+  <p class="q">認証サーバのログで、ログイン失敗の連続が見つかった。侵入の有無と範囲を調べる次の一手として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>認証ログ単独で、侵入の有無と範囲を判断して対応を決める</span></button><p class="why" hidden>ひとつのログから見つけられるのは、異常な値や回数。一連の動きは複数の機器のログを突き合わせてたどる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>同じ時間帯のFWやWebサーバのログと突き合わせ、動きをたどる</span></button><p class="why" hidden>正解。相関分析で複数機器のログを突き合わせ、侵入から持ち出しまでの一連の動きをたどる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ログイン失敗の回数が分かれば十分なので、他機器のログは集めない</span></button><p class="why" hidden>回数の異常は個別の確認で分かるが、一連の動きをたどるには複数の機器のログの突き合わせが要る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>機器ごとに形式が違うので、形式をそろえずに各ログを別々に読み比べる</span></button><p class="why" hidden>機器ごとに形式が違うため、そろえる作業が要る。流れは、収集、形式をそろえる、分析、対応の順。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep159-log-analysis-basics:q2" data-answer="2">
+  <p class="q">インシデント調査と証跡の確保のため、ログの保管を設計する。考え方として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ディスク容量が許す範囲で保管し、保管場所は取得元の機器内で足りるとする</span></button><p class="why" hidden>期間は目的に応じて決める。保管場所も、改ざんされにくい場所に残すことが大切とされている。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>個人情報が含まれる可能性があるログは、取得の対象から外す</span></button><p class="why" hidden>個人情報を理由に取得から外すと、調査や証跡に必要な記録が残らない。個人情報への配慮は、含まれる場合の取り扱いの話。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>調査の目的に合わせて保管期間を決め、改ざんされにくい場所に残す</span></button><p class="why" hidden>正解。目的に応じた期間で保管し、改ざんされにくい場所に残す。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>全機器のログを一律の期間で保管し、目的ごとの違いは考慮しない</span></button><p class="why" hidden>目的ごとに必要な保管期間は異なる。一律にすると、調査に必要な期間が足りなくなることがある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep159-log-analysis-basics:q3" data-answer="1">
+  <p class="q">不審な操作の調査で、誰が何をして成功したのかが記録から分からなかった。見直しとして適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>全機器の保管期間を延ばして、より古い時期のログまで残るようにし、調べ直す</span></button><p class="why" hidden>保管期間は目的に応じて決めるもの。取得していない項目は、期間を延ばしても記録に増えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>いつ・誰が・どこから・何をして・結果はどうかが分かる項目を取得する</span></button><p class="why" hidden>正解。時刻・送信元・宛先・結果・利用者などを含め、いつ誰がどこから何をして結果はどうかが分かる項目を取得する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ログの量を抑えるため、時刻と送信元だけを取得するよう絞る</span></button><p class="why" hidden>時刻と送信元だけでは、誰が何をして結果がどうだったかが分からない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>個人情報に配慮するため、利用者が分かる項目は全ログで取得しない</span></button><p class="why" hidden>利用者を取得しないと、誰の操作かを追えなくなる。個人情報への配慮は、含まれる場合の取り扱いの話で、取得をやめる理由ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep159-log-analysis-basics:q4" data-answer="0">
+  <p class="q">FW・プロキシ・認証のログを一か所に集めたが、形式が違い、検索も突き合わせもできない。流れの中で不足している作業はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>収集の後・分析の前に、機器ごとに違うログの形式をそろえる作業</span></button><p class="why" hidden>正解。流れは収集、形式をそろえる、分析、対応。機器ごとに形式が違うため、そろえる作業が要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>異常とみなす基準を決め、基準を超えた記録にアラートを出す設定を加える</span></button><p class="why" hidden>異常の基準とアラートは分析に使う仕組みで、形式が違う状態を解消するものではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>目的に応じた保管期間を決め、改ざんされにくい場所へ移す作業</span></button><p class="why" hidden>保管期間や改ざんされにくい保管はログ管理の要点で、形式をそろえる作業とは別。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>調査の担当者を決め、集約したログの最終判断を人に任せる作業</span></button><p class="why" hidden>最終的な判断と対応は人が行うが、形式がそろっていないと突き合わせ自体ができない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ログ分析を始める前に、あらかじめ決めておくべきことは何か。なぜそれが要るのかも含めて、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">どのログを、いつまで、どこに残すかを決めておく。残していないログは見られないため。期間は目的に応じて決め、改ざんされにくい場所に残し、いつ・誰が・どこから・何をして・結果はどうかが分かる項目を取得する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep159-log-analysis-basics-t0-0"> どのログをいつまでどこに残すか</label></li><li><label><input type="checkbox" id="ep159-log-analysis-basics-t0-1"> 残していないログは見られない</label></li><li><label><input type="checkbox" id="ep159-log-analysis-basics-t0-2"> 期間は目的に応じ、改ざんされにくい場所へ</label></li><li><label><input type="checkbox" id="ep159-log-analysis-basics-t0-3"> 取得項目に時刻・送信元・宛先・結果・利用者を含める</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">SIEMでアラートが出るようになった。それでも担当者が関わり続ける必要がある点を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">SIEMは集約・相関分析・アラートの自動化を行う。何を異常とみなすかの基準は決めておく必要があり、自動化しても最終的な判断と対応は人が行う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep159-log-analysis-basics-t1-0"> SIEMは集約・相関分析・アラートの自動化</label></li><li><label><input type="checkbox" id="ep159-log-analysis-basics-t1-1"> 異常とみなす基準を決める</label></li><li><label><input type="checkbox" id="ep159-log-analysis-basics-t1-2"> 最終判断と対応は人が行う</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="不正アクセスの経路調査の記録（ダミー）"><div class="logtitle">不正アクセスの経路調査の記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">FWとWebサーバのログは、ログ用サーバに集約済み</span></div><div class="logrow"><span class="hl">保管期間は1年。調査対象の日のログは、すべて残っている</span></div><div class="logrow"><span class="hl">同じ通信が、FWログでは10:02、Webサーバでは10:05の記録</span></div><div class="logrow"><span class="hl">各機器は、それぞれの内蔵時計で、時刻を記録している</span></div><div class="logrow"><span class="hl">要件: 手作業の補正なしで、2つのログを時系列に突き合わせたい</span></div></div></div>
+  <p class="q">ログの突き合わせのために、必要な対策は？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">全機器の時刻を、基準となる時刻源に同期させ続ける</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>ログの保管期間をさらに延ばして、長期間残すようにする … 保管は1年で、調査日のログは残っている</li><li>ログ用サーバへの集約を進めて、一か所にまとめる … すでに集約済みで、記録の時刻は変わらない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.10.1 ログ分析の概要</li></ul>
+  <p>ログ分析の目的と流れ、相関分析と時刻同期の関係、保管・取得項目・最終判断は人という管理の要点を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep158-waf-limits-ops.html">← #58 WAFの限界と運用の課題 入れて終わりではない補助の守り</a><a href="ep160-log-analysis-effects.html">#60 ログ分析の効果と限界 残し方と守り方で価値が決まる →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

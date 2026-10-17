@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#50 ファイアウォールの概要と基本的な構成 DMZで被害を止める｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#50 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>ファイアウォールの概要と基本的な構成 DMZで被害を止める</h1>
+  <ol class="summary"><li>FWは境界で、送信元・宛先、ポート、プロトコル等の規則に基づき通信を許可・拒否する。原則は拒否し、必要な通信だけ許可する。</li><li>規則は上から順に評価し、最初に一致したものを適用する製品が多い（製品による）。一致しなければ暗黙の拒否。</li><li>DMZを置き、DMZから内部への許可も絞る。許可した通信の中身や内部からの攻撃はFWだけでは防げない。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep150-firewall-basics:firewall">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ファイアウォール</span><span class="back" hidden><span class="def">ネットワークの境界で、送信元・宛先のIPアドレス、ポート番号、プロトコル等の規則に基づき、通信を許可・拒否する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep150-firewall-basics:default-deny">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">デフォルト拒否・最小限の許可</span><span class="back" hidden><span class="def">原則すべて拒否し、必要な通信だけを許可する方針。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep150-firewall-basics:first-match">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">規則の評価順序</span><span class="back" hidden><span class="def">規則を上から順に評価し、最初に一致した規則を適用する製品が多い。</span><span class="note">製品による。この前提では、許可と拒否の並び順で結果が変わる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep150-firewall-basics:implicit-deny">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">暗黙の拒否</span><span class="back" hidden><span class="def">どの規則にも一致しなかった通信を拒否する扱い。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep150-firewall-basics:dmz">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DMZ（非武装地帯）</span><span class="back" hidden><span class="def">公開サーバを置く、外部と内部の中間のセグメント。外部からは公開に必要な通信のみを許可し、外部から内部への直接許可はしない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep150-firewall-basics:dmz-to-internal">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">DMZから内部への通信の絞り込み</span><span class="back" hidden><span class="def">DMZから内部への許可は、必要な宛先・通信のみに絞る。DMZのサーバが乗っ取られても内部に広げないための設計。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep150-firewall-basics:two-fw">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">2台のFWでDMZを挟む構成</span><span class="back" hidden><span class="def">外側と内側の2台でDMZを挟む構成。異なる種類にすると一方の弱点で突破されにくいが、運用は増える。</span><span class="note">1台で外部・DMZ・内部の3つに分ける構成もある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep150-firewall-basics:rule-ops">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">規則の運用</span><span class="back" hidden><span class="def">規則を定期的に見直し、不要な規則や例外を残さない。変更管理とログを整える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep150-firewall-basics:v" data-answer="0">
+  <p class="q"><span class="tag">動画で出た問題</span>ファイアウォールの基本的な考え方として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>原則はすべて拒否し、必要な通信だけを、規則で許可する</span></button><p class="why" hidden>原則拒否で、必要な通信だけ許可</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>原則としてすべての通信を許可し、問題が分かったものだけを拒否する</span></button><p class="why" hidden>未知の通信を通してしまう</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>公開サーバは、守りやすいように、内部ネットワークに置く</span></button><p class="why" hidden>乗っ取りが内部に直結する</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>DMZから内部への通信は、運用の手間を減らすため、すべて許可する</span></button><p class="why" hidden>被害が内部に広がる</p></li></ol>
+</li>
+<li class="quiz" data-key="ep150-firewall-basics:q0" data-answer="1">
+  <p class="q">FWの規則表は次のとおり。上から順に評価し、最初に一致した規則を適用する製品とする。1: 外部→DMZ、宛先ポートanyを許可。2: 外部→DMZ、443番以外を拒否。3: 外部→内部を拒否。外部からDMZのWebサーバの22番ポートへ接続要求が来た。結果はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>規則2の方が条件が具体的なので優先され、拒否される</span></button><p class="why" hidden>この前提では、最初に一致した規則が適用される。具体的かどうかで優先順位は決まらない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>規則1に最初に一致して許可される。規則の並び順の見直しが要る</span></button><p class="why" hidden>正解。規則1に最初に一致するので許可され、規則2は評価されない。並び順で結果が変わる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>複数の規則に一致するので、どれも適用されず暗黙の拒否になる</span></button><p class="why" hidden>暗黙の拒否は、どの規則にも一致しなかったときの扱い。規則1に一致している。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>最後まで評価して拒否が1つでもあれば拒否されるので、通信は届かない</span></button><p class="why" hidden>この前提では、一致した最初の規則で決まり、最後まで評価しない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep150-firewall-basics:q1" data-answer="3">
+  <p class="q">外側と内側の2台のFWでDMZを挟む構成を採る。2台を異なる種類にする狙いと代償として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>同じ種類にそろえれば設定を共有でき、一方の弱点で突破される心配も無くなる</span></button><p class="why" hidden>同じ種類だと同じ弱点を共有し、一方で突破された手口がもう一方にも通りうる。異なる種類にする狙いはその回避。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>2台目が1台目の故障時に通信を引き継ぐ冗長化が目的で、運用の手間は減る</span></button><p class="why" hidden>狙いは種類を変えて弱点を分けること。運用はむしろ増える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>内側のFWは外側と同じ規則を写すだけで済み、規則の管理は増えない</span></button><p class="why" hidden>2台の構成では運用が増える。規則の管理が増えないとは言えない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>一方の弱点で突破されにくくなる一方、管理する対象が増えて運用も増える</span></button><p class="why" hidden>正解。種類を変えると一方の弱点で突破されにくいが、運用は増える。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep150-firewall-basics:q2" data-answer="2">
+  <p class="q">FWの規則表を見直したところ、終了した過去の案件のために作った例外の許可規則が、利用実績の確認もされないまま残っていた。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>止めて障害になる恐れがあるため残し、その下に同じ宛先を拒否する規則を足して無効にする</span></button><p class="why" hidden>上から評価して最初に一致した規則を適用する製品では、下に足した拒否規則は先の許可に負ける。不要な規則は残さない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>デフォルト拒否の方針があるので、例外の許可規則が残っていても外部からは到達できない</span></button><p class="why" hidden>例外の許可規則は許可として働くので、対象の通信は通る。デフォルト拒否は、一致しなかった通信への扱い。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>利用の有無を確かめ、不要なら削除する。変更は変更管理に沿って行い、ログも残す</span></button><p class="why" hidden>正解。不要な規則や例外は残さず、定期的に見直す。変更管理とログも整える。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利用実績がなければ通信は発生しないので、残しても影響は無いものとして放置する</span></button><p class="why" hidden>不要な許可規則が残っていると、その通信が通る余地になる。不要な規則や例外は残さない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep150-firewall-basics:q3" data-answer="0">
+  <p class="q">新しい社内システムの接続試験で通信が通らず、FWのログでは暗黙の拒否に該当していた。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>必要な送信元・宛先・ポート・プロトコルを特定し、その通信だけを許可する規則を追加する</span></button><p class="why" hidden>正解。原則拒否のうえで、必要な通信だけを許可するのが基本。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>切り分けのため送信元・宛先・ポートをanyとする許可規則を追加し、そのまま運用に残す</span></button><p class="why" hidden>any許可は最小限の許可の方針に反する。しかも一時的なものを残すと、不要な規則・例外を残すことになる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>暗黙の拒否が出る構成が問題なので、方針を原則許可に切り替え、危険な通信だけ拒否する</span></button><p class="why" hidden>原則はすべて拒否し、必要な通信だけ許可する。原則許可への切り替えは方針が逆。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗黙の拒否はFWの異常動作の表れなので、設定を初期化してから改めて試験をやり直す</span></button><p class="why" hidden>暗黙の拒否は、どの規則にも一致しなかった通信の扱いで、異常動作ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep150-firewall-basics:q4" data-answer="1">
+  <p class="q">443番のみ許可したDMZのWebサーバで、アプリへの不正入力による被害が出た。別の日には社内端末から内部サーバへの不正アクセスも起きた。FWの規則に誤りは無い。評価として適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>規則に誤りが無いのに起きたので、許可するポートをさらに減らして拒否規則を足せば両方とも防げる</span></button><p class="why" hidden>ポートを減らしても、許可した通信の中身は規則で判断できない。内部からの攻撃も同様に防げない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>許可した通信の中身の攻撃や内部からの攻撃は、FWだけでは防げず、別の対策が要る</span></button><p class="why" hidden>正解。許可した通信の中身の攻撃や内部からの攻撃は、FWだけでは防げない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>DMZに置いていれば乗っ取られても内部に広がらないので、FWだけで対策は足りている</span></button><p class="why" hidden>DMZは被害を内部に広げにくくする設計で、不正入力による被害そのものは防がない。内部からの攻撃にも対応しない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>規則を定期的に見直し、不要な例外を残さなければ、これらの被害は完全に防げる</span></button><p class="why" hidden>規則の見直しは必要だが、中身の攻撃や内部からの攻撃までは防げない。「完全に」は言い過ぎ。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">公開Webサーバが乗っ取られても内部に被害を広げないために、FWの構成と規則をどう設計するか、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">公開サーバは外部と内部の中間のDMZに置く。外部からDMZへは公開に必要な通信のみ許可し、外部から内部は直接許可しない。DMZから内部への許可も、必要な宛先・通信のみに絞る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep150-firewall-basics-t0-0"> 公開サーバはDMZに置く</label></li><li><label><input type="checkbox" id="ep150-firewall-basics-t0-1"> 外部から内部は直接許可しない</label></li><li><label><input type="checkbox" id="ep150-firewall-basics-t0-2"> DMZから内部も必要な宛先・通信のみに絞る</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">規則を上から順に評価する製品で、規則の並びや例外の扱いについて運用上注意すべき点を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">最初に一致した規則を適用する製品では、並び順で結果が変わる。広い許可規則を上に置くと、下の拒否が効かない。どれにも一致しなければ暗黙の拒否。不要な規則や例外を残さず、定期的に見直し、変更管理とログを整える。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep150-firewall-basics-t1-0"> 最初に一致した規則が適用される（製品による）</label></li><li><label><input type="checkbox" id="ep150-firewall-basics-t1-1"> 並び順で結果が変わる</label></li><li><label><input type="checkbox" id="ep150-firewall-basics-t1-2"> 不要な規則・例外を残さず定期的に見直す</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="ネットワーク設定の調査記録（ダミー）"><div class="logtitle">ネットワーク設定の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社内ネットワーク（ダミー）。外部・DMZ・内部の3つに分け、公開Webサーバは、DMZに設置</span></div><div class="logrow"><span class="hl">FWの規則: ①外部→DMZのWebサーバ: 443番ポートのみ許可</span></div><div class="logrow"><span class="hl">②外部→内部: 許可する規則は定めていない　③DMZ→内部: 任意の宛先・任意の通信を許可　④その他: 拒否</span></div><div class="logrow"><span class="hl">ある日、DMZのWebサーバが乗っ取られた</span></div><div class="logrow"><span class="hl">その後、内部のファイルサーバへ、不正な通信が行われ、情報が持ち出された</span></div></div></div>
+  <p class="q">被害が内部に広がらないようにする対策は？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">DMZから内部への許可を、必要な宛先・通信だけに絞る</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>外部から内部への許可をなくす … 外部→内部は、許可していない</li><li>外部からDMZの許可を絞る … 外部→DMZは、すでに443番のみ</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.5.1 ファイアウォールの概要</li><li>5.5.2 ファイアウォールの基本的な構成</li></ul>
+  <p>デフォルト拒否と規則の評価順、DMZの通信の向きごとの許可、2台構成の狙いと運用の負担を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep149-tlpt.html">← #49 TLPTの概要 脅威に基づく侵入テスト</a><a href="ep151-firewall-types-nat.html">#51 FWの種類とアドレス変換 状態を見るか中身を見るか →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

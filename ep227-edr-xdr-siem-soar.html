@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#127 EDR・XDR・SIEM・SOAR 役割の使い分け｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#127 ・ 追加テーマ（目次外）</p>
+  <h1>EDR・XDR・SIEM・SOAR 役割の使い分け</h1>
+  <ol class="summary"><li>EDRは端末を見る。XDRは複数の領域を横断する。SIEMはログを集めて相関分析し、SOARは対応を自動で実行する。</li><li>SIEMは時刻同期、取得元の網羅、ルールの調整が前提。入れただけでは見逃しや誤検知が残る。</li><li>SOARは検知の代わりにならない。影響の大きい操作は人の承認を挟む。XDRの範囲は製品で異なる。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep227-edr-xdr-siem-soar:edr">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">EDR</span><span class="back" hidden><span class="def">端末の動作を記録し、不審な動きを検知し、調査や端末の隔離などの対応もできる仕組み。見るのは主に端末。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep227-edr-xdr-siem-soar:xdr">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">XDR</span><span class="back" hidden><span class="def">端末・メール・ネットワーク・クラウドなど、複数の領域の検知を横断して相関させる考え方。</span><span class="note">範囲と機能は、製品や事業者で異なる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep227-edr-xdr-siem-soar:siem">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SIEM</span><span class="back" hidden><span class="def">多くの機器のログを集め、相関分析して警報を出す仕組み。検知して担当者に知らせるのが中心の役割。</span><span class="note">入れただけでは、見逃しや誤検知が残る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep227-edr-xdr-siem-soar:correlation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">相関分析</span><span class="back" hidden><span class="def">別々の機器のログを時刻でつなぎ、一連の流れとして見ること。機器の時刻の同期が前提になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep227-edr-xdr-siem-soar:log-coverage">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ログ取得元の網羅</span><span class="back" hidden><span class="def">SIEMに取り込む機器の範囲。取得元が欠けると、その機器の動きは警報に出ない。ルールの調整もあわせて要る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep227-edr-xdr-siem-soar:soar">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SOAR</span><span class="back" hidden><span class="def">あらかじめ定めた対応手順を自動で実行する仕組み。起票・通知・隔離の依頼など、複数のツールをまたいで動かす。</span><span class="note">検知そのものの代わりにはならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep227-edr-xdr-siem-soar:playbook">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">対応手順（プレイブック）</span><span class="back" hidden><span class="def">SOARが実行する、あらかじめ定めた対応の手順。初動の時間を短くし、手順のばらつきを減らす。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep227-edr-xdr-siem-soar:human-approval">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">人の承認</span><span class="back" hidden><span class="def">端末の隔離のように影響の大きい操作を自動化するとき、手順に挟む確認。誤検知で業務が止まる恐れへの備え。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep227-edr-xdr-siem-soar:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>セキュリティ運用の道具の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>EDRは、ネットワーク機器のログだけを集めて相関分析する</span></button><p class="why" hidden>EDRは端末の動作を見る</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SIEMは、複数の機器のログを集めて相関分析し、警報を出す</span></button><p class="why" hidden>ログの集約・相関分析・警報</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SOARは、攻撃を検知するための、センサーそのものである</span></button><p class="why" hidden>SOARは対応を自動化する</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>XDRを導入すれば、運用の体制や調整は不要になる</span></button><p class="why" hidden>体制と調整は必要</p></li></ol>
+</li>
+<li class="quiz" data-key="ep227-edr-xdr-siem-soar:q0" data-answer="0">
+  <p class="q">SIEMで、ファイアウォールのログとサーバの認証ログをつなぐ相関ルールを作ったが、期待どおりに発火しない。調べると、機器の間で時刻が数分ずれていた。最初に取るべき対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ログを時刻でつなぐため、機器間の時刻同期を確認する</span></button><p class="why" hidden>正解。SIEMは別々の機器のログを時刻でつなぐので、機器の時刻の同期が前提になる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SOARを導入して、相関ルールの検知そのものを自動で行わせる</span></button><p class="why" hidden>SOARは定めた対応手順を自動で実行する仕組み。検知そのものの代わりにはならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>EDRを全端末に導入して、各機器のログの時刻のずれを補正させる</span></button><p class="why" hidden>EDRは端末の動作を記録して検知する仕組み。他の機器のログの時刻を補正するものではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログの取得元をさらに増やせば、時刻のずれがあっても相関は成立する</span></button><p class="why" hidden>取得元を増やしても、時刻がずれていれば、ログを一連の流れとしてつなげない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep227-edr-xdr-siem-soar:q1" data-answer="2">
+  <p class="q">XDRを導入したが、クラウドサービスの不審なサインインが検知に出てこない。最も適切な確認はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>XDRはすべての領域を対象にするので、検知されないのは製品の不具合だ</span></button><p class="why" hidden>XDRの範囲と機能は、製品や事業者で異なる。すべての領域を対象にするとは限らない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SOARを追加すれば、検知の対象外だった領域も検知できるようになる</span></button><p class="why" hidden>SOARは対応手順を自動で実行する仕組みで、検知の代わりにならない。対象外の領域の検知は増えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>製品の対象領域と機能に、クラウドが含まれるかを確認する</span></button><p class="why" hidden>正解。XDRの範囲や機能は製品や事業者で異なる。導入した製品が、クラウドを対象にしているか確認する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>EDRを導入する端末の範囲を広げれば、クラウドの動きも記録できる</span></button><p class="why" hidden>EDRが見るのは主に端末の動作。端末の範囲を広げても、クラウドのサインインが検知の対象になるとは限らない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep227-edr-xdr-siem-soar:q2" data-answer="3">
+  <p class="q">SOARで、EDRのアラートが出たら端末を自動で隔離する手順を全件に設定した。ところが誤検知で営業部門の端末が一斉に隔離され、業務が止まった。最も適切な見直しはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>誤検知で止まらないよう、SIEMの警報を出さない設定へ切り替える</span></button><p class="why" hidden>警報を止めると、本当の攻撃も見逃す。問題は検知ではなく、影響の大きい操作を無条件に自動化した点。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>自動化を前提にして、隔離の対象を全端末に広げ、検知漏れを減らす</span></button><p class="why" hidden>対象を広げると、誤検知の影響がさらに大きくなる。見直すべきは自動化の範囲と条件。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SOARに検知の役割を持たせて、検知ルールの調整を省略する</span></button><p class="why" hidden>SOARは検知そのものの代わりにならない。検知ルールの調整は引き続き必要。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>影響の大きい隔離の手順に、人の承認を挟むように改める</span></button><p class="why" hidden>正解。影響の大きい操作は、人の承認を挟む。誤検知で業務が止まる恐れへの備えになる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep227-edr-xdr-siem-soar:q3" data-answer="0">
+  <p class="q">SIEMを導入したが、重要な業務サーバのログが取り込まれておらず、そのサーバでの不審な操作が警報に出なかった。最も適切な改善はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>重要なサーバも取得元に含め、検知ルールも調整する</span></button><p class="why" hidden>正解。ログの取得元の網羅と、検知ルールの調整が欠かせない。入れただけでは見逃しが残る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SOARを導入して、アラートが出たあとの対応手順を自動で実行させる</span></button><p class="why" hidden>SOARは警報が出たあとの対応を自動化する。取り込まれていないサーバの検知漏れは直らない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>機器の時刻同期を厳密に取れば、未接続のサーバの操作も警報に出る</span></button><p class="why" hidden>時刻同期は、取り込んだログをつなぐための前提。未接続のサーバのログが増えるわけではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ネットワーク機器のログだけを増やせば、サーバの不審な操作も検知できる</span></button><p class="why" hidden>SIEMは取得元に入れた機器のログしか扱えない。サーバが取得元に入っていなければ、ネットワーク機器のログを増やしても、そのサーバの動きは警報に出ない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep227-edr-xdr-siem-soar:q4" data-answer="2">
+  <p class="q">1台のPCで不審なプロセスが起動した。その端末で何が実行されたかをさかのぼって調べ、必要ならその端末を隔離したい。最初に使う仕組みとして、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SIEM。ログを集めて警報を出し、その端末を自動で隔離する</span></button><p class="why" hidden>SIEMは検知して担当者に知らせるのが中心。端末の動作を記録して調べ、端末を隔離する仕組みとは役割が違う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SOAR。対応手順を自動で実行し、端末の動作も記録して調査する</span></button><p class="why" hidden>SOARは定めた手順を実行する仕組み。端末の動作の記録や検知の代わりにならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>EDR。端末の動作の記録から調べ、端末の隔離もできる</span></button><p class="why" hidden>正解。EDRは端末の動作を記録し、検知・調査・端末の隔離ができる。端末で何が起きたかを追うのに向く。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>XDRのうち、メールの領域の検知結果だけを確認して調べる</span></button><p class="why" hidden>メールの領域の検知結果は、端末の中で実行された内容を直接示すものではない。端末の動作は端末側の記録で追う。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">EDR・SIEM・SOARを、それぞれ「何を担うか」の一言で言い分けてみよう。さらに、SIEMだけで足りない場面を頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">EDRは端末の動作を見て検知・調査・隔離、SIEMは多くの機器のログを集めて相関分析し警報を出す、SOARは定めた対応手順を自動で実行する。SIEMは検知と通知が中心なので、通知のあとの起票・連絡・隔離の依頼を手作業で行うと初動が遅れ、SOARの出番になる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep227-edr-xdr-siem-soar-t0-0"> EDRは端末</label></li><li><label><input type="checkbox" id="ep227-edr-xdr-siem-soar-t0-1"> SIEMはログの集約・相関・警報</label></li><li><label><input type="checkbox" id="ep227-edr-xdr-siem-soar-t0-2"> SOARは対応手順の自動実行</label></li><li><label><input type="checkbox" id="ep227-edr-xdr-siem-soar-t0-3"> SIEMは通知まで。その後の対応を自動化する</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">SOARで端末の隔離を完全に自動化するときのリスクと、その備えを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">誤検知で自動隔離すると、業務が止まる恐れがある。影響の大きい操作は、手順に人の承認を挟む。また、SOARは検知の代わりにならないので、検知側のルールの調整と取得元の網羅は引き続き必要。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep227-edr-xdr-siem-soar-t1-0"> 誤検知で業務が止まる恐れ</label></li><li><label><input type="checkbox" id="ep227-edr-xdr-siem-soar-t1-1"> 影響の大きい操作は人の承認を挟む</label></li><li><label><input type="checkbox" id="ep227-edr-xdr-siem-soar-t1-2"> 検知の代わりにはならない</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="SOCの運用記録（ダミー）"><div class="logtitle">SOCの運用記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">SOCの運用記録。相関ルールは正しく発火している</span></div><div class="logrow"><span class="hl">アラートは、検知から1分以内に担当者へ通知される</span></div><div class="logrow"><span class="hl">その後の起票・連絡・隔離の依頼は、複数ツールを手作業で操作</span></div><div class="logrow"><span class="hl">初動までに、平均40分かかっている</span></div><div class="logrow"><span class="hl">要件: 手作業を減らし、初動の時間を短縮したい</span></div></div></div>
+  <p class="q">適切な対策は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">SOARで、定めた対応手順を自動で実行する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>SIEMの相関ルールを増やす … 検知と通知は適切。手作業の対応は短くならない</li><li>EDRを全端末に導入する … 端末の検知や隔離が中心。起票や連絡を含む複数ツールの手順は、まとめて自動実行できない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>EX-13 EDR / XDR / SIEM / SOAR</li></ul>
+  <p>四つの道具が何を担い、何を担わないかを整理する。SIEMの前提（時刻同期・取得元・ルール調整）とSOARの限界に注意して読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep226-container-k8s.html">← #126 コンテナ・Kubernetesのセキュリティ 分離の弱さと設定の落とし穴</a><a href="ep228-vuln-mgmt-metrics.html">#128 脆弱性管理 CVE・CVSS・KEV・EPSS 何を測る指標か →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

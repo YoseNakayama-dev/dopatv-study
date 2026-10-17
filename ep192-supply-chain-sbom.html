@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#92 サプライチェーン攻撃とSBOM 依存関係を見える化する｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#92 ・ 追加テーマ（目次外）</p>
+  <h1>サプライチェーン攻撃とSBOM 依存関係を見える化する</h1>
+  <ol class="summary"><li>依存ライブラリ・ビルド・配布の経路で、正規の成果物に不正が混ざって届く。信頼された経路なので気づきにくい。</li><li>署名は署名者と改ざんの有無を示すだけで、中身の安全は示さない。SBOMも一覧で、それだけでは脆弱性を防げない。</li><li>対策は版の固定とハッシュ検証、取得元・署名の確認、ビルドの権限最小化と記録、SBOMの更新と継続的な照合。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep192-supply-chain-sbom:supply-chain-attack">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ソフトウェアのサプライチェーン攻撃</span><span class="back" hidden><span class="def">依存ライブラリ、ビルド、配布の経路を狙い、正規の成果物に不正が混ざって利用者に届く攻撃。</span><span class="note">信頼された経路なので、気づきにくい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep192-supply-chain-sbom:dependency">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">直接依存と間接依存</span><span class="back" hidden><span class="def">直接使う部品と、その部品が使う部品。間接的に使う部品の脆弱性も、製品に影響する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep192-supply-chain-sbom:sbom">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">SBOM</span><span class="back" hidden><span class="def">ソフトウェアの構成要素と依存関係を一覧にした部品表。形式例はSPDX、CycloneDX。間接依存も対象にする。</span><span class="note">一覧であり、それだけでは脆弱性を防がない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep192-supply-chain-sbom:vuln-matching">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">公表された脆弱性情報との照合</span><span class="back" hidden><span class="def">SBOMを更新し、公表された脆弱性情報と継続的に照合すること。影響する製品を速やかに特定できる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep192-supply-chain-sbom:signature">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">署名</span><span class="back" hidden><span class="def">署名者と、改ざんの有無を示す仕組み。中身の安全や脆弱性の有無は示さない。</span><span class="note">署名の検証が成功しても、脆弱性がないとは言えない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep192-supply-chain-sbom:pin-hash">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">版の固定とハッシュ検証</span><span class="back" hidden><span class="def">依存の版を固定し、取得した成果物のハッシュを検証する対策。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep192-supply-chain-sbom:source-check">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">取得元と署名の確認</span><span class="back" hidden><span class="def">部品を使う前に、取得元と署名を確認する対策。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep192-supply-chain-sbom:build-protection">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ビルド環境の保護</span><span class="back" hidden><span class="def">ビルド環境の権限を絞り、記録を残す対策。権限が広いと成果物への混入を許しうる。</span><span class="note">ビルドの秘密情報が漏れると、成果物を差し替えられうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep192-supply-chain-sbom:provenance">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">成果物の来歴の記録</span><span class="back" hidden><span class="def">成果物がどのように作られたかを記録しておくこと。問題が起きたときに追跡しやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep192-supply-chain-sbom:name-confusion">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">社内用名称と公開名の混同</span><span class="back" hidden><span class="def">社内用の部品名と、外部に公開されている名称が取り違えられること。名称が混同されないよう管理し、取得元を確認する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep192-supply-chain-sbom:v" data-answer="1">
+  <p class="q"><span class="tag">動画で出た問題</span>SBOMの説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ソフトウェアに含まれる脆弱性を、自動的に修正する仕組み</span></button><p class="why" hidden>SBOMは脆弱性を修正しない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ソフトウェアの構成要素と依存関係を、一覧にした部品表</span></button><p class="why" hidden>構成要素と依存関係の部品表</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ソフトウェアの配布元を、電子署名で確認する仕組み</span></button><p class="why" hidden>それは署名の役割</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ソフトウェアへの不正アクセスを、検知して遮断する仕組み</span></button><p class="why" hidden>SBOMは検知も遮断もしない</p></li></ol>
+</li>
+<li class="quiz" data-key="ep192-supply-chain-sbom:q0" data-answer="2">
+  <p class="q">ビルドのたびに、依存ライブラリを「最新版」として自動取得している。配布元の成果物に不正が混ざった場合に備える対策として、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>配布元が署名しているので、署名があれば中身は安全とみなす</span></button><p class="why" hidden>署名は署名者と改ざんの有無を示すだけで、中身の安全は示さない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SBOMを作成すれば、不正な成果物の取得は防げる</span></button><p class="why" hidden>SBOMは一覧で、それだけでは防御にならない。版の固定とハッシュ検証が対策になる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>依存の版を固定し、取得した成果物のハッシュを検証する</span></button><p class="why" hidden>正解。依存の版を固定し、ハッシュで検証する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>取得元が信頼された経路なら、版もハッシュも確認しなくてよい</span></button><p class="why" hidden>この攻撃は、正規の成果物に不正が混ざって信頼された経路で届くため、気づきにくい。信頼された経路でも、版の固定とハッシュ検証が要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep192-supply-chain-sbom:q1" data-answer="0">
+  <p class="q">社内で開発した部品と同じ名前の部品が、外部に公開されていることがわかった。サプライチェーン攻撃の観点で最も適切な対応はどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>社内用の名称が公開名と混同されないよう管理し、取得元を確認する</span></button><p class="why" hidden>正解。社内用の名称と公開名の混同は対策が必要な論点。混同されないよう管理し、取得元と署名を確認する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>社内用の部品なので、取得時に外部の同名部品が選ばれることはありえない</span></button><p class="why" hidden>社内用の名称と公開名の混同は起こりうるから、対策が必要な論点になっている。「ありえない」と断定せず、名称を管理し、取得元を確認する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>同名部品に署名があれば、自社の部品との混同は起きない</span></button><p class="why" hidden>署名は署名者と改ざんの有無を示すだけ。同名の部品との混同を防ぐ手段ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SBOMに自社部品を記載すれば、混同は自動的に防止される</span></button><p class="why" hidden>SBOMは構成要素と依存関係の一覧で、それだけでは防御にならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep192-supply-chain-sbom:q2" data-answer="3">
+  <p class="q">ビルド用のサービスアカウントに、広い権限が付いたままになっている。ビルドの秘密情報が漏れると、成果物を差し替えられうる。対策として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ビルド後の成果物に署名すれば、ビルド環境の権限は広いままでよい</span></button><p class="why" hidden>署名は署名者と改ざんの有無を示すだけ。ビルドの権限が広いと、成果物への混入を許しうる。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ビルド環境を最新の状態に保てば、権限を広く付けても混入されない</span></button><p class="why" hidden>ビルドの権限が広いと、成果物への混入を許しうる。対策は権限を絞り、記録を残すこと。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ビルドの記録は容量を圧迫するため、残さずに運用する</span></button><p class="why" hidden>ビルド環境では、権限を絞り、記録を残すことが対策。記録を残さない運用は逆になる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ビルド環境の権限を必要な範囲に絞り、実行の記録を残しておく</span></button><p class="why" hidden>正解。ビルド環境は権限を絞り、記録を残す。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep192-supply-chain-sbom:q3" data-answer="1">
+  <p class="q">製品のリリース時に作成したSBOMが、その後更新されないまま保管されている。使っているライブラリの脆弱性が公表された。対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SBOMがあるので、公表された時点で自動的に影響が判定される</span></button><p class="why" hidden>SBOMは一覧で、公表された脆弱性情報と照合して初めて使える。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SBOMを更新し、公表された脆弱性情報と継続的に照合する</span></button><p class="why" hidden>正解。SBOMを更新し、公表された脆弱性情報と継続的に照合すると、影響する製品を速やかに特定できる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>直接利用している部品だけを一覧にし、間接依存は対象外とする</span></button><p class="why" hidden>間接的に使う部品の脆弱性も製品に影響する。SBOMは間接依存も対象にする。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ハッシュを検証できていれば、脆弱性の影響はないと判断できる</span></button><p class="why" hidden>ハッシュ検証は取得した成果物の確認で、脆弱性の有無を示すものではない。脆弱性の影響は、SBOMと公表された脆弱性情報の照合で確かめる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep192-supply-chain-sbom:q4" data-answer="2">
+  <p class="q">配布した成果物に不正が混入した疑いが出たが、その成果物がどのビルドで作られたかを追跡できなかった。事前の備えとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>成果物にハッシュを付ければ、作成元は自動的に判明する</span></button><p class="why" hidden>ハッシュ検証は取得した成果物の確認で、来歴の記録とは別の対策。ハッシュを付けても作成元が自動的にわかるわけではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>署名があれば成果物は安全なので、追跡の備えは不要になる</span></button><p class="why" hidden>署名は署名者と改ざんの有無を示すだけで、中身の安全は示さない。来歴の記録は追跡しやすくするための別の対策。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>成果物の来歴を記録しておき、ビルドから追跡できるようにする</span></button><p class="why" hidden>正解。成果物の来歴を記録しておくと、追跡しやすい。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ビルド環境の権限を広げて、誰でも成果物を再作成できるようにする</span></button><p class="why" hidden>ビルド環境は権限を絞り、記録を残す。権限を広げると、混入を許しうる。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">署名の検証が成功した部品でも、安全と言い切れない理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">署名は署名者と改ざんの有無を示すだけで、中身の安全や脆弱性の有無は示さない。間接的に使う部品の脆弱性も製品に影響する。署名の確認に加えて、SBOMを更新し、公表された脆弱性情報と照合する。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep192-supply-chain-sbom-t0-0"> 署名は署名者と改ざんの有無だけを示す</label></li><li><label><input type="checkbox" id="ep192-supply-chain-sbom-t0-1"> 間接的に使う部品の脆弱性も製品に影響する</label></li><li><label><input type="checkbox" id="ep192-supply-chain-sbom-t0-2"> SBOMの更新と脆弱性情報との照合を組み合わせる</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">SBOMだけでは脆弱性を防げない理由と、SBOMを活かす運用を説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">SBOMは構成要素と依存関係（間接依存を含む）の一覧で、それだけでは脆弱性を防がない。公表された脆弱性情報と照合して初めて使える。SBOMを更新して継続的に照合すれば、見つかったときに影響する製品を速やかに特定できる。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep192-supply-chain-sbom-t1-0"> SBOMは一覧で、それだけでは防げない</label></li><li><label><input type="checkbox" id="ep192-supply-chain-sbom-t1-1"> 公表された脆弱性情報と照合して使う</label></li><li><label><input type="checkbox" id="ep192-supply-chain-sbom-t1-2"> 更新して継続的に照合し、影響する製品を特定する</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="ライブラリ脆弱性への対応記録（ダミー）"><div class="logtitle">ライブラリ脆弱性への対応記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">自社製品はライブラリXを利用。部品の一覧はない</span></div><div class="logrow"><span class="hl">脆弱性の公表: Xが内部で使うライブラリYにある</span></div><div class="logrow"><span class="hl">Xのリリースは署名済みで、署名の検証も成功した</span></div><div class="logrow"><span class="hl">要件: 影響する製品を、速やかに特定したい</span></div></div></div>
+  <p class="q">この事業者の対応として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">製品ごとに部品表(SBOM)を管理し、公表された脆弱性と照合する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>Xの署名を検証済みなので、脆弱性もないとみなす … 署名は改ざんの有無を示すだけで、脆弱性の有無は示さない</li><li>直接利用しているXだけを調べる … 脆弱性はXが使うYにあり、Xだけでは見落とす</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>EX-06 サプライチェーン攻撃・SBOM・依存関係管理</li></ul>
+  <p>攻撃が通る経路（依存・ビルド・配布）、署名とSBOMの限界、対策の組み合わせを確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep191-cloud-shared-responsibility.html">← #91 クラウドの責任共有モデル IAMと設定不備</a><a href="ep193-secure-dev-sast-dast.html">#93 脅威モデリングとSAST・DAST・SCA 見つけられる範囲の違い →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

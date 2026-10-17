@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#86 NISTサイバーセキュリティフレームワーク 機能とプロファイルで見る｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#86 ・ 第9章 情報セキュリティに関する法制度</p>
+  <h1>NISTサイバーセキュリティフレームワーク 機能とプロファイルで見る</h1>
+  <ol class="summary"><li>CSFは組織が自主的に使う枠組みで、法的義務ではない。コア・ティア・プロファイルから成る。</li><li>コアは機能で対策を整理し、2.0ではガバナンスが加わり六機能になる。ティアは取組みの度合いを四段階で示す。</li><li>プロファイルで現状と目標を比べ、不足と優先順位を決める。作るだけでは進まず、実行と見直しが要る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep186-nist-csf:nist-csf">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">NISTサイバーセキュリティフレームワーク（CSF）</span><span class="back" hidden><span class="def">対策を整理する枠組み。組織が自主的に使い、法的義務ではない。コア・ティア・プロファイルで構成される。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep186-nist-csf:core">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">コア</span><span class="back" hidden><span class="def">対策を機能ごとに整理する部分。1.1は特定・防御・検知・対応・復旧の五機能。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep186-nist-csf:govern">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ガバナンス（Govern）</span><span class="back" hidden><span class="def">2.0でコアに加わった機能。これで1.1の五機能と合わせて六機能になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep186-nist-csf:tier">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ティア</span><span class="back" hidden><span class="def">リスク管理の取組みの度合いを示す四段階。リスクに合った度合いを組織が選ぶ。</span><span class="note">高いほど良い、とは限らない。成熟度の高低ではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep186-nist-csf:profile">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">プロファイル</span><span class="back" hidden><span class="def">現状と目標をそれぞれまとめたもの。比較して、不足している対策を洗い出す。</span><span class="note">作るだけでは改善は進まない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep186-nist-csf:gap">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">現状と目標の差</span><span class="back" hidden><span class="def">二つのプロファイルを比べて見つける、不足している対策。優先順位を決める材料になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep186-nist-csf:voluntary">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">自主的な枠組み</span><span class="back" hidden><span class="def">使うかどうかを組織が決める枠組みで、法的義務ではない。すべてを同じ水準で行う必要もない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep186-nist-csf:reference-standards">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">参照規格</span><span class="back" hidden><span class="def">CSFが個々の対策の細かい手順を定めない代わりに、示す規格。手順はこちらを参照する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep186-nist-csf:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>ティアの説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>コアの機能ごとに、対策の例を並べたものである</span></button><p class="why" hidden>それはコアの説明</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>現状と目標の対策状況を、組織の事情に合わせてまとめたものである</span></button><p class="why" hidden>それはプロファイルの説明</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>組織が必ず達成すべき対策を、法律で義務付けて定めたものである</span></button><p class="why" hidden>CSFは自主的に使う枠組み</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>リスク管理の取組みの度合いを、四つの段階で表したものである</span></button><p class="why" hidden>取組みの度合いを四段階で示す</p></li></ol>
+</li>
+<li class="quiz" data-key="ep186-nist-csf:q0" data-answer="0">
+  <p class="q">取締役会が「全社のティアを最高にすることを目標とする」と指示した。ティアの目標設定として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ティアは優劣ではなく、リスクに合う度合いを組織が選ぶ</span></button><p class="why" hidden>正解。ティアはリスク管理の取組みの度合いで、高いほど良いとは限らない。リスクに合った度合いを組織が選ぶ。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ティアは高いほど良いので、常に最高を目標にする</span></button><p class="why" hidden>高いほど良いとは限らない。目標は組織がリスクに合わせて決める。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ティアの水準は法律で義務付けられているので、それに合わせる</span></button><p class="why" hidden>CSFは組織が自主的に使う枠組みで、法的義務ではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ティアは個々の対策の細かい手順を示すので、最高の手順書を使う</span></button><p class="why" hidden>CSFは個々の対策の細かい手順を定めない。ティアは取組みの度合いを四段階で示すもの。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep186-nist-csf:q1" data-answer="2">
+  <p class="q">現状と目標のプロファイルを作成し、差が一覧になった。しかし半年たっても対策が進んでいない。対応として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>作成で目的は達成済みなので、対策は次回の作成時に検討する</span></button><p class="why" hidden>プロファイルは作るだけでは改善が進まない。差を埋める計画を実行して見直す。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>差の全項目を、すべて同じ水準で同時に実施するよう命じる</span></button><p class="why" hidden>コアの機能は組織のリスクに合わせて扱い、すべてを同じ水準で行う必要はない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>差に優先順位をつけて計画に落とし込み、実行して見直す</span></button><p class="why" hidden>正解。差から優先順位を決めて計画に落とし込み、実行して定期的に見直す。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>他社のプロファイルを目標に置き換え、差を計算し直す</span></button><p class="why" hidden>他社の目標は、当社の現状やリスクと合わず、当社の不足を示さない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep186-nist-csf:q2" data-answer="1">
+  <p class="q">CSFを導入するチームが「CSFを読めば、個々の対策の細かい設定手順が分かる」と説明した。評価として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>付録に手順が網羅されているので、そのまま実施すればよい</span></button><p class="why" hidden>CSFは個々の対策の細かい手順を定めない。参照規格を示す。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>手順は定めず、参照規格などを示すので、それを使う</span></button><p class="why" hidden>正解。CSFは個々の対策の細かい手順を定めず、参照規格を示す。手順は参照規格などで確認する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ティアを選ぶと、そのティアの手順が自動的に決まる</span></button><p class="why" hidden>ティアはリスク管理の取組みの度合いを示すもので、手順を決めるものではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>法律が手順まで義務付けているので、そのとおりに実施する</span></button><p class="why" hidden>CSFは組織が自主的に使う枠組みで、法的義務ではない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep186-nist-csf:q3" data-answer="3">
+  <p class="q">CSF 1.1 を使ってきた組織が 2.0 に更新する。変わる点として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ティアが四段階から六段階に増え、機能の数と同じになる</span></button><p class="why" hidden>ティアはリスク管理の取組みの度合いを示す四段階で、機能の数とは別のもの。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>自主的な枠組みから、法的義務のある枠組みに変わる</span></button><p class="why" hidden>CSFは組織が自主的に使う枠組みで、法的義務ではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>復旧がコアから外れ、残りの四機能で構成される</span></button><p class="why" hidden>復旧は五機能の一つ。2.0ではこの五機能にガバナンスが加わる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>コアにガバナンスが加わり、五機能から六機能になる</span></button><p class="why" hidden>正解。1.1の五機能（特定・防御・検知・対応・復旧）に、2.0でガバナンスが加わり六機能になる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep186-nist-csf:q4" data-answer="0">
+  <p class="q">自社でCSFを使い始める。最初の整理として適切なのはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>資産とリスクを把握し、コアの機能で今の対策を整理する</span></button><p class="why" hidden>正解。資産とリスクの把握から始め、コアの機能で今の対策を整理する。その後に現状と目標のプロファイルを作る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>他社の目標プロファイルを探して、そのまま自社の目標にする</span></button><p class="why" hidden>他社の目標は、自社の現状やリスクと合わず、自社の不足を示さない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ティアを最高に決めてから、足りない対策を後で探す</span></button><p class="why" hidden>ティアは高いほど良いとは限らず、目標は組織が決める。最高を先に決める必要はない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>参照規格の手順を、すべての項目で同じ水準に揃えて実施する</span></button><p class="why" hidden>コアの機能は組織のリスクに合わせて扱う。すべてを同じ水準で行う必要はない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">不足している対策を洗い出して優先順位を決めるために、CSFをどう使うか、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">コアの機能で今の対策を整理し、現状と目標のプロファイルを作る。二つを比べて不足を洗い出し、差から優先順位を決めて計画に落とし込む。作るだけでは改善は進まないので、実行して定期的に見直す。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep186-nist-csf-t0-0"> 現状と目標のプロファイルを作る</label></li><li><label><input type="checkbox" id="ep186-nist-csf-t0-1"> 比べて不足を洗い出す</label></li><li><label><input type="checkbox" id="ep186-nist-csf-t0-2"> 優先順位を決めて計画にする</label></li><li><label><input type="checkbox" id="ep186-nist-csf-t0-3"> 実行して見直す</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">「CSFを導入すれば、法律で求められる対策が決まる」という説明を修正してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">CSFは組織が自主的に使う枠組みで、法的義務ではない。個々の対策の細かい手順も定めておらず、参照規格を示す。組織がリスクに合わせて目標を決め、現状との差を見て対策を選ぶ。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep186-nist-csf-t1-0"> 自主的な枠組みで法的義務ではない</label></li><li><label><input type="checkbox" id="ep186-nist-csf-t1-1"> 細かい手順は定めず参照規格を示す</label></li><li><label><input type="checkbox" id="ep186-nist-csf-t1-2"> 目標は組織がリスクに合わせて決める</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="セキュリティ対策の整理に関する記録（ダミー）"><div class="logtitle">セキュリティ対策の整理に関する記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 当社は、対策をコアの機能ごとに、整理済みだが、不足は分からない</span></div><div class="logrow"><span class="hl">今の状況と、将来の姿は、それぞれ文書化できる</span></div><div class="logrow"><span class="hl">経営層は、不足する対策を、根拠付きで知りたがっている</span></div><div class="logrow"><span class="hl">要件: 不足する対策を明確にし、優先順位を決めたい</span></div></div></div>
+  <p class="q">要件を満たす方法として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">現状と目標のプロファイルを比べ、不足と優先順位を決める</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>ティアを上げることだけを、目標にする … ティアは取組みの度合いを示すもので、不足する個別の対策は分からない</li><li>他社のプロファイルを、そのまま採用する … 他社の目標は、当社の現状やリスクと合わず、当社の不足を示さない</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>9.1.7 NISTサイバーセキュリティフレームワーク</li></ul>
+  <p>コア・ティア・プロファイルの役割を区別し、ティアの誤解と、プロファイルを作るだけで終わらせない点を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep185-cookie.html">← #85 Cookieの扱い 属性で守る範囲が違う</a><a href="ep187-privacy-mynumber.html">#87 個人情報保護法とマイナンバー法 扱いの線引き →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#56 IPSの構成例と限界 故障時に止めるか通すか｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#56 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>IPSの構成例と限界 故障時に止めるか通すか</h1>
+  <ol class="summary"><li>IPSは通信の経路上に置く。FWの内側が多く、重要なサーバ群の手前で重点的に守る構成もある。</li><li>経路上にあるので故障すると通信が止まりうる。故障時は通す（フェイルオープン）か止めるかを決め、二重化で備える。</li><li>誤検知・未知の攻撃・復号していない暗号化通信・処理能力の超過が限界。更新とログ監視などの運用が要る。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep156-ips-config-limits:inline">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">インライン配置</span><span class="back" hidden><span class="def">通信の経路上にIPSを置く配置。経路上にあるため、故障すると通信が止まりうる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep156-ips-config-limits:fw-outside">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">FWの外側に置く</span><span class="back" hidden><span class="def">外部からの攻撃をすべて見られるが、アラートが多くなり、運用が大変になる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep156-ips-config-limits:fw-inside">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">FWの内側に置く</span><span class="back" hidden><span class="def">FWを通過した通信だけを検査する。ノイズが少なく運用しやすいので、内側に置くことが多い。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep156-ips-config-limits:fail-open">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">フェイルオープン</span><span class="back" hidden><span class="def">故障時に通信を通す動作。業務は止まらないが、その間は検査されない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep156-ips-config-limits:fail-close">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">フェイルクローズ</span><span class="back" hidden><span class="def">故障時に通信を止める動作。安全側だが、業務が止まる。</span><span class="note">どちらも一長一短。二重化で備える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep156-ips-config-limits:redundancy">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">冗長化（二重化）</span><span class="back" hidden><span class="def">複数台にして故障に備えること。一方が故障しても、もう一方が検査と通信を続ける。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep156-ips-config-limits:false-positive">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">誤検知への対処</span><span class="back" hidden><span class="def">正常な通信を遮断して業務に響く。最初は検知のみで運用して調整し、そのうえで遮断にする。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep156-ips-config-limits:limits">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IPSの見逃しと性能の限界</span><span class="back" hidden><span class="def">未知の攻撃や復号していない暗号化通信は止められない。処理能力を超えると遅延や取りこぼしが起きる。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep156-ips-config-limits:decrypt">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">暗号化通信の復号検査</span><span class="back" hidden><span class="def">復号して検査する方法もあるが、処理の負荷が増える。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep156-ips-config-limits:ops">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">IPSの運用</span><span class="back" hidden><span class="def">パターンの更新、ログの監視、例外の手続き、変更時の影響確認。入れて終わりではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep156-ips-config-limits:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>IPSの「フェイルオープン」の説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>故障したときに、通信をすべて遮断して、安全を優先する動作</span></button><p class="why" hidden>それは、フェイルクローズ</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>不正な通信を、通知のみにして、遮断を行わない動作</span></button><p class="why" hidden>検知のみの運用</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>故障に備えて、IPSを複数台にして、二重化して運用すること</span></button><p class="why" hidden>それは、冗長化</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>故障したときに、通信を通して、業務の継続を優先する動作</span></button><p class="why" hidden>故障時に通信を通す</p></li></ol>
+</li>
+<li class="quiz" data-key="ep156-ips-config-limits:q0" data-answer="0">
+  <p class="q">FWの外側に置いたIPSのアラートが多すぎて、運用担当が対応しきれていない。配置の見直しとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>FWの内側へ移す。FWを通過した通信だけを検査するのでノイズが少ない</span></button><p class="why" hidden>正解。内側はFWを通過した通信のみを検査するのでノイズが少なく、運用しやすい。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>FWの外側のまま置く。外部からの攻撃をすべて見られ、アラートも減るため</span></button><p class="why" hidden>外側は外部からの攻撃をすべて見られる反面、アラートが多くなる。減るわけではない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>FWの内側ではFWを通過した通信しか見えず守りが弱まるので、必ず外側に置く</span></button><p class="why" hidden>内側はノイズが少なく運用しやすいので、FWの内側に置くことが多い。必ず外側という決まりはない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>重要なサーバ群の手前に置く構成は、外部の攻撃を見られないため選べない</span></button><p class="why" hidden>重要なサーバ群の手前に置いて、重点的に守る構成もある。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep156-ips-config-limits:q1" data-answer="1">
+  <p class="q">受注システムの手前に、故障時にフェイルクローズとなるよう設定したIPSを1台置いている。このIPSが故障した場合に起きることとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通信は通るが検査されないため、不正な通信の一部が通過しうる</span></button><p class="why" hidden>それはフェイルオープンの動作。フェイルクローズは故障時に通信を止める。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>通信が止まるので、不正な通信は届かないが、受注業務も止まる</span></button><p class="why" hidden>正解。フェイルクローズは故障時に通信を止める。安全側だが、業務が止まる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>二重化していなくても、故障時には検査と通信が自動で継続する</span></button><p class="why" hidden>この設定はフェイルクローズなので、故障時は検査も通信も止まる。検査と通信を続けるには二重化などの備えが要る。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>故障の間だけ通知のみの動作に切り替わり、通信は通って業務も止まらない</span></button><p class="why" hidden>故障時の動作は、通信を通すか止めるかのどちらか。通知のみへの切替は示されていない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep156-ips-config-limits:q2" data-answer="2">
+  <p class="q">IPSの処理能力を超える量の通信が流れ続けた。起こりうる事象として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>検査対象が自動で絞られるため、誤検知が減り、性能の問題は起きない</span></button><p class="why" hidden>処理能力を超えると遅延や取りこぼしが起きる。誤検知が減り、性能の問題が起きなくなるわけではない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>経路の外にあるため通信には影響せず、アラートだけが減る</span></button><p class="why" hidden>IPSは経路上（インライン）に置く。処理が追いつかないと通信に遅延が出うる。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>通信に遅延が生じたり、一部の通信の検査を取りこぼしたりする</span></button><p class="why" hidden>正解。処理能力を超えると、遅延や通信の取りこぼしが起きる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>処理能力を超えると、すべての通信が必ず遮断されるので、攻撃は成立しなくなる</span></button><p class="why" hidden>すべてが遮断されるわけではなく、取りこぼしが起きうる。攻撃が成立しなくなるとは言えない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep156-ips-config-limits:q3" data-answer="1">
+  <p class="q">暗号化通信の中身まで検査して、不正な通信を止めたい。IPSの設計上の考え方として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IPSは暗号化されたままでも通信の中身を検査できるので、追加の対応は不要</span></button><p class="why" hidden>復号していない暗号化通信は止められない。中身を検査するには復号が要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>復号して検査する方法もあるが、処理の負荷が増える点を考慮する</span></button><p class="why" hidden>正解。復号して検査する方法もあるが、処理の負荷が増える。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>復号すれば誤検知が確実になくなるので、すべての通信を復号して検査する</span></button><p class="why" hidden>復号して検査しても、誤検知がなくなるとは言えない。誤検知は調整して減らす。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>暗号化通信は復号しても検査できないため、IPSの検査対象から外したうえで運用する</span></button><p class="why" hidden>復号して検査する方法がある。検査対象から外すと、その通信は止められないままになる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep156-ips-config-limits:q4" data-answer="0">
+  <p class="q">業務システムの変更後、IPSが正常な通信を遮断して業務が止まった。パターンの更新とログの監視は行われていた。運用上の不足として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>システム変更時に、IPSへの影響を確認する手順が運用に含まれていなかった</span></button><p class="why" hidden>正解。IPSの運用には、更新・ログの監視・例外の手続きに加え、変更時の影響確認が要る。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>故障時にフェイルオープンの動作を選んでいたことが、遮断の直接の原因である</span></button><p class="why" hidden>フェイルオープンは故障時に通信を通す動作で、正常な通信の遮断の原因にはならない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>未知の攻撃を止められない限界によるもので、運用では防げない事象である</span></button><p class="why" hidden>未知の攻撃を止められないのは見逃しの限界。今回の事象は正常な通信の遮断で、影響確認などの運用で備える。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>最初から遮断を有効にせず検知のみで運用していたことが、正常な通信を止めた原因である</span></button><p class="why" hidden>検知のみの運用は遮断しない。正常な通信を止めたのは、遮断が有効なためである。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">受注業務は止めたくないが、不正な通信はサーバの手前で止めたい。IPSの故障時の動作と備えを、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">IPSは経路上にあるので故障すると通信が止まりうる。故障時に通すと業務は止まらないが検査されず、止めると安全だが業務が止まる。どちらも一長一短なので、二重化して故障時も検査と通信を続ける。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep156-ips-config-limits-t0-0"> 経路上にあるので故障で通信が止まりうる</label></li><li><label><input type="checkbox" id="ep156-ips-config-limits-t0-1"> フェイルオープンは検査されず、フェイルクローズは業務が止まる</label></li><li><label><input type="checkbox" id="ep156-ips-config-limits-t0-2"> 二重化で検査と通信を続ける</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">IPSを導入して終わりにしてはいけない理由を、限界と運用の両面から頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">誤検知で正常な通信を止めうるので、検知のみで調整してから遮断にする。未知の攻撃や復号していない暗号化通信は止められず、処理能力を超えると取りこぼしも起きる。更新・ログ監視・例外の手続き・変更時の影響確認が要る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep156-ips-config-limits-t1-0"> 誤検知で業務に響く（検知のみで調整）</label></li><li><label><input type="checkbox" id="ep156-ips-config-limits-t1-1"> 未知の攻撃・暗号化通信・処理能力の限界</label></li><li><label><input type="checkbox" id="ep156-ips-config-limits-t1-2"> 更新・ログ監視・例外の手続き・影響確認</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="受注サーバ群のIPS故障の調査記録（ダミー）"><div class="logtitle">受注サーバ群のIPS故障の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 受注サーバ群（ダミー）の手前にIPSを設置。通信の経路上に置いている</span></div><div class="logrow"><span class="hl">設定: 故障時は、通信を通す動作。IPSは1台構成</span></div><div class="logrow"><span class="hl">ある日、IPSが故障し、検査されないまま、通信が受注サーバに届いた</span></div><div class="logrow"><span class="hl">その間、不正な通信の一部が通過した。受注業務は止まらなかった</span></div><div class="logrow"><span class="hl">要件: 受注業務の停止は避ける。不正な通信は、サーバの手前で止めたい</span></div></div></div>
+  <p class="q">故障時の対策として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">IPSを二重化し、故障時にも、検査と通信を続けられるようにする</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>故障時は通信を止める設定にする … 要件は、受注業務の停止を避けること</li><li>経路の外に移し、故障の影響をなくす … 要件は、サーバの手前で止めること</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.7.3 IPSの構成例</li><li>5.7.4 IPSの機能上の限界及び運用上の課題</li></ul>
+  <p>配置（FWの内側か外側か）の理由と、経路上にあるがゆえの故障時の動作を押さえ、限界と運用の課題を結びつけて読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep155-ips-basics.html">← #55 IPSの概要と主な機能 経路の中で検知して止める</a><a href="ep157-waf-basics.html">#57 WAFの種類と主な機能 Webアプリの手前で中身を見る門番 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

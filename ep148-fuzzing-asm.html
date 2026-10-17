@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#48 ファジングとASMの概要 未知の穴と未把握の資産｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#48 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
+  <h1>ファジングとASMの概要 未知の穴と未把握の資産</h1>
+  <ol class="summary"><li>ファジングは不正な入力を大量に自動で与え、異常から未知の脆弱性の手がかりを探す手法。</li><li>検証環境で行い、異常検知と再現入力の記録が要る。異常がすべて脆弱性とは限らず、無くても安全とは言えない。</li><li>ASMは公開資産を継続的に洗い出して台帳と照合する。診断は決めた対象を深く調べる点が違う。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep148-fuzzing-asm:fuzzing">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ファジング</span><span class="back" hidden><span class="def">予期しない・不正な入力を大量に自動生成して与え、クラッシュなどの異常を観察して未知の脆弱性の手がかりを探す手法。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep148-fuzzing-asm:mutation-generation">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ミューテーション型／ジェネレーション型</span><span class="back" hidden><span class="def">ミューテーション型は正常な入力を少しずつ変える。ジェネレーション型は仕様から入力を生成する。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep148-fuzzing-asm:repro-record">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">異常検知と再現入力の記録</span><span class="back" hidden><span class="def">ファジングの準備として、異常を検知する仕組みと、再現できる入力の記録を用意しておくこと。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep148-fuzzing-asm:fuzz-limit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ファジングの限界</span><span class="back" hidden><span class="def">異常がすべて脆弱性とは限らず、原因の調査と分類が要る。到達しにくい処理は見つかりにくく、見つからなくても安全とは言えない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep148-fuzzing-asm:asm">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ASM（攻撃対象領域管理）</span><span class="back" hidden><span class="def">外部に公開している資産を攻撃者の目線で継続的に洗い出して把握し、リスクを評価して管理する取り組み。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep148-fuzzing-asm:unmanaged-asset">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">台帳にない資産</span><span class="back" hidden><span class="def">資産台帳に載っていない公開資産。診断や更新の対象から漏れ、攻撃対象になりやすい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep148-fuzzing-asm:asm-flow">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">ASMの流れ</span><span class="back" hidden><span class="def">発見、台帳との照合と管理者の特定、評価、対処、継続の順。対処には停止・削除・修正がある。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep148-fuzzing-asm:assessment-vs-asm">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">診断とASMの違い</span><span class="back" hidden><span class="def">診断は決めた対象を深く調べる。ASMは対象そのものを継続的に広く見つける。</span><span class="note">ASMは外部から見える範囲が中心で、内部資産は見づらい。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep148-fuzzing-asm:v" data-answer="2">
+  <p class="q"><span class="tag">動画で出た問題</span>ファジングの説明として、適切なのは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>正常な入力だけで、仕様どおりに動くことを、確認する手法</span></button><p class="why" hidden>正常な入力だけでは、異常を探せない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>既知の脆弱性を、一覧と照合して、見つける手法</span></button><p class="why" hidden>それは、既知の脆弱性の診断</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>不正な入力を大量に与え、異常動作を観察する手法</span></button><p class="why" hidden>不正な入力で、異常を観察</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>対象の設計書を読んで、欠陥を探す手法</span></button><p class="why" hidden>設計書のレビューの説明</p></li></ol>
+</li>
+<li class="quiz" data-key="ep148-fuzzing-asm:q0" data-answer="0">
+  <p class="q">ファイル解析ライブラリにファジングを行う。実施前の準備として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>異常を検知する仕組みと、再現できる入力の記録を用意し、検証環境で行う</span></button><p class="why" hidden>正解。異常を検知する仕組みと、再現できる入力の記録が要る。対象が停止・破損しうるので検証環境で行う。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>異常が出たら止めるだけでよいので、入力の記録は残さず、本番環境で負荷を見ながら行う</span></button><p class="why" hidden>対象が停止したりデータが壊れたりしうるため、本番では行わない。再現入力の記録も必要。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>他社製ライブラリの脆弱性を調べるため、提供元の許可は取らずに同じ手法で実施する</span></button><p class="why" hidden>他者の製品やサービスに許可なく実施しない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>異常を検知する仕組みは不要で、画面に表示された結果だけを目視で確認すれば足りる</span></button><p class="why" hidden>クラッシュや異常終了を観察するには、異常を検知する仕組みが要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep148-fuzzing-asm:q1" data-answer="1">
+  <p class="q">ファジングで異常終了が多数記録された。結果の扱いとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>異常はすべて脆弱性にあたるので、記録された件数をそのまま脆弱性の件数として報告する</span></button><p class="why" hidden>検出された異常がすべて脆弱性とは限らない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>原因を調査して分類し、脆弱性にあたるものと、そうでないものを切り分ける</span></button><p class="why" hidden>正解。異常がすべて脆弱性とは限らないので、原因を調べて分類する作業が要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>異常の再現入力は不要なので、件数の集計だけを記録し、原因の調査は省略する</span></button><p class="why" hidden>再現できる入力の記録は、原因の調査に必要。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>異常が少数なら、その対象には脆弱性が無いと判断してよい</span></button><p class="why" hidden>異常が見つからなくても安全とは言えない。少数であることも同じで、無いとは判断できない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep148-fuzzing-asm:q2" data-answer="3">
+  <p class="q">ファジングを実施して異常が検出されなかった。担当者は「脆弱性は無いので、診断などの他の確認は省ける」と報告した。評価として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>適切。異常が無ければ脆弱性は存在せず、以後のテストや診断は省略できると考えてよい</span></button><p class="why" hidden>見つからなくても安全とは言えない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>適切。到達しにくい処理も含め、全ての処理が検査済みと判断できる</span></button><p class="why" hidden>到達しにくい処理は見つかりにくい。全処理が検査済みとは判断できない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>適切。異常ゼロなら、既知の脆弱性の確認も済んだことになる</span></button><p class="why" hidden>既知の脆弱性の確認が中心なのは脆弱性診断。ファジングはそれを補う位置づけ。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>不十分。見つからなくても安全とは言えず、到達しにくい処理は見つかりにくい</span></button><p class="why" hidden>正解。ファジングには限界があり、見つからなくても安全とは言えない。診断を補う位置づけ。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep148-fuzzing-asm:q3" data-answer="0">
+  <p class="q">ASMと脆弱性診断の違いを述べた説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>診断は決めた対象を深く調べる。ASMは公開資産を見つける作業を継続的に行う</span></button><p class="why" hidden>正解。診断は決めた対象を深く調べ、ASMは対象そのものを継続的に探す。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ASMは決めた対象の脆弱性を深く調べる手法で、診断は対象の発見を担う</span></button><p class="why" hidden>役割が逆。診断が決めた対象を深く調べ、ASMが対象を探す。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ASMは一度実施すれば完了し、診断のように繰り返す必要はない</span></button><p class="why" hidden>ASMは継続的に洗い出す取り組み。一度で完了するものではない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ASMは内部資産の洗い出しに適しており、外部から見える範囲は主な対象ではなく後回しにする</span></button><p class="why" hidden>ASMは外部から見える範囲が中心で、内部資産は見づらいのが限界。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep148-fuzzing-asm:q4" data-answer="1">
+  <p class="q">ASMで、台帳にない公開資産が見つかった。発見後の流れとして最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>見つけた時点で目的は果たしたので、管理者の特定や評価は省いて、報告書への記載だけで終える</span></button><p class="why" hidden>ASMの流れは、発見のあとに照合・管理者の特定・評価・対処が続く。見つけただけでは終わらない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>台帳と照合して管理者を特定し、評価したうえで、停止・削除・修正などで対処する</span></button><p class="why" hidden>正解。発見、台帳との照合と管理者の特定、評価、対処の順に進め、継続する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>管理者が分からない資産は他組織のものとみなして対象から外し、継続的な確認もやめる</span></button><p class="why" hidden>管理者の特定は人手で行う。分からない資産を対象から外して終わりにすると、台帳にない資産が放置され、診断や更新から漏れて攻撃対象になりやすい。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>評価より先にすべて削除する。台帳との照合や管理者の特定は、削除の後にまとめて行う</span></button><p class="why" hidden>流れは台帳との照合と管理者の特定、評価のあとに対処する順。削除を先にしない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">ファジングで異常が見つからなかったとき、安全と言えない理由を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">到達しにくい処理は見つかりにくく、見つからなくても安全とは言えない。脆弱性診断を補う位置づけで使う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep148-fuzzing-asm-t0-0"> 到達しにくい処理は見つかりにくい</label></li><li><label><input type="checkbox" id="ep148-fuzzing-asm-t0-1"> 見つからなくても安全とは言えない</label></li><li><label><input type="checkbox" id="ep148-fuzzing-asm-t0-2"> 診断を補う位置づけ</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">台帳にない公開資産が危険になる理由と、ASMで見つけた後の流れ、ASMの限界を、頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">把握していない資産は診断や更新の対象から漏れ、攻撃対象になりやすい。ASMは発見、台帳との照合と管理者の特定、評価、対処の順に継続する。限界は、外から見える範囲が中心で内部は見づらく、管理者の特定や対処が人手になること。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep148-fuzzing-asm-t1-0"> 診断や更新から漏れる</label></li><li><label><input type="checkbox" id="ep148-fuzzing-asm-t1-1"> 発見、照合、管理者の特定、評価、対処</label></li><li><label><input type="checkbox" id="ep148-fuzzing-asm-t1-2"> 外から見える範囲が中心で、内部は見づらい</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="公開資産の調査記録（ダミー）"><div class="logtitle">公開資産の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 自社の、インターネットに公開している資産（ダミー）</span></div><div class="logrow"><span class="hl">資産台帳に記載の公開サーバは12台。12台は、定期診断と更新が済んでいる</span></div><div class="logrow"><span class="hl">今回、外部から公開資産を調べる作業を、担当者が、手作業で一度だけ行った</span></div><div class="logrow"><span class="hl">結果、台帳にない公開サーバが2台あり、OSに公開済みの弱点が残っていた</span></div><div class="logrow"><span class="hl">2台は、過去の検証用に部門が個別に立てたもの。今回の洗い出しで初めて存在が判明した</span></div></div></div>
+  <p class="q">台帳にない資産への対策として、適切なのは？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">公開資産を継続的に洗い出し、台帳と照合する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>台帳の12台の診断を増やす … 12台は、診断と更新が済んでいる</li><li>2台の弱点を直して終える … 修正は個々の脆弱性への対処。設問は、台帳にない資産を把握する対策</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>5.3.3 ファジングの概要</li><li>5.3.4 ASMの概要</li></ul>
+  <p>ファジングの準備と限界、ASMの流れと診断との違い、外部から見える範囲が中心という限界を確かめながら読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep147-vuln-assessment.html">← #47 脆弱性診断の概要と実施 範囲と時点が肝</a><a href="ep149-tlpt.html">#49 TLPTの概要 脅威に基づく侵入テスト →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>

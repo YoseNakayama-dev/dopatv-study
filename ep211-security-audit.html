@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#111 情報セキュリティ監査とシステム監査 独立と証拠で測る｜ドパガキセキュリティTV 学習ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/study.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in"><a class="brand" href="index.html">ドパガキセキュリティTV 学習ノート</a><nav><a href="index.html">回の一覧</a><a href="review.html">復習</a></nav></div></header>
+<main class="wrap">
+<section class="hero">
+  <p class="eyebrow">#111 ・ 第4章 情報セキュリティマネジメントの実践</p>
+  <h1>情報セキュリティ監査とシステム監査 独立と証拠で測る</h1>
+  <ol class="summary"><li>監査は管理の状況を基準に照らして客観的に評価する。自分の管理は見落としやすく、監査人は被監査部門から独立する。</li><li>聞き取りだけでは裏付けにならず、資料の閲覧・質問・現場の確認で証拠を集める。報告後はフォローアップで改善を確認する。</li><li>監査は抽出した範囲の評価で、全てを保証しない。診断は弱点を探す手法で、監査は管理が基準に合うかを評価する。</li></ol>
+  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+</section>
+
+<section class="block" id="cards">
+  <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
+  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
+  <ul class="cards">
+<li class="card" data-key="ep211-security-audit:security-audit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">情報セキュリティ監査</span><span class="back" hidden><span class="def">機密性・完全性・可用性の管理の状況を、基準に照らして客観的に評価すること。</span><span class="note">自己点検（被監査側が自ら確認する）は監査ではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep211-security-audit:independence">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">独立性</span><span class="back" hidden><span class="def">監査人が被監査部門から独立していること。自分の管理は担当者自身では見落としやすいため、第三者の目が要る。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep211-security-audit:internal-external">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">内部監査と外部監査</span><span class="back" hidden><span class="def">内部監査は自組織の別部門が行う監査。外部監査は外部の第三者が行う監査。</span><span class="note">どちらも、被監査部門から独立した立場で行う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep211-security-audit:assurance-advisory">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">保証型と助言型</span><span class="back" hidden><span class="def">保証型は管理の状態を評価して保証する監査。助言型は問題点を指摘し、改善を助言する監査。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep211-security-audit:management-standard">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">管理基準</span><span class="back" hidden><span class="def">情報セキュリティ管理基準。管理の状況を評価するときの物差しになる。</span><span class="note">監査人の行動の拠りどころは、監査基準の側。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep211-security-audit:audit-standard">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">監査基準</span><span class="back" hidden><span class="def">情報セキュリティ監査基準。監査人の行動の拠りどころになる。</span><span class="note">評価の物差しは、管理基準の側。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep211-security-audit:audit-evidence">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">監査証拠</span><span class="back" hidden><span class="def">資料の閲覧・質問・現場の確認で集める、評価の裏付け。</span><span class="note">聞き取りだけでは裏付けにならない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep211-security-audit:follow-up">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">フォローアップ</span><span class="back" hidden><span class="def">指摘した事項が改善されたかを確認すること。報告して終わりにしない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep211-security-audit:system-audit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">システム監査</span><span class="back" hidden><span class="def">情報システム全般を対象にする監査。情報セキュリティ監査と重なる部分はあるが、観点が違う。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+<li class="card" data-key="ep211-security-audit:diagnosis-vs-audit">
+  <button type="button" class="flip" aria-expanded="false"><span class="front">診断と監査の違い</span><span class="back" hidden><span class="def">脆弱性診断は技術的な弱点を探す手法。監査は、管理が基準に合うかを評価する。</span><span class="note">監査は抽出した範囲の評価で、全てを保証するものではない。</span></span></button>
+  <div class="grade"><button type="button" class="ng" data-g="0">まだ</button><button type="button" class="ok" data-g="1">覚えた</button><span class="lv" aria-label="定着度"></span></div>
+</li>
+  </ul>
+</section>
+
+<section class="block" id="quiz">
+  <h2>クイズ</h2>
+  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
+  <ol class="quizzes"><li class="quiz" data-key="ep211-security-audit:v" data-answer="3">
+  <p class="q"><span class="tag">動画で出た問題</span>監査の説明として、適切なものは？</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>保証型は、改善の助言が中心である</span></button><p class="why" hidden>助言が中心なのは助言型</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>システム監査の対象は、セキュリティだけ</span></button><p class="why" hidden>システム全般が対象</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>監査人は、被監査部門の所属が望ましい</span></button><p class="why" hidden>被監査部門から独立する</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>指摘事項の改善は、フォローアップで確認する</span></button><p class="why" hidden>フォローアップで改善を確認</p></li></ol>
+</li>
+<li class="quiz" data-key="ep211-security-audit:q0" data-answer="0">
+  <p class="q">経営層から、情報セキュリティ管理が基準に適合しているかを、被監査部門から独立した立場で評価し、その結果を保証してほしいとの依頼があった。改善案の提示は今回は求められていない。実施方法として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>管理の状態を評価して保証する保証型とし、被監査部門から独立した監査人が実施する</span></button><p class="why" hidden>正解。管理の状態を評価して保証するのは保証型。監査人は被監査部門から独立し、基準に照らして客観的に評価する。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>問題点を洗い出して改善の助言を中心とする助言型とし、評価の保証までは求めずに実施する</span></button><p class="why" hidden>助言型は、問題点を指摘して改善を助言する型。今回は評価の保証を求められており、改善案は求められていない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>運用中のシステムの弱点を探す脆弱性診断を実施し、見つかった弱点の一覧を評価の結果とする</span></button><p class="why" hidden>診断は技術的な弱点を探す手法。監査は、管理が基準に合うかを評価するもので、弱点の一覧は評価の結果にならない。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>運用を担当する部門が基準に照らして自ら丁寧に点検し、その結果を監査報告書としてまとめる</span></button><p class="why" hidden>被監査側が自ら確認する自己点検は、監査ではない。客観的な評価には、被監査部門から独立した監査人が要る。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep211-security-audit:q1" data-answer="2">
+  <p class="q">アクセス権の見直しは四半期ごとに実施していると、担当者が監査人に説明した。しかし、見直しの記録を閲覧すると直近2期分が見当たらない。担当者は「実施した」と繰り返している。監査人の対応として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>担当者が実施したと述べているので、質問への回答を証拠として採用し、実施済みとして報告する</span></button><p class="why" hidden>聞き取りだけでは裏付けにならない。説明は質問で得た情報にとどまり、資料の閲覧や現場の確認で裏付ける必要がある。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>記録が見当たらない時点で、追加の確認なしにその場で未実施と断定し、報告書に未実施と記載する</span></button><p class="why" hidden>記録が見当たらないことは重要な手がかりだが、そこで断定せず、資料の閲覧や現場の確認など追加の証拠で裏付けてから評価する。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>聞き取りだけでは裏付けにならず、資料の閲覧や現場の確認で裏付けて評価する</span></button><p class="why" hidden>正解。監査証拠は、資料の閲覧・質問・現場の確認で集める。聞き取りだけでは裏付けにならないので、追加の証拠で評価する。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>脆弱性診断のツールで運用中のシステムを調べ、診断結果から見直しの実施状況を判断する</span></button><p class="why" hidden>診断は技術的な弱点を探す手法で、見直しという管理の実施状況を評価する手段ではない。監査では管理が基準に合うかを証拠で確かめる。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep211-security-audit:q2" data-answer="1">
+  <p class="q">監査チームで、評価に使う文書の位置づけを整理している。「管理策がどこまで整っているかを評価する基準」と「監査人としての行動の拠りどころ」の使い分けとして、最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>どちらの基準も評価の物差しとして使い、監査人の行動は被監査部門の方針に従って決める</span></button><p class="why" hidden>監査人は被監査部門から独立する。行動を被監査部門の方針に従って決めると、独立性が保てない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>管理基準を評価の物差しとし、監査基準を監査人の行動の拠りどころとして使い分ける</span></button><p class="why" hidden>正解。管理基準が評価の物差し、監査基準が監査人の行動の拠りどころ。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>監査基準を評価の物差しとして管理策に当てはめ、管理基準を監査人の行動の拠りどころとする</span></button><p class="why" hidden>二つの役割が逆になっている。評価の物差しは管理基準、監査人の行動の拠りどころは監査基準。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>文書の基準は使わず、経験豊富な監査人の判断だけで評価するほうが、客観性がいっそう高まる</span></button><p class="why" hidden>客観的な評価は、基準に照らして行う。経験だけの判断では、何に照らして評価したのかが示せない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep211-security-audit:q3" data-answer="0">
+  <p class="q">監査報告を受けた経営層が、「サーバの個別の弱点の一覧がない。弱点を洗い出したかったのに、監査では役に立たない」と述べた。監査の目的に照らした説明として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>監査は管理が基準に合うかの評価で、弱点を探す手法は診断である。目的に応じて使い分ける</span></button><p class="why" hidden>正解。診断は技術的な弱点を探す手法、監査は管理が基準に合うかの評価。弱点の洗出しが目的なら診断が向く。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>監査報告書には診断と同じ水準の弱点の一覧を必ず載せるべきで、載せない監査は不完全だと言える</span></button><p class="why" hidden>監査と診断は目的が違う。監査報告書は管理の評価を伝えるもので、診断と同じ弱点の一覧を載せなければ不完全とは言えない。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>診断が管理を基準で評価する手法で、監査が弱点を探す手法なので、依頼の取り違えである</span></button><p class="why" hidden>二つの説明が逆になっている。弱点を探すのが診断、管理を基準で評価するのが監査。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>監査は全てを保証するので、弱点の一覧が無いなら弱点は存在しないと報告書から判断できる</span></button><p class="why" hidden>監査は抽出した範囲の評価で、全てを保証するものではない。一覧がないことは、弱点が存在しない証明にならない。</p></li></ol>
+</li>
+<li class="quiz" data-key="ep211-security-audit:q4" data-answer="2">
+  <p class="q">監査の結果が「重大な指摘事項なし」だったため、経営層は「管理は全て問題ないと保証された」と受け止め、セキュリティ対策の予算を縮小しようとしている。担当者の助言として最も適切なものはどれか。</p>
+  <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>重大な指摘がなければ全ての管理が適切だと保証されたといえるため、予算の縮小を認めてよい</span></button><p class="why" hidden>監査は抽出した範囲の評価で、全てを保証するものではない。指摘がないことを、全ての管理の適切さの保証とは受け取れない。</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>監査はあらゆる範囲を漏れなく調べる制度なので、指摘がなければ追加の確認や改善の取組みは不要である</span></button><p class="why" hidden>監査は計画で決めた目的・範囲・方法に沿って行い、全てを保証するものではない。結果を改善につなげる取組みが要る。</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>監査は抽出した範囲の評価で全てを保証するものではない。範囲を確認し、結果を改善につなげる</span></button><p class="why" hidden>正解。監査は抽出した範囲の評価で、全てを保証しない。どこまでが対象だったかを確認し、結果を改善につなげる。</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>指摘が無かったので、リスクの高い所を重点にする監査計画の考え方は次回以降は不要になる</span></button><p class="why" hidden>監査計画では、リスクの高い所を重点にする。指摘がなかったことで、この考え方が不要になるわけではない。</p></li></ol>
+</li></ol>
+</section>
+
+<section class="block" id="think">
+  <h2>頭の中で考える</h2>
+  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+  <ol class="thinks"><li class="think">
+  <p class="q">監査人が被監査部門から独立していなければならない理由と、内部監査・外部監査の違いを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">自分の管理は担当者自身では見落としやすく、被監査側が自ら確認する自己点検は監査ではない。客観的に評価するため、監査人は被監査部門から独立する。内部監査は自組織の別部門が、外部監査は外部の第三者が行う。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep211-security-audit-t0-0"> 自分の管理は見落としやすい</label></li><li><label><input type="checkbox" id="ep211-security-audit-t0-1"> 自己点検は監査ではない</label></li><li><label><input type="checkbox" id="ep211-security-audit-t0-2"> 内部監査は自組織の別部門、外部監査は外部の第三者</label></li></ul>
+  </details>
+</li>
+<li class="think">
+  <p class="q">聞き取りの内容だけで監査の結論を出してはいけない理由と、報告のあとに必要なことを頭の中で説明してみよう。</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">聞き取りだけでは裏付けにならないため、資料の閲覧・質問・現場の確認で監査証拠を集めて評価する。結果は監査報告書で依頼者に伝え、指摘した事項が改善されたかをフォローアップで確認する。監査は抽出した範囲の評価で全てを保証しないため、改善につなげることが要る。</p>
+    <p class="sub">思い浮かんだ要素にチェック</p>
+    <ul class="checks"><li><label><input type="checkbox" id="ep211-security-audit-t1-0"> 聞き取りだけでは裏付けにならない</label></li><li><label><input type="checkbox" id="ep211-security-audit-t1-1"> 資料の閲覧・質問・現場の確認で証拠を集める</label></li><li><label><input type="checkbox" id="ep211-security-audit-t1-2"> 報告書の後、フォローアップで改善を確認する</label></li></ul>
+  </details>
+</li></ol>
+</section>
+
+<section class="block" id="exam">
+  <h2>午後問題にチャレンジ</h2>
+  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+  <div class="log" role="figure" aria-label="監査実施前の確認記録（ダミー）"><div class="logtitle">監査実施前の確認記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 情報システム部の、サーバ運用管理</span></div><div class="logrow"><span class="hl">監査人の候補: 運用担当者、または別部門の者</span></div><div class="logrow"><span class="hl">サーバの設定とアクセスの記録は、いつでも確認できる</span></div><div class="logrow"><span class="hl">要件: 結果を、客観的な評価として経営層へ報告したい</span></div></div></div>
+  <p class="q">適切な進め方は、どれ？</p>
+  <details class="reveal"><summary>答えを開く</summary>
+    <p class="ans">運用に関与しない者が、設定と記録を確認して評価する</p>
+    <p class="sub">よくある誤答</p><ul class="traps"><li>運用担当者が、自分で確認して監査報告とする … 別部門の者を選べるのに自分で評価すると、独立性が保てない</li><li>運用に関与しない者が、聞き取りだけで結論を出す … 申告だけでは裏付けにならず、記録は確認できる</li></ul>
+  </details>
+</section>
+
+<section class="block" id="book">
+  <h2>本で読む</h2>
+  <ul class="book"><li>4.10.1 情報セキュリティ監査の必要性と監査制度の概要</li><li>4.10.2 システム監査制度の概要</li></ul>
+  <p>独立性と証拠で評価する監査の考え方、管理基準と監査基準の役割の違いを確かめる。診断やシステム監査との違いも整理して読む。</p>
+  <details class="src"><summary>この回の出典</summary><ul></ul></details>
+</section>
+
+<nav class="pager"><a href="ep210-bcp-bcm.html">← #110 BCPとBCM 事業継続の計画と回し続ける運用</a><a href="ep212-measure-classification.html">#112 情報セキュリティ対策の分類 機能と実施方法の二つの軸 →</a></nav>
+</main>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<script src="assets/study.js"></script>
+</body>
+</html>
