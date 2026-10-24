@@ -16,12 +16,11 @@
   <p class="eyebrow">#45 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>ホストの要塞化の概要 入口を減らす考え方</h1>
   <ol class="summary"><li>要塞化は設定を見直し、攻撃される入口（攻撃対象領域）を減らす。初期状態は使いやすさ優先。</li><li>基本は最小構成・最小権限・既定値の見直し・維持。基準を決め、適用前に検証環境で確認する。</li><li>運用中の構成のずれが起きうる。未知の脆弱性は防げないので、多層防御の一部として使う。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep145-host-hardening:hardening">
   <button type="button" class="flip" aria-expanded="false"><span class="front">要塞化（ハードニング）</span><span class="back" hidden><span class="def">OSやソフトの設定を見直し、攻撃を受けにくくすること。対象はサーバ・端末・仮想マシンなどのホスト。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep145-host-hardening:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>ホストの要塞化に沿った対応として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>作業の手間を減らすため、全利用者に管理者権限を与えておく</span></button><p class="why" hidden>権限が大きいほど、被害も広がる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>導入時の管理用アカウントを、初期パスワードのまま残しておく</span></button><p class="why" hidden>初期値は広く知られている</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>将来使うかもしれないので、不要なサービスも有効にしておく</span></button><p class="why" hidden>入口が増える</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>業務に必要な機能と権限だけを残す</span></button><p class="why" hidden>必要なものだけ残す</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">要塞化を進める手順と、適用の前に検証環境で確認する理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep145-host-hardening-t1-0"> 未知の脆弱性は防げない</label></li><li><label><input type="checkbox" id="ep145-host-hardening-t1-1"> 運用中の構成のずれ</label></li><li><label><input type="checkbox" id="ep145-host-hardening-t1-2"> 多層防御の一部</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="Webサーバ導入時の記録（ダミー）"><div class="logtitle">Webサーバ導入時の記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 新規導入のWebサーバA（ダミー）。インターネットに公開</span></div><div class="logrow"><span class="hl">導入直後の待ち受け: HTTPS・リモート管理・ファイル共有・メール送信</span></div><div class="logrow"><span class="hl">このサーバの業務は、Webページの提供のみ</span></div><div class="logrow"><span class="hl">管理者は、リモート管理で運用する</span></div><div class="logrow"><span class="hl">4つとも、OSの初期設定で有効になっていた</span></div></div></div>
   <p class="q">最小構成の考え方で、閉じるべき待ち受けは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">ファイル共有とメール送信の待ち受け</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>リモート管理 … 管理者が運用で使う（必要な機能）</li><li>HTTPS … このサーバの業務（ページの提供）そのもの</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.2.1 ホストの要塞化の概要</li></ul>
   <p>攻撃対象領域を減らす考え方と、最小構成・最小権限・既定値の見直し・維持の4つ。手順と限界も確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep144-risk-treatment.html">← #44 リスク対応手法の種類 低減・回避・移転・保有の選び方</a><a href="ep146-hardening-items.html">#46 要塞化の主な実施項目 アカウント・サービス・更新・ログ →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

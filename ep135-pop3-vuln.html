@@ -16,12 +16,11 @@
   <p class="eyebrow">#35 ・ 第3章 情報セキュリティにおける脆弱性</p>
   <h1>POP3の脆弱性と対策 平文の認証を守る</h1>
   <ol class="summary"><li>POP3の基本の認証は平文で、暗号化がないと経路上の盗聴でパスワードやメール内容が漏れる。</li><li>APOPはパスワードを送らないが古いハッシュ関数に依存し、総当たりや使い回しの影響も受ける。</li><li>対策はTLSと平文認証の無効化に回数制限・監視を重ねる。端末が感染していれば通信路を守っても漏れる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep135-pop3-vuln:pop3">
   <button type="button" class="flip" aria-expanded="false"><span class="front">POP3</span><span class="back" hidden><span class="def">サーバの受信箱からメールを取り出す仕組み。TCPの110番が基本で、基本の認証は平文で送る。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep135-pop3-vuln:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>POP3の認証情報の盗聴への対策として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パスワードを、覚えやすい数字だけの短い文字列にそろえる</span></button><p class="why" hidden>短く単純で、破られやすい</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>待ち受けのポート番号を、110から別の番号に変えるだけにする</span></button><p class="why" hidden>平文のままなら、盗聴できる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>TLSで通信を保護し、平文の認証を無効にする</span></button><p class="why" hidden>通信路をTLSで保護</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>受信したメールを、すぐに削除するようにしておく</span></button><p class="why" hidden>認証情報の盗聴を防がない</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">公衆無線LANでPOP3を使うと特に危ない理由と、有効な対策を頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep135-pop3-vuln-t1-0"> 端末が感染していれば漏れる</label></li><li><label><input type="checkbox" id="ep135-pop3-vuln-t1-1"> 総当たりや使い回しは別の対策</label></li><li><label><input type="checkbox" id="ep135-pop3-vuln-t1-2"> 回数制限・監視・強いパスワード</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="不正ログインの調査記録（ダミー）"><div class="logtitle">不正ログインの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社員Aのメールが、POP3で不正に読まれた（ダミー）</span></div><div class="logrow"><span class="hl">認証は、ポート110のUSER/PASS方式。TLSは未使用</span></div><div class="logrow"><span class="hl">不正ログインは1回目で成功。接続元は、Aの端末と別のIP</span></div><div class="logrow"><span class="hl">Aは直前に、無料の公衆無線LANから受信。端末は手元にある</span></div><div class="logrow"><span class="hl">Aの端末のマルウェア検査は感染なし。パスワードは固有</span></div></div></div>
   <p class="q">この不正ログインの原因として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">暗号化されていないPOP3の認証情報が、経路上で盗聴された</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>パスワードの総当たり … 1回目の試行で成功</li><li>端末の盗難・紛失 … 端末は手元にある</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>3.4.3 POP3の脆弱性</li><li>3.4.4 POP3の脆弱性への対策</li></ul>
   <p>平文認証が盗聴で漏れる仕組み、APOPの限界、TLSの強制の要否、通信路保護の限界を区別しながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep134-smtp-vuln.html">← #34 SMTPの脆弱性と対策 送信者を確かめない仕組みの弱点</a><a href="ep136-dns-vuln.html">#36 DNSの脆弱性 仕様・設定・実装のどこが弱いか →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

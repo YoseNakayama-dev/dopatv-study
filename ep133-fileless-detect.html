@@ -16,12 +16,11 @@
   <p class="eyebrow">#33 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>ファイルレス攻撃とマルウェアの検出手法 ファイルがなくても見つける</h1>
   <ol class="summary"><li>ファイルレス攻撃は、ディスクに実行ファイルを置かず、メモリ上やOS標準のツールで動く。完全にファイルなしとは限らない。</li><li>ファイルを照合する検査には対象が見当たらない。検出手法はそれぞれ得意な範囲が違い、単独では足りない。</li><li>見る対象をファイルからプロセスの動作と通信へ変え、手法を組み合わせる。誤検知と見逃しは残る。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep133-fileless-detect:fileless">
   <button type="button" class="flip" aria-expanded="false"><span class="front">ファイルレス攻撃</span><span class="back" hidden><span class="def">ディスクに実行ファイルを置かず、メモリ上やOS標準の正規ツールを悪用して動く攻撃。ファイルを調べる検査には対象が見当たらない。</span><span class="note">初期侵入にファイルが使われる、設定が残るといった例もある。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep133-fileless-detect:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>ファイルレス攻撃の検出に、有効なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>パターンファイルの更新頻度を、さらに上げて、毎日配信する</span></button><p class="why" hidden>更新を増やしても、照合するファイルがない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ディスク上のファイルのハッシュ値を、定期的に比べて確認する</span></button><p class="why" hidden>ファイルが置かれないので、変化もない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>実行ファイルの拡張子を、あらかじめ制限しておく</span></button><p class="why" hidden>標準ツールは、実行ファイルを増やさない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>プロセスの動作と通信を、監視して検知する</span></button><p class="why" hidden>動作と通信を見る</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">ファイルレス攻撃がパターンマッチングで見つかりにくい理由と、代わりに見る対象を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep133-fileless-detect-t1-0"> 手法ごとに得意な範囲が違う</label></li><li><label><input type="checkbox" id="ep133-fileless-detect-t1-1"> 正規の使い方に似ると誤検知と見逃しが残る</label></li><li><label><input type="checkbox" id="ep133-fileless-detect-t1-2"> 端末の隔離と調査の流れを用意する</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="経理部端末の調査記録（ダミー）"><div class="logtitle">経理部端末の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 経理部の端末（ダミー）。定期スキャンは、検出なし</span></div><div class="logrow"><span class="hl">同時刻、OS標準のスクリプト実行機能が起動し、外部へ通信</span></div><div class="logrow"><span class="hl">ディスク上に新しい実行ファイルは作られていない（監査ログ）</span></div><div class="logrow"><span class="hl">定期スキャンは、ディスク上のファイルを、パターンファイルと照合</span></div><div class="logrow"><span class="hl">パターンファイルは最新で、スキャンの除外設定はなし</span></div></div></div>
   <p class="q">定期スキャンで検出できなかった理由として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">新しい実行ファイルがなく、ファイルを照合する方式では、見つけられなかった</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>パターンファイルが古かった … 最新だった</li><li>除外設定に入っていた … 除外設定はなし</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.9.12 ファイルレス攻撃</li><li>2.9.14 マルウェアを検出する手法</li></ul>
   <p>ファイルレス攻撃が検査をすり抜ける理由と、各検出手法の得意・不得意、組み合わせても残る限界を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep132-dropper-targeted.html">← #32 ドロッパと標的型攻撃 侵入から外への持ち出しまで</a><a href="ep134-smtp-vuln.html">#34 SMTPの脆弱性と対策 送信者を確かめない仕組みの弱点 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

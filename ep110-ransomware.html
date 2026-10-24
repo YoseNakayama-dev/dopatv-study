@@ -16,12 +16,11 @@
   <p class="eyebrow">#10 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>ランサムウェア 被害の大きさは備えで決まる</h1>
   <ol class="summary"><li>ファイル暗号化型は、感染した端末がアクセスできる範囲に及ぶ。入口はメール添付や改ざんサイトの閲覧。</li><li>復号は困難とされるため、戻す備えが要る。バックアップは取得時だけ接続し、複数媒体に取り、復元を確認する。</li><li>更新やセキュリティソフトは入口を減らす対策で、戻す備えとは別。IPA資料は2017年のもの。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep110-ransomware:ransomware">
   <button type="button" class="flip" aria-expanded="false"><span class="front">ランサムウェア</span><span class="back" hidden><span class="def">感染した端末のファイルを暗号化したり操作不能にしたりして、元に戻すことと引き換えに金銭を要求する不正プログラム。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep110-ransomware:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>ランサムウェアの被害を低減する備えとして適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>書き換え可能な媒体を常時接続しておく</span></button><p class="why" hidden>同時に暗号化されうる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>バックアップを切り離し、戻せるか確認する</span></button><p class="why" hidden>切り離し、戻せるか確認する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>不審な添付ファイルをすぐ開く</span></button><p class="why" hidden>感染の入り口になりうる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>定義ファイルは更新しない</span></button><p class="why" hidden>更新し続けるのが基本</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">ランサムウェア対策で、「入口を減らす対策」と「戻す備え」を分けて考える理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep110-ransomware-t1-0"> 暗号化された場合の影響範囲</label></li><li><label><input type="checkbox" id="ep110-ransomware-t1-1"> 端末がアクセスできる範囲を洗い出す</label></li><li><label><input type="checkbox" id="ep110-ransomware-t1-2"> その結果で方式と頻度を決める</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="暗号化被害の調査記録（ダミー）"><div class="logtitle">暗号化被害の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">ファイルサーバの文書が暗号化され、身代金を要求された</span></div><div class="logrow"><span class="hl">バックアップ用NASは、ファイルサーバと同じネットワークにあった</span></div><div class="logrow"><span class="hl">NAS内のバックアップも暗号化され、復旧に使えるデータが残らなかった</span></div><div class="logrow"><span class="hl">// バックアップは1台のNASのみ。リストア確認は実施済み</span></div><div class="logrow"><span class="hl">// OSとソフト、定義ファイルは最新だった</span></div></div></div>
   <p class="q">復旧できなかった根本原因は？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">バックアップが切り離されておらず、暗号化の対象になった</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>リストア確認をしていなかった … 記録では実施済み</li><li>OSが古かった … 記録では最新。感染の入口の話で、復旧の可否とは別</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.9.7 ボット</li><li>2.9.8 ランサムウェア</li></ul>
   <p>感染の入口と影響範囲、バックアップを切り離す理由、取得とリストアの違いを確かめながら読む。IPA資料は2017年のもの。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep109-tls13.html">← #9 TLS 1.3 通信を守る仕組みの何が変わった？</a><a href="ep111-incident.html">#11 インシデント対応 慌てないための流れと判断基準 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

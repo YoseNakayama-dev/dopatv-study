@@ -16,12 +16,11 @@
   <p class="eyebrow">#26 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>HTTPヘッダインジェクション 改行が区切りになる仕組みと対策</h1>
   <ol class="summary"><li>外部入力をヘッダの値に出力し、含まれる改行を除去・拒否しないと成立する。</li><li>影響はSet-Cookieの追加、レスポンス分割、キャッシュ経由の波及など。実際の影響は実装や中継機器による。</li><li>対策はヘッダ出力のAPI、改行を含む入力の拒否、リダイレクト先の限定。WAFは補助。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep126-http-header-injection:http-header-injection">
   <button type="button" class="flip" aria-expanded="false"><span class="front">HTTPヘッダインジェクション</span><span class="back" hidden><span class="def">入力がレスポンスヘッダの値として出力され、含まれる改行でヘッダが区切られ、意図しないヘッダが追加される攻撃。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep126-http-header-injection:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>HTTPヘッダインジェクションで、悪用される文字は？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>改行（CRLF）</span></button><p class="why" hidden>改行（CRLF）</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>シングルクォート</span></button><p class="why" hidden>SQLインジェクションで問題になる記号</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>山括弧（&lt; &gt;）</span></button><p class="why" hidden>XSSで問題になる記号</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>上位ディレクトリ（../）</span></button><p class="why" hidden>ディレクトリトラバーサルの記号</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">ヘッダインジェクションが成立する2つの条件を挙げ、改行がなぜ問題になるのかを頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep126-http-header-injection-t1-0"> セッションIDの固定</label></li><li><label><input type="checkbox" id="ep126-http-header-injection-t1-1"> 影響は実装や中継機器による</label></li><li><label><input type="checkbox" id="ep126-http-header-injection-t1-2"> API・改行の拒否・リダイレクト先の限定</label></li><li><label><input type="checkbox" id="ep126-http-header-injection-t1-3"> ID再発行・WAFは補助</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="リダイレクト機能の調査記録（ダミー）"><div class="logtitle">リダイレクト機能の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: ログイン後の戻り先を、パラメータで受ける機能（ダミー）</span></div><div class="logrow"><span class="hl">パラメータの値を、そのままLocationヘッダに出力 / 改行の除去なし</span></div><div class="logrow"><span class="hl">レスポンスに、アプリが出力していないSet-Cookieヘッダが追加</span></div><div class="logrow"><span class="hl">利用者のセッションIDが、攻撃者の指定した値に固定されていた</span></div><div class="logrow"><span class="hl">// データベースの異常なし / Locationの遷移先は想定どおり</span></div></div></div>
   <p class="q">この事象の原因として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">入力に含まれる改行が、ヘッダの区切りとして解釈された</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>SQLインジェクション … データベースの異常はない</li><li>オープンリダイレクト … 遷移先は想定どおり</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.8.5 HTTPヘッダインジェクション</li></ul>
   <p>レスポンスの構造と改行の意味、成立条件、影響が環境に左右される点、APIと改行の拒否が中心で他は補助である点を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep125-oscmd-injection.html">← #25 OSコマンドインジェクション 成立条件と、シェルを使わない対策</a><a href="ep127-mail-header-injection.html">#27 メールヘッダインジェクション 改行が区切りになる仕組みと対策 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

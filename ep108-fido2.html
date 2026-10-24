@@ -16,12 +16,11 @@
   <p class="eyebrow">#8 ・ 追加テーマ（目次外）</p>
   <h1>FIDO2・WebAuthn 秘密を渡さずに本人だと示す</h1>
   <ol class="summary"><li>FIDO2は公開鍵暗号を使い、サイトごとの鍵ペアの秘密鍵は認証器にとどめ、サーバは公開鍵だけを保存する。</li><li>鍵はRP ID（ドメイン）に紐づき、作成したサイトのオリジンでしか使えないため、偽サイトに強い設計。</li><li>万能ではない。認証後のセッション盗用や端末のマルウェアは別の課題で、絶対安全とは言えない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep108-fido2:fido2">
   <button type="button" class="flip" aria-expanded="false"><span class="front">FIDO2</span><span class="back" hidden><span class="def">WebAuthn（ブラウザAPI）とCTAP（クライアントと認証器の通信）を合わせた、公開鍵暗号による認証の枠組み。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep108-fido2:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>FIDO2の認証の説明として適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>秘密のパスワードをサイトに送る</span></button><p class="why" hidden>パスワード認証の説明</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>秘密鍵は端末にとどめ、署名で示す</span></button><p class="why" hidden>秘密鍵は端末にとどめ、署名で示す</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>利用者の指紋をサーバに保存する</span></button><p class="why" hidden>生体情報は端末の中にとどまる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ワンタイムコードを毎回メールで送る</span></button><p class="why" hidden>コード送付型の認証の説明</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">偽サイトにFIDO2で認証しようとしても、攻撃者がログインできない理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep108-fido2-t1-0"> FIDO2が守るのは認証の場面</label></li><li><label><input type="checkbox" id="ep108-fido2-t1-1"> セッション盗用・端末のマルウェアは別の課題</label></li><li><label><input type="checkbox" id="ep108-fido2-t1-2"> 絶対安全とは言えず運用とセットで考える</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="不正ログインの記録（ダミー）"><div class="logtitle">不正ログインの記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">利用者が fake-shop.example に ID とパスワードを入力</span></div><div class="logrow"><span class="hl">攻撃者が、その値を使って正規サイトにログインした</span></div><div class="logrow"><span class="hl">// 正規サイトの認証は、パスワードのみだった</span></div><div class="logrow"><span class="hl">// 仮定: サイトが FIDO2 のみを許可し、利用者は登録済み</span></div></div></div>
   <p class="q">FIDO2が、この被害を防ぎやすい主な理由は？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">鍵が正規ドメインに紐づき、偽サイトでは応答を作れない</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ワンタイムパスワードを使うから … FIDO2の仕組みではない</li><li>パスワードを送らないから … 一因だが、決め手はドメインとの紐づけ</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>EX-04 FIDO2 / WebAuthn / パスキー</li></ul>
   <p>登録・認証の流れ、ドメインへの紐づけが効く理由、そして認証後のセッションなど守備範囲の外を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep107-session.html">← #7 セッション管理の不備 IDの扱いを誤るとなりすまされる</a><a href="ep109-tls13.html">#9 TLS 1.3 通信を守る仕組みの何が変わった？ →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

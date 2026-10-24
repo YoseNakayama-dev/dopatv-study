@@ -16,12 +16,11 @@
   <p class="eyebrow">#102 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>攻撃の記述仕様と主な手法 STIX・TAXII・CVE・攻撃手法の整理</h1>
   <ol class="summary"><li>STIXは脅威情報の形式、TAXIIは交換の手順。CVE・CWE・CAPECはそれぞれ指すものが違う。</li><li>攻撃手法は、人・待ち受け・仕組み・組織と、狙う場所で整理し、対策に対応づける。</li><li>形式がそろっても、受け取った情報の質は保証されない。古い・誤りがありうるので、自組織で確認する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep202-attack-spec-methods:stix">
   <button type="button" class="flip" aria-expanded="false"><span class="front">STIX</span><span class="back" hidden><span class="def">脅威情報を共通の形式で表す仕様。機械が読めるので、自動で取り込み、ログと照合できる。</span><span class="note">形式がSTIX、運ぶ手順がTAXII。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep202-attack-spec-methods:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>攻撃の記述仕様と手法の説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>STIXは、脅威情報を交換するための通信手順を定める</span></button><p class="why" hidden>交換の手順はTAXII</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>CAPECは、攻撃パターンを体系的にまとめた一覧である</span></button><p class="why" hidden>攻撃パターンの一覧</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>水飲み場攻撃は、標的へ直接メールを送りつける</span></button><p class="why" hidden>標的が使うサイトを改ざん</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>CVEは、攻撃者グループに付ける識別番号である</span></button><p class="why" hidden>CVEは脆弱性の識別番号</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">CVE・CWE・CAPECが、それぞれ何を指すかを、頭の中で一文ずつ説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep202-attack-spec-methods-t1-0"> 狙う場所に対策を対応づける</label></li><li><label><input type="checkbox" id="ep202-attack-spec-methods-t1-1"> 人には教育、仕組みには修正と設定</label></li><li><label><input type="checkbox" id="ep202-attack-spec-methods-t1-2"> 受け取った情報は古い・誤りがありうる</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="攻撃情報の受領記録（ダミー）"><div class="logtitle">攻撃情報の受領記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">他組織から、攻撃情報を毎日受け取っている</span></div><div class="logrow"><span class="hl">受け取りは、共有サーバからの自動取得で済んでいる</span></div><div class="logrow"><span class="hl">内容は文章のファイルで、担当者が手で転記する</span></div><div class="logrow"><span class="hl">要件: 受けた情報を、システムが自動で照合したい</span></div></div></div>
   <p class="q">このあとの対応として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">機械が読める共通の形式で表す（代表がSTIX）</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>TAXIIを導入して交換を自動化する … 取得はすでに自動化済みで、問題は内容の形式にある</li><li>各情報にCVE番号を付ける … CVEは脆弱性の識別番号で、攻撃情報全体を表す形式ではない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.1.6 サイバー攻撃活動を記述するための仕様</li><li>2.1.8 主なサイバー攻撃手法</li></ul>
   <p>STIX（形式）とTAXII（手順）、CVE・CWE・CAPECの指すものの違いを区別して読む。手法は狙う場所で整理して対策に結びつける。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep201-threat-classes.html">← #101 脅威の分類 災害・障害・人の脅威と備え</a><a href="ep203-port-scan.html">#103 ポートスキャン 目的・種類・対策 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

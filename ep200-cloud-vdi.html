@@ -16,12 +16,11 @@
   <p class="eyebrow">#100 ・ 第1章 情報セキュリティ及びITの基礎</p>
   <h1>クラウドとVDI クラウドコンピューティングの概要とシンクライアント</h1>
   <ol class="summary"><li>クラウドは、自分で用意でき、共用の資源を増減でき、使った量を計測して課金される。</li><li>借りる範囲はIaaS・PaaS・SaaSで違い、利用形態は専用・公開・組み合わせで分ける。</li><li>VDIはデータをサーバに集める。停止の集中や転送設定、入口の認証が限界で、撮影は防げない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep200-cloud-vdi:cloud-traits">
   <button type="button" class="flip" aria-expanded="false"><span class="front">クラウドの特徴</span><span class="back" hidden><span class="def">利用者が自分で資源を用意でき、資源は共用されて必要に応じ増減でき、使った量が計測されて課金される。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep200-cloud-vdi:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>クラウドとVDIの説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ハイブリッドクラウドは、事業者だけの専用環境を指す</span></button><p class="why" hidden>ハイブリッドは複数の形態の組み合わせ</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SaaSの利用者は、OSの管理まで行う</span></button><p class="why" hidden>SaaSはOSの管理まで行わない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>VDIでは、処理を端末側で行い、画面だけをサーバへ送る</span></button><p class="why" hidden>処理はサーバ側、画面が端末へ</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>クラウドは資源を共用し、使った量を計測して利用する</span></button><p class="why" hidden>資源の共用と使用量の計測</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">VDIを導入すれば業務データは端末に残らず安心だ、と説明されたとする。そのまま受け入れてはいけない点を頭の中で挙げてみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep200-cloud-vdi-t1-0"> 停止が全員に及ぶので冗長化</label></li><li><label><input type="checkbox" id="ep200-cloud-vdi-t1-1"> 入口の認証は多要素認証で守る</label></li><li><label><input type="checkbox" id="ep200-cloud-vdi-t1-2"> 転送機能は必要なものだけ許可</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="VDI導入後の設定記録（ダミー）"><div class="logtitle">VDI導入後の設定記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">業務データの保存先: VDIサーバ上のみ（運用）</span></div><div class="logrow"><span class="hl">接続端末: 私物PC（利用は継続）。VDIの画面で利用</span></div><div class="logrow"><span class="hl">端末ドライブの割当: 有効</span></div><div class="logrow"><span class="hl">要件: 業務データを、私物PCに残さない</span></div></div></div>
   <p class="q">このあとの対応として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">VDIから端末のディスクへ、保存できない設定にする</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>サーバのディスクを暗号化する … 暗号化しても、接続した端末への保存は止まらない</li><li>端末のOSを最新にする … 更新しても、端末へ保存できる設定は変わらない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>1.5.1 クラウドコンピューティングの概要</li><li>1.5.2 シンクライアントとVDI</li></ul>
   <p>提供形態（借りる範囲）と利用形態（誰が使うか）が別の軸であること、VDIの利点と限界（集約の裏返し）を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep199-mail-dns-http-vlan.html">← #99 メール・DNS・HTTP・VLAN ネットワーク技術の基礎</a><a href="ep201-threat-classes.html">#101 脅威の分類 災害・障害・人の脅威と備え →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

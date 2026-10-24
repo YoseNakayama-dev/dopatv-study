@@ -16,12 +16,11 @@
   <p class="eyebrow">#18 ・ 第1章 情報セキュリティ及びITの基礎</p>
   <h1>ゼロトラストの実現方式 ZTNAとSASEの考え方と限界</h1>
   <ol class="summary"><li>ゼロトラストは製品ではなく考え方。利用者・端末・アプリ・通信の部品を組み合わせて実現する。</li><li>ZTNAは許可されたアプリにだけ接続させ、状態を見て都度判断する。VPNより侵害時に動ける範囲が狭まる。</li><li>SASEはネットワークと安全機能をクラウドで統合する手段の1つ。許可方針の設計は組織の仕事で、段階的に進める。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep118-sase:zero-trust">
   <button type="button" class="flip" aria-expanded="false"><span class="front">ゼロトラスト</span><span class="back" hidden><span class="def">場所だけでは信頼せず、リソースごとに許可する考え方。製品ではなく、複数の部品の組み合わせで実現する。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep118-sase:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>SASEの説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>暗号アルゴリズムの名称</span></button><p class="why" hidden>暗号の名称ではない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ネットワーク機能とセキュリティ機能を、クラウドで統合提供する考え方</span></button><p class="why" hidden>ネットワークとセキュリティをクラウドで統合</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>社内LANだけを守る専用装置</span></button><p class="why" hidden>社内に限らず、拠点や在宅も対象</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>脆弱性情報の共有の枠組み</span></button><p class="why" hidden>脆弱性情報の共有は別の取組み</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">VPNとZTNAで、侵害された端末が動ける範囲がどう違うかを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep118-sase-t1-0"> SASEは手段の1つで同義ではない</label></li><li><label><input type="checkbox" id="ep118-sase-t1-1"> 許可方針の設計は組織の仕事</label></li><li><label><input type="checkbox" id="ep118-sase-t1-2"> 依存・古いシステム・段階的移行</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="リモートアクセス調査記録（ダミー）"><div class="logtitle">リモートアクセス調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 在宅勤務者のリモートアクセス（現行はVPNのみ・ダミー）</span></div><div class="logrow"><span class="hl">VPN接続後は、社内ネットワーク全体に到達できる</span></div><div class="logrow"><span class="hl">端末は、私物でも会社支給でも同じ条件で接続できる</span></div><div class="logrow"><span class="hl">// 端末の状態確認なし / 侵害された端末から複数サーバに到達</span></div></div></div>
   <p class="q">この環境の改善として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">アプリ単位で許可し、利用者と端末の状態を確認して判断する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>VPNの帯域を増やす … 問題は速度でなく到達範囲</li><li>SASE製品を入れて完了 … 許可方針の設計は別に必要</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>1.7.3 ゼロトラストの実現方式</li><li>1.7.4 SASEの概要</li></ul>
   <p>ゼロトラストを実現する部品、VPNとZTNAの到達範囲の違い、SASEが手段であって同義ではない点と限界を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep117-reverse-brute.html">← #17 リバースブルートフォースとパスワードリスト攻撃 ロックで止まらない理由</a><a href="ep119-info-sharing.html">#19 サイバーセキュリティ情報の共有 J-CSIP・ISAC・TLPの考え方 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

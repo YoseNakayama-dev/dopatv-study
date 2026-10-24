@@ -16,12 +16,11 @@
   <p class="eyebrow">#46 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>要塞化の主な実施項目 アカウント・サービス・更新・ログ</h1>
   <ol class="summary"><li>アカウントとサービスは不要なものを減らす。初期パスワードは変え、共有アカウントは避ける。</li><li>修正プログラムは検証して適用し記録。ファイル権限は必要最小限。ログは別の場所に保管し時刻を合わせる。</li><li>チェックリストと構成基準で漏れを減らし、定期点検でずれを見つける。限界は未知の脆弱性と運用の誤り。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep146-hardening-items:default-password">
   <button type="button" class="flip" aria-expanded="false"><span class="front">初期パスワードの変更</span><span class="back" hidden><span class="def">導入時の初期パスワードを変えること。初期値は広く知られているため、最初に行う。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep146-hardening-items:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>要塞化の実施項目として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>不要なサービスを停止し、通信を必要なものに絞る</span></button><p class="why" hidden>不要なサービスの停止と通信の絞り込み</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ログは、保管の容量を節約するために、取得しないで運用する</span></button><p class="why" hidden>ログがないと、事故を調査できない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>運用の手間を減らすため、管理者アカウントを全員で共有する</span></button><p class="why" hidden>共有だと、誰の操作か追えない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>修正プログラムは、業務に影響しうるので、一切適用しない</span></button><p class="why" hidden>脆弱性が残る。検証して適用する</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">削除の操作ログに共有の管理者アカウントしか残らない場合に、誰の操作か特定できない理由と、パスワードを強くしても解決しない理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep146-hardening-items-t1-0"> 改ざんや消去に備える</label></li><li><label><input type="checkbox" id="ep146-hardening-items-t1-1"> ログがないと調査できない</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="ファイルサーバの調査記録（ダミー）"><div class="logtitle">ファイルサーバの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社内ファイルサーバB（ダミー）。重要フォルダが削除された</span></div><div class="logrow"><span class="hl">誰が削除したかは、特定できていない</span></div><div class="logrow"><span class="hl">操作ログ: 削除の操作を記録。実行アカウントは admin-shared</span></div><div class="logrow"><span class="hl">admin-shared は、運用担当5人が共同で使う管理者アカウント</span></div><div class="logrow"><span class="hl">パスワードは強度基準を満たす / 5人は個人のアカウントも持つ</span></div></div></div>
   <p class="q">特定できない原因への対策として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">共有アカウントを廃止し、管理作業も個人のアカウントで行う</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ログの取得を始める … 削除の記録は、すでにある（アカウントまで）</li><li>パスワードを強くする … 強度は基準を満たす。5人の区別はつかない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.2.2 要塞化の主な実施項目</li></ul>
   <p>実施項目ごとに、なぜそうするかの理由と、限界（未知の脆弱性・運用の誤り）を確かめながら読む。点検は診断の回で扱う。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep145-host-hardening.html">← #45 ホストの要塞化の概要 入口を減らす考え方</a><a href="ep147-vuln-assessment.html">#47 脆弱性診断の概要と実施 範囲と時点が肝 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

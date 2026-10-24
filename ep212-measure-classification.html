@@ -16,12 +16,11 @@
   <p class="eyebrow">#112 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>情報セキュリティ対策の分類 機能と実施方法の二つの軸</h1>
   <ol class="summary"><li>機能は抑止・予防・検知・回復、実施方法は組織的・人的・物理的・技術的。二つの軸を組み合わせて抜けを点検する。</li><li>予防だけに偏ると、起きたとき気付けず戻せない。検知は気付くだけで被害を止めないので、対応につなげる。</li><li>一つの対策が複数の機能を持つことがある。分類は整理の道具で十分さは示さないので、リスクに応じて組み合わせる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep212-measure-classification:deterrence">
   <button type="button" class="flip" aria-expanded="false"><span class="front">抑止</span><span class="back" hidden><span class="def">不正をためらわせる機能。警告の表示や監視の周知が例。心理に働きかけ、実行そのものは止めない。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep212-measure-classification:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>対策の分類の説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>抑止は、被害を元の状態に戻す機能である</span></button><p class="why" hidden>元に戻すのは回復</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>検知は、異常に気付き、対応につなげる機能</span></button><p class="why" hidden>気付いて対応につなげる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>技術的対策だけで、十分に守れる</span></button><p class="why" hidden>他の面の対策も組み合わせる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>監視カメラは、検知の機能しか持たない</span></button><p class="why" hidden>抑止にもなる</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">予防の対策だけに偏った構成が問題になる理由と、補うべき対策を頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep212-measure-classification-t1-0"> 監視カメラは抑止と検知を兼ねる</label></li><li><label><input type="checkbox" id="ep212-measure-classification-t1-1"> 分類は十分さを示さない</label></li><li><label><input type="checkbox" id="ep212-measure-classification-t1-2"> リスクに応じて組み合わせて選ぶ</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="サーバ室の管理記録（ダミー）"><div class="logtitle">サーバ室の管理記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">先月、サーバ室から、機器が無断で持ち出された</span></div><div class="logrow"><span class="hl">入口は扉だけで、誰でも出入りできる状態</span></div><div class="logrow"><span class="hl">出入りの記録は、取っていない</span></div><div class="logrow"><span class="hl">要件: 無断の持出しを、未然に防ぎたい</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">入室できる人を限定し、入口を施錠する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>出入りの記録を取り、毎月確認する … 記録を取っても、誰でも入れる状態は変わらず、持出しは止められない</li><li>機器の再調達の予算を確保する … 持ち出された後の備えで、未然には防げない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.1.1 情報セキュリティ対策の分類</li></ul>
   <p>機能（抑止・予防・検知・回復）と実施方法（組織的・人的・物理的・技術的）の二つの軸で、対策の抜けを点検する考え方を確かめる。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep211-security-audit.html">← #111 情報セキュリティ監査とシステム監査 独立と証拠で測る</a><a href="ep213-sandbox.html">#113 サンドボックス 隔離して動かして見る仕組みと限界 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

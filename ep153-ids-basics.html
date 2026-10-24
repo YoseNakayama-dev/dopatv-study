@@ -16,12 +16,11 @@
   <p class="eyebrow">#53 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>IDSの概要と種類 検知して知らせる見張り番</h1>
   <ol class="summary"><li>IDSは通信やホストを監視し、不正の兆候を検知して通知・記録する。通信は止めない（遮断はIPSの役割）。</li><li>監視場所で分けるとネットワーク型とホスト型。暗号化通信は、ネットワーク型は復号しない限り中身が見えない。</li><li>検知方式で分けるとシグネチャ型とアノマリ型。前者は未知に弱く、後者は誤検知が増えやすい。併用も多い。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep153-ids-basics:ids">
   <button type="button" class="flip" aria-expanded="false"><span class="front">IDS（侵入検知システム）</span><span class="back" hidden><span class="def">通信やホストを監視し、不正の兆候を検知して通知・記録する。主な機能は検知・アラート通知・ログ記録で、通信は止めない。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep153-ids-basics:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>IDSの基本的な役割として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ネットワーク型は、暗号化された通信の中身も、そのまま検査できる</span></button><p class="why" hidden>暗号化の中身は見えない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>シグネチャ型は、未知の攻撃パターンも、確実に検知できる</span></button><p class="why" hidden>未知の攻撃には弱い</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>検知した不正な通信を、自動的に遮断することが、基本の役割である</span></button><p class="why" hidden>遮断はIPSの役割</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>不正の兆候を検知して、通知・記録することが基本の役割である</span></button><p class="why" hidden>検知して通知・記録する</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">ネットワーク型とホスト型の違いを、監視する対象と暗号化通信の見え方に注目して、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep153-ids-basics-t1-0"> シグネチャ型は既知に強く未知に弱い</label></li><li><label><input type="checkbox" id="ep153-ids-basics-t1-1"> アノマリ型は未知も検知しうるが誤検知が増えやすい</label></li><li><label><input type="checkbox" id="ep153-ids-basics-t1-2"> 両方を組み合わせる製品も多い</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="サーバの通信異常の調査記録（ダミー）"><div class="logtitle">サーバの通信異常の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">IDS: ネットワーク型。サーバ用セグメントの通信を、ミラーポートで受けている</span></div><div class="logrow"><span class="hl">検知: 提供元の最新の攻撃パターンとの照合のみ。パターンは最新を適用済み</span></div><div class="logrow"><span class="hl">ある日から3日間、サーバから外部へ、大量の通信が続いた</span></div><div class="logrow"><span class="hl">通信は暗号化されておらず、ミラーポートで全量を取得できていた</span></div><div class="logrow"><span class="hl">通信は正規のプロトコルの形式で、パターンと一致せず、アラート0件</span></div></div></div>
   <p class="q">検知の方式として、追加すべきなのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">通常の通信量を基準に、外れた通信を検知する方式を併用する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ミラーポートの設定を見直す … 通信は、全量を取得できていた</li><li>検知パターンを追加する … 通信は正規の形式で、パターン照合では判定できない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.6.1 侵入検知システムの概要</li><li>5.6.2 IDSの種類と主な機能</li></ul>
   <p>IDSが止めない理由、ミラーポートでの配置、監視場所と検知方式という二つの分け方を、混同しないよう確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep152-fw-limits-ext.html">← #52 FWで防げないものと拡張機能 許可した通信の中身が盲点</a><a href="ep154-ids-limits-ops.html">#54 IDSの限界と運用の課題 誤検知と見逃しにどう向き合うか →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

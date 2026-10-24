@@ -16,12 +16,11 @@
   <p class="eyebrow">#94 ・ 追加テーマ（目次外）</p>
   <h1>インシデント対応とフォレンジック 証拠保全とログ相関</h1>
   <ol class="summary"><li>初動は被害を抑えつつ証拠を失わない。隔離し、消えやすい揮発性の情報から先に採取する。</li><li>ディスクは書込みを防いで複製し、ハッシュ値で照合。解析は複製で行い、原本と受け渡しを記録する。</li><li>ログ相関は時刻同期が前提。上書き・消去・保存期間切れでは追えないので、別の場所へ転送して保管する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep194-incident-forensics:volatile-info">
   <button type="button" class="flip" aria-expanded="false"><span class="front">揮発性の情報</span><span class="back" hidden><span class="def">電源を切ると失われる情報。メモリ上の情報や通信の状態など。消えやすいものから先に採取する。</span><span class="note">電源を切る前に、何が失われるかを考える。メモリ上の情報や通信の状態は、電源断で消える。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep194-incident-forensics:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>ディスクの証拠保全として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>原本のディスクを、そのまま接続して解析する</span></button><p class="why" hidden>原本に接続すると内容が変わりうる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>不要なファイルを消してから、複製を取得する</span></button><p class="why" hidden>消すと証拠が失われる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>書込みを防いで複製を取り、ハッシュ値を記録する</span></button><p class="why" hidden>書込みを防いで複製し、ハッシュ値を記録</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>複製の取得は省き、ファイルの一覧だけを保管する</span></button><p class="why" hidden>一覧だけでは情報が失われる</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">感染が疑われる起動中の端末について、「すぐ電源を切る」より先に何をするか。理由もあわせて、頭の中で組み立ててみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep194-incident-forensics-t1-0"> 時刻同期とタイムゾーンの統一</label></li><li><label><input type="checkbox" id="ep194-incident-forensics-t1-1"> 上書き・消去・保存期間切れでは追えない</label></li><li><label><input type="checkbox" id="ep194-incident-forensics-t1-2"> 別の場所への転送と保管</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="感染疑い端末の初動記録（ダミー）"><div class="logtitle">感染疑い端末の初動記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">端末Aに、マルウェア感染の疑いがある。起動中である</span></div><div class="logrow"><span class="hl">端末Aは、外部への不審な通信を、今も続けている</span></div><div class="logrow"><span class="hl">このあと、原因と侵入経路の調査が必要になる</span></div><div class="logrow"><span class="hl">要件: 被害の拡大を止めつつ、証拠を保全したい</span></div></div></div>
   <p class="q">この端末への初動として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">電源は切らずに隔離し、揮発性の情報から先に採取する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>すぐ電源を切り、ディスクを保全する … 電源を切るとメモリ上の情報が失われ、原因の調査が難しくなる</li><li>通信を続けたまま、様子を観察する … 不審な通信が続くと、被害が拡大する</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>EX-08 インシデント対応とデジタルフォレンジック</li></ul>
   <p>初動で何が消えやすいか、原本・複製・ハッシュ値の役割、ログ相関の前提と限界を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep193-secure-dev-sast-dast.html">← #93 脅威モデリングとSAST・DAST・SCA 見つけられる範囲の違い</a><a href="ep195-mail-auth-spf-dkim-dmarc.html">#95 メール認証 SPF・DKIM・DMARC なりすましへの備え →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

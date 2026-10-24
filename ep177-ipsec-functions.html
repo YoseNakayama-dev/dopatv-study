@@ -16,12 +16,11 @@
   <p class="eyebrow">#77 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
   <h1>IPsecの機能と構成プロトコル 守る役と鍵を配る役</h1>
   <ol class="summary"><li>ESPは暗号化と認証、AHは認証のみ。AHは暗号化しないので、盗聴を防ぐならESPを選ぶ。</li><li>IKEが相手の認証、鍵の交換、SAの確立を自動で行う。事前共有鍵が弱いとIKEの認証が破られるおそれがある。</li><li>両端のSA設定をそろえ、FWでIKEとESPを許可し、NAT越えも確認する。どれかが欠けると接続できないおそれがある。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep177-ipsec-functions:ipsec-functions">
   <button type="button" class="flip" aria-expanded="false"><span class="front">IPsecの四つの機能</span><span class="back" hidden><span class="def">機密性、完全性、通信相手の認証、再送（リプレイ）の防止。ESP・AH・IKEなどが分担して実現する。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep177-ipsec-functions:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>IKEの説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通信データの暗号化を直接行い、鍵の交換は行わないプロトコルである</span></button><p class="why" hidden>暗号化を行うのはESP</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>通信相手を認証し、鍵の交換とSAの確立を自動で行うプロトコルである</span></button><p class="why" hidden>認証し、鍵交換とSAの確立を行う</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>パケットの認証だけを行い、暗号化の鍵の管理は担当しない仕組みである</span></button><p class="why" hidden>認証だけを行うのはAH</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>AHかESPのどちらかを選ぶと、鍵の管理が不要になるプロトコルである</span></button><p class="why" hidden>どちらでも鍵の管理は必要</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">盗聴も改ざんも防ぎたいとき、ESPとAHのどちらを選ぶか。理由を頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep177-ipsec-functions-t1-0"> 両端のSA設定の一致</label></li><li><label><input type="checkbox" id="ep177-ipsec-functions-t1-1"> FWでIKEとESPを許可</label></li><li><label><input type="checkbox" id="ep177-ipsec-functions-t1-2"> NAT越えの確認</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="IPsec拠点間通信の構成に関する調査記録（ダミー）"><div class="logtitle">IPsec拠点間通信の構成に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 拠点間の通信に、IPsecのトンネルを使う</span></div><div class="logrow"><span class="hl">通信内容の盗聴と、データの改ざんを、防ぎたい</span></div><div class="logrow"><span class="hl">通信相手が正規であることも、確認したい</span></div><div class="logrow"><span class="hl">要件: 鍵は手作業でなく自動で交換し、定期的に更新したい</span></div></div></div>
   <p class="q">要件を満たす構成として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">ESPで暗号化と認証を行い、IKEで鍵を自動で交換する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>AHを使い、鍵はIKEで自動交換する … AHは暗号化しないので、盗聴を防げない</li><li>ESPを使い、鍵は管理者が手作業で設定する … 鍵を自動で交換する要件に反する</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>7.3.3 IPsecによって提供される機能</li><li>7.3.4 IPsecを構成するプロトコルや機能の概要</li></ul>
   <p>ESP・AH・IKE・SAの役割分担と、AHでは盗聴を防げない点、FWで通すべき通信を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep176-ipsec-modes.html">← #76 IPsecの概要と二つのモード ヘッダを残すか包むか</a><a href="ep178-ssl-vpn.html">#78 TLSによるVPN（SSL-VPN） ソフトの要否で選ぶ三つの型 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

@@ -16,12 +16,11 @@
   <p class="eyebrow">#9 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
   <h1>TLS 1.3 通信を守る仕組みの何が変わった？</h1>
   <ol class="summary"><li>TLS 1.3は静的RSA・静的DHや圧縮を廃止し、残る対称暗号をAEADにそろえた。</li><li>公開鍵ベースの鍵交換はすべて前方秘匿性を持ち、長期鍵が漏れても過去の通信の鍵は復元されない。</li><li>0-RTTは往復を省くが前方秘匿でなく再送対策も弱い。TLSだけでアプリの脆弱性は消えない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep109-tls13:tls13">
   <button type="button" class="flip" aria-expanded="false"><span class="front">TLS 1.3</span><span class="back" hidden><span class="def">RFC 8446 で規定されたTLSの版。TLS 1.2 から古い方式を整理し、前方秘匿性やハンドシェイクの暗号化などを備える。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep109-tls13:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>前方秘匿性を持つ鍵交換として適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>長期の秘密鍵から通信鍵を復元できる方式</span></button><p class="why" hidden>静的な方式なら、長期鍵の漏えいで過去も危険</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>使い捨てのDH鍵ペアで共有し、破棄する方式</span></button><p class="why" hidden>使い捨てのDH鍵ペアで共有し、破棄する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>圧縮してから暗号化する方式</span></button><p class="why" hidden>圧縮は廃止。前方秘匿性とは別</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>常に0-RTTで再開する方式</span></button><p class="why" hidden>0-RTTは前方秘匿ではなく、再送の恐れもある</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">TLS 1.3 でも 0-RTT を有効にする前に確かめておくべきことを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep109-tls13-t1-0"> TLS は通信路の保護</label></li><li><label><input type="checkbox" id="ep109-tls13-t1-1"> アプリの脆弱性はそれだけでは消えない</label></li><li><label><input type="checkbox" id="ep109-tls13-t1-2"> 古い方式の無効化と前方秘匿性の設定は別に必要</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="鍵漏えい後の調査記録（ダミー）"><div class="logtitle">鍵漏えい後の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">サーバの長期秘密鍵が、後日漏えいした（ダミー）</span></div><div class="logrow"><span class="hl">攻撃者は、過去に盗聴した暗号文を保存していた</span></div><div class="logrow"><span class="hl">// 鍵交換: サーバ公開鍵で暗号化した値から通信鍵を決定（ダミー）</span></div></div></div>
   <p class="q">長期鍵の漏えい後に、過去の通信が解読できた設計上の理由は？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">長期の秘密鍵から、通信鍵を復元できる鍵交換だった</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>サーバ証明書の署名が弱かった … 署名は相手の確認の話。鍵交換とは別</li><li>暗号文を保存されたこと自体 … 保存だけでは解読できない。鍵の復元が原因</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>7.4.1 SSL/TLSの概要</li><li>7.4.2 SSL/TLSにおけるセッション及びコネクション</li></ul>
   <p>鍵交換の方式と前方秘匿性の関係、TLS 1.3 で整理された点、0-RTT が通常のデータと違う点を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep108-fido2.html">← #8 FIDO2・WebAuthn 秘密を渡さずに本人だと示す</a><a href="ep110-ransomware.html">#10 ランサムウェア 被害の大きさは備えで決まる →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

@@ -16,12 +16,11 @@
   <p class="eyebrow">#22 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>DoS攻撃の種類 狙う資源で4つに分ける</h1>
   <ol class="summary"><li>DoSは可用性への攻撃で、DDoSは多数の機器から分散して行う。狙う資源で帯域・接続・アプリ・脆弱性に分けて考える。</li><li>接続型（SYNフラッド）は、未完了の接続が溜まって新規接続を受けられない。回線に余裕があっても応答しなくなる。</li><li>正規と同形式で送信元が分散・偽装されるため防ぎにくい。回線・接続・アプリの状況から資源を切り分ける。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep122-dos:dos">
   <button type="button" class="flip" aria-expanded="false"><span class="front">DoS攻撃</span><span class="back" hidden><span class="def">サービスを使えなくする、可用性への攻撃。狙う資源によって、帯域・接続・アプリ・脆弱性の型に整理できる。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep122-dos:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>DoS攻撃で、直接損なわれるセキュリティ特性は？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>機密性</span></button><p class="why" hidden>情報が漏れないこと</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>完全性</span></button><p class="why" hidden>改ざんされないこと</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>可用性</span></button><p class="why" hidden>可用性</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>真正性</span></button><p class="why" hidden>本物であると確認できること</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">サービスが応答しないのに回線の使用率は平常だった。どの型を疑い、何を確認するかを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep122-dos-t1-0"> 正規と同形式</label></li><li><label><input type="checkbox" id="ep122-dos-t1-1"> 送信元が分散している</label></li><li><label><input type="checkbox" id="ep122-dos-t1-2"> 送信元の偽装もありうる</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="サーバ障害の調査記録（ダミー）"><div class="logtitle">サーバ障害の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 公開Webサーバ（ダミー）。サービスが応答しない</span></div><div class="logrow"><span class="hl">回線の使用率は、平常時と同程度（約20%）</span></div><div class="logrow"><span class="hl">ハンドシェイク未完了（SYN受信済み）の接続が、上限まで残る</span></div><div class="logrow"><span class="hl">送信元は、世界各地の多数のIPアドレスに分散</span></div><div class="logrow"><span class="hl">// 完了したHTTP要求の記録は少なく、アプリのCPU・メモリは余裕あり</span></div></div></div>
   <p class="q">この障害で、枯渇した資源として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">TCP接続の状態を保持する資源（接続の枠）</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>回線の帯域 … 使用率は平常時と同程度</li><li>アプリの処理能力 … CPU・メモリは余裕あり</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.7.1 DoS攻撃の種類と対策</li></ul>
   <p>狙う資源（帯域・接続・アプリ・脆弱性）ごとの仕組みと観測される症状の違い、DDoSが防ぎにくい理由を整理しながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep121-dns-defense.html">← #21 DNSサーバへの攻撃への対策 守備範囲と限界</a><a href="ep123-dos-defense.html">#23 DoS攻撃への総合的な対策 型に合わせた守備範囲と限界 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

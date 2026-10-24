@@ -16,12 +16,11 @@
   <p class="eyebrow">#4 ・ 追加テーマ（目次外）</p>
   <h1>認可不備 IDOR/BOLA 認可チェックが抜けると何が起こる？</h1>
   <ol class="summary"><li>IDOR/BOLAは、URLなどのIDを書き換えられ、オブジェクト単位の認可チェックが無いと成立する。</li><li>根本対策は、利用者IDをセッションから取り、参照・更新・削除のたびに所有者を確認すること。</li><li>推測しにくいIDは補助、WAFでは防げない場合がある。共有データはポリシーやロールで判断する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep104-idor:idor">
   <button type="button" class="flip" aria-expanded="false"><span class="front">IDOR（Insecure Direct Object Reference）</span><span class="back" hidden><span class="def">URLやパラメータ中の識別子を書き換えると、他人のオブジェクトにアクセス・変更できてしまう状態。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep104-idor:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>他人の注文が見える脆弱性の根本対策は？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>注文番号を連番にしない</span></button><p class="why" hidden>推測しにくくなるが補助にとどまる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>注文ごとに所有者を確認する</span></button><p class="why" hidden>リソースごとに認可を確認する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>WAFを導入する</span></button><p class="why" hidden>通信が正常に見え、防げない場合がある</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>パスワードを複雑にする</span></button><p class="why" hidden>認証の強化で、認可の代わりではない</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">注文番号を連番から長いランダムな値に変えただけでは、IDORの対策として足りない理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep104-idor-t1-0"> 他人のデータの更新・削除ができる</label></li><li><label><input type="checkbox" id="ep104-idor-t1-1"> 利用者IDはセッションから取る</label></li><li><label><input type="checkbox" id="ep104-idor-t1-2"> すべての操作で所有者を確認する</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="請求書APIのアクセスログ（ダミー）"><div class="logtitle">請求書APIのアクセスログ（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">請求書 8812 の所有者: alice（一般利用者）</span></div><div class="logrow"><span class="hl">GET /api/invoices/8812  user=alice  200</span></div><div class="logrow"><span class="hl">GET /api/invoices/8813  user=alice  200</span></div><div class="logrow"><span class="hl">請求書 8813 の所有者: bob</span></div></div></div>
   <p class="q">原因として最も適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">オブジェクト単位の認可（所有者の確認）が無い</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>IDが連番 … 補助的な話。本質は認可チェックの欠如</li><li>認証が弱い … 認証は通っている。範囲を決める認可の話</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>EX-01 認可不備・IDOR/BOLA</li></ul>
   <p>認証と認可の違い、所有者チェックの置き場所、推測しにくいIDやWAFが補助にとどまる理由を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep103-xss.html">← #3 XSS 出力の扱いで起きる攻撃と防御</a><a href="ep105-csrf.html">#5 CSRF 本人の意図かを確認しないと何が起こる？ →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

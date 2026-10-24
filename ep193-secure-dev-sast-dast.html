@@ -16,12 +16,11 @@
   <p class="eyebrow">#93 ・ 追加テーマ（目次外）</p>
   <h1>脅威モデリングとSAST・DAST・SCA 見つけられる範囲の違い</h1>
   <ol class="summary"><li>脅威モデリングは設計段階で資産・データの流れ・信頼境界を図にし、STRIDEの観点で脅威を洗い出して設計に反映する。</li><li>SASTは実行せず解析（誤検知あり）、DASTは動作中に入力（触れた範囲のみ）、SCAは部品の既知の脆弱性（自社コード対象外）。</li><li>設計上の不備はツールでは見つけにくく、入れただけでは安全にならない。誤検知を確認し、優先度をつけて直す。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep193-secure-dev-sast-dast:threat-modeling">
   <button type="button" class="flip" aria-expanded="false"><span class="front">脅威モデリング</span><span class="back" hidden><span class="def">設計段階で資産・データの流れ・信頼境界を図にし、脅威を洗い出して設計に反映する手法。</span><span class="note">設計の段階なら、直す手間が小さい。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep193-secure-dev-sast-dast:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>DASTの説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ソースコードを、実行せずに調べて、誤りを見つける手法</span></button><p class="why" hidden>それはSASTの説明</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>利用するOSSの既知の脆弱性を、一覧と照合する手法</span></button><p class="why" hidden>それはSCAの説明</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>設計の段階で、守る資産と脅威を洗い出す手法</span></button><p class="why" hidden>それは脅威モデリング</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>動作中のアプリに入力して、挙動を調べる手法</span></button><p class="why" hidden>動作中のアプリで挙動を調べる</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">SASTで指摘がなくても脆弱性が残りうる理由を、手法の見える範囲の違いから説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep193-secure-dev-sast-dast-t1-0"> 触れた範囲しか分からない</label></li><li><label><input type="checkbox" id="ep193-secure-dev-sast-dast-t1-1"> ログインが必要な画面は認証情報が要る</label></li><li><label><input type="checkbox" id="ep193-secure-dev-sast-dast-t1-2"> 手法を組み合わせる</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="脆弱性対応の状況調査（ダミー）"><div class="logtitle">脆弱性対応の状況調査（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">ビルドの度に、自社コードを静的解析にかけている</span></div><div class="logrow"><span class="hl">指摘はなかったが、利用中のOSSに既知の脆弱性があった</span></div><div class="logrow"><span class="hl">OSSは多数あり、利用する版の一覧を把握していない</span></div><div class="logrow"><span class="hl">要件: 公表された脆弱性の影響を、速やかに判断したい</span></div></div></div>
   <p class="q">この事業者の対応として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">SCAで利用部品を洗い出し、既知の脆弱性と継続的に照合する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>静的解析の対象を、増やす … 静的解析はコードの記述の誤りを探す手法で、部品の版と公表情報の照合はしない</li><li>設計の段階で、脅威モデリングを行う … 脅威モデリングは設計上の脅威を洗い出す。利用部品の版は調べない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>EX-07 セキュア開発・脅威モデリング・SAST/DAST/SCA</li></ul>
   <p>脅威モデリングの手順とSTRIDE、SAST・DAST・SCAが見つけられる範囲の違いと限界を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep192-supply-chain-sbom.html">← #92 サプライチェーン攻撃とSBOM 依存関係を見える化する</a><a href="ep194-incident-forensics.html">#94 インシデント対応とフォレンジック 証拠保全とログ相関 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

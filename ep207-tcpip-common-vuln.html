@@ -16,12 +16,11 @@
   <p class="eyebrow">#107 ・ 第3章 情報セキュリティにおける脆弱性</p>
   <h1>TCP/IP共通の脆弱性 平文・偽装・資源枯渇</h1>
   <ol class="summary"><li>TCP/IPは相手を信頼する前提の設計。平文は盗聴・改ざんされ、送信元アドレスは申告で偽れ、認証は含まれない。</li><li>接続状態に資源を使うためSYNフラッドで枯渇しうる。番号の推測は割込みを、偽の送信元は反射を招く。</li><li>暗号化・送信元の遮断・接続数の制限で備える。ただし暗号化は偽装や過負荷を止めず、多層で備える。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep207-tcpip-common-vuln:trust-model">
   <button type="button" class="flip" aria-expanded="false"><span class="front">信頼を前提とした設計</span><span class="back" hidden><span class="def">TCP/IPの初期の設計は、通信相手を信頼する前提だった。守る仕組みは後から足されたものが多い。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep207-tcpip-common-vuln:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>TCP/IPの弱点の説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>送信元アドレスは、通信路が必ず検証している</span></button><p class="why" hidden>送信元は申告で、検証されない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>暗号化は、TCPが標準で行う</span></button><p class="why" hidden>TCP自体に暗号化はない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>SYNフラッドは、盗聴で認証情報を得る攻撃である</span></button><p class="why" hidden>SYNフラッドは資源を使い果たさせる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>送信元アドレスは申告で、偽ることができる</span></button><p class="why" hidden>送信元アドレスは偽ることができる</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">暗号化を導入しても残るTCP/IPの弱点と、それぞれの対策を、頭の中で整理してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep207-tcpip-common-vuln-t1-0"> SYNフラッドは接続管理の資源を使い果たさせる</label></li><li><label><input type="checkbox" id="ep207-tcpip-common-vuln-t1-1"> 確認が済むまで接続の情報を持たない</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="通信の調査記録（ダミー）"><div class="logtitle">通信の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">サーバの管理に、Telnetを使っている（社内LAN）</span></div><div class="logrow"><span class="hl">同じLAN上の端末で、パケットを取得して確認した</span></div><div class="logrow"><span class="hl">取得内容に、管理者のIDとパスワードが読み取れた</span></div><div class="logrow"><span class="hl">要件: 認証情報を、通信中に読み取られないようにする</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">管理の通信を暗号化する（代表がSSH）</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>外部からのTelnetをFWで遮断する … 取得は同じLAN内で、通信は境界のFWを通らない</li><li>パスワードを長く複雑にする … 平文で流れるため、長くても通信中にそのまま読み取られる</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>3.3.1 TCP/IPプロトコル全般における共通の脆弱性</li><li>3.3.2 TCP/IPプロトコル全般における共通の脆弱性への対策</li></ul>
   <p>設計上の弱点（信頼前提・平文・偽装・認証なし）と仕組みから生じる弱点を対応づけ、暗号化の限界を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep206-network-config-vuln.html">← #106 ネットワーク構成の脆弱性 区画・公開・経路・障害</a><a href="ep208-security-policy.html">#108 情報セキュリティポリシー 体系と策定の留意点 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

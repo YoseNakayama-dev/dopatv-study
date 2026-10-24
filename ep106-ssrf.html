@@ -16,12 +16,11 @@
   <p class="eyebrow">#6 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>SSRF サーバを踏み台にされると何が起こる？</h1>
   <ol class="summary"><li>SSRFは、利用者指定のURLをサーバが取得する機能で、送信先を限定しないと内部へ届いてしまう。</li><li>許可リストが最優先。送信先が決まるなら、スキームやパスは固定し、リダイレクトの追従を無効にする。</li><li>拒否リストや名前の検査だけでは回避されうる。解決IPの検証、ネットワーク制限、クラウド設定で重ねる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep106-ssrf:ssrf">
   <button type="button" class="flip" aria-expanded="false"><span class="front">SSRF（サーバサイド・リクエスト・フォージェリ）</span><span class="back" hidden><span class="def">攻撃者が、サーバ側アプリを使って内部・外部のネットワークや自分自身へリクエストを送らせる攻撃。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep106-ssrf:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>SSRFの対策として最も適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>出力時にHTMLエスケープする</span></button><p class="why" hidden>XSSの対策</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>送信先を許可リストで限定する</span></button><p class="why" hidden>送信先を許可リストで限定する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>秘密情報を埋め込み、照合する</span></button><p class="why" hidden>CSRFの対策</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SQLのプレースホルダを使う</span></button><p class="why" hidden>SQLインジェクション向けの対策</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">外から届かない内部システムの情報が、SSRFで利用者に返ってくる仕組みを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep106-ssrf-t1-0"> 拒否リストは回避されやすい</label></li><li><label><input type="checkbox" id="ep106-ssrf-t1-1"> 許可リストを最優先にする</label></li><li><label><input type="checkbox" id="ep106-ssrf-t1-2"> 解決IP検証・リダイレクト無効・ネットワーク制限</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="プレビューAPIのアクセスログ（ダミー）"><div class="logtitle">プレビューAPIのアクセスログ（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">GET /preview?url=http://img.cdn.example/a.png  200</span></div><div class="logrow"><span class="hl">GET /preview?url=http://internal.example/admin  200</span></div><div class="logrow"><span class="hl">// 内部システムは、Webサーバからのみ到達できる</span></div><div class="logrow"><span class="hl">// プレビューAPIは、指定URLをそのまま取得して返す</span></div></div></div>
   <p class="q">ログの現象を生んだ、設計上の不備は？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">送信先を限定せず、利用者指定のURLを取得した</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>内部に認証が無い … 到達可否の話。今回は送信先を限定しない点が不備</li><li>ログの出力レベルが低い … 記録の話で、現象の原因ではない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.8.8 サーバサイドリクエストフォージェリ（SSRF）</li></ul>
   <p>なぜ内部に届くのか、許可リストが最優先な理由、DNSリバインディングやリダイレクトという限界を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep105-csrf.html">← #5 CSRF 本人の意図かを確認しないと何が起こる？</a><a href="ep107-session.html">#7 セッション管理の不備 IDの扱いを誤るとなりすまされる →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

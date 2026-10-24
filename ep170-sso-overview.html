@@ -16,12 +16,11 @@
   <p class="eyebrow">#70 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
   <h1>SSOの概要 一度の認証で全部使う</h1>
   <ol class="summary"><li>SSOは一度の認証で複数のシステムを使え、認証回数とパスワード数が減り、ID管理と認証強化を集約できる。</li><li>認証が破られると全システムに影響し、基盤が止まると全システムが使えない。離席や盗難、対象外のシステムにも注意。</li><li>対策は多要素認証、認証基盤の冗長化、有効時間の制限とログアウトの徹底、重要な操作での追加認証。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep170-sso-overview:sso">
   <button type="button" class="flip" aria-expanded="false"><span class="front">SSO（シングルサインオン）</span><span class="back" hidden><span class="def">一度の認証で複数のシステム・サービスを利用できる仕組み。認証済みの結果を各システムが受け入れる。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep170-sso-overview:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>SSOの導入時の注意として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>認証基盤が停止しても、各サービスは通常どおり使えるため、冗長化は不要である</span></button><p class="why" hidden>停止すると全システムが使えない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>一度のログインで済むため、有効時間やログアウトの管理は、不要である</span></button><p class="why" hidden>有効時間とログアウトの管理が必要</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>認証基盤が破られると全体に影響するため、多要素認証などで認証を強化する</span></button><p class="why" hidden>集中する分、認証を強化する</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利用者の手間は減るが、管理者のID管理は、サービスごとに別々に必要である</span></button><p class="why" hidden>ID管理も集約できる</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">SSOの利点と注意点が、どちらも「認証の集中」から生じる理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep170-sso-overview-t1-0"> 認証済みの状態がそのまま使われうる</label></li><li><label><input type="checkbox" id="ep170-sso-overview-t1-1"> 有効時間を限り、ログアウトを徹底する</label></li><li><label><input type="checkbox" id="ep170-sso-overview-t1-2"> 重要な操作は追加で認証を求める</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="社内システムの認証見直しに関する調査記録（ダミー）"><div class="logtitle">社内システムの認証見直しに関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 五つの社内Webシステムが、個別のパスワードで認証する</span></div><div class="logrow"><span class="hl">利用者は覚えきれず、同じパスワードを使い回している</span></div><div class="logrow"><span class="hl">各システムは、外部の認証基盤の結果を受け入れる設定ができる</span></div><div class="logrow"><span class="hl">要件: 認証の回数を減らし、認証の強さは一か所で高めたい</span></div></div></div>
   <p class="q">要件を満たす方法として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">共通の認証基盤で認証を集約してSSOにし、その認証を多要素認証にする</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>全システムのパスワードを、同じ値にそろえる … 各システムで入力が要り、認証の回数が減らない</li><li>SSOにするが、認証はパスワードのみとする … 認証の強さを高める要件を満たさない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>6.8.1 SSOの概要</li></ul>
   <p>SSOの利点と、認証が一か所に集中することで生じるリスク、それぞれに対応する対策（多要素認証・冗長化・有効時間）の対応を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep169-directory-eap.html">← #69 ディレクトリサービスとEAP 名簿と入口を整える</a><a href="ep171-sso-mechanisms.html">#71 SSOを実現する仕組み どこで認証を受けるか →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

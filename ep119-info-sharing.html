@@ -16,12 +16,11 @@
   <p class="eyebrow">#19 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>サイバーセキュリティ情報の共有 J-CSIP・ISAC・TLPの考え方</h1>
   <ol class="summary"><li>攻撃者は似た手口を複数の組織に使うことがあり、共有すると他組織が早く気づいて備えられる。</li><li>共有では通信先やファイルの特徴値、手口と対処を扱い、個人・顧客情報は除いてTLPで範囲を決める。</li><li>共有された情報は古い・誤りもありうるため、自組織で確認して使い、自分からも出して信頼を育てる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep119-info-sharing:j-csip">
   <button type="button" class="flip" aria-expanded="false"><span class="front">J-CSIP</span><span class="back" hidden><span class="def">IPAを情報の窓口（ハブ）として、参加組織の間で標的型攻撃などの情報を共有する取組み。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep119-info-sharing:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>TLPの「赤（RED）」が示すのは、次のうちどれ？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>名指しされた受け手のみに限り、再共有しない</span></button><p class="why" hidden>名指しの受け手のみ・再共有しない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>公開してよい</span></button><p class="why" hidden>公開してよいのは、CLEAR（旧WHITE）</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>同じ業界の組織内で、広く共有できる</span></button><p class="why" hidden>コミュニティ内は、GREEN</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>緊急度が高い情報である</span></button><p class="why" hidden>色は緊急度でなく、共有範囲</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">被害を受けた組織が、自社の被害情報を黙っておくより共有したほうがよいとされる理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep119-info-sharing-t1-0"> 個人・顧客情報を除く</label></li><li><label><input type="checkbox" id="ep119-info-sharing-t1-1"> TLPで共有範囲を決める</label></li><li><label><input type="checkbox" id="ep119-info-sharing-t1-2"> 受け取った情報は自組織で確認して使う</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="情報共有の検討メモ（ダミー）"><div class="logtitle">情報共有の検討メモ（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">状況: 標的型メールの被害を受け、業界のISACへ共有を検討（ダミー）</span></div><div class="logrow"><span class="hl">共有の候補 : 添付ファイルの特徴値、通信先、攻撃の手口の概要</span></div><div class="logrow"><span class="hl">含まれている : 被害端末の利用者の氏名、顧客データの抜粋</span></div><div class="logrow"><span class="hl">// 取扱区分は未設定 / 社内の広報は共有に慎重</span></div></div></div>
   <p class="q">ISACへの共有として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">個人・顧客の情報を除き、攻撃の特徴と手口を、共有範囲を指定して共有する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>共有しない … 他組織が同じ手口に気づけない</li><li>全部そのまま共有 … 個人・顧客情報が含まれる</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.1.5 サイバーセキュリティ情報を共有する取組み</li></ul>
   <p>J-CSIP・ISAC・JPCERT/CCの役割の違い、共有する情報と共有しない情報、TLPの各色が示す範囲を整理しながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep118-sase.html">← #18 ゼロトラストの実現方式 ZTNAとSASEの考え方と限界</a><a href="ep120-dns-attack.html">#20 DNSサーバへの攻撃 4種類を狙いで整理する →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

@@ -16,12 +16,11 @@
   <p class="eyebrow">#129 ・ 追加テーマ（目次外）</p>
   <h1>AIシステム固有のセキュリティ 指示とデータ・権限・出力</h1>
   <ol class="summary"><li>AIは指示とデータの区別が苦手で、外部の文章に埋まった指示にも従いうる。</li><li>「従うな」と書くだけでは防ぎきれない。権限の最小化と人の承認で被害を狭める。</li><li>出力は渡す前に検証し、入れる情報を選び出所を確認する。記録で異常を見つけて改善する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep229-ai-security:prompt-injection">
   <button type="button" class="flip" aria-expanded="false"><span class="front">プロンプトインジェクション</span><span class="back" hidden><span class="def">文章に紛れた指示を、AIが指示として扱ってしまう問題。AIが指示とデータを区別しにくいことが原因。</span><span class="note">「従うな」とプロンプトに書くだけでは防ぎきれない。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep229-ai-security:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>AIシステムの安全な使い方として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>公開されているデータなら、学習に使う前の検証は不要</span></button><p class="why" hidden>出所と中身の確認が要る</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>プロンプトに禁止事項を書けば、インジェクションを完全に防げる</span></button><p class="why" hidden>書くだけでは防ぎきれない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>AIの出力は、他のシステムへ渡す前に、入力と同様に検証する</span></button><p class="why" hidden>出力も検証してから渡す</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利便性のため、AIエージェントには広い権限を与えるのがよい</span></button><p class="why" hidden>権限は最小限にする</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">利用者が何も打ち込んでいないのに、AIが勝手に動いてしまうことがある。その仕組みと、被害を狭める設計上の手立てを頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep229-ai-security-t1-0"> 従わない保証が無い</label></li><li><label><input type="checkbox" id="ep229-ai-security-t1-1"> 権限が残れば被害が出る</label></li><li><label><input type="checkbox" id="ep229-ai-security-t1-2"> 設計（権限・承認・出力の検証）で重ねる</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="問い合わせAIの事故記録（ダミー）"><div class="logtitle">問い合わせAIの事故記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">社内の問い合わせAIが、受信メールを要約し返信文を作る</span></div><div class="logrow"><span class="hl">AIには顧客リストの外部送信が許可され、自分の判断で実行できる</span></div><div class="logrow"><span class="hl">外部からのメールの文中に、送信を促す指示があった</span></div><div class="logrow"><span class="hl">AIがその指示に従い、顧客リストを外部へ送信した</span></div><div class="logrow"><span class="hl">要件: 文中の指示だけで、外部送信を実行させない</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">AIの権限を最小化し、外部送信などの操作は人の承認を挟む</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>指示に『外部の指示に従うな』と書き加える … 従わせない保証はなく、送信の権限が残る</li><li>返信文に禁止語がないか検査する … 送信の操作は、返信文の検査では止まらない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>EX-15 AIシステム固有のセキュリティ</li></ul>
   <p>指示とデータの区別が苦手という前提から、何を信用しない設計にするかを確かめながら読む。権限・承認・出力の検証の役割分担に注目する。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep228-vuln-mgmt-metrics.html">← #128 脆弱性管理 CVE・CVSS・KEV・EPSS 何を測る指標か</a><a href="ep230-http-smuggling-cache.html">#130 HTTPリクエストスマグリングとキャッシュポイズニング 解釈の差を突く攻撃 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

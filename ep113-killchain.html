@@ -16,12 +16,11 @@
   <p class="eyebrow">#13 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>サイバーキルチェーンとATT&amp;CK 攻撃を整理する共通の言葉</h1>
   <ol class="summary"><li>キルチェーンは侵入を7段階（偵察から目的の実行）で捉え、防御側の対処を段階に対応づけて考える。</li><li>早い段階で止めるほど有利になりやすいが、断定はできない。拒否の例はパッチ、妨害の例はDEP。</li><li>ATT&amp;CKは観測に基づく戦術（なぜ）・技術（どうやって）の知識ベース。優劣でなく見る角度が違う。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep113-killchain:killchain">
   <button type="button" class="flip" aria-expanded="false"><span class="front">侵入キルチェーン</span><span class="back" hidden><span class="def">Lockheed Martin の論文が整理した、侵入の7段階。偵察・武器化・配送・悪用・インストール・C2・目的の実行。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep113-killchain:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>ATT&amp;CKの「戦術」が表すものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>どうやって達成するか</span></button><p class="why" hidden>それは「技術」</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>なぜ行うか（目的）</span></button><p class="why" hidden>戦術は、なぜ（目的）</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>攻撃に使うツールの名前</span></button><p class="why" hidden>戦術はツール名ではない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>防御側の製品の一覧</span></button><p class="why" hidden>防御製品の一覧ではない</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">キルチェーンと ATT&amp;CK の違いと、組み合わせて使う場面を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep113-killchain-t1-0"> 段階ごとに効く対処が違う</label></li><li><label><input type="checkbox" id="ep113-killchain-t1-1"> 早い段階で止めるほど有利になりやすい（断定はしない）</label></li><li><label><input type="checkbox" id="ep113-killchain-t1-2"> 手前だけに頼らず、後段にも対処を置く</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="検知できなかった侵入の調査記録（ダミー）"><div class="logtitle">検知できなかった侵入の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">検知ルールは20本。内容は、既知のマルウェアのハッシュ値の一致のみ</span></div><div class="logrow"><span class="hl">侵入者は、正規の管理ツールを使って社内を移動していた</span></div><div class="logrow"><span class="hl">検知ルールは、一度も反応しなかった</span></div><div class="logrow"><span class="hl">// 調査に必要な期間のログは残っていた</span></div></div></div>
   <p class="q">検知の穴を整理するのに適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">観測された手法ごとに、検知の有無を対応づけて確認する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ハッシュ値のルールを増やす … 正規ツールの利用は、一致しない</li><li>ログの保存期間を延ばす … 記録は残っていた。穴の整理ではない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.1.7 サイバーキルチェーンとMITRE ATT&amp;CK</li></ul>
   <p>7段階それぞれの内容、防御側の対処の分類、ATT&amp;CKの戦術と技術の違いを確かめながら読む。両者に優劣はない点に注意。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep112-zerotrust.html">← #12 ゼロトラスト 場所を信頼しない考え方</a><a href="ep114-bof.html">#14 BOF攻撃の仕組み 戻りアドレスとsetuidの権限昇格 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

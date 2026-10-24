@@ -16,12 +16,11 @@
   <p class="eyebrow">#130 ・ 追加テーマ（目次外）</p>
   <h1>HTTPリクエストスマグリングとキャッシュポイズニング 解釈の差を突く攻撃</h1>
   <ol class="summary"><li>前段と後段で要求の区切りの解釈が食い違うと、スマグリングが成立しうる。</li><li>キーに含まれない入力が応答を変えると、細工された応答が保存され他の人に届く。</li><li>解釈・設定・更新をそろえ曖昧な要求は拒否する。WAFだけでは解釈の差は消えない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep230-http-smuggling-cache:request-smuggling">
   <button type="button" class="flip" aria-expanded="false"><span class="front">HTTPリクエストスマグリング</span><span class="back" hidden><span class="def">前段と後段で要求の区切りの解釈が食い違うと成立しうる攻撃。要求の余りが次の要求の先頭に付き、他の利用者に影響する。</span><span class="note">成立には前段と後段の解釈の差が必要。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep230-http-smuggling-cache:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>HTTPの攻撃の説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>前段と後段で要求の境界の解釈が異なると、スマグリングが成立しうる</span></button><p class="why" hidden>境界の解釈の食い違い</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>HTTPSにすれば、スマグリングは起きなくなる</span></button><p class="why" hidden>暗号化と境界の解釈は無関係</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>HTTPのキャッシュポイズニングは、DNSの応答を書き換える攻撃である</span></button><p class="why" hidden>HTTPの保存された応答の細工</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WAFを入れれば、解釈の差は解消される</span></button><p class="why" hidden>解釈の差は消えない</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">リクエストスマグリングが成立する条件と、被害が他の利用者に及ぶ理由を頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep230-http-smuggling-cache-t1-0"> キーに含まれない入力が応答を変える</label></li><li><label><input type="checkbox" id="ep230-http-smuggling-cache-t1-1"> 細工された応答が保存され他の人に届く</label></li><li><label><input type="checkbox" id="ep230-http-smuggling-cache-t1-2"> キーに含める・無視、個人向けは保存させない</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="リバースプロキシ構成の診断記録（ダミー）"><div class="logtitle">リバースプロキシ構成の診断記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">構成: 利用者 → 前段のリバースプロキシ → 後段のアプリ</span></div><div class="logrow"><span class="hl">前段は、後段への接続を複数の利用者で使い回す</span></div><div class="logrow"><span class="hl">診断: 前段と後段で長さの解釈が食い違い、余りが次の人に付いた</span></div><div class="logrow"><span class="hl">接続の使い回しは性能のため維持。後段はHTTP/1.1のみ</span></div><div class="logrow"><span class="hl">要件: 他の利用者の要求に、影響を及ぼさせない</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">前段と後段で要求の解釈をそろえ、曖昧な要求は拒否する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>TLSの暗号強度を上げる … 経路の暗号化は、要求の区切りの解釈に関係しない</li><li>WAFで特定の文字列を遮断する … 解釈の差は残り、遮断の対象外の形でも起きる</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>EX-16 HTTPリクエストスマグリング・キャッシュポイズニング</li></ul>
   <p>前段と後段の解釈の差が成立条件になる点と、キャッシュのキーに含まれない入力の関係を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep229-ai-security.html">← #129 AIシステム固有のセキュリティ 指示とデータ・権限・出力</a><span></span></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

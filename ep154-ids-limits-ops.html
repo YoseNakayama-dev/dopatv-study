@@ -16,12 +16,11 @@
   <p class="eyebrow">#54 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>IDSの限界と運用の課題 誤検知と見逃しにどう向き合うか</h1>
   <ol class="summary"><li>IDSには誤検知・見逃し・取りこぼしの限界があり、検知は事後の対応につながる。通信は止められない。</li><li>運用では、重要度の分類、環境に合わせた調整、パターンの更新、確認と対応の手順・連絡先が要る。</li><li>検知の厳しさは誤検知と見逃しのトレードオフ。ログの突き合わせと、IPSなど他の対策との併用で補う。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep154-ids-limits-ops:ids">
   <button type="button" class="flip" aria-expanded="false"><span class="front">IDS（侵入検知システム）</span><span class="back" hidden><span class="def">不正な通信を検知して通知する仕組み。基本的に通信は止めないので、検知後の対応が遅れると被害が進む。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep154-ids-limits-ops:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>IDSの「誤検知」の説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>不正な通信を、正常な通信と判定して、見逃してしまうこと</span></button><p class="why" hidden>それは、見逃し</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>検知した通信を、管理者の確認なしに、自動で遮断してしまうこと</span></button><p class="why" hidden>IDSは、遮断しない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>正常な通信や操作を、不正な通信と誤って判定してしまうこと</span></button><p class="why" hidden>正常を不正と誤判定</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>攻撃パターンの定義を、最新の状態に更新できていないこと</span></button><p class="why" hidden>運用上の不備</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">アラートが毎日大量に出て、重要なものが埋もれている。原因の見立てと、改善の方向を頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep154-ids-limits-ops-t1-0"> IDSは通信を止められない</label></li><li><label><input type="checkbox" id="ep154-ids-limits-ops-t1-1"> 確認・対応の手順と連絡先が必要</label></li><li><label><input type="checkbox" id="ep154-ids-limits-ops-t1-2"> 遮断はIPS、事後はインシデント対応と併用</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="IDS運用の調査記録（ダミー）"><div class="logtitle">IDS運用の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">IDSのアラート: 1日に約3000件。大半は、定期バックアップの通信への反応</span></div><div class="logrow"><span class="hl">検知設定: 既定のまま。環境に合わせた調整は、導入後に一度も行っていない</span></div><div class="logrow"><span class="hl">アラートの確認: 担当者1名が、週に1回、まとめて確認している</span></div><div class="logrow"><span class="hl">先週、重要度「高」のアラートが出たが、確認されたのは4日後だった</span></div><div class="logrow"><span class="hl">その4日間、サーバから外部へ、データが送信され続けた</span></div></div></div>
   <p class="q">運用の改善として、優先すべきなのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">誤検知を減らす調整と、重要度に応じた確認・対応の手順を整える</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>IDSを増設し、監視範囲を広げる … 重要度「高」のアラートは、出ていた</li><li>アノマリ型に変更する … 誤検知が増えやすく、現状は1日3000件</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.6.3 IDSの機能上の限界及び運用上の課題</li></ul>
   <p>誤検知・見逃し・取りこぼしの違いと、検知しても通信は止められない点を、運用課題（調整・更新・体制）と結びつけて読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep153-ids-basics.html">← #53 IDSの概要と種類 検知して知らせる見張り番</a><a href="ep155-ips-basics.html">#55 IPSの概要と主な機能 経路の中で検知して止める →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

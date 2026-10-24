@@ -16,12 +16,11 @@
   <p class="eyebrow">#115 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
   <h1>バイオメトリック認証 仕組み・誤り・方式の特徴</h1>
   <ol class="summary"><li>生体認証は読み取りが毎回一致しないため、類似度がしきい値以上かで判定する。</li><li>しきい値を厳しくすると他人受入率は下がり本人拒否率は上がる。両方を同時にゼロにはできない。</li><li>特徴は変えられないので保管を厳重に。写真や模型には生体検知、拒否には代替手段で備える。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep215-biometric:biometric">
   <button type="button" class="flip" aria-expanded="false"><span class="front">バイオメトリック認証</span><span class="back" hidden><span class="def">身体的特徴（指紋・虹彩・静脈・顔）や行動的特徴（署名・筆跡など）で本人かどうかを確認する認証。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep215-biometric:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>生体認証の説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>本人拒否率とは、他人を誤って受け入れる割合</span></button><p class="why" hidden>それは他人受入率</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>しきい値を厳しくすると、他人受入率は下がる</span></button><p class="why" hidden>厳しくすると他人受入率は下がる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>生体の特徴は、漏えいしても容易に変更できる</span></button><p class="why" hidden>容易に変更できない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>静脈認証は、体の表面の模様を読み取る方式</span></button><p class="why" hidden>静脈は体内の血管</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">しきい値を厳しくしたときの変化と、運用で備えることを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep215-biometric-t1-0"> 変更できず漏えいは取り返しがつかない</label></li><li><label><input type="checkbox" id="ep215-biometric-t1-1"> 特徴情報を暗号化などで厳重に保管する</label></li><li><label><input type="checkbox" id="ep215-biometric-t1-2"> 提示には生体検知で備える</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="顔認証の入室管理の記録（ダミー）"><div class="logtitle">顔認証の入室管理の記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">入室管理: 顔のみで判定し、特徴量が一致すれば許可</span></div><div class="logrow"><span class="hl">先週、他人が登録者の顔写真を示し、入室できた</span></div><div class="logrow"><span class="hl">示された写真の顔は、登録者の顔と一致していた</span></div><div class="logrow"><span class="hl">しきい値は適切で、本人拒否はほとんどない</span></div><div class="logrow"><span class="hl">要件: 利用者の操作を増やさず、写真で入れなくする</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">生体検知で、実物の顔かを判定する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>しきい値を厳しくする … 写真でも一致するため止まる保証がなく、本人拒否は確実に増える</li><li>カメラの画素数を上げる … 鮮明でも写真の顔は登録者と一致するため、防げない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>6.5.1 バイオメトリック認証システムの概要</li><li>6.5.2 バイオメトリック認証システムの性質及び機能</li><li>6.5.3 主なバイオメトリック認証システムの特徴</li></ul>
   <p>本人拒否率と他人受入率の向きの違い、方式ごとの特徴、特徴を変更できないことへの備えを確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep214-redundancy-monitoring.html">← #114 二重化・監視・クラスタ・RAID 止めない備えと気付く仕組み</a><a href="ep216-ipvpn-smime-pgp.html">#116 IP-VPN・L2TP・S/MIME・PGP 閉域網とメール保護の整理 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

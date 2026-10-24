@@ -16,12 +16,11 @@
   <p class="eyebrow">#67 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
   <h1>トークンによるOTP認証 手のひらで変わる合言葉</h1>
   <ol class="summary"><li>トークンはOTPを表示する携帯認証装置。パスワード（知識）に所持を加えて二要素にできる。</li><li>時刻同期は秘密情報と現在時刻、イベント同期は秘密情報と使用回数から計算する。ずれに注意。</li><li>紛失は速やかに無効化し、ずれは許容範囲と再同期で吸収する。偽画面へのその場の入力は防げない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep167-otp-token:token">
   <button type="button" class="flip" aria-expanded="false"><span class="front">トークン（携帯認証装置）</span><span class="back" hidden><span class="def">ワンタイムパスワードを表示する装置。利用者は表示値を読み取って入力する。所持の要素になる。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep167-otp-token:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>時刻同期方式のトークンの説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>認証のたびに増える回数だけで、表示する値を決める方式である</span></button><p class="why" hidden>回数から計算するのはイベント同期方式</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>表示する値は常に固定で、サーバとの照合に時計を使わない方式</span></button><p class="why" hidden>固定の値は使い回せてしまう</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>秘密情報と現在時刻から値を作り、サーバ側も同じ計算で照合する</span></button><p class="why" hidden>秘密情報と現在時刻から計算</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>サーバが送る値を入力させ、その応答だけを表示する方式である</span></button><p class="why" hidden>値の入力と応答は別の方式</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">時刻同期方式とイベント同期方式の違いを、値の作り方と、ずれの種類の両面から頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep167-otp-token-t1-0"> 紛失したら速やかに無効化する</label></li><li><label><input type="checkbox" id="ep167-otp-token-t1-1"> ずれは許容範囲と再同期の手順で吸収する</label></li><li><label><input type="checkbox" id="ep167-otp-token-t1-2"> 偽の画面にその場で入力させられる悪用は防げない</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="社内システムの認証強化に関する調査記録（ダミー）"><div class="logtitle">社内システムの認証強化に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 利用者は固定のパスワードだけで、社内システムに接続する</span></div><div class="logrow"><span class="hl">認証の強化のため、表示専用の小型トークンを配布する</span></div><div class="logrow"><span class="hl">トークンには、サーバから値を受け取る手段も、ボタンもない</span></div><div class="logrow"><span class="hl">サーバとトークンは、同じ秘密情報を持ち、時計も合わせてある</span></div><div class="logrow"><span class="hl">要件: 表示された値が、時間が経つと自動的に無効になること</span></div></div></div>
   <p class="q">要件を満たす、表示値の作り方として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">秘密情報と現在時刻から計算し、サーバも同じ計算で照合する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>秘密情報と使用回数から計算する … 次に使うまで、同じ値が有効なまま残る</li><li>サーバが送る値を入力し、応答を表示する … トークンに値を受け取る手段がない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>6.4.3 トークン（携帯認証装置）によるOTP認証システム</li></ul>
   <p>トークンの値の作り方（時刻同期・イベント同期・チャレンジレスポンス型）を比べ、それぞれで何がずれると失敗するかを確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep166-otp-challenge-response.html">← #66 ワンタイムパスワードとチャレンジレスポンス 一度きりの合言葉</a><a href="ep168-radius-kerberos.html">#68 RADIUSとKerberos 認証を集めてチケットで通す →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

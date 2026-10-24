@@ -16,12 +16,11 @@
   <p class="eyebrow">#21 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>DNSサーバへの攻撃への対策 守備範囲と限界</h1>
   <ol class="summary"><li>DNS攻撃の対策は攻撃ごとに違い、DNSSECだけで全部は防げない。キャッシュと権威の役割を分けて層で守る。</li><li>DNSSECは応答の出所と完全性を署名で検証するが、署名側と検証側の双方の対応と鍵の運用が必要。</li><li>再帰の制限・レート制限・冗長化は可用性、ゾーン転送は必要な相手だけに許す。制限しすぎは正規にも影響する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep121-dns-defense:match-strengthen">
   <button type="button" class="flip" aria-expanded="false"><span class="front">照合の強化</span><span class="back" hidden><span class="def">問い合わせごとの要素（識別子・送信元ポート）をランダムにして、偽の応答を通りにくくする対策（RFC 5452）。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep121-dns-defense:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>DNSSECによって確認できるのは、次のうちどれ？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>応答が正当なもので、改ざんされていないこと</span></button><p class="why" hidden>応答の正当性と改ざんの有無</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>通信が暗号化され、盗聴されないこと</span></button><p class="why" hidden>DNSSECは暗号化の仕組みではない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>問い合わせの数が、制限されていること</span></button><p class="why" hidden>問い合わせ数の制限は、レート制限</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利用者が、本人であること</span></button><p class="why" hidden>利用者の認証とは別</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">DNS増幅攻撃の踏み台にされないために、キャッシュサーバと権威サーバでそれぞれ何をするかを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep121-dns-defense-t1-0"> DNSSECは応答の正当性の検証</label></li><li><label><input type="checkbox" id="ep121-dns-defense-t1-1"> 可用性やゾーン転送には別の対策が要る</label></li><li><label><input type="checkbox" id="ep121-dns-defense-t1-2"> 双方の対応と鍵の運用が必要</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="DNSサーバの設定確認記録（ダミー）"><div class="logtitle">DNSサーバの設定確認記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社外向けDNSサーバの設定確認（ダミー）</span></div><div class="logrow"><span class="hl">同一のサーバが、権威とキャッシュの両方の役割を持つ</span></div><div class="logrow"><span class="hl">再帰問い合わせに、外部のどこからでも応答している</span></div><div class="logrow"><span class="hl">// ゾーン転送は副サーバのみ許可 / DNSSECは未対応</span></div></div></div>
   <p class="q">最優先の改善として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">再帰問い合わせに応じる範囲を内部に限り、権威サーバと役割を分ける</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ゾーン転送を全面禁止 … 副サーバのみに限定済み</li><li>DNSSECを有効にして完了 … 踏み台への悪用は残る</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.6.2 DNSサーバに対する攻撃への対策</li></ul>
   <p>攻撃の狙いごとに有効な対策を対応づけ、DNSSECの範囲と限界、制限しすぎの副作用、役割分離の意味を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep120-dns-attack.html">← #20 DNSサーバへの攻撃 4種類を狙いで整理する</a><a href="ep122-dos.html">#22 DoS攻撃の種類 狙う資源で4つに分ける →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

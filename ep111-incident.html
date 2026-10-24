@@ -16,12 +16,11 @@
   <p class="eyebrow">#11 ・ 第4章 情報セキュリティマネジメントの実践</p>
   <h1>インシデント対応 慌てないための流れと判断基準</h1>
   <ol class="summary"><li>流れは、検知／連絡受付、トリアージ、インシデントレスポンス、報告／公開（対応と並行）、事後の見直し。</li><li>トリアージでは誤検知も疑い、状況を整理して優先順位を決める。原因の究明は後回しで、不要なら根拠を説明。</li><li>難しいときは経営層・IT部門・外部専門機関と連携する。資料は2015年版で、最新の指針とは差があるかもしれない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep111-incident:incident-flow">
   <button type="button" class="flip" aria-expanded="false"><span class="front">インシデント対応の流れ</span><span class="back" hidden><span class="def">検知／連絡受付 → トリアージ → インシデントレスポンス → 報告／情報公開（対応と並行）。終了後に事後の見直しを行う。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep111-incident:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>トリアージの段階で適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>原因を完全に究明してから動く</span></button><p class="why" hidden>トリアージでは原因の究明は後回し。だから誤り</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>インシデントか判断し、優先順位を決める</span></button><p class="why" hidden>判断し、優先順位を決める</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>対応不要の根拠は説明しない</span></button><p class="why" hidden>対応不要でも根拠を説明する。だから誤り</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>報告・公開の検討は、対応が終わってから始める</span></button><p class="why" hidden>報告・公開は対応と並行して検討する。だから誤り</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">トリアージの段階で、原因の究明を後回しにして先に行うことは何か。頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep111-incident-t1-0"> インシデントリストの定期的な見直し</label></li><li><label><input type="checkbox" id="ep111-incident-t1-1"> 予行演習と、手順・体制・ポリシーの修正</label></li><li><label><input type="checkbox" id="ep111-incident-t1-2"> 知見（ナレッジ）の蓄積</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="検知から対応までの記録（ダミー）"><div class="logtitle">検知から対応までの記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">09:10 異常な通信を、監視システムが検知した</span></div><div class="logrow"><span class="hl">担当者は連絡を受けた。優先度の判断方法と上長への連絡経路は、文書化されていなかった</span></div><div class="logrow"><span class="hl">担当者は自分で判断できず、対応の開始まで数時間かかった</span></div><div class="logrow"><span class="hl">// 要員は足りていた。原因の調査は、対応開始後に完了した</span></div></div></div>
   <p class="q">対応開始が遅れた根本原因は？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">優先度の判断基準と連絡経路が、事前に定められていなかった</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>検知の仕組みが無かった … 記録では検知できていた</li><li>要員が足りなかった … 記録では足りていた</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>4.8.1 情報セキュリティインシデント管理の流れと留意事項</li></ul>
   <p>検知から事後の見直しまでの流れと、トリアージで先に決めること・後回しにすることを確かめながら読む。資料は2015年版。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep110-ransomware.html">← #10 ランサムウェア 被害の大きさは備えで決まる</a><a href="ep112-zerotrust.html">#12 ゼロトラスト 場所を信頼しない考え方 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

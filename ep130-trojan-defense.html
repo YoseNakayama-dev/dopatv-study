@@ -16,12 +16,11 @@
   <p class="eyebrow">#30 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>トロイの木馬とマルウェア対策 見せかけと多層防御</h1>
   <ol class="summary"><li>トロイの木馬は正規を装い、利用者に実行させる。自己増殖はしない。利用者の判断が侵入の入口になる。</li><li>成立には、利用者が信じて実行し、止める仕組みが働かず、実行後の動作が検知されないことが要る。</li><li>対策は入口・端末・影響低減の層で重ねる。パターンマッチングもふるまい検知も限界があり、単独では足りない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep130-trojan-defense:trojan">
   <button type="button" class="flip" aria-expanded="false"><span class="front">トロイの木馬</span><span class="back" hidden><span class="def">正規のソフトや文書に見せかけ、利用者に実行させるマルウェア。自己増殖はしない。実行後に裏口の設置や情報窃取などを行う。</span><span class="note">広がり方は別の仕組み次第。ウイルスやワームとは区別する。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep130-trojan-defense:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>トロイの木馬の特徴として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>正規のものに見せかけ、利用者に実行させる</span></button><p class="why" hidden>正規を装い、実行させる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>自己増殖して、ネットワーク経由で他の端末へ広がる</span></button><p class="why" hidden>自己増殖しないのが、特徴</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>他のファイルに寄生して、宿主ごと実行されて増える</span></button><p class="why" hidden>ウイルスの説明</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>大量の通信を送りつけて、サービスを停止させる</span></button><p class="why" hidden>DoS攻撃の説明</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">トロイの木馬が成立する3つの条件と、それぞれを崩す対策を、頭の中で組み立ててみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep130-trojan-defense-t1-0"> トロイの木馬と判断した根拠</label></li><li><label><input type="checkbox" id="ep130-trojan-defense-t1-1"> 他端末への接続がなくワームではない</label></li><li><label><input type="checkbox" id="ep130-trojan-defense-t1-2"> 影響を絞る備え（最小権限・バックアップ・分離・ログ監視）</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="経理端末の調査記録（ダミー）"><div class="logtitle">経理端末の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 経理担当の端末（ダミー）。請求書を装ったファイルを、利用者が自分で開いて実行</span></div><div class="logrow"><span class="hl">実行の直後から、外部の宛先への通信が、一定間隔で継続</span></div><div class="logrow"><span class="hl">通信先は、外部の1宛先のみ / 社内の他端末への接続は、なし</span></div><div class="logrow"><span class="hl">少量のデータを、一定間隔で送る継続的な通信（ビーコンのような動き）</span></div><div class="logrow"><span class="hl">// 修正プログラムは適用済み / 端末のサービスは正常に稼働</span></div></div></div>
   <p class="q">この端末で起きたこととして、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">利用者が実行したトロイの木馬による、外部との通信</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ワーム … 通信先は外部1宛先のみで、他端末への接続はない</li><li>DoS攻撃 … 少量のデータを送る通信で、大量の通信ではない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.9.3 マルウェアへの対策</li><li>2.9.4 トロイの木馬</li></ul>
   <p>トロイの木馬の成立条件と、多層防御の各層の役割、検知方式の限界を結び付けながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep129-virus-worm.html">← #29 ウイルスとワーム 宿主の有無と広がり方の違い</a><a href="ep131-mobilecode-spyware.html">#31 悪意あるモバイルコードとスパイウェア 閲覧だけで動く仕組みと対策 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

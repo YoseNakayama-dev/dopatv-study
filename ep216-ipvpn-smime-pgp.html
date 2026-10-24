@@ -16,12 +16,11 @@
   <p class="eyebrow">#116 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
   <h1>IP-VPN・L2TP・S/MIME・PGP 閉域網とメール保護の整理</h1>
   <ol class="summary"><li>IP-VPNは経路を分離する閉域網で、暗号化は含まれないのが一般的。事業者の運用を信頼する前提がある。</li><li>L2TP自体に暗号化と認証の機能はない。IPsecと組み合わせて補う。</li><li>S/MIMEとPGPは暗号化と署名が目的。違いは鍵の持ち主の保証で、認証局か利用者同士の署名か。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep216-ipvpn-smime-pgp:ipvpn">
   <button type="button" class="flip" aria-expanded="false"><span class="front">IP-VPN</span><span class="back" hidden><span class="def">通信事業者の閉域網で拠点間をつなぐサービス。インターネットを経由せず、事業者が利用者ごとに経路を分ける。</span><span class="note">暗号化は含まれないのが一般的。インターネットVPNとは別物。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep216-ipvpn-smime-pgp:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>通信とメールの保護の説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IP-VPNは、それ自体で通信内容の暗号化を保証する</span></button><p class="why" hidden>IP-VPN自体は暗号化を保証しない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>L2TPは、単独で通信を暗号化できる</span></button><p class="why" hidden>L2TPに暗号化の機能はない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>S/MIMEの署名は、本文を暗号化して隠す</span></button><p class="why" hidden>署名は本文を隠さない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>PGPは、認証局に頼らず、利用者同士で信頼を築く</span></button><p class="why" hidden>利用者同士の署名で信頼を築く</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">S/MIMEの暗号化と署名で、使う鍵と守れることの違いを頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep216-ipvpn-smime-pgp-t1-0"> S/MIMEは認証局の証明書</label></li><li><label><input type="checkbox" id="ep216-ipvpn-smime-pgp-t1-1"> PGPは利用者同士の署名（信頼の輪）</label></li><li><label><input type="checkbox" id="ep216-ipvpn-smime-pgp-t1-2"> 持ち主の確認は利用者自身が行い、指紋を別経路で確かめる</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="IP-VPN構成の確認記録（ダミー）"><div class="logtitle">IP-VPN構成の確認記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">本社と支店3拠点を、IP-VPNの閉域網で接続</span></div><div class="logrow"><span class="hl">検討中のどの事業者も、通信の暗号化を含まない</span></div><div class="logrow"><span class="hl">回線の帯域は十分で、通信の遅延もない</span></div><div class="logrow"><span class="hl">要件: 事業者網内でも、通信内容を読まれないこと</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">拠点間でIPsecによる暗号化を併用する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>帯域の大きい回線に変更する … 帯域は十分で、暗号化にも関係しない</li><li>別の事業者のIP-VPNに乗り換える … 検討中のどの事業者も、暗号化は含まない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>7.5.1 IP-VPN</li><li>7.5.5 S/MIME</li><li>7.5.6 PGP</li></ul>
   <p>閉域網と暗号化が別であること、L2TPにIPsecが要る理由、メール保護の鍵の使い分けと信頼の築き方の違いを確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep215-biometric.html">← #115 バイオメトリック認証 仕組み・誤り・方式の特徴</a><a href="ep217-wlan.html">#117 無線LANのセキュリティ 脅威・暗号化方式・強化策 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

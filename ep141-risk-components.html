@@ -16,12 +16,11 @@
   <p class="eyebrow">#41 ・ 第4章 情報セキュリティマネジメントの実践</p>
   <h1>リスクの構成要素と損失 資産・脅威・脆弱性とアセスメント</h1>
   <ol class="summary"><li>リスクの構成要素は、情報資産・脅威・脆弱性。3つが重なると事故につながりうる。</li><li>損失は直接損失と間接損失。リスクの大きさは、影響と可能性で見積もる。</li><li>アセスメントは特定→分析→評価。見積もりは不確実で、前提を明示する。残留リスクもある。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep141-risk-components:asset">
   <button type="button" class="flip" aria-expanded="false"><span class="front">情報資産</span><span class="back" hidden><span class="def">守る対象。価値が高いほど、失ったときの損害も大きい。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep141-risk-components:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>リスクを構成する要素の組合せとして、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>脅威、対策、損失、事故</span></button><p class="why" hidden>対策は手段、損失・事故は結果</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>資産、監査、費用、期間</span></button><p class="why" hidden>監査・費用・期間は要素外</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>利用者、権限、期間、場所</span></button><p class="why" hidden>利用者・権限・場所は要素外</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>資産、脅威、脆弱性</span></button><p class="why" hidden>資産・脅威・脆弱性</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">資産・脅威・脆弱性の3つの関係と、リスクを下げる考え方を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep141-risk-components-t1-0"> 影響と可能性から見積もる</label></li><li><label><input type="checkbox" id="ep141-risk-components-t1-1"> 見積もりは不確実で、前提を明示する</label></li><li><label><input type="checkbox" id="ep141-risk-components-t1-2"> 残留リスクが残る</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="顧客情報DBサーバの調査記録（ダミー）"><div class="logtitle">顧客情報DBサーバの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 顧客情報を保管するDBサーバ（ダミー）。業務上、社外拠点からの接続を許可（接続元は限定済み）</span></div><div class="logrow"><span class="hl">保管している顧客情報は、漏えいすると損害が大きい（資産としての価値は高い）</span></div><div class="logrow"><span class="hl">このDBサーバのOSには、修正プログラムが未適用で、公開済みの弱点が残っている</span></div><div class="logrow"><span class="hl">許可外の外部IPアドレスから、DBサーバへの接続の試行が、毎日記録（遮断済み）</span></div><div class="logrow"><span class="hl">漏えいした場合は、賠償と復旧の費用に加え、信用低下による取引の減少が見込まれる</span></div></div></div>
   <p class="q">ログの中で、「脆弱性」にあたるものは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">OSの修正プログラムが未適用で、公開済みの弱点が残っていること</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>外部からの接続の試行 … 外部の行為であり、システムの弱点ではない（脅威）</li><li>信用低下による取引の減少 … 事故のあとに生じる結果（間接損失）</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>4.1.2 リスクの構成要素と損失</li><li>4.1.3 リスクアセスメントの概要</li></ul>
   <p>資産・脅威・脆弱性の区別、直接損失と間接損失、特定→分析→評価の順序を、取り違えやすい点に注意して確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep140-webapp-flaws.html">← #40 Webアプリの仕様と実装による脆弱性 設計の穴と実装の穴</a><a href="ep142-detailed-risk.html">#42 詳細リスク分析・評価の手順 ベースラインとの使い分け →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

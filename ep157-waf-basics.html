@@ -16,12 +16,11 @@
   <p class="eyebrow">#57 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>WAFの種類と主な機能 Webアプリの手前で中身を見る門番</h1>
   <ol class="summary"><li>WAFはWebアプリの手前で、HTTP/HTTPSのリクエストの中身を検査し、脆弱性を狙う通信を遮断・検知する。</li><li>一般的なFWはIPアドレスとポート番号が中心で、許可した通信の中身は見ない。見る層が違う。</li><li>形態はネットワーク型・ホスト型・クラウド型など。暗号化通信は復号できる位置で検査する必要がある。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep157-waf-basics:waf">
   <button type="button" class="flip" aria-expanded="false"><span class="front">WAF（Web Application Firewall）</span><span class="back" hidden><span class="def">Webアプリの脆弱性を狙う通信を、HTTP/HTTPSのリクエストの内容から検査し、遮断・検知する仕組み。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep157-waf-basics:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>WAFの説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>HTTPの通信内容を検査し、Webアプリへの不正な要求を止める</span></button><p class="why" hidden>HTTP通信の内容を検査して遮断</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>送信元のIPアドレスとポート番号だけを見て、通信の許可を決める</span></button><p class="why" hidden>それは、パケットフィルタ型のFW</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>Webアプリのソースコードを解析し、見つかった脆弱性を直す</span></button><p class="why" hidden>それは、ソースコードの解析</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>利用者のIDとパスワードを確認して、正規の利用者だけを許可する</span></button><p class="why" hidden>それは、認証</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">FWがあるのにWebアプリを狙う攻撃が届いた。FWとWAFの役割の違いを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep157-waf-basics-t1-0"> 構成・性能・運用体制・暗号化通信の扱いで選ぶ</label></li><li><label><input type="checkbox" id="ep157-waf-basics-t1-1"> ネットワーク型・ホスト型・クラウド型の特徴</label></li><li><label><input type="checkbox" id="ep157-waf-basics-t1-2"> 導入できる条件（機器・ソフト・中継）と対応づける</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="問い合わせサイト防御の検討記録（ダミー）"><div class="logtitle">問い合わせサイト防御の検討記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: レンタルサーバ上の問い合わせサイト（ダミー）</span></div><div class="logrow"><span class="hl">契約でサーバへのソフト追加は不可。自社に機器の設置場所もない</span></div><div class="logrow"><span class="hl">入力欄を狙う不正な要求が届く。アプリ改修は2か月後</span></div><div class="logrow"><span class="hl">DNSの設定は自社で変更可。外部事業者の経由は社内規程で許可</span></div><div class="logrow"><span class="hl">要件: アプリを改修せずに、手前で遮断する</span></div></div></div>
   <p class="q">WAFの導入方式として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">DNSの設定で事業者のサービスに中継させ、そこで検査して遮断する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>Webサーバにソフトを導入し、サーバ上で検査して遮断する … 契約で、サーバへの追加が認められていない</li><li>自社の設備に専用機器を置き、手前で検査して遮断する … 自社には、置く場所も設備もない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.8.1 WAFの種類と主な機能</li></ul>
   <p>FWとの違い（見る層）、3つの形態の違い、検査方式と動作の選択肢を整理しながら読む。HTTPSをどこで復号するかにも注目する。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep156-ips-config-limits.html">← #56 IPSの構成例と限界 故障時に止めるか通すか</a><a href="ep158-waf-limits-ops.html">#58 WAFの限界と運用の課題 入れて終わりではない補助の守り →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

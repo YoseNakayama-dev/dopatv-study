@@ -16,12 +16,11 @@
   <p class="eyebrow">#29 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>ウイルスとワーム 宿主の有無と広がり方の違い</h1>
   <ol class="summary"><li>ウイルスは他のファイルに寄生して増え、宿主ファイルが実行されて動く。実行されなければ広がらない。</li><li>ワームは宿主を持たず単独で増える。広がるには到達できる経路と、未修正の脆弱性などが要る。</li><li>対策は修正プログラム適用・不要サービス停止・ネットワーク分離。検知ソフトだけでは未知の検体を取りこぼしうる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep129-virus-worm:malware">
   <button type="button" class="flip" aria-expanded="false"><span class="front">マルウェア</span><span class="back" hidden><span class="def">悪意のあるソフトウェアの総称。ウイルスやワームなどを含む。分類の軸には、増え方や目的がある。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep129-virus-worm:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>ウイルスとワームの違いとして、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ウイルスは宿主を持たず、単独で自己増殖する</span></button><p class="why" hidden>逆。ウイルスは宿主に寄生する</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ワームは感染するとデータを暗号化し金銭を要求する</span></button><p class="why" hidden>それは、ランサムウェアの挙動</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ウイルスは宿主ファイルを実行しなくても動き出す</span></button><p class="why" hidden>宿主ファイルの実行が、きっかけになる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ワームは宿主を持たず、単独で自己増殖する</span></button><p class="why" hidden>ワームは宿主を持たない</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">ウイルスとワームの違いを、宿主の有無と「広がる条件」の観点で、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep129-virus-worm-t1-0"> ワームと判断した根拠（宿主なし・操作なし）</label></li><li><label><input type="checkbox" id="ep129-virus-worm-t1-1"> 修正プログラム適用と不要サービス停止</label></li><li><label><input type="checkbox" id="ep129-virus-worm-t1-2"> ネットワーク分離で拡大を抑える</label></li><li><label><input type="checkbox" id="ep129-virus-worm-t1-3"> 挙動は検体ごとに異なるという限界</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="社内端末の感染調査記録（ダミー）"><div class="logtitle">社内端末の感染調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社内の端末群（ダミー）。端末Aの感染のあと、同一セグメントの端末が次々に感染</span></div><div class="logrow"><span class="hl">感染した端末は、すべて修正プログラム未適用 / 適用済みの端末は感染なし</span></div><div class="logrow"><span class="hl">感染端末から、他端末の共有サービス用ポートへの接続が、連続して発生</span></div><div class="logrow"><span class="hl">最初の実行は、OSの共有サービスのプロセスから / 既存の実行ファイルに変更なし</span></div><div class="logrow"><span class="hl">感染時刻は、利用者のログオンの有無と無関係 / 利用者が実行したファイルの記録なし</span></div></div></div>
   <p class="q">この感染の種類として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">ワーム（単独で自己増殖し、脆弱性を介して広がる）</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ウイルス … 既存の実行ファイルに変更がなく、宿主がない</li><li>トロイの木馬 … 感染は、利用者のログオンと無関係で、実行したファイルもない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.9.1 マルウェアの種類</li><li>2.9.2 コンピュータウイルス、ワーム</li></ul>
   <p>ウイルスとワームを「宿主の有無」と「広がる条件」で区別し、それぞれの対策と限界を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep128-dir-traversal.html">← #28 ディレクトリトラバーサル 階層をさかのぼる仕組みと対策</a><a href="ep130-trojan-defense.html">#30 トロイの木馬とマルウェア対策 見せかけと多層防御 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

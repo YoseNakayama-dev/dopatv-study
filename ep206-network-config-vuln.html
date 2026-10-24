@@ -16,12 +16,11 @@
   <p class="eyebrow">#106 ・ 第3章 情報セキュリティにおける脆弱性</p>
   <h1>ネットワーク構成の脆弱性 区画・公開・経路・障害</h1>
   <ol class="summary"><li>ネットワーク構成には、区画の分割なし・不要な公開・平文の通信・単一障害点という弱点が潜む。</li><li>構成図と実態のずれ、境界を通らない経路、管理通信の共用、期限なく残る許可は見えにくい弱点になる。</li><li>区画を分け、区画間は必要な通信だけ許可する。許可した通信は通るので、構成図の維持と見直しが要る。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep206-network-config-vuln:flat-network">
   <button type="button" class="flip" aria-expanded="false"><span class="front">区画のない構成</span><span class="back" hidden><span class="def">全端末とサーバが同一のネットワークにある構成。一台に侵入されると、内部へ広がりやすい。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep206-network-config-vuln:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>弱点と対策の組合せとして、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>区画の分割なし → 区画を分け、通信を絞る</span></button><p class="why" hidden>区画を分け、必要な通信だけ許可</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>単一障害点 → 暗号化を強化する</span></button><p class="why" hidden>単一障害点は冗長化で対処</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>平文の管理通信 → FWを増設する</span></button><p class="why" hidden>平文は暗号化で対処</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>不要なポートの開放 → 冗長化する</span></button><p class="why" hidden>不要なポートは閉じる</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">区画を分けただけでは安心できない理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep206-network-config-vuln-t1-0"> 境界を通らず、FWが見ていない</label></li><li><label><input type="checkbox" id="ep206-network-config-vuln-t1-1"> 知らない機器は守れない</label></li><li><label><input type="checkbox" id="ep206-network-config-vuln-t1-2"> 構成図の維持・変更管理・見直し</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="社内ネットワークの構成記録（ダミー）"><div class="logtitle">社内ネットワークの構成記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">営業部の端末1台が感染。社内は全機器が同一ネットワーク</span></div><div class="logrow"><span class="hl">経理サーバも同じ。全端末から直接通信できる</span></div><div class="logrow"><span class="hl">境界のFWは設定済み。バックアップは毎日取得済み</span></div><div class="logrow"><span class="hl">要件: 経理サーバへ、感染を広げにくくしたい</span></div></div></div>
   <p class="q">構成の見直しとして、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">経理サーバを別のセグメントに置き、必要な通信だけ許可する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>境界のFWの規則を厳しくする … 感染は社内で広がり、その通信は境界のFWを通らない</li><li>バックアップの頻度を上げる … 復旧の手段で、感染の広がりは抑えられない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>3.2.1 ネットワーク構成における脆弱性</li><li>3.2.2 ネットワーク構成における脆弱性への対策</li></ul>
   <p>構成そのものの弱点と見えにくい弱点を整理し、区画分割の限界（許可した通信は通る）まで確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep205-vulnerability-basics.html">← #105 脆弱性とは 弱点の種類と優先順位</a><a href="ep207-tcpip-common-vuln.html">#107 TCP/IP共通の脆弱性 平文・偽装・資源枯渇 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

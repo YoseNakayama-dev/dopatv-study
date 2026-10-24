@@ -16,12 +16,11 @@
   <p class="eyebrow">#109 ・ 第4章 情報セキュリティマネジメントの実践</p>
   <h1>情報資産の洗出し・分類とクライアントPC</h1>
   <ol class="summary"><li>情報と、それを扱う機器・ソフト・保管場所を挙げ、台帳に記録して重要度で区分する。漏れた資産は守る対象から外れる。</li><li>取扱い規則は区分ごとに保管・持出し・送信・廃棄を定める。廃棄は復元できない方法で行い、管理責任者が見直す。</li><li>PCは暗号化や権限の制限などを重ねる。紛失や盗難は起きるので保存を絞り遠隔消去も使うが、通信できないと届かない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep209-info-asset-client-pc:info-asset">
   <button type="button" class="flip" aria-expanded="false"><span class="front">情報資産</span><span class="back" hidden><span class="def">守る対象となる情報と、それを扱う機器・ソフト・保管場所。挙げ漏れた資産は守る対象から外れる。</span><span class="note">情報そのものだけでなく、扱う機器や保管場所も洗出しの対象。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep209-info-asset-client-pc:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>情報資産の管理の説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>分類は、一度決めたら見直さなくてよい</span></button><p class="why" hidden>分類も変化に応じて見直す</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>資産台帳には、管理責任者を記録しない</span></button><p class="why" hidden>管理責任者を記録する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>区分ごとに、保管や廃棄の方法を定める</span></button><p class="why" hidden>区分ごとに取扱い方法を定める</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>クライアントPCは、パスワードだけで十分に保護できる</span></button><p class="why" hidden>暗号化や権限の制限も組み合わせる</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">紛失したノートPCに顧客名簿の複製があった。暗号化と遠隔消去がそれぞれ何のための対策で、どんな限界があるかを頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep209-info-asset-client-pc-t1-0"> 機器・ソフト・保管場所まで漏れなく挙げる</label></li><li><label><input type="checkbox" id="ep209-info-asset-client-pc-t1-1"> 台帳に名称・場所・管理責任者を記録する</label></li><li><label><input type="checkbox" id="ep209-info-asset-client-pc-t1-2"> 重要度から区分を決め、基準は文書化する</label></li><li><label><input type="checkbox" id="ep209-info-asset-client-pc-t1-3"> 区分ごとの規則を管理責任者が見直す</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="ノートPCの管理記録（ダミー）"><div class="logtitle">ノートPCの管理記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">営業部のノートPCに、業務のため顧客名簿の複製を保存</span></div><div class="logrow"><span class="hl">持出しは業務上継続する。紛失時、PCは通信できないことがある</span></div><div class="logrow"><span class="hl">ディスクを別のPCにつなぐと、中身をそのまま読める</span></div><div class="logrow"><span class="hl">要件: 紛失しても、名簿の内容を読み取られないようにする</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">ディスク全体を暗号化する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ログインのパスワードを長くする … ディスクを別のPCにつなぐと、ログインを経由せず読める</li><li>持出しを禁止する … 業務上、持出しを継続する前提で、禁止はできない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>4.5.1 情報資産の洗出しと分類</li><li>4.5.2 情報資産の取扱い方法の明確化</li><li>4.5.3 クライアントPCの管理及びセキュリティ対策</li></ul>
   <p>洗出し、台帳、重要度、区分という流れと、区分ごとの取扱い規則のつながりを確かめる。PCは紛失を前提に、対策を重ねる考え方を読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep208-security-policy.html">← #108 情報セキュリティポリシー 体系と策定の留意点</a><a href="ep210-bcp-bcm.html">#110 BCPとBCM 事業継続の計画と回し続ける運用 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

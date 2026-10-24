@@ -16,12 +16,11 @@
   <p class="eyebrow">#44 ・ 第4章 情報セキュリティマネジメントの実践</p>
   <h1>リスク対応手法の種類 低減・回避・移転・保有の選び方</h1>
   <ol class="summary"><li>リスク対応は低減・回避・移転・保有の4種類。版により修正・共有と呼ぶこともある。</li><li>限界: 低減は残留リスクが残り、回避は成果も失う。移転しても信用や説明責任は残りうる。</li><li>影響・可能性・費用で選び、組み合わせて理由を記録する。基準超えの保有は所有者が例外承認。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep144-risk-treatment:risk-reduction">
   <button type="button" class="flip" aria-expanded="false"><span class="front">リスク低減</span><span class="back" hidden><span class="def">リスクの発生可能性や影響を小さくする対応。脆弱性の修正やバックアップが例。</span><span class="note">版によっては「修正」と呼ばれる。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep144-risk-treatment:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>リスク回避の例として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>サイバー保険に加入して、損失の一部を保険会社に負担してもらう</span></button><p class="why" hidden>損失の負担を分ける（移転）</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>脆弱性を修正して、攻撃が成功する可能性を下げる</span></button><p class="why" hidden>可能性を下げる（低減）</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>リスクの原因となる機能の提供を、やめる</span></button><p class="why" hidden>原因となる活動をやめる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>大きさを理解した上で、追加の対策はしないと決めて運用する</span></button><p class="why" hidden>対策しないと決める（保有）</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">委託先と契約すればリスクの責任まで渡せる、と言えない理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep144-risk-treatment-t1-0"> 理由を記録する</label></li><li><label><input type="checkbox" id="ep144-risk-treatment-t1-1"> リスク所有者が例外として承認する</label></li><li><label><input type="checkbox" id="ep144-risk-treatment-t1-2"> 受容は判断、保有は決定で別の概念</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="決済システムのリスク対応記録（ダミー）"><div class="logtitle">決済システムのリスク対応記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">リスクP（基準超え）: 利用者が少ない旧機能を、提供終了にした</span></div><div class="logrow"><span class="hl">リスクQ（基準超え）: 停止時の補償を受けるため、保険に加入した</span></div><div class="logrow"><span class="hl">リスクQ: 決済システムは、稼働を続けている</span></div><div class="logrow"><span class="hl">リスクQ: 発生可能性と被害の範囲を変える対策は、実施していない</span></div><div class="logrow"><span class="hl">リスクR（基準超え）: 費用超過で対策なし。理由を記録し、所有者が承認</span></div></div></div>
   <p class="q">リスクQへの対応は、どの手法にあたる？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">リスク移転（損失の負担を、保険会社と分けた）</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>リスク低減 … 発生可能性と被害の範囲を変える対策は、していない</li><li>リスク回避 … 決済システムは稼働を続けている（やめていない）</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>4.2.3 リスク対応手法の種類</li></ul>
   <p>4つの手法の定義と限界、影響・可能性・費用による選び方、基準超えを保有するときの手続きを確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep143-risk-process.html">← #43 リスクマネジメントのプロセスとリスク対応 残留リスクを管理する</a><a href="ep145-host-hardening.html">#45 ホストの要塞化の概要 入口を減らす考え方 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

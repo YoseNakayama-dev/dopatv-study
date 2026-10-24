@@ -16,12 +16,11 @@
   <p class="eyebrow">#60 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>ログ分析の効果と限界 残し方と守り方で価値が決まる</h1>
   <ol class="summary"><li>効果は、早期の検知、原因と影響範囲の特定、証跡、抑止と設定の見直し。記録があってこそ成り立つ。</li><li>限界は、出力設定のない操作は残らないこと、消去や改ざん、量による見落とし、暗号化通信の中身。</li><li>対策は、発生時の別保管先への転送、出力設定の確認、アラートでの絞り込み、訓練、取得対象の見直し。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep160-log-analysis-effects:early-detection">
   <button type="button" class="flip" aria-expanded="false"><span class="front">早期の検知</span><span class="back" hidden><span class="def">不審な動きに早く気づくこと。早く気づけば、被害の拡大を抑えられる。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep160-log-analysis-effects:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>ログ分析の限界として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>出力の設定がない操作は、ログに残らず、後から調べられない</span></button><p class="why" hidden>出力設定のない操作は残らない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ログを保管していれば、改ざんされても、必ず元の内容に戻せる</span></button><p class="why" hidden>改ざんされると戻せるとは限らない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ログの量が増えるほど、不審な動きは、人手でも見つけやすくなる</span></button><p class="why" hidden>量が増えると見落としやすい</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログ分析は事後の調査専用で、不審な動きの早期の検知には使えない</span></button><p class="why" hidden>アラートで早期の検知にも使う</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">侵入者にログを消去・改ざんされることへの対策を、限界の原因と結びつけて、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep160-log-analysis-effects-t1-0"> 出力設定のない操作は残らない</label></li><li><label><input type="checkbox" id="ep160-log-analysis-effects-t1-1"> 取得対象を定期的に見直す</label></li><li><label><input type="checkbox" id="ep160-log-analysis-effects-t1-2"> 訓練でログが足りるかを確かめる</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="Webサーバ侵害の調査記録（ダミー）"><div class="logtitle">Webサーバ侵害の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">侵害されたWebサーバのログは、ある時刻以降が空白だった</span></div><div class="logrow"><span class="hl">ログの保存先は、そのWebサーバ自身の内蔵ディスクのみ</span></div><div class="logrow"><span class="hl">FWのログには、同時刻の、そのサーバから外部への通信が残る</span></div><div class="logrow"><span class="hl">保管期間は1年。該当日は、その期間内にある</span></div><div class="logrow"><span class="hl">要件: 侵害されても、消去や改ざんの影響を受けず記録を残す</span></div></div></div>
   <p class="q">ログの保全として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">ログを発生時に、別のログ専用サーバへ転送して保存する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ログの保管期間をさらに延ばして、長期間残すようにする … 期間は1年で、該当日はその期間内</li><li>出力するログの項目を増やして、より詳細に残すようにする … 保存先は同じサーバのままで、要件を満たさない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.10.2 ログ分析による効果及び限界</li></ul>
   <p>効果が記録の有無に左右されること、四つの限界とそれぞれの対策の対応づけ、転送・設定確認・絞り込み・訓練の役割の違いを確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep159-log-analysis-basics.html">← #59 ログ分析の概要 突き合わせて初めて見える不正の足取り</a><a href="ep161-access-control-basics.html">#61 アクセス制御の概要 必要な人に必要な範囲だけ →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

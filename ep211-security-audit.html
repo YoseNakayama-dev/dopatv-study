@@ -16,12 +16,11 @@
   <p class="eyebrow">#111 ・ 第4章 情報セキュリティマネジメントの実践</p>
   <h1>情報セキュリティ監査とシステム監査 独立と証拠で測る</h1>
   <ol class="summary"><li>監査は管理の状況を基準に照らして客観的に評価する。自分の管理は見落としやすく、監査人は被監査部門から独立する。</li><li>聞き取りだけでは裏付けにならず、資料の閲覧・質問・現場の確認で証拠を集める。報告後はフォローアップで改善を確認する。</li><li>監査は抽出した範囲の評価で、全てを保証しない。診断は弱点を探す手法で、監査は管理が基準に合うかを評価する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep211-security-audit:security-audit">
   <button type="button" class="flip" aria-expanded="false"><span class="front">情報セキュリティ監査</span><span class="back" hidden><span class="def">機密性・完全性・可用性の管理の状況を、基準に照らして客観的に評価すること。</span><span class="note">自己点検（被監査側が自ら確認する）は監査ではない。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep211-security-audit:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>監査の説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>保証型は、改善の助言が中心である</span></button><p class="why" hidden>助言が中心なのは助言型</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>システム監査の対象は、セキュリティだけ</span></button><p class="why" hidden>システム全般が対象</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>監査人は、被監査部門の所属が望ましい</span></button><p class="why" hidden>被監査部門から独立する</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>指摘事項の改善は、フォローアップで確認する</span></button><p class="why" hidden>フォローアップで改善を確認</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">監査人が被監査部門から独立していなければならない理由と、内部監査・外部監査の違いを頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep211-security-audit-t1-0"> 聞き取りだけでは裏付けにならない</label></li><li><label><input type="checkbox" id="ep211-security-audit-t1-1"> 資料の閲覧・質問・現場の確認で証拠を集める</label></li><li><label><input type="checkbox" id="ep211-security-audit-t1-2"> 報告書の後、フォローアップで改善を確認する</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="監査実施前の確認記録（ダミー）"><div class="logtitle">監査実施前の確認記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 情報システム部の、サーバ運用管理</span></div><div class="logrow"><span class="hl">監査人の候補: 運用担当者、または別部門の者</span></div><div class="logrow"><span class="hl">サーバの設定とアクセスの記録は、いつでも確認できる</span></div><div class="logrow"><span class="hl">要件: 結果を、客観的な評価として経営層へ報告したい</span></div></div></div>
   <p class="q">適切な進め方は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">運用に関与しない者が、設定と記録を確認して評価する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>運用担当者が、自分で確認して監査報告とする … 別部門の者を選べるのに自分で評価すると、独立性が保てない</li><li>運用に関与しない者が、聞き取りだけで結論を出す … 申告だけでは裏付けにならず、記録は確認できる</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>4.10.1 情報セキュリティ監査の必要性と監査制度の概要</li><li>4.10.2 システム監査制度の概要</li></ul>
   <p>独立性と証拠で評価する監査の考え方、管理基準と監査基準の役割の違いを確かめる。診断やシステム監査との違いも整理して読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep210-bcp-bcm.html">← #110 BCPとBCM 事業継続の計画と回し続ける運用</a><a href="ep212-measure-classification.html">#112 情報セキュリティ対策の分類 機能と実施方法の二つの軸 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

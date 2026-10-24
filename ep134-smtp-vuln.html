@@ -16,12 +16,11 @@
   <p class="eyebrow">#34 ・ 第3章 情報セキュリティにおける脆弱性</p>
   <h1>SMTPの脆弱性と対策 送信者を確かめない仕組みの弱点</h1>
   <ol class="summary"><li>SMTPは送信者を確かめず、差出人の表示も自由に書け、そのままでは暗号化されない。</li><li>第三者中継は仕様ではなく設定の不備で成立し、踏み台化とブロックリスト登録を招く。</li><li>対策は送信者認証の必須化・TLS・送信ドメイン認証。TLSは強制しないと戻され、認証結果の扱いは運用次第。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep134-smtp-vuln:smtp">
   <button type="button" class="flip" aria-expanded="false"><span class="front">SMTP</span><span class="back" hidden><span class="def">メールを送り、複数のサーバを中継して届ける古い仕組み。送信者を確かめる機能を持たず、そのままでは暗号化もされない。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep134-smtp-vuln:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>第三者中継を防ぐ対策として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SMTP-AUTHを必須にして、中継を拒否する</span></button><p class="why" hidden>認証のない中継を拒否</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>受信用のPOP3を有効にして、受信側の認証を強くする</span></button><p class="why" hidden>POP3は受信用で、送信の許可と無関係</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>メール本文を圧縮してから、送信するようにしておく</span></button><p class="why" hidden>圧縮は、送信者の確認と無関係</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>待ち受けのポート番号を、標準以外の番号に変えるだけにする</span></button><p class="why" hidden>中継を許す設定は、変わらない</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">第三者中継が「仕様の弱点」ではなく「設定の不備」と言われる理由と、直し方を頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep134-smtp-vuln-t1-0"> ログインを経ていない</label></li><li><label><input type="checkbox" id="ep134-smtp-vuln-t1-1"> 盗聴は受理の理由にならない</label></li><li><label><input type="checkbox" id="ep134-smtp-vuln-t1-2"> 原因は認証なしの中継を許す設定</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="メールサーバの調査記録（ダミー）"><div class="logtitle">メールサーバの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 自社のメールサーバ（ダミー）。外部へ大量送信している</span></div><div class="logrow"><span class="hl">接続元は外部の1つのIP。ログイン(SMTP-AUTH)なしで依頼</span></div><div class="logrow"><span class="hl">依頼は、宛先指定と本文の送信。受信箱の読み出しはなし</span></div><div class="logrow"><span class="hl">差出人も宛先も自社ドメインではなく、サーバは全て受理して転送</span></div><div class="logrow"><span class="hl">結果: 他社のブロックリストに、自社のIPが登録された</span></div></div></div>
   <p class="q">この事象の原因として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">認証なしの第三者の中継を許可する、サーバの設定</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>利用者アカウントの漏えい … ログインを経ていない</li><li>メール本文の盗聴 … 盗聴は読み取る行為。読み出しはなし</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>3.4.1 SMTPの脆弱性</li><li>3.4.2 SMTPの脆弱性への対策</li></ul>
   <p>仕様の弱点と第三者中継（設定の不備）の区別、TLSを強制しない限界、送信ドメイン認証が中継の防止とは別である点を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep133-fileless-detect.html">← #33 ファイルレス攻撃とマルウェアの検出手法 ファイルがなくても見つける</a><a href="ep135-pop3-vuln.html">#35 POP3の脆弱性と対策 平文の認証を守る →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

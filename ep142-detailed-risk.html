@@ -16,12 +16,11 @@
   <p class="eyebrow">#42 ・ 第4章 情報セキュリティマネジメントの実践</p>
   <h1>詳細リスク分析・評価の手順 ベースラインとの使い分け</h1>
   <ol class="summary"><li>進め方はベースライン・詳細リスク分析・組合せ。費用と精度のバランスで選ぶ。</li><li>詳細は、資産・脅威・既存の管理策と脆弱性の特定、リスクの算定、受容基準と比べる評価の順。</li><li>定量はALE＝1回の損失額×年間の発生回数。手間がかかり見積もりは不確実なので、前提を明示する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep142-detailed-risk:baseline">
   <button type="button" class="flip" aria-expanded="false"><span class="front">ベースラインアプローチ</span><span class="back" hidden><span class="def">標準的な基準に照らして対策を選ぶ方法。手間は少ないが、組織固有のリスクを見落としうる。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep142-detailed-risk:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>ベースラインアプローチの特徴として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>標準的な基準に照らすため、手間が少ない</span></button><p class="why" hidden>標準的な基準に照らす</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>資産ごとに脅威と脆弱性を個別に分析して、リスクを算定する</span></button><p class="why" hidden>それは詳細リスク分析の説明</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>リスクの算定は行わず、すべてのリスクを受容する</span></button><p class="why" hidden>基準に沿って、対策を選ぶ</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>組織固有のリスクを、見落とすことが一切ない</span></button><p class="why" hidden>固有のリスクは見落としうる</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">「重要な資産だけ詳細に分析し、ほかはベースライン」という進め方の利点と注意点を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep142-detailed-risk-t1-0"> 1回の損失額 × 年間の発生回数</label></li><li><label><input type="checkbox" id="ep142-detailed-risk-t1-1"> 受容基準と比べ、超えたら対応する</label></li><li><label><input type="checkbox" id="ep142-detailed-risk-t1-2"> 前提を明示して見直す</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="顧客DBのリスク評価記録（ダミー）"><div class="logtitle">顧客DBのリスク評価記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 顧客DB（ダミー）。漏えい時の損失は、1回6000万円</span></div><div class="logrow"><span class="hl">脅威: 外部からの不正アクセス。発生は年0.1回（10年に1回）</span></div><div class="logrow"><span class="hl">脆弱性: 修正プログラムが未適用。対策はまだ追加していない</span></div><div class="logrow"><span class="hl">受容基準: 年間予想損失額が300万円を超えたら、対応する</span></div><div class="logrow"><span class="hl">年間予想損失額 = 1回の損失額 × 年間の発生回数</span></div></div></div>
   <p class="q">このリスクの評価として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">年間予想損失額は600万円で、受容基準を超えるため、対応する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>10年に1回で低い … 基準は年間予想損失額</li><li>年間予想損失額は6000万円 … 6000万は1回の損失額</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>4.1.4 詳細リスク分析・評価の手順</li></ul>
   <p>ベースライン・詳細・組合せの違い、特定→算定→評価の対応、年間予想損失額の計算と受容基準との比較を、自分で手を動かして確かめる。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep141-risk-components.html">← #41 リスクの構成要素と損失 資産・脅威・脆弱性とアセスメント</a><a href="ep143-risk-process.html">#43 リスクマネジメントのプロセスとリスク対応 残留リスクを管理する →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

@@ -16,12 +16,11 @@
   <p class="eyebrow">#56 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>IPSの構成例と限界 故障時に止めるか通すか</h1>
   <ol class="summary"><li>IPSは通信の経路上に置く。FWの内側が多く、重要なサーバ群の手前で重点的に守る構成もある。</li><li>経路上にあるので故障すると通信が止まりうる。故障時は通す（フェイルオープン）か止めるかを決め、二重化で備える。</li><li>誤検知・未知の攻撃・復号していない暗号化通信・処理能力の超過が限界。更新とログ監視などの運用が要る。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep156-ips-config-limits:inline">
   <button type="button" class="flip" aria-expanded="false"><span class="front">インライン配置</span><span class="back" hidden><span class="def">通信の経路上にIPSを置く配置。経路上にあるため、故障すると通信が止まりうる。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep156-ips-config-limits:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>IPSの「フェイルオープン」の説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>故障したときに、通信をすべて遮断して、安全を優先する動作</span></button><p class="why" hidden>それは、フェイルクローズ</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>不正な通信を、通知のみにして、遮断を行わない動作</span></button><p class="why" hidden>検知のみの運用</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>故障に備えて、IPSを複数台にして、二重化して運用すること</span></button><p class="why" hidden>それは、冗長化</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>故障したときに、通信を通して、業務の継続を優先する動作</span></button><p class="why" hidden>故障時に通信を通す</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">受注業務は止めたくないが、不正な通信はサーバの手前で止めたい。IPSの故障時の動作と備えを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep156-ips-config-limits-t1-0"> 誤検知で業務に響く（検知のみで調整）</label></li><li><label><input type="checkbox" id="ep156-ips-config-limits-t1-1"> 未知の攻撃・暗号化通信・処理能力の限界</label></li><li><label><input type="checkbox" id="ep156-ips-config-limits-t1-2"> 更新・ログ監視・例外の手続き・影響確認</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="受注サーバ群のIPS故障の調査記録（ダミー）"><div class="logtitle">受注サーバ群のIPS故障の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 受注サーバ群（ダミー）の手前にIPSを設置。通信の経路上に置いている</span></div><div class="logrow"><span class="hl">設定: 故障時は、通信を通す動作。IPSは1台構成</span></div><div class="logrow"><span class="hl">ある日、IPSが故障し、検査されないまま、通信が受注サーバに届いた</span></div><div class="logrow"><span class="hl">その間、不正な通信の一部が通過した。受注業務は止まらなかった</span></div><div class="logrow"><span class="hl">要件: 受注業務の停止は避ける。不正な通信は、サーバの手前で止めたい</span></div></div></div>
   <p class="q">故障時の対策として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">IPSを二重化し、故障時にも、検査と通信を続けられるようにする</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>故障時は通信を止める設定にする … 要件は、受注業務の停止を避けること</li><li>経路の外に移し、故障の影響をなくす … 要件は、サーバの手前で止めること</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.7.3 IPSの構成例</li><li>5.7.4 IPSの機能上の限界及び運用上の課題</li></ul>
   <p>配置（FWの内側か外側か）の理由と、経路上にあるがゆえの故障時の動作を押さえ、限界と運用の課題を結びつけて読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep155-ips-basics.html">← #55 IPSの概要と主な機能 経路の中で検知して止める</a><a href="ep157-waf-basics.html">#57 WAFの種類と主な機能 Webアプリの手前で中身を見る門番 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

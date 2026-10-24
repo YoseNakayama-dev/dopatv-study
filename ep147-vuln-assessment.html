@@ -16,12 +16,11 @@
   <p class="eyebrow">#47 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>脆弱性診断の概要と実施 範囲と時点が肝</h1>
   <ol class="summary"><li>脆弱性診断は、攻撃される前に脆弱性を見つけて対処する。ネットワーク診断とWebアプリ診断がある。</li><li>計画で範囲を合意し、自動と手動を組み合わせて実施。報告の深刻度に資産の重要度と公開を加味する。</li><li>結果は診断した範囲と時点のもの。許可と本番への配慮が要り、変更のたびに再診断する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep147-vuln-assessment:vuln-assessment">
   <button type="button" class="flip" aria-expanded="false"><span class="front">脆弱性診断</span><span class="back" hidden><span class="def">システムの脆弱性を、攻撃を受ける前に見つけて対処するための診断。公開前、大きな変更の後、定期的に実施する。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep147-vuln-assessment:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>脆弱性診断の実施として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>診断で重大な指摘がなければ、その後は再診断を行わない</span></button><p class="why" hidden>変更のたびに再診断が必要</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>本番環境で、事前の合意なく、負荷の高い診断を行う</span></button><p class="why" hidden>本番の停止や、問題の原因に</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>実施前に、対象と範囲と時間帯を合意する</span></button><p class="why" hidden>実施前に、範囲などを合意</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ツールの結果だけで、業務ロジックの不備もないと判断する</span></button><p class="why" hidden>ロジックの不備は見落としやすい</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">診断の指摘をすべて直したのに、公開後に別の不備が見つかることがある。その理由を、診断の範囲と時点の観点で、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep147-vuln-assessment-t1-0"> 誤検知・検出漏れがある</label></li><li><label><input type="checkbox" id="ep147-vuln-assessment-t1-1"> 業務ロジックの不備は見つけにくい</label></li><li><label><input type="checkbox" id="ep147-vuln-assessment-t1-2"> 本番では負荷やデータの変更に配慮する</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="会員サイトの診断記録（ダミー）"><div class="logtitle">会員サイトの診断記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 会員サイト（ダミー）。公開前に、診断事業者が、ネットワーク診断とWebアプリ診断を実施</span></div><div class="logrow"><span class="hl">診断計画の対象画面: トップ、ログイン、検索</span></div><div class="logrow"><span class="hl">診断で指摘された3件は、すべて修正し、再診断で解消を確認済み</span></div><div class="logrow"><span class="hl">公開後、利用者の通報で、購入手続きの画面の不備が見つかった</span></div><div class="logrow"><span class="hl">// 診断事業者は、診断計画に記載のない画面は、診断していない</span></div></div></div>
   <p class="q">診断で見つからなかった原因として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">購入手続きの画面が、診断の範囲に入っていなかった</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>指摘事項への対処漏れ … 指摘3件は、すべて再診断で解消を確認済み</li><li>Webアプリ診断を実施していない … ネットワーク診断と、両方を実施済み</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.3.1 脆弱性診断の概要</li><li>5.3.2 脆弱性診断の実施</li></ul>
   <p>診断の種類と方式の違い、計画から再診断までの流れ、診断の範囲と時点という限界を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep146-hardening-items.html">← #46 要塞化の主な実施項目 アカウント・サービス・更新・ログ</a><a href="ep148-fuzzing-asm.html">#48 ファジングとASMの概要 未知の穴と未把握の資産 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

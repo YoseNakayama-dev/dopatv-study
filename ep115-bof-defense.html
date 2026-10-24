@@ -16,12 +16,11 @@
   <p class="eyebrow">#15 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>BOF攻撃への対策 カナリア・DEP・ASLRの守備範囲と限界</h1>
   <ol class="summary"><li>BOFが成功すると、脆弱なプロセスの権限で任意のコードが動く。影響の大きさは動いていた権限で決まる。</li><li>根本は長さの確認と修正。カナリア・DEP/NX・ASLRは緩和で、それぞれ防げる範囲に限界がある。</li><li>setuidの最小化はBOFを消さず被害を抑える。どれか1つで完全には防げないので、多層で守る。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep115-bof-defense:safe-func">
   <button type="button" class="flip" aria-expanded="false"><span class="front">安全な関数・境界チェック</span><span class="back" hidden><span class="def">コピー前に入力の長さを確認し、長さを指定できる関数を使うこと。あふれる書き込み自体を防ぐ根本の対策。</span><span class="note">限界: 長さの計算を間違えれば脆弱性は残る。既存コードの修正漏れにも注意。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep115-bof-defense:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>DEP／NXが防ぐのは、次のうちどれ？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>コピー時の長さ確認の漏れ</span></button><p class="why" hidden>安全な関数・境界チェックの役割</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>メモリ配置の予測</span></button><p class="why" hidden>ASLRの役割</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>データ領域上のコードの実行</span></button><p class="why" hidden>データ領域上のコードの実行</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>setuid権限の付与</span></button><p class="why" hidden>権限の話で、DEPは無関係</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">スタックカナリア・DEP/NX・ASLRを入れても、BOFの対策として十分とは言えない理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep115-bof-defense-t1-0"> 根本: 長さの確認と修正</label></li><li><label><input type="checkbox" id="ep115-bof-defense-t1-1"> 緩和: カナリア・DEP/NX・ASLR</label></li><li><label><input type="checkbox" id="ep115-bof-defense-t1-2"> 被害抑制: setuidの最小化</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="対策後の動作確認記録（ダミー）"><div class="logtitle">対策後の動作確認記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 所有者root・setuid付きの管理コマンド（再ビルド後）</span></div><div class="logrow"><span class="hl">変更点: コンパイル時のスタック保護オプションを有効化のみ</span></div><div class="logrow"><span class="hl">以前に権限昇格した長い引数で実行 → uid変化なし</span></div><div class="logrow"><span class="hl">標準エラーに *** stack smashing detected *** を出力、SIGABRTで終了</span></div><div class="logrow"><span class="hl">// 入力長の確認コードは差分なし / ls -l で s 属性は残存</span></div></div></div>
   <p class="q">この結果から言える内容として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">戻りアドレスの書き換えを実行時に検知し、プロセスを停止させた</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>脆弱性が修正された … 入力長の確認コードは差分なし</li><li>setuidが外れた … ls -l で s 属性が残っている</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.3.3 BOF攻撃による影響</li><li>2.3.4 BOF攻撃への対策</li></ul>
   <p>影響が権限で決まる点と、各対策が防ぐ範囲・限界を区別し、根本対策と緩和策・被害抑制の違いを確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep114-bof.html">← #14 BOF攻撃の仕組み 戻りアドレスとsetuidの権限昇格</a><a href="ep116-password-crack.html">#16 パスワードクラックの種類と対策 ソルトとストレッチングの役割 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

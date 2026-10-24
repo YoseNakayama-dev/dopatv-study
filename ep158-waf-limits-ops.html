@@ -16,12 +16,11 @@
   <p class="eyebrow">#58 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>WAFの限界と運用の課題 入れて終わりではない補助の守り</h1>
   <ol class="summary"><li>WAFは根本対策ではなく、影響を低減する補助。通信が正常に見える認可・業務ロジックの不備は防げない場合がある。</li><li>導入初期は検知のみで動かし、誤検知を確認してから遮断。除外は最小限にし、アプリ変更時は見直す。</li><li>遮断・通過の両方のログを確認し、WAF自体の故障時の動作も決める。脆弱性診断と修正を併用する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep158-waf-limits-ops:not-root">
   <button type="button" class="flip" aria-expanded="false"><span class="front">根本対策ではないという限界</span><span class="back" hidden><span class="def">WAFは実装面の根本対策ではなく、攻撃による影響を低減する対策。脆弱性そのものは残る。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep158-waf-limits-ops:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>WAFの運用として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>設定が完了したら、ルールは変更せずに、そのまま使い続ける</span></button><p class="why" hidden>変更や新たな攻撃に合わせ、見直しが要る</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>誤検知が出たら、検査をすべて無効にして、運用を続ける</span></button><p class="why" hidden>全部無効だと、守れなくなる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>アプリを変更したときは、ルールが合っているかを、見直す</span></button><p class="why" hidden>アプリの変更時はルールを見直す</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログは、遮断した通信だけを確認し、通過した通信は見ない</span></button><p class="why" hidden>通過した通信のログも確認する</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">WAFを遮断モードで運用しているのに、会員サイトで他人の情報が見られてしまった。なぜWAFで防げなかったか、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep158-waf-limits-ops-t1-0"> 検知のみ→誤検知を確認→調整してから遮断</label></li><li><label><input type="checkbox" id="ep158-waf-limits-ops-t1-1"> 除外ルールは必要最小限</label></li><li><label><input type="checkbox" id="ep158-waf-limits-ops-t1-2"> アプリ変更・新たな攻撃への見直しとログ確認</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="会員サイトの情報漏えいの調査記録（ダミー）"><div class="logtitle">会員サイトの情報漏えいの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">会員サイトの前段にWAFを導入済み。遮断モードで稼働中</span></div><div class="logrow"><span class="hl">ある利用者が、URLの会員番号を変え、他人の情報を閲覧した</span></div><div class="logrow"><span class="hl">会員番号は正しい形式で、要求は、通常の操作と同じ形だった</span></div><div class="logrow"><span class="hl">サーバは、ログイン済みであることだけを確認して、返していた</span></div><div class="logrow"><span class="hl">要件: 他の利用者の情報は返さない。アプリの改修は可能</span></div></div></div>
   <p class="q">情報漏えいを防ぐ対策として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">サーバ側で、要求された情報が本人のものか確認して返す</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>WAFに攻撃パターンを追加して、不審な通信を遮断する … 要求は通常の操作と同じ形で、パターンに当たらない</li><li>WAFで会員番号の形式を厳しく検査して、不正な要求を遮断する … 番号は正しい形式で、形式では区別できない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.8.2 WAFの機能上の限界及び運用上の課題</li></ul>
   <p>WAFで防げない場合と、運用（検知のみ→遮断、除外の最小化、見直し、ログ確認）を、アプリ修正との併用という位置づけとあわせて読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep157-waf-basics.html">← #57 WAFの種類と主な機能 Webアプリの手前で中身を見る門番</a><a href="ep159-log-analysis-basics.html">#59 ログ分析の概要 突き合わせて初めて見える不正の足取り →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

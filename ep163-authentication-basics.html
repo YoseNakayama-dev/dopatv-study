@@ -16,12 +16,11 @@
   <p class="eyebrow">#63 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
   <h1>認証とは 名乗りと確認は別もの</h1>
   <ol class="summary"><li>識別は名乗ること、認証は本人かを確かめること。流れは識別、認証、認可の順。</li><li>対象は利用者・機器・サーバ。目的はなりすましの防止と、操作した人の特定。</li><li>認証情報は暗号化した通信で送り、失敗の理由は教えすぎない。ロックは締め出しに悪用されうる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep163-authentication-basics:identification">
   <button type="button" class="flip" aria-expanded="false"><span class="front">識別</span><span class="back" hidden><span class="def">利用者を区別するために、IDなどを示すこと。自分は誰かを名乗る段階。</span><span class="note">名乗りだけでは、誰でも他人のふりができてしまう。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep163-authentication-basics:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>識別と認証の説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>識別は利用者を区別すること、認証は本人であることを確かめること</span></button><p class="why" hidden>区別が識別、確認が認証</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>識別は本人であることを確かめ、認証はIDを利用者に割り当てること</span></button><p class="why" hidden>識別と認証の役割が逆</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>識別は操作の権限を判断し、認証は操作の履歴を記録すること</span></button><p class="why" hidden>権限の判断は認可、履歴は記録</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>IDを入力させれば、識別も認証も、同時に完了したことになる</span></button><p class="why" hidden>IDは名乗りで本人確認ではない</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">アカウントのロックを導入するときの狙いと、設計時に気をつける点を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep163-authentication-basics-t1-0"> 対象は利用者・機器・サーバ</label></li><li><label><input type="checkbox" id="ep163-authentication-basics-t1-1"> サーバは証明書などで接続先が本物かを確かめる</label></li><li><label><input type="checkbox" id="ep163-authentication-basics-t1-2"> 目的はなりすましの防止</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="ログイン画面の応答に関する調査記録（ダミー）"><div class="logtitle">ログイン画面の応答に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 会員向けサイトのログイン画面（ダミー）</span></div><div class="logrow"><span class="hl">現状: IDがなければ「IDがありません」と表示する</span></div><div class="logrow"><span class="hl">現状: パスワードの誤りなら「パスワードが違います」と表示する</span></div><div class="logrow"><span class="hl">メッセージの違いから、IDの登録有無を外部から判別できた</span></div><div class="logrow"><span class="hl">要件: 失敗は伝えつつ、IDの登録有無を外部に知られたくない</span></div></div></div>
   <p class="q">ログイン失敗時の応答として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">どちらの誤りかを示さず、同じ内容のメッセージを返す</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>失敗が続いたら、アカウントを一時的にロックする … メッセージの違いが残り、IDの登録有無は分かる</li><li>誤りの内容に応じて、メッセージを出し分け続ける … 現状がその方式で、登録有無を判別できた</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>6.2.1 認証とは</li></ul>
   <p>識別と認証の区別、認証の対象と目的、失敗時の応答・ロック・再認証など実装のポイントとその注意点を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep162-access-control-impl.html">← #62 アクセス制御の実施 判定は画面でなくサーバ側で</a><a href="ep164-authentication-factors.html">#64 認証の分類 知識・所持・生体を重ねる →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

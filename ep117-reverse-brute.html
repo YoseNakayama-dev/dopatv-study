@@ -16,12 +16,11 @@
   <p class="eyebrow">#17 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>リバースブルートフォースとパスワードリスト攻撃 ロックで止まらない理由</h1>
   <ol class="summary"><li>リバースブルートフォースは、パスワードを固定してIDを変えて試す。1アカウントの失敗が少なく、ロックに届かない。</li><li>パスワードリスト攻撃は、別サービスで漏れた組の流用。前提は使い回しで、組が合えば1回で成功し、正規の入力に見える。</li><li>対策は多要素認証、使い回しの禁止、サイト全体の監視。どれも完全ではなく、層で守る。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep117-reverse-brute:brute-force">
   <button type="button" class="flip" aria-expanded="false"><span class="front">通常のブルートフォース</span><span class="back" hidden><span class="def">IDを固定し、パスワードを変えて試す。同一アカウントの失敗が積み重なるので、アカウントロックで止めやすい。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep117-reverse-brute:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>パスワードリスト攻撃への対策として、最も有効なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>アカウントの失敗回数のしきい値だけを下げる</span></button><p class="why" hidden>1アカウントの失敗が少なく、届かない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>パスワードの使い回しをやめ、多要素認証を併用する</span></button><p class="why" hidden>使い回しをやめ、多要素認証を併用</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>パスワードの最大文字数を短く制限する</span></button><p class="why" hidden>短くすると、むしろ弱くなる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログインのエラー理由を詳しく表示する</span></button><p class="why" hidden>詳しい理由の表示は、攻撃者にも有利</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">約3000のIDに各1回失敗し、試された文字列は全IDで同じだった。ロックが動かなかった理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep117-reverse-brute-t1-0"> 前提は使い回し</label></li><li><label><input type="checkbox" id="ep117-reverse-brute-t1-1"> 利用者は使い回しをやめる</label></li><li><label><input type="checkbox" id="ep117-reverse-brute-t1-2"> サイトは多要素認証・監視などを重ねる</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="ログイン認証ログの調査記録（ダミー）"><div class="logtitle">ログイン認証ログの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 会員サイトのログイン認証ログ（約1時間分・ダミー）</span></div><div class="logrow"><span class="hl">失敗: 約3000のIDに、それぞれ1回ずつ。試された文字列は同じ</span></div><div class="logrow"><span class="hl">同一IDの連続失敗は最大1回。アカウントロックは0件</span></div><div class="logrow"><span class="hl">// 送信元は複数のIPアドレスに分散 / 成功は数件</span></div></div></div>
   <p class="q">この記録から言える内容として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">アカウント単位のロックでは検知しにくい、パスワードを固定した試行が疑われる</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>特定IDへの総当たり … 同一IDの連続失敗は最大1回</li><li>パスワードリスト攻撃 … 試された文字列が全IDで同じ</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.4.3 リバースブルートフォース攻撃</li><li>2.4.4 パスワードリスト攻撃</li></ul>
   <p>通常のブルートフォースとの向きの違い、ロックが効かない理由、パスワードリスト攻撃の前提（使い回し）と各対策の限界を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep116-password-crack.html">← #16 パスワードクラックの種類と対策 ソルトとストレッチングの役割</a><a href="ep118-sase.html">#18 ゼロトラストの実現方式 ZTNAとSASEの考え方と限界 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

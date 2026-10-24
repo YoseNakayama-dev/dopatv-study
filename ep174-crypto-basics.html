@@ -16,12 +16,11 @@
   <p class="eyebrow">#74 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
   <h1>暗号の概念と主な暗号方式 鍵の使い分けと渡し方</h1>
   <ol class="summary"><li>共通鍵暗号は高速だが鍵配送が課題。公開鍵暗号は低速だが、鍵の数はn組で済む。</li><li>ハイブリッド暗号は、データを共通鍵で、その共通鍵を公開鍵で送る。公開鍵は証明書で本物か確認する。</li><li>鍵が漏れれば方式が強くても読まれる。推奨方式を十分な鍵長で使い、鍵の一生を管理する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep174-crypto-basics:plaintext-ciphertext">
   <button type="button" class="flip" aria-expanded="false"><span class="front">平文・暗号文・復号</span><span class="back" hidden><span class="def">平文を鍵で暗号化したものが暗号文。暗号文を元の平文に戻すことが復号で、鍵がなければ戻せない。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep174-crypto-basics:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>公開鍵暗号方式の説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>暗号化と復号に別の鍵を使い、公開鍵は相手に知られても問題ない方式</span></button><p class="why" hidden>別の鍵を使い、公開鍵は公開してよい</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>暗号化と復号に同じ鍵を使い、その鍵を事前に共有しておく方式である</span></button><p class="why" hidden>同じ鍵を使うのは共通鍵暗号</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>共通鍵暗号方式より一般に高速で、大容量データの暗号化に向く方式</span></button><p class="why" hidden>一般に共通鍵のほうが高速</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>公開鍵が知られると復号できるため、厳重に秘密にしておく必要がある方式</span></button><p class="why" hidden>秘密にするのは秘密鍵</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">ハイブリッド暗号で、データと共通鍵にそれぞれどの方式を使うか、その理由とあわせて頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep174-crypto-basics-t1-0"> 偽の公開鍵のすり替え</label></li><li><label><input type="checkbox" id="ep174-crypto-basics-t1-1"> 公開鍵が本物かは別に確かめる必要がある</label></li><li><label><input type="checkbox" id="ep174-crypto-basics-t1-2"> 証明書で確認する</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="拠点間通信の暗号化に関する調査記録（ダミー）"><div class="logtitle">拠点間通信の暗号化に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 本社と拠点が、インターネットで大容量の設計図を送る</span></div><div class="logrow"><span class="hl">拠点間で、鍵を安全に事前配布する手段はない</span></div><div class="logrow"><span class="hl">相手の公開鍵は、証明書で本物と確認して入手できる</span></div><div class="logrow"><span class="hl">要件: 大容量でも実用的な速度で、盗聴されても読まれない</span></div></div></div>
   <p class="q">要件を満たす方式として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">データは共通鍵で暗号化し、その共通鍵を相手の公開鍵で暗号化して送る</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>データ全体を、受信者の公開鍵で暗号化する … 大容量では処理が遅く、実用的な速度にならない</li><li>共通鍵を事前に全拠点へ配って暗号化する … 鍵を安全に事前配布する手段がない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>7.1.1 暗号の概念</li><li>7.1.2 主な暗号方式</li></ul>
   <p>共通鍵と公開鍵の違い（速度・鍵の数・配送）と、ハイブリッド暗号の分担を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep173-id-federation-tech.html">← #73 主なID連携技術 認証と認可を分けて覚える</a><a href="ep175-hash-mac-dh.html">#75 ハッシュ関数とMAC、DH鍵交換 値で確かめ、鍵を作る →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

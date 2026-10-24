@@ -16,12 +16,11 @@
   <p class="eyebrow">#124 ・ 追加テーマ（目次外）</p>
   <h1>DNSSECとDoH・DoT 真正性と秘匿性の違い</h1>
   <ol class="summary"><li>DNSの課題は真正性と秘匿性の二つ。対策は別で、真正性はDNSSEC、端末側の秘匿はDoT・DoH。</li><li>DNSSECは署名を検証して偽の応答や改ざんを検知する。暗号化はせず、署名側と検証側の両方が要る。</li><li>DoT・DoHは端末とリゾルバの間を保護するが、リゾルバには見える。DoHは監視を回避されうる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep224-dnssec-doh-dot:dnssec">
   <button type="button" class="flip" aria-expanded="false"><span class="front">DNSSEC</span><span class="back" hidden><span class="def">ゾーンに電子署名を付け、リゾルバが検証することで、偽の応答や改ざんを検知する仕組み。</span><span class="note">暗号化はしない。署名する側と検証する側の両方の対応が要る。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep224-dnssec-doh-dot:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>DNSの保護の説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>DNSSECは、問い合わせの内容を暗号化する</span></button><p class="why" hidden>DNSSECは暗号化しない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>DoHを使えば、リゾルバにも内容は見えなくなる</span></button><p class="why" hidden>リゾルバには見える</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>DoTは、権威サーバの応答の真正性を保証する</span></button><p class="why" hidden>応答の真正性はDNSSECの役割</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>DNSSECは、署名の検証で応答の改ざんを検知する</span></button><p class="why" hidden>署名の検証で改ざんを検知</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">公開リゾルバへ暗号化なしで問い合わせている環境で、ドメインはDNSSEC署名済みで検証も有効だった。それでも問い合わせ内容を第三者に見られた。理由と対策を頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep224-dnssec-doh-dot-t1-0"> DoHは通常のWeb通信に紛れる</label></li><li><label><input type="checkbox" id="ep224-dnssec-doh-dot-t1-1"> DNSの監視・フィルタを回避されうる</label></li><li><label><input type="checkbox" id="ep224-dnssec-doh-dot-t1-2"> 使うリゾルバを方針で決めて管理する</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="出張先のDNS通信の診断記録（ダミー）"><div class="logtitle">出張先のDNS通信の診断記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">出張先の無線LANから、社外の公開リゾルバに問い合わせる</span></div><div class="logrow"><span class="hl">問い合わせと応答は、暗号化されない通信（UDP 53）</span></div><div class="logrow"><span class="hl">対象のドメインはDNSSEC署名済みで、検証も有効</span></div><div class="logrow"><span class="hl">診断: 同じ無線LANの第三者が、問い合わせ内容を閲覧できた</span></div><div class="logrow"><span class="hl">要件: 端末のDNS設定だけで、無線LAN上の第三者に見せない</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">リゾルバとの間を、DoTまたはDoHで暗号化する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>DNSSECを有効にする … すでに有効だが、問い合わせ内容は閲覧された</li><li>別の事業者のリゾルバに変える … 暗号化されない経路では、内容は見られる</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>EX-10 DNSSEC・DoH/DoT</li></ul>
   <p>DNSSECは真正性、DoT・DoHは端末とリゾルバ間の秘匿と役割を分けて読む。それぞれの限界と運用上の注意も確かめる。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep223-esign-law.html">← #123 電子署名法 本人だけが行える署名と認証業務</a><a href="ep225-api-security.html">#125 APIセキュリティ 守る場所は画面ではなくサーバ側 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

@@ -16,12 +16,11 @@
   <p class="eyebrow">#119 ・ 第8章 システム開発におけるセキュリティ対策</p>
   <h1>Javaのセキュリティ 実行環境の機構・留意点・例外処理</h1>
   <ol class="summary"><li>Javaは検証・クラスローダ・ポリシーで実行を絞る。ただしセキュリティマネージャはJava 17で非推奨。</li><li>公開範囲は最小に。finalは参照の付け替えを防ぐだけで、可変オブジェクトの中身は防御的コピーで守る。</li><li>例外は握りつぶさず、内部情報は画面に出さずログへ。認可で例外が出たら許可せず拒否に倒す。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep219-java-security:bytecode-verification">
   <button type="button" class="flip" aria-expanded="false"><span class="front">バイトコード検証</span><span class="back" hidden><span class="def">クラスの読み込み時に、不正なバイトコードがないかを検査する実行環境の機構。</span><span class="note">実行時に動作範囲を絞る制御ではない。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep219-java-security:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>Javaの説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>バイトコード検証は、プログラムの実行後に行われる</span></button><p class="why" hidden>検証はクラスの読み込み時</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>可変オブジェクトの受け取りには、防御的コピーが有効</span></button><p class="why" hidden>防御的コピーが有効</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>例外は、握りつぶすほうが安全である</span></button><p class="why" hidden>握りつぶすと異常に気付けない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>クラスローダは、バイトコードを暗号化する仕組みである</span></button><p class="why" hidden>クラスローダは読み込みを管理</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">認可の処理で例外が出たとき、許可と拒否のどちらに倒すべきか。その理由を頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep219-java-security-t1-0"> finalは参照の付け替えを防ぐ</label></li><li><label><input type="checkbox" id="ep219-java-security-t1-1"> 参照先の中身は変更できる</label></li><li><label><input type="checkbox" id="ep219-java-security-t1-2"> 防御的コピーで中身を守る</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="Webアプリの障害記録（ダミー）"><div class="logtitle">Webアプリの障害記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">Webアプリ: 認証処理で、DB接続の例外が発生</span></div><div class="logrow"><span class="hl">画面に、スタックトレースとDBの接続先が表示された</span></div><div class="logrow"><span class="hl">どこでも捕捉されない例外は、既定のエラー画面に出る</span></div><div class="logrow"><span class="hl">要件: 画面に内部情報を出さず、原因は調査できること</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">例外を捕捉し、認証は失敗として扱い、画面は汎用の文言、詳細はログに記録する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>例外を捕捉して何もしない … 原因が記録されず、調査できない</li><li>例外を投げ直すだけで、どこでも捕捉しない … 既定のエラー画面に出てしまう</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>8.3.2 Javaのセキュリティ機構の概要</li><li>8.3.3 Javaのセキュリティ上の留意点</li><li>8.3.4 例外発生に備えた処理</li></ul>
   <p>実行環境の機構ごとの役割（検証・ローダ・ポリシー・署名）の違いと、例外が出たときの振る舞いを確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep218-bof-functions.html">← #118 BOFを招くC言語の関数 危険な関数・書式文字列・置き換え</a><a href="ep220-ecmascript-related.html">#120 ECMAScript関連技術 オリジン・CORS・JSON・DOMの扱い →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

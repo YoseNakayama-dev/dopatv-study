@@ -16,12 +16,11 @@
   <p class="eyebrow">#14 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>BOF攻撃の仕組み 戻りアドレスとsetuidの権限昇格</h1>
   <ol class="summary"><li>BOFは、固定長バッファに長さを確認せず入力をコピーし、戻りアドレスまで上書きされることで起きる。</li><li>setuidは所有者の権限で動く。所有者rootのsetuidにBOFがあり、入力を渡せると権限昇格になる。</li><li>setuid rootだけでは成立せず、BOFでも得られるのは動いたプロセスの権限分。配置は環境で違う。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep114-bof:bof">
   <button type="button" class="flip" aria-expanded="false"><span class="front">バッファオーバーフロー（BOF）</span><span class="back" hidden><span class="def">固定長のバッファに、長さを確認せず入力をコピーし、バッファより先のメモリまで書き込まれてしまう不備。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep114-bof:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>setuid属性付きの実行ファイルを実行したとき、プロセスの実効ユーザーは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>実行した人</span></button><p class="why" hidden>それは属性がない通常の場合</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>常にroot</span></button><p class="why" hidden>所有者がrootのときだけ</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ファイルの所有者</span></button><p class="why" hidden>ファイルの所有者</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>親プロセスの所有者</span></button><p class="why" hidden>親プロセスは関係しない</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">所有者rootのsetuidコマンドがあるだけでは、権限昇格は起きない。成立に必要な条件を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep114-bof-t1-0"> 長さを確認しないコピー</label></li><li><label><input type="checkbox" id="ep114-bof-t1-1"> 戻りアドレスが書き換わる</label></li><li><label><input type="checkbox" id="ep114-bof-t1-2"> 脆弱なプロセスの権限で任意のコード実行</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="権限昇格の調査記録（ダミー）"><div class="logtitle">権限昇格の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 所有者root、setuid属性付きの管理用コマンド</span></div><div class="logrow"><span class="hl">一般ユーザーが、非常に長い引数を渡して実行した</span></div><div class="logrow"><span class="hl">直前に当該コマンドが SIGSEGV で異常終了した記録あり</span></div><div class="logrow"><span class="hl">その直後、同じ端末のシェルが euid=0（実効UID=0）に</span></div><div class="logrow"><span class="hl">// 認証失敗の記録なし / ファイルのハッシュは配布時と一致</span></div></div></div>
   <p class="q">権限昇格が成立した原因として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">setuid rootのコマンドが入力長を確認せず、戻りアドレスを書き換えられた</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>管理者パスワードの推測 … 認証失敗の記録はない</li><li>コマンドの改ざん … ハッシュは配布時と一致していた</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.3.1 BOF攻撃の仕組み</li><li>2.3.2 setuid/setgid属性を悪用したBOF攻撃</li></ul>
   <p>スタック上の配置と戻りアドレスの書き換わり方、setuidが権限昇格に結びつく条件と、setuid rootだけでは成立しない点を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep113-killchain.html">← #13 サイバーキルチェーンとATT&amp;CK 攻撃を整理する共通の言葉</a><a href="ep115-bof-defense.html">#15 BOF攻撃への対策 カナリア・DEP・ASLRの守備範囲と限界 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

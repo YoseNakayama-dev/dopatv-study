@@ -16,12 +16,11 @@
   <p class="eyebrow">#55 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>IPSの概要と主な機能 経路の中で検知して止める</h1>
   <ol class="summary"><li>IPSは通信の経路に置き（インライン）、通る通信を検査して、不正なものを自動で遮断する。</li><li>IDSは経路の外で通知のみ。IPSは誤検知なら正常な通信も止めるので、まず検知のみで運用して調整する。</li><li>脆弱性を狙う通信の遮断は修正までの被害軽減で、修正の代わりではない。暗号化通信は復号が要る。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep155-ips-basics:ips">
   <button type="button" class="flip" aria-expanded="false"><span class="front">IPS（侵入防御システム）</span><span class="back" hidden><span class="def">不正な通信を検知し、自動で遮断する仕組み。IDSの検知に防御を加えたもの。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep155-ips-basics:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>IPSの説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通信の経路に置き、不正と判定した通信を、自動で遮断する</span></button><p class="why" hidden>経路に置き、自動で遮断</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>通信の写しを受け取り、検知と通知だけを行う</span></button><p class="why" hidden>それは、IDSの説明</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>暗号化された通信でも、復号することなく、中身まで検査できる</span></button><p class="why" hidden>復号しないと、中身は見えない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>誤検知が起きても、正常な通信は、遮断されない</span></button><p class="why" hidden>誤検知なら、正常な通信も止まる</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">IDSでは「確認を待つ間も通信が到達し続ける」状況だった。IPSが解決する点と、IPSで新たに生じる注意点を頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep155-ips-basics-t1-0"> 修正までの間の被害軽減</label></li><li><label><input type="checkbox" id="ep155-ips-basics-t1-1"> 脆弱性そのものは残る</label></li><li><label><input type="checkbox" id="ep155-ips-basics-t1-2"> 修正の代わりにはならない</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="受注システムの不正通信の調査記録（ダミー）"><div class="logtitle">受注システムの不正通信の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">IDSは経路の外で写しを受け、通知のみ。FWとの連携機能はない</span></div><div class="logrow"><span class="hl">ある夜、既知の脆弱性を狙う通信を検知し、管理者に通知した</span></div><div class="logrow"><span class="hl">確認は翌朝。その間も、通信は受注システムに到達し続けた</span></div><div class="logrow"><span class="hl">通信はWeb以外も含む。サーバにソフトは追加できない</span></div><div class="logrow"><span class="hl">要件: 確認を待たず止める。FWの許可規則は業務上変更しない</span></div></div></div>
   <p class="q">追加する仕組みと配置として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">通信の経路に、不正な通信を自動で遮断するIPSを置く</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>夜間も人が確認する体制にする … 要件は、人の確認を待たずに止めること</li><li>IDSと同じ、経路の外に置く … 経路の外のIDSは通知のみで、遮断機能がない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.7.1 IPSの概要</li><li>5.7.2 IPSの主な機能</li></ul>
   <p>IDSとの違い（経路の外か中か、通知か遮断か）と、遮断できる分だけ誤検知の影響が大きくなる点を意識して読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep154-ids-limits-ops.html">← #54 IDSの限界と運用の課題 誤検知と見逃しにどう向き合うか</a><a href="ep156-ips-config-limits.html">#56 IPSの構成例と限界 故障時に止めるか通すか →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

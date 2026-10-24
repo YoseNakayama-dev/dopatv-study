@@ -16,12 +16,11 @@
   <p class="eyebrow">#84 ・ 第8章 システム開発におけるセキュリティ対策</p>
   <h1>開発工程ごとの対策 上流から重ねて防ぐ</h1>
   <ol class="summary"><li>要件・設計・実装・試験の各工程に対策を置く。要件で資産と基準を決め、設計で脅威分析をして対策を入れる。</li><li>実装は規約・レビュー・静的解析で確かめ、試験は動かして入力を与える脆弱性診断を行う。公開後も続ける。</li><li>規約は確認しないと形だけ。静的解析は設計の不備を見つけにくく、試験は確認した範囲の不備しか見つからない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep184-dev-process:security-requirements">
   <button type="button" class="flip" aria-expanded="false"><span class="front">セキュリティ要件</span><span class="back" hidden><span class="def">要件定義で、守る資産と満たす基準を決めて文書に残したもの。関係者で共有する。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep184-dev-process:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>静的解析の説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>実際にシステムを動かして、入力への応答から欠陥を探す手法である</span></button><p class="why" hidden>動かして調べるのは動的な検査</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>プログラムを実行せず、ソースコードから欠陥を探す手法である</span></button><p class="why" hidden>実行せず、ソースコードを調べる</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>公開済みのシステムへ、擬似的な攻撃を行って侵入を試みる手法である</span></button><p class="why" hidden>擬似的な攻撃は侵入テスト</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>設計書の記述だけを読んで、仕様上の欠陥を探す手法である</span></button><p class="why" hidden>設計書の確認は設計レビュー</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">「最後にテストすれば安全」と考えてはいけない理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep184-dev-process-t1-0"> 守られているか確認しないと形だけ</label></li><li><label><input type="checkbox" id="ep184-dev-process-t1-1"> レビューや静的解析で確認する</label></li><li><label><input type="checkbox" id="ep184-dev-process-t1-2"> 静的解析は設計の不備を見つけにくい</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="Webアプリ開発の現状記録（ダミー）"><div class="logtitle">Webアプリ開発の現状記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: Webアプリの実装中。開発者は10名で書き方に差がある</span></div><div class="logrow"><span class="hl">過去の不具合は、入力値の検証漏れが多かった</span></div><div class="logrow"><span class="hl">ビルドの仕組みには、検査ツールを組み込める</span></div><div class="logrow"><span class="hl">要件: 個人の差に左右されず、検証漏れを早く見つけたい</span></div></div></div>
   <p class="q">要件を満たす対策として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">コーディング規約を定め、ビルドのたびに静的解析を行う</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>公開後に脆弱性診断を行う … 要件の『早く見つけたい』に合わない</li><li>開発者に、口頭で注意を促す … 個人の差に左右され、要件を満たせない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>8.1.2 システム開発工程におけるセキュリティ対策の実施例</li></ul>
   <p>各工程の対策を整理しながら、規約の形骸化・静的解析の限界・試験の範囲・診断の時期という弱点を対応づけて読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep183-secure-dev-need.html">← #83 システム開発とセキュリティ 後付けせず作り込む</a><a href="ep185-cookie.html">#85 Cookieの扱い 属性で守る範囲が違う →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

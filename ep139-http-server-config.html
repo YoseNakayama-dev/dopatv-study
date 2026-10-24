@@ -16,12 +16,11 @@
   <p class="eyebrow">#39 ・ 第3章 情報セキュリティにおける脆弱性</p>
   <h1>HTTPの仕様とWebサーバの設定不備 仕様側と設定側の弱点</h1>
   <ol class="summary"><li>HTTP自体は平文で盗聴・改ざんされうる。対策はHTTPSとHSTSで、Basic認証もHTTPS前提で使う。</li><li>要求の値（ヘッダ・パラメータ）は送る側が自由に変えられるので、信用せずサーバ側で検証する。</li><li>設定不備（一覧表示・公開領域の置き忘れ等）はHTTPSでは防げない。無効化・更新・定期点検で守る。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep139-http-server-config:http-plain">
   <button type="button" class="flip" aria-expanded="false"><span class="front">HTTPの平文通信</span><span class="back" hidden><span class="def">HTTP自体は通信を暗号化しない。通信路では中身が見え、盗聴や改ざんの余地がある。対策はHTTPS/TLS。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep139-http-server-config:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>Webサーバの設定不備への対策として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ディレクトリ一覧の表示を、有効のままにしておく</span></button><p class="why" hidden>公開領域の中身が見えてしまう</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>初期設定のアカウントを、そのまま使い続ける</span></button><p class="why" hidden>初期設定は、広く知られている</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>不要な機能を無効にし、エラーを汎用にする</span></button><p class="why" hidden>不要機能の無効化と汎用エラー</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>古い版のソフトを、動作実績を理由に使い続ける</span></button><p class="why" hidden>公開済みの弱点が残る</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">Basic認証をHTTPのまま使うと何が問題か。Base64の性質に触れて、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep139-http-server-config-t1-0"> HTTPSが守るのは経路</label></li><li><label><input type="checkbox" id="ep139-http-server-config-t1-1"> 設定不備（一覧表示・公開領域など）は防げない</label></li><li><label><input type="checkbox" id="ep139-http-server-config-t1-2"> 無効化・更新・定期点検が別に必要</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="Webサーバの調査記録（ダミー）"><div class="logtitle">Webサーバの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 企業のWebサーバ（ダミー）。外部から、公開用ディレクトリへの要求が多数あった</span></div><div class="logrow"><span class="hl">要求は、公開ディレクトリ内の通常のパスで、上位ディレクトリを示す指定は含まない</span></div><div class="logrow"><span class="hl">応答には、ディレクトリ内のファイル一覧が含まれ、バックアップファイルが取得されていた</span></div><div class="logrow"><span class="hl">この公開ディレクトリは、一覧の表示設定が有効で、認証なしで取得できた</span></div><div class="logrow"><span class="hl">// 通信は常にHTTPSで暗号化 / 取得は外部からサーバへの直接の要求</span></div></div></div>
   <p class="q">この事象の原因として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">ディレクトリ一覧の表示が有効で、公開領域にバックアップを置いた設定の不備</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ディレクトリトラバーサル … 要求は通常のパスで、上位指定を含まない</li><li>通信の盗聴 … 通信はHTTPSで暗号化され、直接の要求だった</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>3.6.3 HTTP（プロトコル）の仕様による脆弱性と対策</li><li>3.6.4 Webサーバの実装や設定の不備による脆弱性と対策</li></ul>
   <p>仕様側（平文・Basic認証・要求の値）と設定側（一覧表示・公開領域・不要機能）を分け、HTTPSで防げる範囲と防げない範囲を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep138-http-session.html">← #38 HTTPとセッション管理 IDを持つ人が本人になる仕組み</a><a href="ep140-webapp-flaws.html">#40 Webアプリの仕様と実装による脆弱性 設計の穴と実装の穴 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

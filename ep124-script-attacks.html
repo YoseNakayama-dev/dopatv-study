@@ -16,12 +16,11 @@
   <p class="eyebrow">#24 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>命令を実行させる攻撃の種類 解釈される場所で整理する</h1>
   <ol class="summary"><li>共通の原因は、外部入力が検証・無害化されず、受け取った側で命令として解釈されること。</li><li>攻撃の名前は解釈される場所で決まる。ブラウザ・DB・OS・ヘッダで被害が違う。</li><li>根本はデータと命令の分離。検証は補助、最小権限とWAFは被害軽減で原因は直らない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep124-script-attacks:data-command-mix">
   <button type="button" class="flip" aria-expanded="false"><span class="front">データと命令の混在</span><span class="back" hidden><span class="def">本来は区別すべき入力データが、受け取った側で命令として解釈されてしまう状態。これらの攻撃に共通する原因。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep124-script-attacks:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>これらの攻撃に共通する、根本的な対策は？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>通信を常に暗号化する</span></button><p class="why" hidden>暗号化は、盗聴への対策</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>データと命令を、はっきり分ける</span></button><p class="why" hidden>データと命令を分ける</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>パスワードを定期的に変更する</span></button><p class="why" hidden>パスワード変更は、認証の話</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログを長期間保存する</span></button><p class="why" hidden>ログは、事後の調査用</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">入力値の検証だけでは、これらの攻撃への対策として足りない理由と、根本の対策を頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep124-script-attacks-t1-0"> エスケープは場所ごとに方法が違う</label></li><li><label><input type="checkbox" id="ep124-script-attacks-t1-1"> 1つの方法ですべての場所は守れない</label></li><li><label><input type="checkbox" id="ep124-script-attacks-t1-2"> 場所に合った方法を選ぶ</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="不具合調査メモ（ダミー）"><div class="logtitle">不具合調査メモ（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社内向けWebシステムの、不具合調査メモ（ダミー）</span></div><div class="logrow"><span class="hl">検索欄の入力が、SQL文の一部として連結されていた</span></div><div class="logrow"><span class="hl">ネットワーク診断画面の入力が、OSの命令に連結されていた</span></div><div class="logrow"><span class="hl">// どちらも、入力値の検証・無害化の処理がない</span></div></div></div>
   <p class="q">2つの不具合に共通する原因として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">入力値を検証せず、データと命令を区別せずに連結している</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>通信が暗号化されていない … どちらの記録にも無関係</li><li>パスワードが短い … 認証の問題ではない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.8.1 不正なスクリプトや命令を実行させる攻撃の種類</li></ul>
   <p>攻撃の名前が解釈される場所で決まることと、共通する根本対策（データと命令の分離）、検証・WAFが補助にとどまる点を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep123-dos-defense.html">← #23 DoS攻撃への総合的な対策 型に合わせた守備範囲と限界</a><a href="ep125-oscmd-injection.html">#25 OSコマンドインジェクション 成立条件と、シェルを使わない対策 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

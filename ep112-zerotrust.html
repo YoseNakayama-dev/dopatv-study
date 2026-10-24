@@ -16,12 +16,11 @@
   <p class="eyebrow">#12 ・ 第1章 情報セキュリティ及びITの基礎</p>
   <h1>ゼロトラスト 場所を信頼しない考え方</h1>
   <ol class="summary"><li>ゼロトラストは、ネットワークの位置や機器の所有だけでは暗黙の信頼を与えず、リソースの保護に重点を置く考え方。</li><li>アクセスはセッション単位で最小権限を与え、ID・資産状態・振る舞い・環境の動的ポリシーで判断する。</li><li>製品を入れただけでは完成しない。収集した情報は改善に使う。実現方式は別の回で扱う。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep112-zerotrust:zero-trust">
   <button type="button" class="flip" aria-expanded="false"><span class="front">ゼロトラスト</span><span class="back" hidden><span class="def">暗黙の信頼を与えず、信頼を継続的に評価する考え方。ネットワーク境界ではなく、リソースの保護に重点を置く。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep112-zerotrust:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>ゼロトラストの考え方として適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>社内ネットワークの機器は信頼する</span></button><p class="why" hidden>位置による暗黙の信頼は与えない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>位置だけでは信頼せず、リソースごとに許可する</span></button><p class="why" hidden>位置だけでは信頼せず、リソースごとに許可</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>一度認証すれば、全リソースを許可する</span></button><p class="why" hidden>リソースごと・セッションごとに許可</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>製品を導入すれば完成する</span></button><p class="why" hidden>導入しただけでは完成しない</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">「社内ネットワークの中なら安全」とみなす設計の問題点と、ゼロトラストでの考え方の違いを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep112-zerotrust-t1-0"> PE：許可・拒否・取り消しの判断</label></li><li><label><input type="checkbox" id="ep112-zerotrust-t1-1"> PA：経路の確立・遮断を指示</label></li><li><label><input type="checkbox" id="ep112-zerotrust-t1-2"> PEP：接続の有効化・監視・終了</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="情報漏えいの調査記録（ダミー）"><div class="logtitle">情報漏えいの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">利用者は、多要素認証でVPNに接続した（正規の利用者）</span></div><div class="logrow"><span class="hl">接続後、利用者の端末から、複数の社内システムにアクセスがあった</span></div><div class="logrow"><span class="hl">端末はマルウェアに感染しており、人事システムのデータが持ち出された</span></div><div class="logrow"><span class="hl">// VPNの通信は暗号化されていた</span></div><div class="logrow"><span class="hl">// 各システムの設定は、VPN接続元アドレスからの通信を許可するのみ</span></div></div></div>
   <p class="q">ゼロトラストの観点で、設計上の問題点は？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">接続元の位置だけで許可し、リソースごと・端末の状態を踏まえた認可をしていなかった</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>VPNの暗号が弱かった … 記録では暗号化されていた</li><li>認証が弱かった … 認証は通っている。問題は認証の後の認可</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>1.7.1 ゼロトラストの概要</li><li>1.7.2 NIST ZTAの概要</li></ul>
   <p>境界防御との違い、位置や所有で信頼しない点、判断と実施の役割分担を確かめながら読む。製品名ではなく考え方に注目する。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep111-incident.html">← #11 インシデント対応 慌てないための流れと判断基準</a><a href="ep113-killchain.html">#13 サイバーキルチェーンとATT&amp;CK 攻撃を整理する共通の言葉 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

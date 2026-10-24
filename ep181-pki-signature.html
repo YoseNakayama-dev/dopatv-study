@@ -16,12 +16,11 @@
   <p class="eyebrow">#81 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
   <h1>証明書を支える要素とデジタル署名 失効と検証</h1>
   <ol class="summary"><li>CAは証明書の発行と失効、RAは申請者の本人確認と審査を担う。失効情報はCRL（一覧）かOCSP（一件ずつ問い合わせ）。</li><li>デジタル署名は、ハッシュ値を送信者の秘密鍵で署名し、公開鍵で検証する。改ざん検知・署名者の確認・否認防止ができる。</li><li>署名の検証だけでは失効は分からず、CRLは更新間隔の分だけ遅れる。秘密鍵が漏れると偽の署名を作られる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep181-pki-signature:ca">
   <button type="button" class="flip" aria-expanded="false"><span class="front">CA</span><span class="back" hidden><span class="def">証明書を発行し、必要なら失効させる。鍵が漏れたときなどは、有効期間内でも失効させる。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep181-pki-signature:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>デジタル署名の説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>送信者の秘密鍵で署名し、受信者が公開鍵で検証する方式である</span></button><p class="why" hidden>送信者の秘密鍵で署名、公開鍵で検証</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>受信者の公開鍵で署名を作り、受信者の秘密鍵で検証する方式である</span></button><p class="why" hidden>署名は送信者の秘密鍵で作る</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>共通鍵で署名を作り、同じ鍵を持つ者だけが検証できる方式である</span></button><p class="why" hidden>共通鍵で作るのはMAC。第三者に証明できない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>データを暗号化して、盗聴を防ぐために付ける情報である</span></button><p class="why" hidden>署名は暗号化ではなく、改ざん検知・本人確認</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">署名の検証に成功した文書の署名者証明書が、実は失効済みだった。検証で気付けない理由と防ぎ方を頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep181-pki-signature-t1-0"> ハッシュ値を送信者の秘密鍵で署名</label></li><li><label><input type="checkbox" id="ep181-pki-signature-t1-1"> 受信者は公開鍵で検証しハッシュ値を比べる</label></li><li><label><input type="checkbox" id="ep181-pki-signature-t1-2"> 不一致なら改ざんを検知できる</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="クライアント証明書の運用に関する調査記録（ダミー）"><div class="logtitle">クライアント証明書の運用に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 社員用のクライアント証明書を、社内のCAが発行している</span></div><div class="logrow"><span class="hl">ある社員の端末が紛失し、秘密鍵が漏れたおそれがある</span></div><div class="logrow"><span class="hl">この証明書の有効期間は、まだ残っている</span></div><div class="logrow"><span class="hl">要件: 接続を受ける側で、この証明書による接続を拒否したい</span></div></div></div>
   <p class="q">要件を満たす対応として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">CAがこの証明書を失効させ、受ける側が失効情報を確認して拒否する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>有効期間が切れるまで待つ … 期間はまだ残っており、拒否したい要件を満たせない</li><li>受ける側で、証明書のCA署名だけを検証する … 失効しても署名は有効なままで、拒否できない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>7.7.3 デジタル証明書による認証基盤を構成する要素</li><li>7.7.4 デジタル署名</li></ul>
   <p>CA・RA・失効情報（CRL/OCSP）の役割分担と、署名の検証と失効確認が別であること、MACとの違いを確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep180-pki-certificate.html">← #80 PKIとデジタル証明書 署名をたどって信頼する</a><a href="ep182-longterm-signature.html">#82 電子文書の長期保存 時刻の証拠を付け直す →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

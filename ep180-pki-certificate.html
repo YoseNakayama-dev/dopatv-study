@@ -16,12 +16,11 @@
   <p class="eyebrow">#80 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
   <h1>PKIとデジタル証明書 署名をたどって信頼する</h1>
   <ol class="summary"><li>PKIは、CAが公開鍵と持ち主を結び付け、CAの秘密鍵で署名した証明書（X.509）で持ち主を確かめる仕組み。</li><li>検証は、登録済みCAの公開鍵で署名を確かめ、有効期間と接続先の名前の一致、失効も確認する。</li><li>穴は署名の未検証、怪しいCAの登録、期限切れ・失効の見落とし、秘密鍵の流出。登録CAを絞り期限を管理する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep180-pki-certificate:pki">
   <button type="button" class="flip" aria-expanded="false"><span class="front">PKI</span><span class="back" hidden><span class="def">公開鍵の持ち主を確認する仕組み。CAが公開鍵と持ち主の情報を結び付けて、証明書を発行する。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep180-pki-certificate:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>デジタル証明書の説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>持ち主の秘密鍵と情報を結び付け、CAが署名して発行する証明書である</span></button><p class="why" hidden>結び付けるのは公開鍵。秘密鍵は持ち主だけが保管</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>利用者のパスワードを保管し、サーバの認証に使うための証明書である</span></button><p class="why" hidden>証明書にパスワードは載らない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>持ち主の公開鍵と情報を結び付け、CAが署名して発行する証明書である</span></button><p class="why" hidden>公開鍵と持ち主を結び付け、CAが署名</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>通信を暗号化する共通鍵を、CAが署名して利用者へ配布する証明書である</span></button><p class="why" hidden>載るのは公開鍵。共通鍵は配らない</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">端末に怪しいCAが登録されていたら何が起きるか。対策も含めて頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep180-pki-certificate-t1-0"> 期限切れは有効期間で確認</label></li><li><label><input type="checkbox" id="ep180-pki-certificate-t1-1"> 名前の不一致は名前の一致で確認</label></li><li><label><input type="checkbox" id="ep180-pki-certificate-t1-2"> 失効や秘密鍵の流出は失効で確認</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="取引先サイトの本人確認に関する調査記録（ダミー）"><div class="logtitle">取引先サイトの本人確認に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 利用者が、取引先のサイトにHTTPSで接続する</span></div><div class="logrow"><span class="hl">ブラウザには、信頼するCAの証明書が登録されている</span></div><div class="logrow"><span class="hl">取引先のサーバは、証明書を提示してくる</span></div><div class="logrow"><span class="hl">要件: 接続先が、取引先本人のサーバだと確認したい</span></div></div></div>
   <p class="q">要件を満たす確認方法として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">登録済みCAの公開鍵で署名を検証し、名前が接続先と一致することも確認する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>証明書が提示されたことを、確認とみなす … 誰でも証明書を作れるため、署名の検証なしでは本人と分からない</li><li>所有者名が取引先名と同じなら、署名の検証は省く … 署名を検証しなければ、所有者名は誰でも自由に書ける</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>7.7.1 PKIの概要</li><li>7.7.2 デジタル証明書</li></ul>
   <p>CAの署名を起点に信頼がつながる流れと、証明書に載る項目（所有者・公開鍵・有効期間・署名）を押さえて読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep179-ssh.html">← #79 SSH 接続先と利用者を両方確かめる</a><a href="ep181-pki-signature.html">#81 証明書を支える要素とデジタル署名 失効と検証 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

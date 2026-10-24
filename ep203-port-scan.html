@@ -16,12 +16,11 @@
   <p class="eyebrow">#103 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>ポートスキャン 目的・種類・対策</h1>
   <ol class="summary"><li>ポートスキャンは各ポートへ要求を送り、返答の違いで開閉やフィルタを判定する。</li><li>攻撃者の偵察にも管理者の棚卸しにも使う。種類は接続・SYN・UDP・変則的な送り方があり、結果は実装で変わる。</li><li>対策は閉じる・絞る・検知。開けたポートは見え、時間をかけた走査は検知を回避しうる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep203-port-scan:port-scan">
   <button type="button" class="flip" aria-expanded="false"><span class="front">ポートスキャン</span><span class="back" hidden><span class="def">開いているポートと、動いているサービスを調べる行為。攻撃者の偵察にも、管理者の棚卸しにも使われる。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep203-port-scan:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>ポートスキャンの説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SYNスキャンは、接続を完了させず、返答で状態を判定する</span></button><p class="why" hidden>完了させず返答で判定</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>UDPスキャンでは、閉じたポートからRSTが返る</span></button><p class="why" hidden>UDPはICMPの到達不能</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ポートスキャンは、攻撃者だけが行うもので、管理者は行わない</span></button><p class="why" hidden>管理者の棚卸しにも使う</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ファイアウォールを置けば、ポートスキャンを完全に防げる</span></button><p class="why" hidden>開けたポートは見える</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">ポートスキャンを防ぐ対策の限界を、頭の中で説明してみよう。それでも対策を行う意味は何か。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep203-port-scan-t1-0"> FWは必要な通信だけ許可し既定で拒否</label></li><li><label><input type="checkbox" id="ep203-port-scan-t1-1"> IDSは多数の接続試行を検知</label></li><li><label><input type="checkbox" id="ep203-port-scan-t1-2"> 絞る役と見張る役で役割が違う</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="外部からのポート検査結果（ダミー）"><div class="logtitle">外部からのポート検査結果（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">外部から、自社サーバへSYNを送って検査した</span></div><div class="logrow"><span class="hl">22番: SYN/ACKが返った</span></div><div class="logrow"><span class="hl">23番: RSTが返った</span></div><div class="logrow"><span class="hl">8080番: 何も返らなかった</span></div></div></div>
   <p class="q">22番・23番・8080番のうち、待ち受けていると判断できるのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">22番 … SYN/ACKは、待ち受けている印</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>23番 … RSTは、待ち受けるサービスがないことを示す</li><li>8080番 … 返答がなければ、待ち受けの有無は判断できない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.2.1 ポートスキャンの目的と実行方法</li><li>2.2.2 ポートスキャンの種類と仕組み</li><li>2.2.3 ポートスキャンへの対策</li></ul>
   <p>返答（SYN/ACK・RST・返答なし）から状態を読む方法と、スキャンの種類ごとの違いを確かめながら読む。対策の限界にも注意。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep202-attack-spec-methods.html">← #102 攻撃の記述仕様と主な手法 STIX・TAXII・CVE・攻撃手法の整理</a><a href="ep204-emotet.html">#104 Emotet 返信を装うメールと感染拡大 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

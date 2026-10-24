@@ -16,12 +16,11 @@
   <p class="eyebrow">#28 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>ディレクトリトラバーサル 階層をさかのぼる仕組みと対策</h1>
   <ol class="summary"><li>入力をパスに使い、上位ディレクトリ指定を拒否・検証せず、実行権限で読めると成立する。</li><li>根本は入力をファイル名として直接使わないこと。使うなら正規化し、基準ディレクトリ配下か検証する。</li><li>文字列の除去だけでは別表記で回避されうる。実行権限の最小化や公開領域の整理は補助。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep128-dir-traversal:dir-traversal">
   <button type="button" class="flip" aria-expanded="false"><span class="front">ディレクトリトラバーサル</span><span class="back" hidden><span class="def">入力がファイルパスの一部に使われ、階層をさかのぼって基準ディレクトリの外のファイルを指せてしまう攻撃。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep128-dir-traversal:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>ディレクトリトラバーサルへの、有効な対策は？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ダウンロード用のファイルを圧縮して保存する</span></button><p class="why" hidden>圧縮は、パスの解決と無関係</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>入力のシングルクォートをエスケープして出力する</span></button><p class="why" hidden>クォートの処理はSQL向け。パスは変わらない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>パスを正規化し、配下を検証する</span></button><p class="why" hidden>正規化と配下の検証</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ダウンロード回数を利用者ごとに制限する</span></button><p class="why" hidden>1回でも外のファイルは読める</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">ディレクトリトラバーサルの成立条件を3つ挙げ、実行権限を絞ると何が変わるかを頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep128-dir-traversal-t1-0"> 別の表記で回避されうる</label></li><li><label><input type="checkbox" id="ep128-dir-traversal-t1-1"> 入力を直接使わない（対応表・許可リスト）</label></li><li><label><input type="checkbox" id="ep128-dir-traversal-t1-2"> 正規化して基準配下を検証</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="資料ダウンロード機能の調査記録（ダミー）"><div class="logtitle">資料ダウンロード機能の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 資料ダウンロード機能（ダミー）。公開ディレクトリ内の資料を返す</span></div><div class="logrow"><span class="hl">パラメータのファイル名を、公開ディレクトリのパスに連結 / 検証なし</span></div><div class="logrow"><span class="hl">パラメータに、上位ディレクトリを示す指定が繰り返し含まれていた</span></div><div class="logrow"><span class="hl">公開ディレクトリの外にある、設定ファイルが、応答200で返されていた</span></div><div class="logrow"><span class="hl">// パラメータは、ファイルパスの連結にのみ使われ、SQLにも外部コマンドの引数にも使われない</span></div></div></div>
   <p class="q">この事象の原因として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">入力のパスが検証されず、階層をさかのぼってファイルを指せた</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>SQLインジェクション … パラメータはパスの連結にのみ使われる</li><li>OSコマンドインジェクション … パラメータはコマンドの引数に使われない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.8.7 ディレクトリトラバーサル攻撃</li></ul>
   <p>成立条件の3つと、入力をファイル名に使わない対策、正規化と基準配下の検証、権限の最小化が補助である点を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep127-mail-header-injection.html">← #27 メールヘッダインジェクション 改行が区切りになる仕組みと対策</a><a href="ep129-virus-worm.html">#29 ウイルスとワーム 宿主の有無と広がり方の違い →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

@@ -16,12 +16,11 @@
   <p class="eyebrow">#121 ・ 第9章 情報セキュリティに関する法制度</p>
   <h1>セキュリティの規格と制度 15408・PCI DSS・20000</h1>
   <ol class="summary"><li>規格は基準を定めた文書、制度は審査して認証する仕組み。何を対象にした認証かの取り違えに注意する。</li><li>15408は製品の評価基準でEALは保証のレベル。PCI DSSはカード会員データを扱う事業者向けで、維持が要る。</li><li>20000は組織が認証を受けるITサービス管理の規格。ITILは指針で、情報セキュリティはISMSと組み合わせる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep221-standards-need:standard-and-scheme">
   <button type="button" class="flip" aria-expanded="false"><span class="front">規格と制度</span><span class="back" hidden><span class="def">規格は守るべき基準を定めた文書。制度は、その基準で第三者が審査し認証する仕組み。調達や取引の判断材料になる。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep221-standards-need:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>規格や制度の説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>EALが高いほど、製品の機能は強力である</span></button><p class="why" hidden>EALは保証のレベル</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>PCI DSSは、セキュリティコードの保存を認めている</span></button><p class="why" hidden>承認後は保存しない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ISO/IEC 20000は、組織がITサービスマネジメントの認証を受ける規格</span></button><p class="why" hidden>20000は組織が認証を受ける</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ITILは、組織が認証を受けるための規格である</span></button><p class="why" hidden>ITILは指針で認証の規格でない</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">ISMS認証済みの開発元の製品を選んでも、製品の機能の検証にならないのはなぜか。頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep221-standards-need-t1-0"> 脆弱性がない保証ではない</label></li><li><label><input type="checkbox" id="ep221-standards-need-t1-1"> 評価した構成・版に限られる</label></li><li><label><input type="checkbox" id="ep221-standards-need-t1-2"> EALは保証レベルで機能の強さではない</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="ファイアウォール製品の調達記録（ダミー）"><div class="logtitle">ファイアウォール製品の調達記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">調達: 社内用のファイアウォール製品を選定する</span></div><div class="logrow"><span class="hl">候補Aの開発元は、組織としてISMS認証を取得済み</span></div><div class="logrow"><span class="hl">ISMS認証の対象は、組織の運用で、製品ではない</span></div><div class="logrow"><span class="hl">この装置では、カード会員データを扱わない</span></div><div class="logrow"><span class="hl">要件: 製品の機能を、第三者の検証結果で確かめたい</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">ISO/IEC 15408に基づく評価・認証を受けた製品を選ぶ</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ISMS認証を取得した開発元の製品を選ぶ … 認証の対象は組織の運用で、製品ではない</li><li>PCI DSSへの準拠を求める … 事業者向けの基準で、製品の機能を評価する制度ではない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>9.1.1 情報セキュリティに関する規格や制度の必要性</li><li>9.1.2 ISO/IEC 15408</li><li>9.1.4 PCI DSS</li><li>9.1.5 ISO/IEC 20000及びITIL</li></ul>
   <p>規格ごとに何を対象にした認証・基準かを整理しながら読む。製品か事業者か組織かの区別と、認証の限界を確かめる。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep220-ecmascript-related.html">← #120 ECMAScript関連技術 オリジン・CORS・JSON・DOMの扱い</a><a href="ep222-cyber-laws.html">#122 サイバーセキュリティ関連の法律 不正アクセス禁止法ほか →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

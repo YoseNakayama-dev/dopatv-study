@@ -16,12 +16,11 @@
   <p class="eyebrow">#48 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>ファジングとASMの概要 未知の穴と未把握の資産</h1>
   <ol class="summary"><li>ファジングは不正な入力を大量に自動で与え、異常から未知の脆弱性の手がかりを探す手法。</li><li>検証環境で行い、異常検知と再現入力の記録が要る。異常がすべて脆弱性とは限らず、無くても安全とは言えない。</li><li>ASMは公開資産を継続的に洗い出して台帳と照合する。診断は決めた対象を深く調べる点が違う。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep148-fuzzing-asm:fuzzing">
   <button type="button" class="flip" aria-expanded="false"><span class="front">ファジング</span><span class="back" hidden><span class="def">予期しない・不正な入力を大量に自動生成して与え、クラッシュなどの異常を観察して未知の脆弱性の手がかりを探す手法。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep148-fuzzing-asm:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>ファジングの説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>正常な入力だけで、仕様どおりに動くことを、確認する手法</span></button><p class="why" hidden>正常な入力だけでは、異常を探せない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>既知の脆弱性を、一覧と照合して、見つける手法</span></button><p class="why" hidden>それは、既知の脆弱性の診断</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>不正な入力を大量に与え、異常動作を観察する手法</span></button><p class="why" hidden>不正な入力で、異常を観察</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>対象の設計書を読んで、欠陥を探す手法</span></button><p class="why" hidden>設計書のレビューの説明</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">ファジングで異常が見つからなかったとき、安全と言えない理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep148-fuzzing-asm-t1-0"> 診断や更新から漏れる</label></li><li><label><input type="checkbox" id="ep148-fuzzing-asm-t1-1"> 発見、照合、管理者の特定、評価、対処</label></li><li><label><input type="checkbox" id="ep148-fuzzing-asm-t1-2"> 外から見える範囲が中心で、内部は見づらい</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="公開資産の調査記録（ダミー）"><div class="logtitle">公開資産の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 自社の、インターネットに公開している資産（ダミー）</span></div><div class="logrow"><span class="hl">資産台帳に記載の公開サーバは12台。12台は、定期診断と更新が済んでいる</span></div><div class="logrow"><span class="hl">今回、外部から公開資産を調べる作業を、担当者が、手作業で一度だけ行った</span></div><div class="logrow"><span class="hl">結果、台帳にない公開サーバが2台あり、OSに公開済みの弱点が残っていた</span></div><div class="logrow"><span class="hl">2台は、過去の検証用に部門が個別に立てたもの。今回の洗い出しで初めて存在が判明した</span></div></div></div>
   <p class="q">台帳にない資産への対策として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">公開資産を継続的に洗い出し、台帳と照合する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>台帳の12台の診断を増やす … 12台は、診断と更新が済んでいる</li><li>2台の弱点を直して終える … 修正は個々の脆弱性への対処。設問は、台帳にない資産を把握する対策</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.3.3 ファジングの概要</li><li>5.3.4 ASMの概要</li></ul>
   <p>ファジングの準備と限界、ASMの流れと診断との違い、外部から見える範囲が中心という限界を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep147-vuln-assessment.html">← #47 脆弱性診断の概要と実施 範囲と時点が肝</a><a href="ep149-tlpt.html">#49 TLPTの概要 脅威に基づく侵入テスト →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

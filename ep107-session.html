@@ -16,12 +16,11 @@
   <p class="eyebrow">#7 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>セッション管理の不備 IDの扱いを誤るとなりすまされる</h1>
   <ol class="summary"><li>セッション管理の不備は、IDの推測・盗用・固定化で、パスワードを知らなくてもなりすましが成立する。</li><li>対策は、暗号論的乱数のID、ログイン成功後の再発行と旧IDの無効化、URLにIDを載せないこと。</li><li>HttpOnly・SameSiteや有効期限は補助。Secureは盗聴対策。XSSや盗聴の対策も別に必要になる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep107-session:session-id">
   <button type="button" class="flip" aria-expanded="false"><span class="front">セッションID</span><span class="back" hidden><span class="def">ログイン後の利用者を見分ける識別子。毎回パスワードを送らない代わりに送られ、知られると本人として扱われうる。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep107-session:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>セッション固定化の根本的な対策は？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>Cookieの有効期限を長くする</span></button><p class="why" hidden>長くするほど、リスクが増えうる</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ログイン成功後にIDを再発行する</span></button><p class="why" hidden>ログイン成功後にIDを再発行する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>出力時にHTMLエスケープする</span></button><p class="why" hidden>XSS対策。固定化の根本対策ではない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>IDをURLに埋め込む</span></button><p class="why" hidden>URLからIDが漏れるおそれ</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">ログイン前から同じセッションIDを使い続けると、なぜ固定化を許してしまうのか。頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep107-session-t1-0"> 乱数は推測への対策にとどまる</label></li><li><label><input type="checkbox" id="ep107-session-t1-1"> 盗用・固定化は別の経路で起きる</label></li><li><label><input type="checkbox" id="ep107-session-t1-2"> 再発行・属性・サーバ側管理・XSS対策を重ねる</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="ログイン前後のセッションIDの記録（ダミー）"><div class="logtitle">ログイン前後のセッションIDの記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">ログイン前: Set-Cookie sid=A7F3…（暗号論的乱数）</span></div><div class="logrow"><span class="hl">ログイン後: sid=A7F3…（変わらない）</span></div><div class="logrow"><span class="hl">攻撃者が事前に取得したIDで利用者がログイン</span></div><div class="logrow"><span class="hl">→ 同じIDで、別の端末からもアクセスできた</span></div><div class="logrow"><span class="hl">// 通信はHTTPSのみ。IDはURLに含まれず、漏えい経路は無い</span></div></div></div>
   <p class="q">固定化を許した根本原因は？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">ログイン成功後に、セッションIDを再発行していない</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>IDが推測しやすい … 前提は暗号論的乱数。固定化は予測が不要</li><li>盗聴で漏れた … 前提では漏えい経路は無い。原因はID据え置き</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.5.1 セッションハイジャックの概要</li><li>2.5.2 セッションハイジャックの種類と実行方法</li><li>2.5.3 セッションフィクセーションの実行方法</li><li>2.5.4 セッションハイジャックへの対策</li></ul>
   <p>推測・盗用・固定化の三つを経路で区別し、再発行・属性・サーバ側管理がどの攻撃に効くかを確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep106-ssrf.html">← #6 SSRF サーバを踏み台にされると何が起こる？</a><a href="ep108-fido2.html">#8 FIDO2・WebAuthn 秘密を渡さずに本人だと示す →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

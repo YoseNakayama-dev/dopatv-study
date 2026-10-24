@@ -16,12 +16,11 @@
   <p class="eyebrow">#73 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
   <h1>主なID連携技術 認証と認可を分けて覚える</h1>
   <ol class="summary"><li>SAMLは署名付きXMLで認証結果を伝え、OpenID ConnectはOAuth上に署名付きIDトークンで認証を加える。</li><li>OAuth 2.0は認可の枠組みで、パスワードを渡さずトークンで権限を渡す。OAuth単体は本人確認の仕組みではない。</li><li>署名・宛先・期限を検証し、リダイレクトURIは事前登録と照合、state/nonceで対応づけ、スコープは最小に。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep173-id-federation-tech:saml">
   <button type="button" class="flip" aria-expanded="false"><span class="front">SAML</span><span class="back" hidden><span class="def">署名付きのXML文書で認証結果を伝える方式。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep173-id-federation-tech:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>OpenID Connectの説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>署名付きのXMLで認証結果を伝える、SAMLと同じ仕様に基づく方式</span></button><p class="why" hidden>XMLで伝えるのはSAML</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>OAuthの仕様とは独立しており、トークンを一切使わない方式である</span></button><p class="why" hidden>OAuthを土台にしている</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>OAuthを土台に認証を加え、IDトークンで認証結果を伝える方式</span></button><p class="why" hidden>OAuthの上に認証を加える</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>アクセストークンがあれば、署名の検証を省略できる方式である</span></button><p class="why" hidden>署名検証は省略しない</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">OAuth 2.0とOpenID Connectの違いを、認証と認可の言葉で、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep173-id-federation-tech-t1-0"> コードやトークンが攻撃者へ渡る</label></li><li><label><input type="checkbox" id="ep173-id-federation-tech-t1-1"> リダイレクトURIを事前に登録する</label></li><li><label><input type="checkbox" id="ep173-id-federation-tech-t1-2"> 登録と照合し、登録にないURLへは返さない</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="写真閲覧アプリの連携に関する調査記録（ダミー）"><div class="logtitle">写真閲覧アプリの連携に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 外部の写真閲覧アプリが、利用者のクラウド上の写真を表示する</span></div><div class="logrow"><span class="hl">外部アプリに、利用者のパスワードは渡したくない</span></div><div class="logrow"><span class="hl">外部アプリに、写真の閲覧以外の操作はさせたくない</span></div><div class="logrow"><span class="hl">クラウド側は、利用者の同意に基づく権限付与に対応している</span></div><div class="logrow"><span class="hl">要件: 権限は利用者が把握できる範囲に限り、有効期間に上限を設ける</span></div></div></div>
   <p class="q">要件を満たす方法として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">利用者の同意のもと、閲覧に限り期限をつけた許可証を外部アプリに発行する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>利用者のパスワードを外部アプリに登録し、代わりにログインさせる … パスワードを渡さない要件に反する</li><li>ストレージ全体の管理者アカウントを外部アプリと共有する … パスワードも渡すことになり、範囲も期限も絞れない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>6.9.2 主なID連携技術</li></ul>
   <p>SAML・OAuth・OpenID Connectで何が伝わるか（認証結果か権限か）を区別し、各注意点と対策の対応を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep172-id-federation.html">← #72 ID連携の概要 認証は持ち主に任せる</a><a href="ep174-crypto-basics.html">#74 暗号の概念と主な暗号方式 鍵の使い分けと渡し方 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

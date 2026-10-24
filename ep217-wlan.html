@@ -16,12 +16,11 @@
   <p class="eyebrow">#117 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
   <h1>無線LANのセキュリティ 脅威・暗号化方式・強化策</h1>
   <ol class="summary"><li>無線LANは電波が届けば建物の外からも傍受されうる。電波は囲えないので暗号化と認証が要る。</li><li>WEPは使わない。主流はAES（CCMP）のWPA2、WPA3はSAEでパスワード推測への耐性を高めた。</li><li>SSID非表示とMAC制限は補助にとどまる。共有鍵は退職時に変更し、電波調査で不正APを検知する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep217-wlan:wep">
   <button type="button" class="flip" aria-expanded="false"><span class="front">WEP</span><span class="back" hidden><span class="def">初期の無線LANの暗号化方式。脆弱性が知られており、使ってはならない。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep217-wlan:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>無線LANの説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>WEPは脆弱性が知られており、使うべきでない</span></button><p class="why" hidden>WEPは使うべきでない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>SSIDを隠せば、通信は暗号化される</span></button><p class="why" hidden>SSIDを隠しても暗号化されない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>MACアドレスの制限で、端末の偽装を防げる</span></button><p class="why" hidden>MACアドレスは偽装できる</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>WPA2のPSKは、利用者ごとに異なる鍵を使う</span></button><p class="why" hidden>PSKは全員共通の鍵</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">無線LANが有線と違い、暗号化と認証の両方を必要とする理由を頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep217-wlan-t1-0"> PSKは全員共通で、漏えいや退職時に全員分の入れ替えが要る</label></li><li><label><input type="checkbox" id="ep217-wlan-t1-1"> 802.1Xは利用者ごとの個別認証</label></li><li><label><input type="checkbox" id="ep217-wlan-t1-2"> EAPで認証し、RADIUSが判定する</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="社内無線LANの診断記録（ダミー）"><div class="logtitle">社内無線LANの診断記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">社内無線LAN: SSIDは非表示、端末はMACアドレスで制限</span></div><div class="logrow"><span class="hl">暗号化: 設定していない（オープンな状態）</span></div><div class="logrow"><span class="hl">診断: 接続せずに、電波を受信しただけで傍受を試した</span></div><div class="logrow"><span class="hl">結果: 通信の内容を、平文で取得できた</span></div><div class="logrow"><span class="hl">要件: 無線区間で傍受されても、内容を読まれないこと</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">WPA2（AES）以降の方式で、無線区間を暗号化する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>SSIDを隠す … すでに非表示だが、通信内容は平文で取得できた</li><li>MACアドレスの制限を厳しくする … 傍受は接続せずに行われており、影響しない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>7.6.1 無線LANのセキュリティ機能及び脆弱性</li><li>7.6.2 無線LANのセキュリティ強化策</li></ul>
   <p>無線特有の脅威、暗号化方式の変遷、補助的な対策が暗号化の代わりにならない理由を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep216-ipvpn-smime-pgp.html">← #116 IP-VPN・L2TP・S/MIME・PGP 閉域網とメール保護の整理</a><a href="ep218-bof-functions.html">#118 BOFを招くC言語の関数 危険な関数・書式文字列・置き換え →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

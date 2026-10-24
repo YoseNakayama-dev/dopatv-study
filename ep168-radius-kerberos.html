@@ -16,12 +16,11 @@
   <p class="eyebrow">#68 ・ 第6章 情報セキュリティ対策技術（2）アクセス制御と認証</p>
   <h1>RADIUSとKerberos 認証を集めてチケットで通す</h1>
   <ol class="summary"><li>RADIUSは入口の装置がクライアントとなり、認証要求をサーバへ転送して認証・認可・記録を一元化する。</li><li>Kerberosは、KDCが発行するTGTとサービスチケットで、パスワードをサービスへ送らず利用できる。</li><li>共有秘密とKDCは保護が要る。チケットには有効期限があり、時刻のずれが大きいと認証に失敗する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep168-radius-kerberos:radius">
   <button type="button" class="flip" aria-expanded="false"><span class="front">RADIUS</span><span class="back" hidden><span class="def">認証要求を入口の装置からサーバへ転送し、許可か拒否の結果に従う仕組み。認証をサーバに集められる。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep168-radius-kerberos:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>Kerberosの説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>利用者のパスワードを、利用するサービスごとに、そのまま送って確認する方式</span></button><p class="why" hidden>パスワードをそのまま送らない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>チケットに有効期限はなく、一度発行されれば、ずっと使い続けられる方式</span></button><p class="why" hidden>チケットには有効期限がある</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>認証サーバとサービス側の時刻が、大きくずれても、動作に影響しない方式</span></button><p class="why" hidden>時刻のずれは認証失敗の原因</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>認証後に受け取ったチケットを、サービスに示して、利用を許可される方式</span></button><p class="why" hidden>チケットを示して利用を許可</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">RADIUSで認証を一元化すると何が楽になり、何を守る必要が出るかを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep168-radius-kerberos-t1-0"> TGT、サービスチケットの順に得て、サービスに示す</label></li><li><label><input type="checkbox" id="ep168-radius-kerberos-t1-1"> パスワードをサービスへ送らずに済む</label></li><li><label><input type="checkbox" id="ep168-radius-kerberos-t1-2"> 有効期限と時刻のずれによる失敗</label></li><li><label><input type="checkbox" id="ep168-radius-kerberos-t1-3"> KDCの冗長化と保護</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="利用者認証の見直しに関する調査記録（ダミー）"><div class="logtitle">利用者認証の見直しに関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 無線LANの親機とVPN装置ごとに、利用者の登録を持つ</span></div><div class="logrow"><span class="hl">退職者の削除を、装置ごとに行っており、消し忘れが出た</span></div><div class="logrow"><span class="hl">各装置は外部サーバとの連携機能を持つが、チケットは扱えない</span></div><div class="logrow"><span class="hl">要件: 利用者の登録を一か所にまとめ、削除も一度で済ませたい</span></div></div></div>
   <p class="q">要件を満たす構成として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">各装置をRADIUSクライアントにして、RADIUSサーバへ認証を問い合わせる</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>管理者が毎週、各装置の登録を点検して直す … 登録は装置ごとに残り、一か所にならない</li><li>利用者にKerberosのチケットを配り、各装置で検証する … 装置はチケットを扱えない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>6.7.1 RADIUS</li><li>6.7.3 Kerberos</li></ul>
   <p>RADIUSは誰が誰に問い合わせるか、Kerberosはチケットがどの順で渡るかを図で追う。共有秘密・KDC・時刻の注意点も確かめる。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep167-otp-token.html">← #67 トークンによるOTP認証 手のひらで変わる合言葉</a><a href="ep169-directory-eap.html">#69 ディレクトリサービスとEAP 名簿と入口を整える →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

@@ -16,12 +16,11 @@
   <p class="eyebrow">#91 ・ 追加テーマ（目次外）</p>
   <h1>クラウドの責任共有モデル IAMと設定不備</h1>
   <ol class="summary"><li>事業者はクラウド自体（施設・ネットワーク・仮想化基盤）、利用者はデータ・アカウント・設定を守る。範囲は形態で変わる。</li><li>どの形態でも、データとアクセス権の管理は利用者に残る。設定の誤りは利用者側の事故に直結する。</li><li>対策は最小権限、管理者の多要素認証、設定の継続点検、監査ログの有効化と保全。ログは見直して初めて役に立つ。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep191-cloud-shared-responsibility:shared-responsibility">
   <button type="button" class="flip" aria-expanded="false"><span class="front">責任共有モデル</span><span class="back" hidden><span class="def">事業者はクラウド自体（施設、ネットワーク、仮想化基盤）を、利用者はクラウドの中（データ、アカウント・アクセス権、設定）を守る考え方。</span><span class="note">細部は事業者ごとの資料で確認する。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep191-cloud-shared-responsibility:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>クラウドの責任共有モデルの説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>SaaSでは、データとアクセス権の管理も、事業者がすべて負う</span></button><p class="why" hidden>SaaSでも、データとアクセス権は利用者</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>IaaSでは、仮想サーバのOSの管理も、事業者が負う</span></button><p class="why" hidden>IaaSのOSは利用者が管理する</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>利用形態によらず、データとアクセス権の管理は、利用者に残る</span></button><p class="why" hidden>データとアクセス権は利用者に残る</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>事業者が基盤を守るので、利用者は設定を点検しなくてよい</span></button><p class="why" hidden>設定の点検は利用者が行う</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">「クラウドは事業者が守るので、設定ミスの責任も事業者にある」という主張の誤りを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep191-cloud-shared-responsibility-t1-0"> 事故が起きる前に有効にする</label></li><li><label><input type="checkbox" id="ep191-cloud-shared-responsibility-t1-1"> 保全する</label></li><li><label><input type="checkbox" id="ep191-cloud-shared-responsibility-t1-2"> 見直して初めて役に立つ</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="クラウド上のデータ取得事案の調査記録（ダミー）"><div class="logtitle">クラウド上のデータ取得事案の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">構成: クラウドのオブジェクトストレージ</span></div><div class="logrow"><span class="hl">調査: ストレージは、匿名の利用者でも取得できた</span></div><div class="logrow"><span class="hl">事業者の調査: 基盤に障害も侵害もなかった</span></div><div class="logrow"><span class="hl">要件: 責任の所在を踏まえ、利用企業の再発防止を決めたい</span></div></div></div>
   <p class="q">この利用企業の再発防止策として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">利用者側で公開設定を見直し、匿名の取得を許さない</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ストレージは事業者の設備なので、設定の修正も事業者に任せる … アクセス設定は、どの利用形態でも利用者の責任</li><li>事業者の基盤が破られたとして、対策の強化を待つ … 調査では、基盤に障害も侵害もなかった</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>EX-05 クラウドの責任共有モデル・IAM・設定不備</li></ul>
   <p>事業者と利用者の担当範囲の線引き、形態ごとの違い、設定不備の例と対策（最小権限・点検・監査ログ）を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep190-oauth-oidc-saml.html">← #90 OAuth・OIDC・SAML 認可コードフローとトークン検証</a><a href="ep192-supply-chain-sbom.html">#92 サプライチェーン攻撃とSBOM 依存関係を見える化する →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

@@ -16,12 +16,11 @@
   <p class="eyebrow">#92 ・ 追加テーマ（目次外）</p>
   <h1>サプライチェーン攻撃とSBOM 依存関係を見える化する</h1>
   <ol class="summary"><li>依存ライブラリ・ビルド・配布の経路で、正規の成果物に不正が混ざって届く。信頼された経路なので気づきにくい。</li><li>署名は署名者と改ざんの有無を示すだけで、中身の安全は示さない。SBOMも一覧で、それだけでは脆弱性を防げない。</li><li>対策は版の固定とハッシュ検証、取得元・署名の確認、ビルドの権限最小化と記録、SBOMの更新と継続的な照合。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep192-supply-chain-sbom:supply-chain-attack">
   <button type="button" class="flip" aria-expanded="false"><span class="front">ソフトウェアのサプライチェーン攻撃</span><span class="back" hidden><span class="def">依存ライブラリ、ビルド、配布の経路を狙い、正規の成果物に不正が混ざって利用者に届く攻撃。</span><span class="note">信頼された経路なので、気づきにくい。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep192-supply-chain-sbom:v" data-answer="1">
   <p class="q"><span class="tag">動画で出た問題</span>SBOMの説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ソフトウェアに含まれる脆弱性を、自動的に修正する仕組み</span></button><p class="why" hidden>SBOMは脆弱性を修正しない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ソフトウェアの構成要素と依存関係を、一覧にした部品表</span></button><p class="why" hidden>構成要素と依存関係の部品表</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ソフトウェアの配布元を、電子署名で確認する仕組み</span></button><p class="why" hidden>それは署名の役割</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ソフトウェアへの不正アクセスを、検知して遮断する仕組み</span></button><p class="why" hidden>SBOMは検知も遮断もしない</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">署名の検証が成功した部品でも、安全と言い切れない理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep192-supply-chain-sbom-t1-0"> SBOMは一覧で、それだけでは防げない</label></li><li><label><input type="checkbox" id="ep192-supply-chain-sbom-t1-1"> 公表された脆弱性情報と照合して使う</label></li><li><label><input type="checkbox" id="ep192-supply-chain-sbom-t1-2"> 更新して継続的に照合し、影響する製品を特定する</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="ライブラリ脆弱性への対応記録（ダミー）"><div class="logtitle">ライブラリ脆弱性への対応記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">自社製品はライブラリXを利用。部品の一覧はない</span></div><div class="logrow"><span class="hl">脆弱性の公表: Xが内部で使うライブラリYにある</span></div><div class="logrow"><span class="hl">Xのリリースは署名済みで、署名の検証も成功した</span></div><div class="logrow"><span class="hl">要件: 影響する製品を、速やかに特定したい</span></div></div></div>
   <p class="q">この事業者の対応として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">製品ごとに部品表(SBOM)を管理し、公表された脆弱性と照合する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>Xの署名を検証済みなので、脆弱性もないとみなす … 署名は改ざんの有無を示すだけで、脆弱性の有無は示さない</li><li>直接利用しているXだけを調べる … 脆弱性はXが使うYにあり、Xだけでは見落とす</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>EX-06 サプライチェーン攻撃・SBOM・依存関係管理</li></ul>
   <p>攻撃が通る経路（依存・ビルド・配布）、署名とSBOMの限界、対策の組み合わせを確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep191-cloud-shared-responsibility.html">← #91 クラウドの責任共有モデル IAMと設定不備</a><a href="ep193-secure-dev-sast-dast.html">#93 脅威モデリングとSAST・DAST・SCA 見つけられる範囲の違い →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

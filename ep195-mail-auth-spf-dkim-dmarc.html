@@ -16,12 +16,11 @@
   <p class="eyebrow">#95 ・ 追加テーマ（目次外）</p>
   <h1>メール認証 SPF・DKIM・DMARC なりすましへの備え</h1>
   <ol class="summary"><li>SPFは接続元IP、DKIMは署名の検証。見るのはMAIL FROMのドメインと署名のドメインで、ヘッダFromとは別。</li><li>DMARCは、SPFかDKIMが合格し、かつ合格したドメインがヘッダFromと一致して初めて合格になる。</li><li>転送や件名の追記で失敗しうる。攻撃者が自分のドメインで認証を通す類似ドメインは防げない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep195-mail-auth-spf-dkim-dmarc:spf">
   <button type="button" class="flip" aria-expanded="false"><span class="front">SPF</span><span class="back" hidden><span class="def">送信ドメインがDNS(TXT)に許可する送信元IPを公開し、受信側が接続元IPを照合する仕組み。</span><span class="note">検証対象はMAIL FROM（封筒の送信者）のドメイン。ヘッダFromは直接見ない。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep195-mail-auth-spf-dkim-dmarc:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>DKIMの説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>秘密鍵で署名し、DNSの公開鍵で検証する</span></button><p class="why" hidden>秘密鍵で署名し、公開鍵で検証</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>送信元IPが、許可の一覧にあるか確かめる</span></button><p class="why" hidden>送信元IPの確認はSPF</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>失敗時の扱いを、ドメインの持ち主が宣言する</span></button><p class="why" hidden>失敗時の扱いの宣言はDMARC</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>本文を暗号化し、第三者に読めなくする</span></button><p class="why" hidden>DKIMは署名で、暗号化ではない</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">SPF・DKIM・DMARCは、それぞれ何を検証しているか。DMARCが「束ねる」とはどういうことか、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep195-mail-auth-spf-dkim-dmarc-t1-0"> 類似ドメインは攻撃者のドメインで認証が通る</label></li><li><label><input type="checkbox" id="ep195-mail-auth-spf-dkim-dmarc-t1-1"> 表示名の偽装・本文の正当性は保証されない</label></li><li><label><input type="checkbox" id="ep195-mail-auth-spf-dkim-dmarc-t1-2"> 認証されるのはドメインであること</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="受信メールの判定記録（ダミー）"><div class="logtitle">受信メールの判定記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">ヘッダFrom : info@example.jp</span></div><div class="logrow"><span class="hl">SPFとDKIM : どちらも bad.test で合格</span></div><div class="logrow"><span class="hl">example.jp のDMARC : p=reject</span></div><div class="logrow"><span class="hl">DMARC合格の条件 : 合格ドメインがFromと同じ</span></div></div></div>
   <p class="q">ポリシーに従う受信側は、どう扱う？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">DMARCは不合格となり、ポリシーに従って拒否する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>SPFが合格なので、そのまま受信箱へ配送する … 合格したのはbad.testで、Fromのexample.jpとは別のドメインである</li><li>DKIMが合格なので、example.jpの正規メールとして扱う … 署名したのもbad.testで、example.jpの署名ではない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>EX-09 メール認証 SPF / DKIM / DMARC</li></ul>
   <p>SPF・DKIM・DMARCの検証対象の違いと、ヘッダFromとの一致の考え方、転送・書き換え・類似ドメインの限界を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep194-incident-forensics.html">← #94 インシデント対応とフォレンジック 証拠保全とログ相関</a><a href="ep196-infosec-properties.html">#96 情報セキュリティの特性 機密性・完全性・可用性と付加的な特性 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

@@ -16,12 +16,11 @@
   <p class="eyebrow">#90 ・ 追加テーマ（目次外）</p>
   <h1>OAuth・OIDC・SAML 認可コードフローとトークン検証</h1>
   <ol class="summary"><li>認可コードはブラウザ経由でリダイレクトURIに返り、クライアントが認可サーバと直接通信してトークンに交換する。</li><li>PKCEは乱数のハッシュを認可要求に付け、交換時に元の乱数を求める。リダイレクトURIの厳密な照合は省けない。</li><li>IDトークンは署名・発行元・宛先・期限・nonceを検証する。SAMLも署名・Issuer・Audience等を確かめる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep190-oauth-oidc-saml:oauth">
   <button type="button" class="flip" aria-expanded="false"><span class="front">OAuth 2.0</span><span class="back" hidden><span class="def">認可の枠組み。代表的な認可コードフローでは、認可コードをトークンに交換して使う。</span><span class="note">認可（OAuth）と認証（OIDC）を区別する。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep190-oauth-oidc-saml:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>IDトークンを受け取ったクライアントの検証として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>宛先が自分のクライアントIDであることを、確認する</span></button><p class="why" hidden>宛先(aud)の確認が必要</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>署名が正しければ、宛先の確認は省略する</span></button><p class="why" hidden>署名と宛先の確認は別</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>期限が切れていても、署名が正しければ受け入れる</span></button><p class="why" hidden>期限切れは受け入れない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>発行元がどこでも、署名を検証できれば受け入れる</span></button><p class="why" hidden>発行元が想定どおりか確認する</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">PKCEが認可コードの横取りにどう備えるかと、それでも残る限界を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep190-oauth-oidc-saml-t1-0"> 署名・発行元・宛先・期限・nonceを確認する</label></li><li><label><input type="checkbox" id="ep190-oauth-oidc-saml-t1-1"> 宛先を確かめないと、別のサービス向けの証明を受け入れる</label></li><li><label><input type="checkbox" id="ep190-oauth-oidc-saml-t1-2"> SAMLでも同様に検証する</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="認可コード受け渡しの調査記録（ダミー）"><div class="logtitle">認可コード受け渡しの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">クライアントは、ネイティブアプリで、秘密を持てない</span></div><div class="logrow"><span class="hl">リダイレクトを、端末上の別アプリも受け取れる</span></div><div class="logrow"><span class="hl">別アプリが、認可コードをトークンへ交換しようとした</span></div><div class="logrow"><span class="hl">要件: コードを奪われても、トークンを渡したくない</span></div></div></div>
   <p class="q">要件を満たす対策として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">認可要求に乱数のハッシュを付け、交換時に元の乱数を求める</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>認可要求のstateを、応答で照合する … stateは要求と応答の対応づけ。別アプリによるコードの交換は止められない</li><li>トークンの有効期限を、短くする … 期限を短くしても、コードの交換は止められない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>EX-03 OAuth 2.0 / OpenID Connect / SAML</li></ul>
   <p>認可コードフローの各段の通信経路、PKCEが防ぐものと防げないもの、IDトークンとSAMLの検証項目を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep189-cyber-keiei-guideline.html">← #89 サイバーセキュリティ経営ガイドライン 経営者の三原則と十項目</a><a href="ep191-cloud-shared-responsibility.html">#91 クラウドの責任共有モデル IAMと設定不備 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

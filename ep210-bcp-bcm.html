@@ -16,12 +16,11 @@
   <p class="eyebrow">#110 ・ 第4章 情報セキュリティマネジメントの実践</p>
   <h1>BCPとBCM 事業継続の計画と回し続ける運用</h1>
   <ol class="summary"><li>BCPは事業全体で重要業務を続け戻す計画。策定前にBIAで影響を調べ、業務ごとにRTOとRPOを決める。</li><li>戦略（代替拠点・複製）と、発動基準・連絡網・役割分担を文書にする。経営層が方針と資源を決め、委託先も対象に含める。</li><li>計画は想定の範囲で、作っただけでは動かない。BCMで訓練と見直しを続ける。システムが戻っても業務手順が要る。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep210-bcp-bcm:bcp">
   <button type="button" class="flip" aria-expanded="false"><span class="front">BCP（事業継続計画）</span><span class="back" hidden><span class="def">事業が中断・阻害されたときに、重要業務を継続・復旧するための文書化された計画。情報システムに限らず事業全体が対象。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep210-bcp-bcm:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>BCPとBCMの説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>BCMは、BCPの訓練や見直しも続ける活動</span></button><p class="why" hidden>BCMは訓練と見直しも続ける</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>BCPは、情報システムの復旧手順だけを定める</span></button><p class="why" hidden>BCPは事業全体の継続を扱う</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>BIAは、BCPを発動した後の効果測定である</span></button><p class="why" hidden>BIAは影響を調べて重要業務を決める分析</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>RPOは、復旧に使える時間の上限を表す</span></button><p class="why" hidden>時間の目標はRTO</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">RTOとRPOの違いを、障害が起きた場面を想定して頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep210-bcp-bcm-t1-0"> 計画は想定の範囲で、作っただけでは動かない</label></li><li><label><input type="checkbox" id="ep210-bcp-bcm-t1-1"> 訓練で手順を実際に動かして不備を見つける</label></li><li><label><input type="checkbox" id="ep210-bcp-bcm-t1-2"> 組織・設備・委託先の変化を反映して見直す</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="復旧計画の検討記録（ダミー）"><div class="logtitle">復旧計画の検討記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">受注システム: 停止が4時間を超えると、納期遅延が確定</span></div><div class="logrow"><span class="hl">経理システム: 3日止まっても、決算に影響しない</span></div><div class="logrow"><span class="hl">復旧の要員は少なく、同時に着手できるのは1システム</span></div><div class="logrow"><span class="hl">要件: 事業への影響が大きい業務から、順に復旧したい</span></div></div></div>
   <p class="q">復旧計画の方針として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">受注システムを、4時間以内の目標で最優先にする</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>全システムを、同じ目標時間にそろえる … 4時間にそろえても着手できるのは1システム。経理に割くと受注が間に合わない</li><li>経理システムを、最優先で復旧する … 経理は3日待てる。先に限度が来るのは、4時間の受注</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>4.9.1 BCP、BCMの概要</li><li>4.9.2 BCP策定、BCM確立における要点</li></ul>
   <p>BCPとBCMの関係、BIAからRTO・RPOを決める流れを確かめる。戦略と体制、訓練と見直しの運用まで続けて読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep209-info-asset-client-pc.html">← #109 情報資産の洗出し・分類とクライアントPC</a><a href="ep211-security-audit.html">#111 情報セキュリティ監査とシステム監査 独立と証拠で測る →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

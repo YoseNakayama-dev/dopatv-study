@@ -16,12 +16,11 @@
   <p class="eyebrow">#36 ・ 第3章 情報セキュリティにおける脆弱性</p>
   <h1>DNSの脆弱性 仕様・設定・実装のどこが弱いか</h1>
   <ol class="summary"><li>DNSは標準では応答が本物かを確かめず、照合の要素が予測しやすいと偽の応答が通る余地がある。</li><li>答えはTTLの間キャッシュされるので、偽の答えが入ると影響が続く。弱点は仕様・設定・実装に分ける。</li><li>設定の弱点は再帰やゾーン転送の開けすぎ、内部名の載せすぎ、兼用。実装はソフトの更新遅れ。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep136-dns-vuln:dns-udp">
   <button type="button" class="flip" aria-expanded="false"><span class="front">DNSの問い合わせ・応答（UDP）</span><span class="back" hidden><span class="def">主にUDPで短いやり取りを行う。接続の確立を省く分、送信元が偽られやすい。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep136-dns-vuln:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>DNSの仕様上の弱点として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ゾーン転送を誰にでも許していて、登録情報が見えること</span></button><p class="why" hidden>設定の弱点（仕様ではない）</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>DNSサーバのソフトウェアの更新が遅れ、既知の脆弱性が残ること</span></button><p class="why" hidden>実装の弱点（仕様ではない）</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>標準では、応答の真偽を確かめる仕組みがないこと</span></button><p class="why" hidden>標準では出どころを確かめない</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>再帰問い合わせを誰にでも許していて、踏み台にされること</span></button><p class="why" hidden>設定の弱点（仕様ではない）</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">DNSの弱点を「仕様・設定・実装」に分けて考えると、何が嬉しいか。頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep136-dns-vuln-t1-0"> 応答の真偽を確かめる仕組みがない</label></li><li><label><input type="checkbox" id="ep136-dns-vuln-t1-1"> 照合の要素が予測しやすいと通る</label></li><li><label><input type="checkbox" id="ep136-dns-vuln-t1-2"> TTLの間キャッシュされ影響が続く</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="キャッシュDNSサーバの調査記録（ダミー）"><div class="logtitle">キャッシュDNSサーバの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社内のキャッシュDNSサーバ（ダミー）。誤誘導が発生</span></div><div class="logrow"><span class="hl">権威サーバの登録内容は正しく、他のキャッシュも正しい値</span></div><div class="logrow"><span class="hl">このキャッシュを使う全端末が、同じ誤ったIPを得ていた</span></div><div class="logrow"><span class="hl">各端末のhostsファイルとDNS設定は、正規のまま</span></div><div class="logrow"><span class="hl">調査: なりすました応答が、正規より先に届き、識別子とポートも一致</span></div></div></div>
   <p class="q">この誤誘導の原因として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">キャッシュサーバが、正規より先に届いた偽の応答を受理して、覚えた</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>権威サーバの登録内容の改ざん … 登録内容は正しい</li><li>各端末の設定の改ざん … 端末の設定は正規のまま</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>3.5.1 DNSの脆弱性</li></ul>
   <p>仕様・設定・実装の3分類で、どの弱点がどこに入るかを確かめながら読む。対策は次回（3.5.2）で対応づける。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep135-pop3-vuln.html">← #35 POP3の脆弱性と対策 平文の認証を守る</a><a href="ep137-dns-vuln-defense.html">#37 DNSの脆弱性への対策 弱点ごとに塞ぐ →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

@@ -16,12 +16,11 @@
   <p class="eyebrow">#51 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>FWの種類とアドレス変換 状態を見るか中身を見るか</h1>
   <ol class="summary"><li>パケットフィルタ型は高速で単純だが状態も中身も見ない。ステートフル型は状態表で応答を許可するが、状態表は有限。</li><li>アプリケーションゲートウェイ型は中身まで検査できるが、処理が重く、対応するアプリが限られる。</li><li>NATはアドレス変換、NAPTはポートも変換して1つのアドレスを共有する。NATはFWの代わりにならない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep151-firewall-types-nat:packet-filter">
   <button type="button" class="flip" aria-expanded="false"><span class="front">パケットフィルタリング型</span><span class="back" hidden><span class="def">パケット1つ1つを、送信元・宛先のIPアドレス、ポート番号、プロトコル等の規則で判断する。高速で単純。</span><span class="note">状態も中身も見ないので、戻りの通信には戻り用の規則が別に要る。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep151-firewall-types-nat:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>NAPT（IPマスカレード）の説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>IPアドレスだけを1対1で変換し、ポート番号は変えない</span></button><p class="why" hidden>それは、1対1のNAT</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>通信の中身を検査して、不正なデータを取り除く</span></button><p class="why" hidden>それは、ゲートウェイ型の機能</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ポート番号も変換して、1つのアドレスを共有する</span></button><p class="why" hidden>ポート番号も変換し、共有</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>外部から内部への通信を、すべて許可する機能</span></button><p class="why" hidden>通信を許可する機能ではない</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">要件が「中身の検査は不要、処理は高速に保つ、応答は届く」のとき、どの方式を選び、何に注意するか、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep151-firewall-types-nat-t1-0"> 目的はアドレスの節約と隠蔽</label></li><li><label><input type="checkbox" id="ep151-firewall-types-nat-t1-1"> 隠れるのは副次効果</label></li><li><label><input type="checkbox" id="ep151-firewall-types-nat-t1-2"> 中身の攻撃は防げない</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="通信障害の調査記録（ダミー）"><div class="logtitle">通信障害の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 社内PCから外部Webサイトへの通信（ダミー）。要件は、中身の検査は不要で、処理を高速に保つこと</span></div><div class="logrow"><span class="hl">FWの方針は、外部から始まる通信（新規接続）を、すべて拒否</span></div><div class="logrow"><span class="hl">FWの種類は、パケットフィルタリング型。パケット1つ1つを、アドレスとポート番号の規則で判断</span></div><div class="logrow"><span class="hl">PCが送った要求は、FWを通って、外部のWebサイトに届いている</span></div><div class="logrow"><span class="hl">Webサイトからの応答は、外部の443番ポートから、PCの一時的なポート番号へ戻るが、FWで遮断された</span></div></div></div>
   <p class="q">高速を保ち、応答も届く方式として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">通信の状態を記憶し、応答の戻りだけを許可する方式</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>内部から外部への通信を禁止する … 要求は、FWを通って届いている</li><li>外部→内部のポートを全開にする … 方針は、外部から始まる通信を全拒否</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.5.3 フィルタリング方式から見たFWの種類</li><li>5.5.4 ファイアウォールのアドレス変換機能</li></ul>
   <p>3方式が何を見て何を見ないか、状態表の限界、NATとNAPTの変換の違いと、NATがFWの代わりにならない理由を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep150-firewall-basics.html">← #50 ファイアウォールの概要と基本的な構成 DMZで被害を止める</a><a href="ep152-fw-limits-ext.html">#52 FWで防げないものと拡張機能 許可した通信の中身が盲点 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

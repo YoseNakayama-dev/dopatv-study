@@ -16,12 +16,11 @@
   <p class="eyebrow">#5 ・ 追加テーマ（目次外）</p>
   <h1>CSRF 本人の意図かを確認しないと何が起こる？</h1>
   <ol class="summary"><li>CSRFは、Cookie等でログイン状態を保つサイトで、リクエストが本人の意図か識別しないと成立する。</li><li>根本対策は、予測困難な秘密情報（トークン）の照合かパスワード再入力。POSTで送り、GETで状態を変えない。</li><li>SameSiteや通知メールは補助。XSSが残るとトークンも読まれ、CSRF対策は破られうる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep105-csrf:csrf">
   <button type="button" class="flip" aria-expanded="false"><span class="front">CSRF（クロスサイト・リクエスト・フォージェリ）</span><span class="back" hidden><span class="def">ログイン中の利用者に、本人の意図しないリクエストを別サイトから送らせ、その権限で操作を実行させる攻撃。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep105-csrf:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>CSRFの根本的な対策として適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>入力の「&lt;」を削除する</span></button><p class="why" hidden>「&lt;」の削除はXSS向けで、CSRFは防げない</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>出力時にHTMLエスケープする</span></button><p class="why" hidden>XSSの対策で、CSRFは防げない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>秘密情報を埋め込み、照合する</span></button><p class="why" hidden>本人の意図の証拠を照合する</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>SQLのプレースホルダを使う</span></button><p class="why" hidden>SQLインジェクション向けの対策</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">CSRFで、攻撃者が利用者のCookieを盗んでいないのに操作が成立する理由を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep105-csrf-t1-0"> SameSiteは多層防御（補助）</label></li><li><label><input type="checkbox" id="ep105-csrf-t1-1"> LaxでもGETの状態変更は防げない</label></li><li><label><input type="checkbox" id="ep105-csrf-t1-2"> 根本対策はトークン照合など</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="送金処理のアクセスログ（ダミー）"><div class="logtitle">送金処理のアクセスログ（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">POST /transfer  Cookie=有効（本人の端末）</span></div><div class="logrow"><span class="hl">利用者は送金画面を開いていない</span></div><div class="logrow"><span class="hl">サーバは Cookie の有効性だけを確認</span></div><div class="logrow"><span class="hl">// パスワードは強く、Cookieの漏えいは無い</span></div></div></div>
   <p class="q">送金を受け付けた根本原因は？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">リクエストが利用者本人の意図か確認していない</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>Cookieが盗まれた … 前提では漏えいは無い</li><li>パスワードが弱い … 前提では強い。意図の確認の欠落が原因</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>EX-02 CSRF</li></ul>
   <p>根本対策（トークン・再入力）と補助（SameSite・通知）の区別、XSSとの違いと前提関係を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep104-idor.html">← #4 認可不備 IDOR/BOLA 認可チェックが抜けると何が起こる？</a><a href="ep106-ssrf.html">#6 SSRF サーバを踏み台にされると何が起こる？ →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

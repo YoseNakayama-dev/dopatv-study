@@ -16,12 +16,11 @@
   <p class="eyebrow">#114 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>二重化・監視・クラスタ・RAID 止めない備えと気付く仕組み</h1>
   <ol class="summary"><li>冗長化は単一障害点をなくすが、同じ原因の故障や誤操作は防げない。切替は事前に試験する。</li><li>機器がping応答してもサービスが動くとは限らない。サービス自体の応答も確認する。</li><li>ハートビートが途切れ両系が稼働系になるとデータが壊れうる。RAIDはバックアップの代わりでない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep214-redundancy-monitoring:spof">
   <button type="button" class="flip" aria-expanded="false"><span class="front">単一障害点（SPOF）</span><span class="back" hidden><span class="def">そこが壊れるとシステム全体が止まる箇所。冗長化は、これをなくして一部が壊れても止めないために行う。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep214-redundancy-monitoring:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>可用性対策の説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>RAID1は、ディスク1台の故障に耐える</span></button><p class="why" hidden>RAID1は1台の故障に耐える</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>RAID5は、ディスク2台の同時故障に耐える</span></button><p class="why" hidden>RAID5は1台の故障まで</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>待機系は、通常時も処理を受け持つ</span></button><p class="why" hidden>待機系は通常は待機</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>RAIDを組めば、バックアップは不要である</span></button><p class="why" hidden>誤削除は戻せない</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">サーバがpingに応答しているのに、Webサービスだけが止まっていた。なぜ見落とすのか、どう備えるかを頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep214-redundancy-monitoring-t1-0"> ハートビートが途切れる</label></li><li><label><input type="checkbox" id="ep214-redundancy-monitoring-t1-1"> 両方が稼働系になりデータが壊れうる</label></li><li><label><input type="checkbox" id="ep214-redundancy-monitoring-t1-2"> 通信経路を二重にして備える</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="Web2台構成の障害記録（ダミー）"><div class="logtitle">Web2台構成の障害記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">Webサーバ2台に、負荷分散装置が処理を振り分ける</span></div><div class="logrow"><span class="hl">装置は、各サーバへのpingの応答で、動作を確認する</span></div><div class="logrow"><span class="hl">昨夜、サーバAのWebサービスのみ停止。pingは応答</span></div><div class="logrow"><span class="hl">装置はAへの振り分けを続け、一部の利用者がエラー</span></div><div class="logrow"><span class="hl">要件: 停止したサーバへの振り分けを、自動で止めたい</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">装置が、Webサービスの応答を確認し、なければ振り分けから外す</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>pingの間隔を短くする … Aはpingに応答しており、間隔を短くしても停止を検知できない</li><li>サーバを3台に増やす … 台数を増やしても、停止したAへの振り分けは止まらない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.11.1 二重化／冗長化</li><li>5.11.2 稼働状況監視</li><li>5.11.4 クラスタリングシステム</li></ul>
   <p>冗長化の目的と限界、監視が見ている対象の違い、クラスタの注意点を確かめながら読む。RAIDは動画の補足として扱う。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep213-sandbox.html">← #113 サンドボックス 隔離して動かして見る仕組みと限界</a><a href="ep215-biometric.html">#115 バイオメトリック認証 仕組み・誤り・方式の特徴 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

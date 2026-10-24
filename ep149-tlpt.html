@@ -16,12 +16,11 @@
   <p class="eyebrow">#49 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>TLPTの概要 脅威に基づく侵入テスト</h1>
   <ol class="summary"><li>TLPTは、実際の攻撃者の手口（脅威情報）を元に攻撃を模擬し、検知・対応を含む防御力を評価する。</li><li>レッド・ブルー・ホワイトの役割があり、ブルーは通常実施を知らされない。範囲と緊急停止は事前に合意する。</li><li>診断などの基礎が整った組織が行う。費用と期間が大きく、1回のシナリオで全体の安全は示せない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep149-tlpt:tlpt">
   <button type="button" class="flip" aria-expanded="false"><span class="front">TLPT（脅威ベースのペネトレーションテスト）</span><span class="back" hidden><span class="def">実際の攻撃者の手口を元にしたシナリオで、本番環境に近い環境へ攻撃を模擬して侵入を試み、検知・対応を含む防御力を評価する。</span><span class="note">狙いは脆弱性の網羅的な列挙ではない。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep149-tlpt:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>TLPTの説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>対象システムの脆弱性を網羅的に列挙し、深刻度を付ける診断</span></button><p class="why" hidden>それは、脆弱性診断の説明</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>開発中のソフトに、不正な入力を大量に与える試験</span></button><p class="why" hidden>それは、ファジングの説明</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>公開資産を継続的に洗い出し、台帳と照合する取り組み</span></button><p class="why" hidden>それは、ASMの説明</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>実際の攻撃者の手口を模擬し、検知と対応も評価する取り組み</span></button><p class="why" hidden>手口を模擬し、検知と対応も評価</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">脆弱性診断を毎年行い指摘も対処済みの組織が、それでもTLPTを行う意義を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep149-tlpt-t1-0"> 本当の検知力を見るため知らせない</label></li><li><label><input type="checkbox" id="ep149-tlpt-t1-1"> 範囲・禁止事項・緊急停止の手順を文書で合意</label></li><li><label><input type="checkbox" id="ep149-tlpt-t1-2"> 委託先やクラウドの同意</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="TLPTの実施記録（ダミー）"><div class="logtitle">TLPTの実施記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 決済事業者の基幹システム（ダミー）。脆弱性診断は毎年実施し、指摘は対処済み</span></div><div class="logrow"><span class="hl">脅威情報に基づくシナリオで、模擬の攻撃チームが、本番環境への侵入を試みた</span></div><div class="logrow"><span class="hl">監視チームには、実施を事前に知らせていない</span></div><div class="logrow"><span class="hl">侵入に使われたのは、演習の前提として付与された、正規のアカウント情報。未修正の脆弱性は、使われていない</span></div><div class="logrow"><span class="hl">侵入から目的の達成まで、10日間。経路上で、監視のアラートが、3回発生した。3回とも、模擬の攻撃チームの操作が原因</span></div><div class="logrow"><span class="hl">3回とも、担当者が「定型の誤検知」と判断し、記録のみで処理した</span></div></div></div>
   <p class="q">検知・対応の観点で、優先して見直すべきなのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">アラートが出たときの、判断の基準と確認の手順</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>監視の仕組みの導入 … 経路上で、アラートは3回発生している</li><li>未修正の脆弱性の解消 … 侵入に使われたのは、正規のアカウント情報</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.3.5 TLPTの概要</li></ul>
   <p>脆弱性診断との目的の違い、三つの役割、事前合意の内容、1回の結果で安全とは言えない理由を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep148-fuzzing-asm.html">← #48 ファジングとASMの概要 未知の穴と未把握の資産</a><a href="ep150-firewall-basics.html">#50 ファイアウォールの概要と基本的な構成 DMZで被害を止める →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

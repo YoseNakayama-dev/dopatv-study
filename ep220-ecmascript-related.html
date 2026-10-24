@@ -16,12 +16,11 @@
   <p class="eyebrow">#120 ・ 第8章 システム開発におけるセキュリティ対策</p>
   <h1>ECMAScript関連技術 オリジン・CORS・JSON・DOMの扱い</h1>
   <ol class="summary"><li>オリジンはスキーム・ホスト名・ポートの組。別オリジンの応答は原則読めないが、送信は止まらない。</li><li>CORSは許可したオリジンにだけ読取りを許す。Cookie付きは特定のオリジンを指定し、認可の代わりにならない。</li><li>JSONはJSON.parseで解析し、DOMへはtextContentで出す。JSONPは提供元のコードを実行する古い方式。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep220-ecmascript-related:origin">
   <button type="button" class="flip" aria-expanded="false"><span class="front">オリジン</span><span class="back" hidden><span class="def">スキーム・ホスト名・ポート番号の組。どれか一つでも違えば別のオリジンになる。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep220-ecmascript-related:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>ECMAScript関連の説明として、適切なものは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>オリジンは、ホスト名だけで決まる</span></button><p class="why" hidden>スキームとポートも含む</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>CORSを設定すれば、サーバ側の認可は不要になる</span></button><p class="why" hidden>CORSは認可の代わりではない</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>JSONPは、提供元を信頼しなくても安全に使える</span></button><p class="why" hidden>JSONPは提供元のコードを実行</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>JSONの文字列は、evalでなくJSON.parseで解析する</span></button><p class="why" hidden>JSON.parseで解析する</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">同一オリジンポリシーが防ぐものと、防がないものを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep220-ecmascript-related-t1-0"> 特定のオリジンを許可リストと照合して指定する</label></li><li><label><input type="checkbox" id="ep220-ecmascript-related-t1-1"> Originのそのまま返しや*は避ける</label></li><li><label><input type="checkbox" id="ep220-ecmascript-related-t1-2"> サーバ側の認可は別に必要</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="社内ポータルの通信記録（ダミー）"><div class="logtitle">社内ポータルの通信記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">ポータルは、Cookie付きでAPIを呼び出して表示する</span></div><div class="logrow"><span class="hl">APIは、Originの値をそのまま許可し、Cookieも許可</span></div><div class="logrow"><span class="hl">外部サイトのスクリプトが、社員のAPI応答を読んだ</span></div><div class="logrow"><span class="hl">その要求はGETで、事前確認（プリフライト）はなし</span></div><div class="logrow"><span class="hl">要件: Cookie付きのまま、自社ポータルだけに読ませる</span></div></div></div>
   <p class="q">適切な対策は、どれ？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">許可リストと照合して、自社ポータルのオリジンだけを許可する</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>許可を*にする … Cookie付きでは使えず、使えても全オリジンに読ませてしまう</li><li>事前確認への応答を拒否する … 読まれたGETでは事前確認は行われない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>8.4.5 ECMAScriptに関連した各種技術</li></ul>
   <p>読み取りの制限（同一オリジンポリシー）と許可（CORS）の関係、許可の範囲の決め方、DOMへの出力の安全な書き方を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep219-java-security.html">← #119 Javaのセキュリティ 実行環境の機構・留意点・例外処理</a><a href="ep221-standards-need.html">#121 セキュリティの規格と制度 15408・PCI DSS・20000 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

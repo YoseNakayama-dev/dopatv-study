@@ -16,12 +16,11 @@
   <p class="eyebrow">#78 ・ 第7章 情報セキュリティ対策技術（3）暗号</p>
   <h1>TLSによるVPN（SSL-VPN） ソフトの要否で選ぶ三つの型</h1>
   <ol class="summary"><li>SSL-VPNはTLSで通信を暗号化し、HTTPSと同じ通り道なのでFWを通りやすい。方式はソフトの要否や使える範囲で選ぶ。</li><li>暗号化されても端末の安全は保証されない。弱い認証、感染端末、装置の脆弱性、広すぎる接続先が入口になる。</li><li>対策は多要素認証、接続前の端末確認、修正プログラムの速やかな適用、利用者ごとの接続先の限定。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep178-ssl-vpn:ssl-vpn">
   <button type="button" class="flip" aria-expanded="false"><span class="front">SSL-VPN</span><span class="back" hidden><span class="def">TLSで通信を暗号化するリモートアクセス型のVPN。HTTPSと同じ通り道（443番）で使え、FWを通りやすい。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep178-ssl-vpn:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>SSL-VPNの説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>TLSを使い、ブラウザや専用ソフトで社内システムへ接続できる方式である</span></button><p class="why" hidden>TLSで暗号化し、ブラウザや専用ソフトで接続</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>利用者ごとに専用の暗号化装置を接続しないと、使えない方式である</span></button><p class="why" hidden>専用の暗号化装置は不要</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>通信にはIPsecのESPを使うので、ブラウザでは利用できない方式である</span></button><p class="why" hidden>ESPはIPsecの方式</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>通信を暗号化しないので、盗聴対策を別に用意する必要がある方式である</span></button><p class="why" hidden>TLSで通信を暗号化する</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">SSL-VPNは通信が暗号化されるのに、なぜ感染したPCからの入り込みを防げないのか。頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep178-ssl-vpn-t1-0"> 認証：多要素認証</label></li><li><label><input type="checkbox" id="ep178-ssl-vpn-t1-1"> 端末：接続前の確認</label></li><li><label><input type="checkbox" id="ep178-ssl-vpn-t1-2"> 装置：修正プログラムの適用</label></li><li><label><input type="checkbox" id="ep178-ssl-vpn-t1-3"> 範囲：接続先を絞る</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="在宅勤務の接続方式に関する調査記録（ダミー）"><div class="logtitle">在宅勤務の接続方式に関する調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">現状: 在宅の社員が、私物のPCから社内のWebシステムを使う</span></div><div class="logrow"><span class="hl">私物のPCに、ソフトウェアを導入させることはできない</span></div><div class="logrow"><span class="hl">社内のシステムは、すべてWebブラウザで操作する</span></div><div class="logrow"><span class="hl">要件: 通信を暗号化し、ブラウザだけで接続させたい</span></div></div></div>
   <p class="q">要件を満たす構成として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">リバースプロキシ型のSSL-VPN装置を、社内の入口に置く</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ポートフォワード型のSSL-VPNを使う … 専用ソフトが必要で、導入できない前提に反する</li><li>端末に、IPsecのクライアントを入れる … ソフトの導入が必要で、前提に反する</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>7.4.3 TLSによるインターネットVPN（SSL-VPN）</li></ul>
   <p>方式の違いをソフトの要否と使える範囲で整理し、入口になるSSL-VPN装置を守る四つの観点を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep177-ipsec-functions.html">← #77 IPsecの機能と構成プロトコル 守る役と鍵を配る役</a><a href="ep179-ssh.html">#79 SSH 接続先と利用者を両方確かめる →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

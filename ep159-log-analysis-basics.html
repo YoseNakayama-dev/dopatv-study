@@ -16,12 +16,11 @@
   <p class="eyebrow">#59 ・ 第5章 情報セキュリティ対策技術（1）予防・検知・防御</p>
   <h1>ログ分析の概要 突き合わせて初めて見える不正の足取り</h1>
   <ol class="summary"><li>ログ分析の目的は、不正の検知・インシデントの調査・証跡の確保。残すログを前提として決めておく。</li><li>複数機器のログを突き合わせる相関分析は、機器の時刻が同期していることが前提になる。</li><li>保管は目的に応じた期間で改ざんされにくく。基準を決めてアラート化しても、最終判断は人が行う。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep159-log-analysis-basics:log-purpose">
   <button type="button" class="flip" aria-expanded="false"><span class="front">ログ分析の目的</span><span class="back" hidden><span class="def">不正の検知、インシデントの調査、証跡の確保の3つ。何が起きたかを後から説明する根拠にもなる。</span><span class="note">残していないログは見られない。どのログをいつまでどこに残すかを前提として決める。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep159-log-analysis-basics:v" data-answer="3">
   <p class="q"><span class="tag">動画で出た問題</span>ログ分析の「相関分析」の説明として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ひとつの機器のログを、古い順に並べて、一定期間保管すること</span></button><p class="why" hidden>それは、ログの整理と保管</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>ログに含まれる個人情報を、見えないように加工して、保管すること</span></button><p class="why" hidden>それは、マスキングなどの加工</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>保管期間が過ぎたログを、定期的に削除して、容量を確保すること</span></button><p class="why" hidden>それは、ログの廃棄</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>複数の機器のログを突き合わせて、一連の不審な動きを見つけること</span></button><p class="why" hidden>複数のログを突き合わせる</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">ログ分析を始める前に、あらかじめ決めておくべきことは何か。なぜそれが要るのかも含めて、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep159-log-analysis-basics-t1-0"> SIEMは集約・相関分析・アラートの自動化</label></li><li><label><input type="checkbox" id="ep159-log-analysis-basics-t1-1"> 異常とみなす基準を決める</label></li><li><label><input type="checkbox" id="ep159-log-analysis-basics-t1-2"> 最終判断と対応は人が行う</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="不正アクセスの経路調査の記録（ダミー）"><div class="logtitle">不正アクセスの経路調査の記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">FWとWebサーバのログは、ログ用サーバに集約済み</span></div><div class="logrow"><span class="hl">保管期間は1年。調査対象の日のログは、すべて残っている</span></div><div class="logrow"><span class="hl">同じ通信が、FWログでは10:02、Webサーバでは10:05の記録</span></div><div class="logrow"><span class="hl">各機器は、それぞれの内蔵時計で、時刻を記録している</span></div><div class="logrow"><span class="hl">要件: 手作業の補正なしで、2つのログを時系列に突き合わせたい</span></div></div></div>
   <p class="q">ログの突き合わせのために、必要な対策は？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">全機器の時刻を、基準となる時刻源に同期させ続ける</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ログの保管期間をさらに延ばして、長期間残すようにする … 保管は1年で、調査日のログは残っている</li><li>ログ用サーバへの集約を進めて、一か所にまとめる … すでに集約済みで、記録の時刻は変わらない</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>5.10.1 ログ分析の概要</li></ul>
   <p>ログ分析の目的と流れ、相関分析と時刻同期の関係、保管・取得項目・最終判断は人という管理の要点を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep158-waf-limits-ops.html">← #58 WAFの限界と運用の課題 入れて終わりではない補助の守り</a><a href="ep160-log-analysis-effects.html">#60 ログ分析の効果と限界 残し方と守り方で価値が決まる →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

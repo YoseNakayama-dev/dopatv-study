@@ -16,12 +16,11 @@
   <p class="eyebrow">#20 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>DNSサーバへの攻撃 4種類を狙いで整理する</h1>
   <ol class="summary"><li>DNS攻撃は狙いで整理する。答えの正しさはポイズニング、可用性は増幅とランダムサブドメイン。</li><li>ポイズニングは、照合を通る偽の応答が正規より先に届くと成立し、照合要素が予測しやすいほど成立しやすい。</li><li>増幅はUDPの送信元偽装と誰にでも答えるサーバが条件。ゾーン転送の無制限許可は構成情報が漏れる。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep120-dns-attack:cache-server">
   <button type="button" class="flip" aria-expanded="false"><span class="front">キャッシュサーバ（リゾルバ）</span><span class="back" hidden><span class="def">利用者の代わりに名前を調べるサーバ。得た答えを一定時間キャッシュに残す。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep120-dns-attack:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>DNS増幅攻撃が成立する条件として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>送信元を偽装でき、誰にでも答えるサーバがある</span></button><p class="why" hidden>送信元の偽装＋誰にでも答えるサーバ</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>権威サーバがDNSSECに対応している</span></button><p class="why" hidden>DNSSECは応答の正当性の検証</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ゾーン転送を許可した相手に限っている</span></button><p class="why" hidden>ゾーン転送の制限は別の攻撃への備え</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>キャッシュの保持時間が長い</span></button><p class="why" hidden>保持が長いほど、問い合わせは減る</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">DNSへの4つの攻撃を「狙い」で3つに分類し、それぞれに入る攻撃を、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep120-dns-attack-t1-0"> 正規の応答より先に届く</label></li><li><label><input type="checkbox" id="ep120-dns-attack-t1-1"> 照合を通る偽応答である</label></li><li><label><input type="checkbox" id="ep120-dns-attack-t1-2"> 照合要素が予測しやすいほど成立しやすい</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="権威DNSサーバの障害調査記録（ダミー）"><div class="logtitle">権威DNSサーバの障害調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 自社ドメインの権威DNSサーバのログ（約10分間・ダミー）</span></div><div class="logrow"><span class="hl">問い合わせ: 存在しないランダムな名前が、毎秒数千件</span></div><div class="logrow"><span class="hl">送信元: 多数の組織のキャッシュサーバ / CPU使用率が上昇</span></div><div class="logrow"><span class="hl">// ゾーン転送の要求は0件</span></div></div></div>
   <p class="q">この記録から言える内容として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">存在しない名前を大量に問い合わせる、ランダムサブドメイン攻撃が疑われる</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>キャッシュポイズニング … 大量照会・負荷上昇を説明できない</li><li>ゾーン転送の悪用 … 転送要求は0件</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.6.1 DNSサーバに対する攻撃の種類と実行方法</li></ul>
   <p>DNSの仕組み（キャッシュサーバと権威サーバ）を押さえ、4つの攻撃の狙いと成立条件、観測される特徴の違いを整理しながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep119-info-sharing.html">← #19 サイバーセキュリティ情報の共有 J-CSIP・ISAC・TLPの考え方</a><a href="ep121-dns-defense.html">#21 DNSサーバへの攻撃への対策 守備範囲と限界 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

@@ -16,12 +16,11 @@
   <p class="eyebrow">#32 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>ドロッパと標的型攻撃 侵入から外への持ち出しまで</h1>
   <ol class="summary"><li>ドロッパは内部に持つ別のマルウェアを書き出して実行する。自身は悪質な動作が少なく、検出されにくい。</li><li>標的型攻撃は特定の組織や人を狙い、長期間続きやすく、既知の対策を回避するよう作り込まれる。</li><li>対策は入口・内部・出口で重ねる。入口だけでは防ぎきれないので、検知後の対応手順も用意する。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 8</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep132-dropper-targeted:dropper">
   <button type="button" class="flip" aria-expanded="false"><span class="front">ドロッパ</span><span class="back" hidden><span class="def">内部に持つ別のマルウェアを、端末に書き出して実行するマルウェア。自身は悪質な動作が少なく、検出されにくい。</span></span></button>
@@ -60,7 +59,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep132-dropper-targeted:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>標的型攻撃への対策として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>入口・内部・出口を重ね、侵入を前提に検知と封じ込めを備える</span></button><p class="why" hidden>多層で、侵入を前提に備える</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>送信元が取引先のアドレスなら、添付ファイルを開いてよい</span></button><p class="why" hidden>送信元は偽装でき、乗っ取りもある</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>入口のメールフィルタがあれば、内部の対策は不要</span></button><p class="why" hidden>すり抜ける攻撃が、内部で動く</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>攻撃は短時間で終わるので、事後のログ調査は不要</span></button><p class="why" hidden>長期間続き、ログが経路の手がかり</p></li></ol>
@@ -87,9 +85,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">標的型攻撃で「入口だけでは防ぎきれない」と言われる理由と、入口を抜けられた後の備えを、頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -106,29 +102,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep132-dropper-targeted-t1-0"> 出口の対策であり、侵入済みの影響は残りうる</label></li><li><label><input type="checkbox" id="ep132-dropper-targeted-t1-1"> 内部調査・横展開で他の端末へ広がりうる</label></li><li><label><input type="checkbox" id="ep132-dropper-targeted-t1-2"> 検知後の対応手順で影響範囲を調べる</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="総務部端末の調査記録（ダミー）"><div class="logtitle">総務部端末の調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 総務部の端末（ダミー）。取引先を名乗るメールの添付ファイルを開いた</span></div><div class="logrow"><span class="hl">開いた直後、一時フォルダに実行ファイルXが作られ、起動された</span></div><div class="logrow"><span class="hl">Xのハッシュ値は、添付ファイルの内部に格納されていたデータと一致</span></div><div class="logrow"><span class="hl">外部への通信は、Xのプロセスだけが行っていた / 添付ファイル自体は通信なし</span></div></div></div>
   <p class="q">最初に開かれた添付ファイルの役割として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">内部に格納した実行ファイルを書き出して起動する、ドロッパ</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>ダウンローダ … Xは添付ファイルの内部のデータと一致</li><li>スパイウェア本体 … 通信しているのはXのプロセス</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.9.9 ドロッパ</li><li>2.9.10 標的型攻撃</li></ul>
   <p>ドロッパとダウンローダの違い、標的型攻撃の流れの各段階に、入口・内部・出口のどの対策が対応するかを確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep131-mobilecode-spyware.html">← #31 悪意あるモバイルコードとスパイウェア 閲覧だけで動く仕組みと対策</a><a href="ep133-fileless-detect.html">#33 ファイルレス攻撃とマルウェアの検出手法 ファイルがなくても見つける →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

@@ -16,12 +16,11 @@
   <p class="eyebrow">#38 ・ 第3章 情報セキュリティにおける脆弱性</p>
   <h1>HTTPとセッション管理 IDを持つ人が本人になる仕組み</h1>
   <ol class="summary"><li>HTTPは1回ごとのやり取りが独立（ステートレス）で、セッションIDをCookieで毎回送り利用者を見分ける。</li><li>弱点は推測・盗用・固定化の3つ。IDを持つ人が利用者として扱われるので、IDの扱いが要になる。</li><li>乱数ID・URLに含めない・Cookie属性・ログイン後の再発行・サーバ側の破棄を重ねる。HttpOnlyはXSSを防がない。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 9</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep138-http-session:stateless">
   <button type="button" class="flip" aria-expanded="false"><span class="front">ステートレス</span><span class="back" hidden><span class="def">HTTPの1回ごとのやり取りは独立していて、前の状態を覚えていない性質。ログイン状態の維持には別の仕組みが要る。</span></span></button>
@@ -64,7 +63,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep138-http-session:v" data-answer="0">
   <p class="q"><span class="tag">動画で出た問題</span>セッション管理の対策として、適切なのは？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>ログイン成功後に、新しいIDを発行する</span></button><p class="why" hidden>ログイン後にIDを再発行する</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>セッションIDを、URLのパラメータで受け渡す</span></button><p class="why" hidden>URLに含めると、外部へ漏れやすい</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>ログイン時刻から連番で、セッションIDを作る</span></button><p class="why" hidden>規則的なIDは、推測される</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>ログアウトしても、サーバ側のセッションは残す</span></button><p class="why" hidden>破棄しないと、盗まれたIDが使える</p></li></ol>
@@ -91,9 +89,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">セッションIDの弱点（推測・盗用・固定化）を、それぞれ一言で区別し、対策を結びつけてみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -110,29 +106,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep138-http-session-t1-0"> URLに含めたIDが外部へ漏れた</label></li><li><label><input type="checkbox" id="ep138-http-session-t1-1"> 推測・固定化は当てはまらない</label></li><li><label><input type="checkbox" id="ep138-http-session-t1-2"> URLに含めずCookieで送る</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="会員サイトの調査記録（ダミー）"><div class="logtitle">会員サイトの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 会員サイト（ダミー）。利用者Aがログイン中に、外部サイトのリンクを開いた</span></div><div class="logrow"><span class="hl">このサイトは、セッションIDをCookieではなく、URLのパラメータに含めていた</span></div><div class="logrow"><span class="hl">外部サイトのアクセスログに、利用者AのセッションIDを含むURLが、参照元として記録</span></div><div class="logrow"><span class="hl">その後、同じIDを持つ別の端末から、利用者Aとして設定変更の要求が届いた</span></div><div class="logrow"><span class="hl">// IDは十分に長い乱数で連番でない / ログイン後にIDは再発行され、ログイン前と異なる</span></div></div></div>
   <p class="q">この事象の原因として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">URLに含めたセッションIDが、外部サイトへ漏れて、使われた</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>セッションIDの推測 … IDは十分に長い乱数で、連番ではない</li><li>セッション固定化 … ログイン後にIDが再発行され、以前と異なる</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>3.6.1 HTTPとWebアプリケーションの仕組み</li><li>3.6.2 セッション管理の脆弱性と対策</li></ul>
   <p>ステートレスなHTTPでセッションIDが果たす役割、3類型の区別、HttpOnlyや再発行の限界を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep137-dns-vuln-defense.html">← #37 DNSの脆弱性への対策 弱点ごとに塞ぐ</a><a href="ep139-http-server-config.html">#39 HTTPの仕様とWebサーバの設定不備 仕様側と設定側の弱点 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>

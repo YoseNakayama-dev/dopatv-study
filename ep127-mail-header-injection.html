@@ -16,12 +16,11 @@
   <p class="eyebrow">#27 ・ 第2章 情報セキュリティにおける脅威</p>
   <h1>メールヘッダインジェクション 改行が区切りになる仕組みと対策</h1>
   <ol class="summary"><li>外部入力をメールヘッダの値に出力し、含まれる改行を除去・拒否しないと成立する。</li><li>影響は宛先の追加による第三者宛送信、件名・本文の改変、送信元の評判低下。実際の影響は送信機能による。</li><li>対策はライブラリのAPI、ヘッダ用入力の改行拒否。宛先固定・送信数制限・CAPTCHAは補助。</li></ol>
-  <nav class="jump"><a href="#cards">用語カード 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後問題</a><a href="#book">本で読む</a></nav>
+  <nav class="jump"><a href="#cards">用語 10</a><a href="#quiz">クイズ 6</a><a href="#think">考える 2</a><a href="#exam">午後</a><a href="#book">本</a></nav>
 </section>
 
 <section class="block" id="cards">
   <div class="head"><h2>用語カード</h2><div class="filter" role="group" aria-label="表示"><button type="button" data-f="all" aria-pressed="true">すべて</button><button type="button" data-f="weak" aria-pressed="false">苦手だけ</button></div></div>
-  <p class="lead">用語を見て意味を言えるか試し、タップで裏返します。「覚えた」を続けるほど定着度が上がり、「まだ」で最初に戻ります。</p>
   <ul class="cards">
 <li class="card" data-key="ep127-mail-header-injection:mail-header-injection">
   <button type="button" class="flip" aria-expanded="false"><span class="front">メールヘッダインジェクション</span><span class="back" hidden><span class="def">入力がメールヘッダの値として出力され、含まれる改行でヘッダが区切られ、意図しないヘッダが追加される攻撃。</span></span></button>
@@ -68,7 +67,6 @@
 
 <section class="block" id="quiz">
   <h2>クイズ</h2>
-  <p class="lead">選ぶと、すべての選択肢について「なぜ正しいか・なぜ違うか」が出ます。間違えた問題は復習に入ります。</p>
   <ol class="quizzes"><li class="quiz" data-key="ep127-mail-header-injection:v" data-answer="2">
   <p class="q"><span class="tag">動画で出た問題</span>メールヘッダインジェクションへの、有効な対策は？</p>
   <ol class="choices"><li><button type="button" class="choice" data-i="0"><span class="lbl">ア</span><span>本文の文字数を、200字以内に制限する</span></button><p class="why" hidden>文字数制限では、短い改行も通る</p></li><li><button type="button" class="choice" data-i="1"><span class="lbl">イ</span><span>件名の文字列を、HTMLエスケープして出力する</span></button><p class="why" hidden>HTMLエスケープはXSS向け。改行は残る</p></li><li><button type="button" class="choice" data-i="2"><span class="lbl">ウ</span><span>入力の改行を拒否し、送信APIを使う</span></button><p class="why" hidden>改行の拒否と送信APIの利用</p></li><li><button type="button" class="choice" data-i="3"><span class="lbl">エ</span><span>自社ドメインにSPFレコードを登録して公開する</span></button><p class="why" hidden>SPFは送信元の認証。正規サーバ経由は防げない</p></li></ol>
@@ -95,9 +93,7 @@
 </li></ol>
 </section>
 
-<section class="block" id="think">
-  <h2>頭の中で考える</h2>
-  <p class="lead">書かなくて大丈夫です。答えを頭の中で組み立ててから開き、要素がそろっていたか確かめます。</p>
+<section class="block fold" id="think"><details><summary><h2>頭の中で考える</h2></summary><div class="foldbody">
   <ol class="thinks"><li class="think">
   <p class="q">問い合わせフォームが第三者宛メールの踏み台にされる仕組みを、成立条件を入れて頭の中で説明してみよう。</p>
   <details class="reveal"><summary>答えを開く</summary>
@@ -114,29 +110,26 @@
     <ul class="checks"><li><label><input type="checkbox" id="ep127-mail-header-injection-t1-0"> 宛先固定・送信数制限・CAPTCHAは補助</label></li><li><label><input type="checkbox" id="ep127-mail-header-injection-t1-1"> 原因は改行の扱い</label></li><li><label><input type="checkbox" id="ep127-mail-header-injection-t1-2"> APIの利用と改行の拒否が中心</label></li></ul>
   </details>
 </li></ol>
-</section>
+</div></details></section>
 
-<section class="block" id="exam">
-  <h2>午後問題にチャレンジ</h2>
-  <p class="lead">動画の午後問題です。ログを読んで、答えを頭の中で決めてから開いてください。</p>
+<section class="block fold" id="exam"><details><summary><h2>午後問題にチャレンジ</h2></summary><div class="foldbody">
   <div class="log" role="figure" aria-label="問い合わせフォームの調査記録（ダミー）"><div class="logtitle">問い合わせフォームの調査記録（ダミー）</div><div class="logbody"><div class="logrow"><span class="hl">対象: 問い合わせフォーム（ダミー）。管理者宛に1通を送る機能</span></div><div class="logrow"><span class="hl">入力された件名を、そのままSubjectヘッダに出力 / 改行の除去なし</span></div><div class="logrow"><span class="hl">件名の入力値に、改行（CRLF）と、Bcc: 外部アドレス に相当する文字列が含まれていた</span></div><div class="logrow"><span class="hl">送信されたメールに、アプリが出力していないBccヘッダが追加</span></div><div class="logrow"><span class="hl">1回の送信で、外部の宛先にも同じメールが配信されていた</span></div><div class="logrow"><span class="hl">// 送信はすべて、アプリ自身の正規の送信アカウント / 件名の入力は、SQLには使われず、Subjectヘッダにのみ使われる</span></div></div></div>
   <p class="q">この事象の原因として、適切なのは？</p>
   <details class="reveal"><summary>答えを開く</summary>
     <p class="ans">入力に含まれる改行が、ヘッダの区切りとして解釈された</p>
     <p class="sub">よくある誤答</p><ul class="traps"><li>SMTP認証の突破 … 送信は、アプリ自身の正規の送信アカウントのみ</li><li>SQLインジェクション … 件名の入力は、Subjectヘッダにのみ使われる</li></ul>
   </details>
-</section>
+</div></details></section>
 
-<section class="block" id="book">
-  <h2>本で読む</h2>
+<section class="block fold" id="book"><details><summary><h2>本で読む</h2></summary><div class="foldbody">
   <ul class="book"><li>2.8.6 メールヘッダインジェクション</li></ul>
   <p>ヘッダが改行で区切られる構造、影響の種類と環境依存、API・改行拒否が中心で宛先固定などが補助である点を確かめながら読む。</p>
   <details class="src"><summary>この回の出典</summary><ul></ul></details>
-</section>
+</div></details></section>
 
 <nav class="pager"><a href="ep126-http-header-injection.html">← #26 HTTPヘッダインジェクション 改行が区切りになる仕組みと対策</a><a href="ep128-dir-traversal.html">#28 ディレクトリトラバーサル 階層をさかのぼる仕組みと対策 →</a></nav>
 </main>
-<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は掲載していません。学習記録はこのブラウザにだけ保存されます。</div></footer>
+<footer class="foot"><div class="wrap">非公式の学習用ページです。章・節の番号は『情報処理教科書 情報処理安全確保支援士 2026年版』の目次に対応し、本文は載せていません。学習記録はこのブラウザにだけ保存されます。</div></footer>
 <script src="assets/study.js"></script>
 </body>
 </html>
